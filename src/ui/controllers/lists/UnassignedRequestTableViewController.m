@@ -104,7 +104,7 @@
 
 - (void)loadData {
     
-    //T21LogDebug(@"UnassignedRequestTableViewController::loadRequestList");
+    DDLogDegub(@"UnassignedRequestTableViewController::loadRequestList");
     _waitingResponseType = PFWaitingResponseTypeList;
     [super loadData];
 }
@@ -112,7 +112,7 @@
 - (IBAction)rejectAction:(id)sender {
     
     reject = YES;
-    //T21LogDebug(@"Reject Action....");
+    DDLogDegub(@"Reject Action....");
     
     // Preguntamos el por qué del rechazo
     UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Rechazo de peticiones" message:@"Indique el motivo del rechazo" delegate:self cancelButtonTitle:@"Cancelar" otherButtonTitles:@"Continuar", nil];
@@ -125,7 +125,7 @@
 
 - (IBAction)cancelAction:(id)sender
 {
-    //T21LogDebug(@"Cancel Action....");
+    DDLogDegub(@"Cancel Action....");
     [self cancelEditing];
 }
 
@@ -146,7 +146,7 @@
 
     _waitingResponseType = PFWaitingResponseTypeApproval;
     NSString *requestData = [ApproveXMLController buildRequestWithRequestArray:_selectedRequestSetToApprove.allObjects];
-    //T21LogDebug(@"UnassignedRequestTableViewController::startSendingApproveRequests------\n%@\n-----------------------------------------------------------------------\n", requestData);
+    DDLogDegub(@"UnassignedRequestTableViewController::startSendingApproveRequests------\n%@\n-----------------------------------------------------------------------\n", requestData);
     [self.wsDataController loadPostRequestWithData:requestData code:PFRequestCodeApprove];
     [self.wsDataController startConnection];
 }
@@ -199,7 +199,7 @@
 
 - (IBAction)signAction:(id)sender
 {
-    //T21LogDebug(@"Sign Action....\nSelected rows=%lu", (unsigned long)[selectedRows count]);
+    DDLogDegub(@"Sign Action....\nSelected rows=%lu", (unsigned long)[selectedRows count]);
     [self separateSignAndApproveRequests];
     [self showSignApproveAlert];
 }
@@ -264,7 +264,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     
-    //T21LogDebug(@"BaseListTVC::prepareForSegueWithIdentifier=%@", [segue identifier]);
+    DDLogDegub(@"BaseListTVC::prepareForSegueWithIdentifier=%@", [segue identifier]);
 
     if ([[segue identifier] isEqualToString:@"segueDetail"]) {
         
@@ -274,7 +274,7 @@
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
-    //T21LogDebug(@"shouldPerformSegueWithIdentifier:%@", ([self isEditing]) ? @"YES" : @"NO");
+    DDLogDegub(@"shouldPerformSegueWithIdentifier:%@", ([self isEditing]) ? @"YES" : @"NO");
 
     return (!([self isEditing]));
 }
@@ -284,7 +284,7 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
     [super setEditing: editing animated:animated];
-    //T21LogDebug(@"setEditing editing = %d", editing);
+    DDLogDegub(@"setEditing editing = %d", editing);
 
     if (editing) {
         
@@ -379,7 +379,7 @@
 
 - (void)didReceivedApprovalResponse:(NSData *)responseData
 {
-    //T21LogDebug(@"didReceivedApprovalResponse:\n%@", [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding]);
+    DDLogDegub(@"didReceivedApprovalResponse:\n%@", [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding]);
     NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:responseData];
     ApproveXMLController *parser = [[ApproveXMLController alloc] init];
 
@@ -435,7 +435,7 @@
 
 - (void)didReceiveSignerRequestResult:(NSArray *)requestsSigned
 {
-    //T21LogDebug(@"UnsignedRequestTableViewController::didReceiveSignerRequestResult - reqs count: %lu", (unsigned long)[requestsSigned count]);
+    DDLogDegub(@"UnsignedRequestTableViewController::didReceiveSignerRequestResult - reqs count: %lu", (unsigned long)[requestsSigned count]);
     [SVProgressHUD dismiss];
 
     NSIndexSet *requestsWithError = [requestsSigned indexesOfObjectsPassingTest:^BOOL (PFRequest *request, NSUInteger idx, BOOL *stop) {
@@ -511,7 +511,7 @@
             
             NSString *data = [RejectXMLController buildRequestWithIds:selectedRows motivoR:motivoRechazo];
             
-            //T21LogDebug(@"UnassignedRequestTableViewController::rejectRequest input Data=%@", data);
+            DDLogDegub(@"UnassignedRequestTableViewController::rejectRequest input Data=%@", data);
             
             _waitingResponseType = PFWaitingResponseTypeRejection;
             [self.wsDataController loadPostRequestWithData:data code:PFRequestCodeReject];

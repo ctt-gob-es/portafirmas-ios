@@ -82,7 +82,7 @@
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qualifiedName attributes:attributeDict];
 
     if ([elementName isEqualToString:@"req"]) {
-        //T21LogDebug(@"PreSignXMLController::user element found – create a new instance of rqt class...");
+        DDLogDegub(@"PreSignXMLController::user element found – create a new instance of rqt class...");
 
         request = [[PFRequest alloc] init];
         documentList = [[NSMutableArray alloc] init];
@@ -93,7 +93,7 @@
     }
 
     if ([elementName isEqualToString:@"doc"]) {
-        //T21LogDebug(@"PreSignXMLController::user element found – create a new instance of document class...");
+        DDLogDegub(@"PreSignXMLController::user element found – create a new instance of document class...");
         // We reached the end of the XML document
         waitingForDocument = YES;
         document = [[Document alloc]init];
@@ -105,14 +105,14 @@
     }
 
     if ([elementName isEqualToString:@"p"]) {
-        //T21LogDebug(@"PreSignXMLController::p element found");
+        DDLogDegub(@"PreSignXMLController::p element found");
         // addresses is an NSMutableArray instance variable
         NSString *atributosP = [attributeDict objectForKey:@"n"];
 
         if (atributosP) {
             ssparam = [[Param alloc]init];
             ssparam.key = atributosP;
-            //T21LogDebug(@"Atributo n del parametro -> %@", atributosP);
+            DDLogDegub(@"Atributo n del parametro -> %@", atributosP);
         }
 
         return;

@@ -59,10 +59,10 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 {
     NSString *url = [appConfig objectForKey:@"requestDetailURL"];
 
-    //T21LogDebug(@"DetailTableViewController::loadWebService.url=%@", url);
+    DDLogDegub(@"DetailTableViewController::loadWebService.url=%@", url);
 
     NSString *data = [DetailXMLController buildRequestWithId:_requestId];
-    //T21LogDebug(@"DetailTableViewController::loadWebService.message data=%@", data);
+    DDLogDegub(@"DetailTableViewController::loadWebService.message data=%@", data);
 
     // Load Detail request
     _waitingResponseType = PFWaitingResponseTypeDetail;
@@ -72,7 +72,7 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    //T21LogDebug(@"DetailTableViewController::viewWillAppear");
+    DDLogDegub(@"DetailTableViewController::viewWillAppear");
 
     self.navigationController.toolbarHidden = YES;
 }
@@ -87,7 +87,7 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //T21LogDebug(@"DetailTableViewController::viewDidLoad");
+    DDLogDegub(@"DetailTableViewController::viewDidLoad");
 
     [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
 
@@ -137,7 +137,7 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
             break;
 
         case PFDocumentActionCancel:
-            //T21LogDebug(@"Cancel Action....");
+            DDLogDegub(@"Cancel Action....");
             break;
 
         default:
@@ -147,7 +147,7 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 
 - (void)rejectAction
 {
-    //T21LogDebug(@"Reject Action....");
+    DDLogDegub(@"Reject Action....");
     // Preguntamos el por qué del rechazo
     UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Rechazo de peticiones" message:@"Indique el motivo del rechazo" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Continuar", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
@@ -167,11 +167,11 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     }
     else {
         
-        //T21LogDebug(@"UnassignedRequestTableViewController::Reject request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
+        DDLogDegub(@"UnassignedRequestTableViewController::Reject request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
         [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
         
         NSString *data = [RejectXMLController buildRequestWithIds:_selectedRows motivoR: motivoRechazo];
-        //T21LogDebug(@"UnassignedRequestTableViewController::rejectRequest input Data=%@", data);
+        DDLogDegub(@"UnassignedRequestTableViewController::rejectRequest input Data=%@", data);
         
         _waitingResponseType = PFWaitingResponseTypeRejection;
         [wsController loadPostRequestWithData:data code:PFRequestCodeReject];
@@ -181,7 +181,7 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 
 - (void)signAction
 {
-    //T21LogDebug(@"Sign Action....\nAccept request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
+    DDLogDegub(@"Sign Action....\nAccept request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
 
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
 
@@ -207,7 +207,7 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     _waitingResponseType = PFWaitingResponseTypeApproval;
     NSString *requestData = [ApproveXMLController buildRequestWithRequestArray:@[_dataSource]];
 
-    //T21LogDebug(@"DetailTableViewController::startApprovalRequest------\n%@\n------------------------------------------------------------\n", requestData);
+    DDLogDegub(@"DetailTableViewController::startApprovalRequest------\n%@\n------------------------------------------------------------\n", requestData);
     [wsController loadPostRequestWithData:requestData code:PFRequestCodeApprove];
     [wsController startConnection];
 }
@@ -216,10 +216,10 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    //T21LogDebug(@"DetailTableViewController::prepareForSegue sender=%@", [segue identifier]);
+    DDLogDegub(@"DetailTableViewController::prepareForSegue sender=%@", [segue identifier]);
 
     if ([[segue identifier] isEqual:@"segueAttachments"]) {
-        //T21LogDebug(@"DetailTableViewController::prepareForSegue number of attachments=%lu", (unsigned long)[_dataSource.documents count]);
+        DDLogDegub(@"DetailTableViewController::prepareForSegue number of attachments=%lu", (unsigned long)[_dataSource.documents count]);
 
         AttachmentViewController *attachmentController = [segue destinationViewController];
         attachmentController.dataSource = _dataSource.documents;
@@ -228,13 +228,13 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     }
 
     if ([[segue identifier] isEqual:@"segueShowSenders"]) {
-        //T21LogDebug(@"DetailTableViewController::prepareForSegue number of receivers=%lu", (unsigned long)[_dataSource.senders count]);
+        DDLogDegub(@"DetailTableViewController::prepareForSegue number of receivers=%lu", (unsigned long)[_dataSource.senders count]);
         SendersViewController *sendersController = [segue destinationViewController];
         sendersController.dataSource = _dataSource.senders;
     }
 
     if ([[segue identifier] isEqual:@"segueShowReceivers"]) {
-        //T21LogDebug(@"DetailTableViewController::prepareForSegue number of receivers=%lu", (unsigned long)[_dataSource.senders count]);
+        DDLogDegub(@"DetailTableViewController::prepareForSegue number of receivers=%lu", (unsigned long)[_dataSource.senders count]);
         ReceiversViewController *receiversController = [segue destinationViewController];
         receiversController.dataSource = _dataSource.signlines;
     }
@@ -397,10 +397,10 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     BOOL finishOK = ![parser finishWithError];
 
     if (!finishOK) {
-        //T21LogError(@"Error  parsing  document!");
+        DDLogError(@"Error  parsing  document!");
         [self didReceiveParserWithError:[NSString stringWithFormat:@"Mensaje del servidor:%@(%@)", [parser err], [parser errorCode]]];
     } else {
-        //T21LogDebug(@"DetailTableViewController:: Parsing Detail XML message with no errors ");
+        DDLogDegub(@"DetailTableViewController:: Parsing Detail XML message with no errors ");
         _dataSource = [parser dataSource];
         [self loadDetailInfo];
     }
@@ -410,7 +410,7 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 {
     [SVProgressHUD dismiss];
 
-    //T21LogDebug(@"UnassignedRequestTableViewController::didReceiveParserWithError: %@", errorString);
+    DDLogDegub(@"UnassignedRequestTableViewController::didReceiveParserWithError: %@", errorString);
     [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"")
                                 message:errorString
                                delegate:nil
@@ -422,7 +422,7 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 
 - (void)didReceiveSignerRequestResult:(NSArray *)requestsSigned
 {
-    //T21LogDebug(@"ModalSignerController::didReceiveSignerRequestResult");
+    DDLogDegub(@"ModalSignerController::didReceiveSignerRequestResult");
     [SVProgressHUD dismiss];
 
     BOOL processedOK = YES;

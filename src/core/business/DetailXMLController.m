@@ -55,27 +55,27 @@
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qualifiedName attributes:attributeDict];
 
     if ([elementName isEqualToString:@"dtl"]) {
-       // T21LogDebug(@"user element found – create a new instance of dtl class...");
+       DDLogDegub(@"user element found – create a new instance of dtl class...");
 
         _detail = [[Detail alloc] initWithDict:attributeDict];
         waitingForDocument = FALSE;
     }
 
     if ([elementName isEqualToString:@"snders"]) {
-        //T21LogDebug(@"user element found – create a new instance of snders list class...");
+        DDLogDegub(@"user element found – create a new instance of snders list class...");
         waitingForSenders = YES;
         senders = [[NSMutableArray alloc ]init];
 
     }
 
     if ([elementName isEqualToString:@"sgnlines"]) {
-       // T21LogDebug(@"user element found – create a new instance of signlines list class...");
+       DDLogDegub(@"user element found – create a new instance of signlines list class...");
 
         signlines = [[NSMutableArray alloc ]init];
     }
 
     if ([elementName isEqualToString:@"sgnline"]) {
-        //T21LogDebug(@"user element found – create a new instance of sgnline class...");
+        DDLogDegub(@"user element found – create a new instance of sgnline class...");
 
         waitingForSignline = YES;
         signline = [[SignLine alloc ]init];
@@ -84,19 +84,19 @@
     }
 
     if ([elementName isEqualToString:@"docs"]) {
-        //T21LogDebug(@"user element found – create a new instance of docs list class...");
+        DDLogDegub(@"user element found – create a new instance of docs list class...");
 
         documents = [[NSMutableArray alloc ]init];
     }
 
     if ([elementName isEqualToString:@"doc"]) {
-        //T21LogDebug(@"user element found – create a new instance of doc class...");
+        DDLogDegub(@"user element found – create a new instance of doc class...");
         // We reached the end of the XML document
         waitingForDocument = YES;
         document = [[Document alloc ]init];
 
         document.docid = [attributeDict objectForKey:@"docid"];
-        //T21LogDebug(@"user element found – document docid=%@", [attributeDict objectForKey:@"docid"]);
+        DDLogDegub(@"user element found – document docid=%@", [attributeDict objectForKey:@"docid"]);
     }
 }
 

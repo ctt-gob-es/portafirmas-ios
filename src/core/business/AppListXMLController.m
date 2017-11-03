@@ -52,7 +52,7 @@ static AppListXMLController *_sharedInstance = nil;
 {
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     NSString *requestString = [self buildRequest];
-   // T21LogDebug(@"AppListXMLController::requestAppsList---\n%@", requestString);
+   DDLogDegub(@"AppListXMLController::requestAppsList---\n%@", requestString);
     DDLogDebug(@"AppListXMLController::requestAppsList---\n%@", requestString);
     [_wsDataController loadPostRequestWithData:requestString code:PFRequestCodeAppList];
     [_wsDataController startConnection];
@@ -92,7 +92,7 @@ static AppListXMLController *_sharedInstance = nil;
 {
     [SVProgressHUD dismiss];
 
-   // T21LogDebug(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+   DDLogDegub(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
     NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:data];
     [nsXmlParser setDelegate:self];
     BOOL success = [nsXmlParser parse];

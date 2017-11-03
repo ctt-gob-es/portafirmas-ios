@@ -75,7 +75,7 @@
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     NSString *data = [PreviewXMLController buildRequestWithId:_docId];
 
-    //T21LogDebug(@"PreviewXMLController::loadWebService.message data=%@", data);
+    DDLogDegub(@"PreviewXMLController::loadWebService.message data=%@", data);
 
     // loadRequest
     [dataController loadPostRequestWithData:data code:_requestCode];
@@ -85,7 +85,7 @@
 - (void)didReceiveParserWithError:(NSString *)errorString
 {
     [SVProgressHUD dismiss];
-    //T21LogDebug(@"UnassignedRequestTableViewController::didReceiveParserWithError: %@", errorString);
+    DDLogDegub(@"UnassignedRequestTableViewController::didReceiveParserWithError: %@", errorString);
     [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"")
                                 message:errorString
                                delegate:nil

@@ -157,7 +157,7 @@ static long cellSelected;
                                           action:@selector(handleTapGesture:)];
     
     if (!cell) {
-        //T21LogError(@"ServersListVC::cellForRowAtIndexPath - Cell is nil");
+        DDLogError(@"ServersListVC::cellForRowAtIndexPath - Cell is nil");
         return nil;
     }
     

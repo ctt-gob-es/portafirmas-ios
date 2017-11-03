@@ -58,7 +58,7 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    //T21LogDebug(@"didReceiveMemoryWarning");
+    DDLogDegub(@"didReceiveMemoryWarning");
 
 }
 
@@ -141,7 +141,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //T21LogDebug(@"didSelectRowAtIndexPath row=%ld", (long)[indexPath row]);
+    DDLogDegub(@"didSelectRowAtIndexPath row=%ld", (long)[indexPath row]);
 
     _selectedCertificate = [files objectAtIndex:[indexPath row]];
 }
@@ -190,11 +190,11 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    //T21LogDebug(@"DocumentCertificatesViewController::prepareForSegue identifier=%@", [segue identifier]);
+    DDLogDegub(@"DocumentCertificatesViewController::prepareForSegue identifier=%@", [segue identifier]);
 
     if ([segue.identifier isEqualToString:@"segueModalCertificates"]) {
         NSIndexPath *selectedRowIndexPath = [self.tableView indexPathForSelectedRow];
-        //T21LogDebug(@"DocumentCertificatesViewController::prepareForSegue selected index=%ld", (long)[selectedRowIndexPath row]);
+        DDLogDegub(@"DocumentCertificatesViewController::prepareForSegue selected index=%ld", (long)[selectedRowIndexPath row]);
 
         // Sets data in Aplication delegate objet to be shared for the application's tab
         _selectedCertificate = [files objectAtIndex:[selectedRowIndexPath row]];

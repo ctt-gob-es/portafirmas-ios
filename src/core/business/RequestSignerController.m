@@ -39,7 +39,7 @@
 
 - (void)loadPreSignRequestsWithCurrentCertificate:(NSArray *)requests
 {
-    //T21LogDebug(@"RequestSignerController::loadPreSignRequestsWithCurrentCertificate...");
+    DDLogDegub(@"RequestSignerController::loadPreSignRequestsWithCurrentCertificate...");
     waitingPreSign = TRUE;
 
     NSData *certificateData = [[CertificateUtils sharedWrapper] publicKeyBits];
@@ -47,7 +47,7 @@
     NSLog(@"Presing - RequestSignerController");
     NSString *data = [PreSignXMLController buildRequestWithCert:certificateB64 witRequestList:requests];
 
-    //T21LogDebug(@"RequestSignerController::loadPreSignRequestsWithCurrentCertificate data=%@", data);
+    DDLogDegub(@"RequestSignerController::loadPreSignRequestsWithCurrentCertificate data=%@", data);
 
     _wsController.delegate = self;
     [_wsController loadPostRequestWithData:data code:0];
@@ -56,7 +56,7 @@
 
 - (void)loadPreSignDetailWithCurrentCertificate:(Detail *)detail
 {
-    //T21LogDebug(@"RequestSignerController::loadPreSignDetailWithCurrentCertificate...");
+    DDLogDegub(@"RequestSignerController::loadPreSignDetailWithCurrentCertificate...");
 
     PFRequest *request = [[PFRequest alloc] init];
     request.reqid = detail.detailid;
@@ -66,7 +66,7 @@
 
 - (void)loadPostSignRequest:(NSArray *)requests
 {
-    //T21LogDebug(@"RequestSignerController::loadPostSignRequest");
+    DDLogDegub(@"RequestSignerController::loadPostSignRequest");
 
     // load Pre Sign Request
     [self signRequestList: requests];
@@ -80,7 +80,7 @@
     NSString *data = [PostSignXMLController buildRequestWithCert:certificateB64 witRequestList:requests];
 
     NSLog(@"\n \n");
-    //T21LogDebug(@"loadPreSignRequest::loadPostSignRequest data => \n\n%@", data);
+    DDLogDegub(@"loadPreSignRequest::loadPostSignRequest data => \n\n%@", data);
     NSLog(@"\n \n \n");
     
     waitingPostSign = YES;
@@ -99,12 +99,12 @@
 {
     if (waitingPreSign) {
         waitingPreSign = NO;
-        //T21LogDebug(@"RequestSignerController::didReceiveParserWithError PreSign message: %@", errorString);
+        DDLogDegub(@"RequestSignerController::didReceiveParserWithError PreSign message: %@", errorString);
     }
 
     if (waitingPostSign) {
         waitingPostSign = NO;
-        //T21LogDebug(@"RequestSignerController::didReceiveParserWithError PostSign message: %@", errorString);
+        DDLogDegub(@"RequestSignerController::didReceiveParserWithError PostSign message: %@", errorString);
     }
 
     [[self delegate] didReceiveError:errorString];
@@ -114,7 +114,7 @@
 {
     NSString *responseString = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
 
-    //T21LogDebug(@"Respuesta del servidor: \n%@", responseString);
+    DDLogDegub(@"Respuesta del servidor: \n%@", responseString);
 
     if (waitingPreSign) {
         waitingPreSign = NO;
@@ -132,14 +132,14 @@
 
         // test the result
         if (success) {
-            //T21LogDebug(@"doParse:: Parsing PreSign XML with no errors ");
+            DDLogDegub(@"doParse:: Parsing PreSign XML with no errors ");
 
             // parsing...
 
             BOOL finishWithError = [parser finishWithError];
 
             if (finishWithError) {
-               // T21LogError(@"Error  parsing  document!");
+               DDLogError(@"Error  parsing  document!");
                 [[self delegate] didReceiveError:[NSString stringWithFormat:@"Se ha producido un error en el servidor:%@(%@)", [parser err], [parser errorCode]]];
 
                 return;
@@ -150,7 +150,7 @@
 
             [self loadPostSignRequest:preSignRequests];
         } else {
-            //T21LogError(@"doParse::Error  parsing PreSign document!");
+            DDLogError(@"doParse::Error  parsing PreSign document!");
             [[self delegate] didReceiveError:@"Se ha producido un error de conexión con el servidor"];
         }
     } else if (waitingPostSign) {
@@ -175,7 +175,7 @@
 
             [[self delegate] didReceiveSignerRequestResult:_dataSource];
         } else {
-           // T21LogError(@"doParse::Error  parsing PreSign document!");
+           DDLogError(@"doParse::Error  parsing PreSign document!");
             [[self delegate] didReceiveError:@"Se ha producido un error de conexión con el servidor"];
         }
     }
@@ -208,7 +208,7 @@
     for (int i = 0; i < [reqDoc.ssconfig count]; i++) {
         
         Param *param = [reqDoc.ssconfig objectAtIndex: i];
-       // T21LogDebug(@"Session param: %@", param.key);
+       DDLogDegub(@"Session param: %@", param.key);
 
         if ([param.key hasPrefix:@"PRE"]) {
             preSignResult = param.value;
@@ -222,7 +222,7 @@
     
     NSData *data = [Base64Utils base64DecodeString:preSignResult];
     NSData *result = nil;
-    //T21LogDebug(@"signDocument::mdalgo => %@", mdalgo);
+    DDLogDegub(@"signDocument::mdalgo => %@", mdalgo);
 
     if ([mdalgo isEqualToString:@"sha-1"] || [mdalgo isEqualToString:@"sha1"]) {
         result = [[CertificateUtils sharedWrapper] getSignatureBytesSHA1:data];
@@ -233,7 +233,7 @@
     } else if ([mdalgo isEqualToString:@"sha-512"] || [mdalgo isEqualToString:@"sha512"]) {
         result = [[CertificateUtils sharedWrapper] getSignatureBytesSHA512:data];
     } else {
-        //T21LogDebug(@"RequestController::signDocument mdalgo error =%@", mdalgo);
+        DDLogDegub(@"RequestController::signDocument mdalgo error =%@", mdalgo);
     }
 
     // reqDoc.result=[result base64EncodedString];
@@ -254,7 +254,7 @@
         mdalgo = [mdalgo lowercaseString];
     }
 
-   // T21LogDebug(@"show Signature RSA::>>>>>>>>>>>>>>mdalgo=%@", mdalgo);
+   DDLogDegub(@"show Signature RSA::>>>>>>>>>>>>>>mdalgo=%@", mdalgo);
 
     if ([mdalgo isEqualToString:@"sha-1"]) {
         result = [[CertificateUtils sharedWrapper] getSignatureBytesSHA1:data];
@@ -265,12 +265,12 @@
     } else if ([mdalgo isEqualToString:@"sha-512"]) {
         result = [[CertificateUtils sharedWrapper] getSignatureBytesSHA512:data];
     } else {
-        //T21LogDebug(@"RequestController::signDocument mdalgo error =%@", mdalgo);
+        DDLogDegub(@"RequestController::signDocument mdalgo error =%@", mdalgo);
     }
 
     // NSString *resBase64=[result base64EncodedString];
     NSString *resBase64 = [Base64Utils base64EncodeData:result];
-   // T21LogDebug(@"showSignature::RSA Digital sign:%@ length=%lu", resBase64, (unsigned long)[resBase64 length]);
+   DDLogDegub(@"showSignature::RSA Digital sign:%@ length=%lu", resBase64, (unsigned long)[resBase64 length]);
 }
 
 @end

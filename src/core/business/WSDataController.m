@@ -62,7 +62,7 @@ struct {
                             (unsigned long)code, [msgData base64EncodedString]];
 
         NSString *newURL = [wsURLString stringByAppendingString:params];
-       // T21LogDebug(@"WSDataController::loadPostRequestWithURL.GET Url=%@", newURL);
+       DDLogDegub(@"WSDataController::loadPostRequestWithURL.GET Url=%@", newURL);
 
         request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:newURL]
                                           cachePolicy:NSURLRequestReloadIgnoringCacheData
@@ -130,18 +130,18 @@ struct {
 {
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
 
-    //T21LogDebug(@"WSDataController::connection didReceive Response =%@", [httpResponse allHeaderFields]);
+    DDLogDegub(@"WSDataController::connection didReceive Response =%@", [httpResponse allHeaderFields]);
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    //T21LogDebug(@"Succeeded! Received %lu bytes of data", (unsigned long)[data length]);
+    DDLogDegub(@"Succeeded! Received %lu bytes of data", (unsigned long)[data length]);
     [xmlData appendData:data];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    //T21LogDebug(@"Datos totales descargados: %lu", (unsigned long)[xmlData length]);
+    DDLogDegub(@"Datos totales descargados: %lu", (unsigned long)[xmlData length]);
     [self doParse: xmlData];
 }
 
@@ -160,7 +160,7 @@ struct {
 
 - (void)doParse:(NSData *)data
 {
-    //T21LogDebug(@"doParse data: \n\n%@", [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding]);
+    DDLogDegub(@"doParse data: \n\n%@", [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding]);
     [_delegate doParse: data];
 }
 

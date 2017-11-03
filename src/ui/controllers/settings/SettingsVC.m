@@ -84,7 +84,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
     
     if (!cell) {
         
-        //T21LogError(@"SettingsVC::cellForRowAtIndexPath - Cell is nil");
+        DDLogError(@"SettingsVC::cellForRowAtIndexPath - Cell is nil");
         return nil;
     }
     

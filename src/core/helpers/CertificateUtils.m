@@ -83,7 +83,7 @@ static CertificateUtils *__sharedKeyWrapper = nil;
 
 - (OSStatus)loadCertKeyWithName:(NSString *)certName password:(NSString *)pass fromDocument:(BOOL)saveInDocument
 {
-    //T21LogDebug(@"CertificateUtils::loadCertKeyWithName.Name=%@,pass=%@", certName, pass);
+    DDLogDegub(@"CertificateUtils::loadCertKeyWithName.Name=%@,pass=%@", certName, pass);
     NSData *PKCS12Data = nil;
 
     if (saveInDocument) {
@@ -92,8 +92,8 @@ static CertificateUtils *__sharedKeyWrapper = nil;
 
         NSFileManager *fm = [[NSFileManager alloc] init];
 
-        //T21LogDebug(@"CertificateUtils::loadCertKeyWithName.Name. File name=<%@>", filePath);
-        //T21LogDebug(@"CertificateUtils::File exists.%d", [fm fileExistsAtPath:filePath]);
+        DDLogDegub(@"CertificateUtils::loadCertKeyWithName.Name. File name=<%@>", filePath);
+        DDLogDegub(@"CertificateUtils::File exists.%d", [fm fileExistsAtPath:filePath]);
         [fm release];
 
         PKCS12Data = [NSData dataWithContentsOfFile:filePath];
@@ -134,7 +134,7 @@ static CertificateUtils *__sharedKeyWrapper = nil;
     status = SecIdentityCopyCertificate(_myIdentity, &certificateRef);  // 1
     CFStringRef certSummary = SecCertificateCopySubjectSummary(certificateRef);  // 2
     _summaryString = [[NSString alloc]initWithString:(NSString *)certSummary];
-    //T21LogDebug(@"Información del certificado: %@", _summaryString);
+    DDLogDegub(@"Información del certificado: %@", _summaryString);
 
     _publicKey = SecTrustCopyPublicKey(myTrust);
     if (certSummary) {
@@ -147,7 +147,7 @@ static CertificateUtils *__sharedKeyWrapper = nil;
 - (OSStatus)loadCertKeyChainWithName:(NSString *)certName password:(NSString *)pass fromDocument:(BOOL)saveInDocument
 {
 
-    //T21LogDebug(@"CertificateUtils::loadCertKeyChainWithName.Name=%@,pass=%@", certName, pass);
+    DDLogDegub(@"CertificateUtils::loadCertKeyChainWithName.Name=%@,pass=%@", certName, pass);
 
     OSStatus status = noErr;
     status = [self loadCertKeyWithName:certName password:pass fromDocument:saveInDocument];
@@ -163,7 +163,7 @@ static CertificateUtils *__sharedKeyWrapper = nil;
 
 - (BOOL)searchIdentityByName:(NSString *)certificateName
 {
-    //T21LogDebug(@"searchIdentityByName::cert label=%@", certificateName);
+    DDLogDegub(@"searchIdentityByName::cert label=%@", certificateName);
 
     OSStatus status = noErr;
     CFTypeRef result;
@@ -395,7 +395,7 @@ static CertificateUtils *__sharedKeyWrapper = nil;
 
 - (OSStatus)addKeychainIdentity
 {
-    //T21LogDebug(@"CertificateUtils::addKeychainIdentity");
+    DDLogDegub(@"CertificateUtils::addKeychainIdentity");
     OSStatus sanityCheck = noErr;
 
     NSMutableDictionary *dict = [[NSMutableDictionary alloc]init];
@@ -417,12 +417,12 @@ static CertificateUtils *__sharedKeyWrapper = nil;
     // Remove any existing instance of the key
 
     sanityCheck = SecItemDelete((CFDictionaryRef)dict);
-    //T21LogDebug(@"addKeyChainIdentityByName:::identity deleted=%d", (int)sanityCheck);
+    DDLogDegub(@"addKeyChainIdentityByName:::identity deleted=%d", (int)sanityCheck);
 
     // Add the new key
-    //T21LogDebug(@"addKeychainIdentityByName::identity=%@", _myIdentity);
+    DDLogDegub(@"addKeychainIdentityByName::identity=%@", _myIdentity);
     sanityCheck = SecItemAdd((CFDictionaryRef)dict, NULL);
-    //T21LogDebug(@"addKeyChainIdentityByName:::identity added=%d", (int)sanityCheck);
+    DDLogDegub(@"addKeyChainIdentityByName:::identity added=%d", (int)sanityCheck);
 
     if (dict) {
         CFRelease(dict);
@@ -466,7 +466,7 @@ static CertificateUtils *__sharedKeyWrapper = nil;
                                 &signedHashBytesSize
                                 );
 
-    //T21LogDebug(@"sanityCheck::Return code=%d", (int)sanityCheck);
+    DDLogDegub(@"sanityCheck::Return code=%d", (int)sanityCheck);
 
     // Build up signed SHA1 blob.
     signedHash = [NSData dataWithBytes:(const void *)signedHashBytes length:(NSUInteger)signedHashBytesSize];
@@ -516,7 +516,7 @@ static CertificateUtils *__sharedKeyWrapper = nil;
                                 &signedHashBytesSize
                                 );
 
-    //T21LogDebug(@"sanityCheck::Return code=%d", (int)sanityCheck);
+    DDLogDegub(@"sanityCheck::Return code=%d", (int)sanityCheck);
 
     // Build up signed SHA256 blob.
     signedHash = [NSData dataWithBytes:(const void *)signedHashBytes length:(NSUInteger)signedHashBytesSize];
@@ -566,7 +566,7 @@ static CertificateUtils *__sharedKeyWrapper = nil;
                                 &signedHashBytesSize
                                 );
 
-    //T21LogDebug(@"sanityCheck::Return code=%d", (int)sanityCheck);
+    DDLogDegub(@"sanityCheck::Return code=%d", (int)sanityCheck);
 
     // Build up signed SHA256 blob.
     signedHash = [NSData dataWithBytes:(const void *)signedHashBytes length:(NSUInteger)signedHashBytesSize];
@@ -618,7 +618,7 @@ static CertificateUtils *__sharedKeyWrapper = nil;
                                 &signedHashBytesSize
                                 );
 
-    //T21LogDebug(@"sanityCheck::Return code=%d", (int)sanityCheck);
+    DDLogDegub(@"sanityCheck::Return code=%d", (int)sanityCheck);
 
     // Build up signed SHA1 blob.
     signedHash = [NSData dataWithBytes:(const void *)signedHashBytes length:(NSUInteger)signedHashBytesSize];

@@ -85,11 +85,11 @@
     [SVProgressHUD dismiss];
 
     if (status == noErr) {
-        //T21LogDebug(@"deleterWithCertificateName::Certificate %@ is deleted from keychain:", certificateInfo.subject);
+        DDLogDegub(@"deleterWithCertificateName::Certificate %@ is deleted from keychain:", certificateInfo.subject);
     }
     else {
-        //T21LogDebug(@"deleterWithCertificateName::Certificate %@ is deleted from keychain:", certificateInfo.subject);
-        //T21LogDebug(@"No Se ha eliminado el certificado correctamente.Error: %i", (int)status);
+        DDLogDegub(@"deleterWithCertificateName::Certificate %@ is deleted from keychain:", certificateInfo.subject);
+        DDLogDegub(@"No Se ha eliminado el certificado correctamente.Error: %i", (int)status);
     }
 
     return status;
@@ -104,7 +104,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //T21LogDebug(@"LoginViewController::numberOfRowsInSection=%ld. rows=%ld", (long)section, (unsigned long)[arrayCerts count]);
+    DDLogDegub(@"LoginViewController::numberOfRowsInSection=%ld. rows=%ld", (long)section, (unsigned long)[arrayCerts count]);
     [self.editButtonItem setEnabled:[arrayCerts count] > 0];
 
     return [arrayCerts count];
@@ -112,13 +112,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //T21LogDebug(@"LoginViewController::cellForRowAtIndexPath row=%ld", (long)[indexPath row]);
+    DDLogDegub(@"LoginViewController::cellForRowAtIndexPath row=%ld", (long)[indexPath row]);
 
     static NSString *CellIdentifier = @"CertificateCell";
     CertificateCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
     if (cell == nil) {
-        //T21LogDebugT21LogError(@"LoginViewController::cell is nill");
+        DDLogDegub(@"LoginViewController::cell is nill");
     }
     
     [cell setCertificateInfo:arrayCerts[indexPath.row] forEditingCell:self.isEditing];
@@ -183,12 +183,12 @@
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     PFCertificateInfo *selectedCertificate = arrayCerts[selectedIndexPath.row];
     
-    //T21LogDebug(@"LoginViewController::prepareForSegue selected index=%ld", (long)selectedIndexPath.row);
-    //T21LogDebug(@"LoginViewController:: certificado seleccionado -> %@", selectedCertificate.subject);
+    DDLogDegub(@"LoginViewController::prepareForSegue selected index=%ld", (long)selectedIndexPath.row);
+    DDLogDegub(@"LoginViewController:: certificado seleccionado -> %@", selectedCertificate.subject);
     
     if ([[CertificateUtils sharedWrapper] searchIdentityByName:selectedCertificate.subject] == YES) {
         
-        //T21LogDebug(@"LoginViewController::prepareForSegue::selected certificate....");
+        DDLogDegub(@"LoginViewController::prepareForSegue::selected certificate....");
         [[NSUserDefaults standardUserDefaults] setObject:@{kPFUserDefaultsKeyAlias:selectedCertificate.subject} forKey:kPFUserDefaultsKeyCurrentCertificate];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
