@@ -7,9 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "NSData+Conversion.h"
 
 @implementation AppDelegate
-
 // @synthesize certificate, appConfig=_appConfig;
 @synthesize  appConfig = _appConfig;
 
@@ -22,6 +22,7 @@
 
     // Load the file content and read the data into arrays
     _appConfig = [[NSDictionary alloc] initWithContentsOfFile:path];
+    
 
     return self;
 }
@@ -39,6 +40,8 @@ void uncaughtExceptionHandler(NSException *exception)
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     [self customizeAppearance];
     [self loadSelectedCertificate];
+    
+    [[PushNotificationService instance] initializePushNotificationsService];
     
     return YES;
 }
@@ -100,6 +103,21 @@ void uncaughtExceptionHandler(NSException *exception)
             [[CertificateUtils sharedWrapper] setSelectedCertificateName:currentCertificateName];
         }
     }
+}
+
+#pragma mark - Notifications Support
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(nonnull NSData *)deviceToken {
+    NSString *tokenHex = [deviceToken hexadecimalString];
+    DDLogDebug(@"Device Registered for notifications, token: %@", [tokenHex uppercaseString]);
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(nonnull NSError *)error {
+    DDLogError(@"Error Register for remote notifications: %@", error);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    DDLogDebug(@"Receive remote notification: %@", userInfo);
 }
 
 @end

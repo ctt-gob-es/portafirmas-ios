@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CertificateUtils.h"
+#import "PushNotificationService.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

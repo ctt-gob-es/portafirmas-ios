@@ -11,6 +11,9 @@
 #define isiPhone                         !isiPad
 
 #pragma mark - iOS info
+#define IOS_NEWER_OR_EQUAL_TO_11          ([[UIDevice currentDevice] systemVersion].floatValue >= 11.0)
+#define IOS_NEWER_OR_EQUAL_TO_10          ([[UIDevice currentDevice] systemVersion].floatValue >= 10.0)
+#define IOS_NEWER_OR_EQUAL_TO_9          ([[UIDevice currentDevice] systemVersion].floatValue >= 9.0)
 #define IOS_NEWER_OR_EQUAL_TO_8          ([[UIDevice currentDevice] systemVersion].floatValue >= 8.0)
 #define IOS_NEWER_OR_EQUAL_TO_7          ([[UIDevice currentDevice] systemVersion].floatValue >= 7.0)
 
