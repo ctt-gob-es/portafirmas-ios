@@ -95,19 +95,19 @@
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qualifiedName attributes:attributeDict];
 
     if ([elementName isEqualToString:@"rqt"]) {
-        DDLogDegub(@"user element found – create a new instance of rqt class...");
+        DDLogDebug(@"user element found – create a new instance of rqt class...");
 
         request = [[PFRequest alloc] initWithDict:attributeDict];
         waitingForDocument = FALSE;
     }
 
     if ([elementName isEqualToString:@"docs"]) {
-        DDLogDegub(@"user element found – create a new instance of docs list class...");
+        DDLogDebug(@"user element found – create a new instance of docs list class...");
         documentList = [@[] mutableCopy];
     }
 
     if ([elementName isEqualToString:@"doc"]) {
-        DDLogDegub(@"user element found – create a new instance of document class...");
+        DDLogDebug(@"user element found – create a new instance of document class...");
         // We reached the end of the XML document
         waitingForDocument = YES;
         document = [[Document alloc]init];

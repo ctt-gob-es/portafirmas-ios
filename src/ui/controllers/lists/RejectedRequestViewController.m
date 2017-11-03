@@ -59,7 +59,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    DDLogDegub(@"BaseListTVC::prepareForSegueWithIdentifier=%@", [segue identifier]);
+    DDLogDebug(@"BaseListTVC::prepareForSegueWithIdentifier=%@", [segue identifier]);
 
     if ([[segue identifier] isEqualToString:@"segueDetail"]) {
         [self prepareForDetailSegue:segue enablingSigning:NO];

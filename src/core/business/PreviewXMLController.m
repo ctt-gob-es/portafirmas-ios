@@ -53,7 +53,7 @@
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qualifiedName attributes:attributeDict];
 
     if ([elementName isEqualToString:@"prw"]) {
-        DDLogDegub(@"user element found – create a new instance of prw class...");
+        DDLogDebug(@"user element found – create a new instance of prw class...");
 
         _dataSource = [[Preview alloc] init];
         // We do not have any attributes in the user elements, but if
@@ -97,7 +97,7 @@
         // We reached the end of the XML document
         return;
     } else {
-        DDLogDegub(@"PreviewXMLController::element name=%@", elementName);
+        DDLogDebug(@"PreviewXMLController::element name=%@", elementName);
         [_dataSource setValue:currentElementValue forKey:elementName];
     }
 

@@ -40,9 +40,6 @@ void uncaughtExceptionHandler(NSException *exception)
     [self customizeAppearance];
     [self loadSelectedCertificate];
     
-    
-
-
     return YES;
 }
 

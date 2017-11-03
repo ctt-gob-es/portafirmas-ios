@@ -79,7 +79,7 @@
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qualifiedName attributes:attributeDict];
 
     if ([elementName isEqualToString:@"rjct"]) {
-        DDLogDegub(@"user element found – create a new instance of rjct class...");
+        DDLogDebug(@"user element found – create a new instance of rjct class...");
 
         reject = [[PFRequestResult alloc] init];
         // We do not have any attributes in the user elements, but if
@@ -89,7 +89,7 @@
     }
 
     if ([elementName isEqualToString:@"rjcts"]) {
-       DDLogDegub(@"user element found – create a new instance of rjcts list class...");
+       DDLogDebug(@"user element found – create a new instance of rjcts list class...");
         _dataSource = [[NSMutableArray alloc] init];
     }
 }

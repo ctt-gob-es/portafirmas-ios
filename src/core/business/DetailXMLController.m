@@ -55,27 +55,27 @@
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qualifiedName attributes:attributeDict];
 
     if ([elementName isEqualToString:@"dtl"]) {
-       DDLogDegub(@"user element found – create a new instance of dtl class...");
+       DDLogDebug(@"user element found – create a new instance of dtl class...");
 
         _detail = [[Detail alloc] initWithDict:attributeDict];
         waitingForDocument = FALSE;
     }
 
     if ([elementName isEqualToString:@"snders"]) {
-        DDLogDegub(@"user element found – create a new instance of snders list class...");
+        DDLogDebug(@"user element found – create a new instance of snders list class...");
         waitingForSenders = YES;
         senders = [[NSMutableArray alloc ]init];
 
     }
 
     if ([elementName isEqualToString:@"sgnlines"]) {
-       DDLogDegub(@"user element found – create a new instance of signlines list class...");
+       DDLogDebug(@"user element found – create a new instance of signlines list class...");
 
         signlines = [[NSMutableArray alloc ]init];
     }
 
     if ([elementName isEqualToString:@"sgnline"]) {
-        DDLogDegub(@"user element found – create a new instance of sgnline class...");
+        DDLogDebug(@"user element found – create a new instance of sgnline class...");
 
         waitingForSignline = YES;
         signline = [[SignLine alloc ]init];
@@ -84,19 +84,19 @@
     }
 
     if ([elementName isEqualToString:@"docs"]) {
-        DDLogDegub(@"user element found – create a new instance of docs list class...");
+        DDLogDebug(@"user element found – create a new instance of docs list class...");
 
         documents = [[NSMutableArray alloc ]init];
     }
 
     if ([elementName isEqualToString:@"doc"]) {
-        DDLogDegub(@"user element found – create a new instance of doc class...");
+        DDLogDebug(@"user element found – create a new instance of doc class...");
         // We reached the end of the XML document
         waitingForDocument = YES;
         document = [[Document alloc ]init];
 
         document.docid = [attributeDict objectForKey:@"docid"];
-        DDLogDegub(@"user element found – document docid=%@", [attributeDict objectForKey:@"docid"]);
+        DDLogDebug(@"user element found – document docid=%@", [attributeDict objectForKey:@"docid"]);
     }
 }
 

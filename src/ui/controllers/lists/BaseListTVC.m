@@ -91,7 +91,7 @@
     }
 
     NSString *data = [RequestListXMLController buildDefaultRequestWithState:_dataStatus pageNumber:_currentPage filters:_filtersDict];
-    DDLogDegub(@"BaseListTVC::loadData::data---\n%@", data);
+    DDLogDebug(@"BaseListTVC::loadData::data---\n%@", data);
     [_wsDataController loadPostRequestWithData:data code:PFRequestCodeList];
     [_wsDataController startConnection];
 }

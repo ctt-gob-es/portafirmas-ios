@@ -70,14 +70,14 @@ typedef NS_ENUM (NSInteger, PFAttachmentVCSection)
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    DDLogDegub(@"AttachmentViewController::numberOfRowsInSection=%ld. rows=%ld", (long)section, (unsigned long)[_dataSource count]);
+    DDLogDebug(@"AttachmentViewController::numberOfRowsInSection=%ld. rows=%ld", (long)section, (unsigned long)[_dataSource count]);
 
     return [_dataSource count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DDLogDegub(@"AttachmentViewController::cellForRowAtIndexPath row=%ld", (long)[indexPath row]);
+    DDLogDebug(@"AttachmentViewController::cellForRowAtIndexPath row=%ld", (long)[indexPath row]);
 
     static NSString *CellIdentifier = @"AttachmentsCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -110,7 +110,7 @@ typedef NS_ENUM (NSInteger, PFAttachmentVCSection)
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    DDLogDegub(@"AttachmentViewController::prepareForSegue identifier=%@", [segue identifier]);
+    DDLogDebug(@"AttachmentViewController::prepareForSegue identifier=%@", [segue identifier]);
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
 
     if ([segue.identifier isEqualToString:@"segueShowPreview"]) {
@@ -118,7 +118,7 @@ typedef NS_ENUM (NSInteger, PFAttachmentVCSection)
         PreviewViewController *previewViewController = [segue destinationViewController];
         // Configure the cell...
         Document *selectedDoc = _dataSource[selectedIndexPath.row];
-        DDLogDegub(@"AttachmentViewController::prepareForSegue document Id:%@", [selectedDoc docid]);
+        DDLogDebug(@"AttachmentViewController::prepareForSegue document Id:%@", [selectedDoc docid]);
 
         PFRequestCode requestCode = [PFHelper getPFRequestCodeForSection:selectedIndexPath.section];
         [selectedDoc prepareForRequestWithCode:requestCode];

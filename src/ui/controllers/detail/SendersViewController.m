@@ -45,20 +45,20 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    DDLogDegub(@"SendersViewController::numberOfRowsInSection=%ld. rows=%lu", (long)section, (unsigned long)[_dataSource count]);
+    DDLogDebug(@"SendersViewController::numberOfRowsInSection=%ld. rows=%lu", (long)section, (unsigned long)[_dataSource count]);
 
     return [_dataSource count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DDLogDegub(@"SenderViewController::cellForRowAtIndexPath row=%ld", (long)[indexPath row]);
+    DDLogDebug(@"SenderViewController::cellForRowAtIndexPath row=%ld", (long)[indexPath row]);
 
     static NSString *CellIdentifier = @"SendersCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
     if (cell == nil) {
-        DDLogDegub(@"SendersViewController::cell is nill");
+        DDLogDebug(@"SendersViewController::cell is nill");
     }
 
     // Configure the cell...

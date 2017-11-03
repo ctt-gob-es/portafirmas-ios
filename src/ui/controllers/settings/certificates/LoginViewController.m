@@ -85,11 +85,11 @@
     [SVProgressHUD dismiss];
 
     if (status == noErr) {
-        DDLogDegub(@"deleterWithCertificateName::Certificate %@ is deleted from keychain:", certificateInfo.subject);
+        DDLogDebug(@"deleterWithCertificateName::Certificate %@ is deleted from keychain:", certificateInfo.subject);
     }
     else {
-        DDLogDegub(@"deleterWithCertificateName::Certificate %@ is deleted from keychain:", certificateInfo.subject);
-        DDLogDegub(@"No Se ha eliminado el certificado correctamente.Error: %i", (int)status);
+        DDLogDebug(@"deleterWithCertificateName::Certificate %@ is deleted from keychain:", certificateInfo.subject);
+        DDLogDebug(@"No Se ha eliminado el certificado correctamente.Error: %i", (int)status);
     }
 
     return status;
@@ -104,7 +104,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    DDLogDegub(@"LoginViewController::numberOfRowsInSection=%ld. rows=%ld", (long)section, (unsigned long)[arrayCerts count]);
+    DDLogDebug(@"LoginViewController::numberOfRowsInSection=%ld. rows=%ld", (long)section, (unsigned long)[arrayCerts count]);
     [self.editButtonItem setEnabled:[arrayCerts count] > 0];
 
     return [arrayCerts count];
@@ -112,13 +112,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DDLogDegub(@"LoginViewController::cellForRowAtIndexPath row=%ld", (long)[indexPath row]);
+    DDLogDebug(@"LoginViewController::cellForRowAtIndexPath row=%ld", (long)[indexPath row]);
 
     static NSString *CellIdentifier = @"CertificateCell";
     CertificateCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
     if (cell == nil) {
-        DDLogDegub(@"LoginViewController::cell is nill");
+        DDLogDebug(@"LoginViewController::cell is nill");
     }
     
     [cell setCertificateInfo:arrayCerts[indexPath.row] forEditingCell:self.isEditing];
@@ -183,12 +183,12 @@
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     PFCertificateInfo *selectedCertificate = arrayCerts[selectedIndexPath.row];
     
-    DDLogDegub(@"LoginViewController::prepareForSegue selected index=%ld", (long)selectedIndexPath.row);
-    DDLogDegub(@"LoginViewController:: certificado seleccionado -> %@", selectedCertificate.subject);
+    DDLogDebug(@"LoginViewController::prepareForSegue selected index=%ld", (long)selectedIndexPath.row);
+    DDLogDebug(@"LoginViewController:: certificado seleccionado -> %@", selectedCertificate.subject);
     
     if ([[CertificateUtils sharedWrapper] searchIdentityByName:selectedCertificate.subject] == YES) {
         
-        DDLogDegub(@"LoginViewController::prepareForSegue::selected certificate....");
+        DDLogDebug(@"LoginViewController::prepareForSegue::selected certificate....");
         [[NSUserDefaults standardUserDefaults] setObject:@{kPFUserDefaultsKeyAlias:selectedCertificate.subject} forKey:kPFUserDefaultsKeyCurrentCertificate];
         [[NSUserDefaults standardUserDefaults] synchronize];
         

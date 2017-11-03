@@ -77,7 +77,7 @@
     [mesg appendString:requestsMsg];
 
     NSLog(@"\n\n");
-   DDLogDegub(@"mesg -> \n\n%@", mesg);
+   DDLogDebug(@"mesg -> \n\n%@", mesg);
     NSLog(@"\n\n");
     
     return mesg;
@@ -105,7 +105,7 @@
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qualifiedName attributes:attributeDict];
 
     if ([elementName isEqualToString:@"req"]) {
-       DDLogDegub(@"user element found – create a new instance of req class...");
+       DDLogDebug(@"user element found – create a new instance of req class...");
 
         request = [[PFRequest alloc] init];
         /*
@@ -115,13 +115,13 @@
 
         // if We attributes in the user elements, you can extract them here:
         request.reqid = [attributeDict objectForKey:@"id"];
-       DDLogDegub(@"id attribute found: %@", request.reqid);
+       DDLogDebug(@"id attribute found: %@", request.reqid);
 
         NSLog(@"\n \n");
         NSLog(@"------------------");
         NSLog(@"element name: %@", elementName);
         request.status = [attributeDict objectForKey:@"status"];
-        DDLogDegub(@"status attribute found: %@", request.status);
+        DDLogDebug(@"status attribute found: %@", request.status);
 
         /*
            if (!documentList) {
@@ -175,7 +175,7 @@
 
         return;
     }
-    DDLogDegub(@"element for %@ es: %@", elementName, currentElementValue);
+    DDLogDebug(@"element for %@ es: %@", elementName, currentElementValue);
 
     // [currentElementValue release];
     currentElementValue = nil;

@@ -21,7 +21,7 @@
 
 - (IBAction)clickImport:(id)sender
 {
-    DDLogDegub(@"ClickImport");
+    DDLogDebug(@"ClickImport");
     _password = _passwordText.text;
 
     if (!_password || [_password isEqualToString:@""]) {
@@ -77,7 +77,7 @@
     } else {
         _infoLabel = @"El certificado se ha cargado correctamente";
 
-        DDLogDegub(@"registerWithCertificateName::Certificate is loaded");
+        DDLogDebug(@"registerWithCertificateName::Certificate is loaded");
        
         if (_delegate) {
             [_delegate certificateAdded];
@@ -100,8 +100,8 @@
 {
     // Boton OK presionado - certificado cargado correctamente
     if (buttonIndex == 0) {
-        DDLogDegub(@"registerWithCertificateName::Certificado cargado");
-        DDLogDegub(@"registerWithCertificateName::Volvemos a la vista anterior...");
+        DDLogDebug(@"registerWithCertificateName::Certificado cargado");
+        DDLogDebug(@"registerWithCertificateName::Volvemos a la vista anterior...");
     }
 
     [_passwordText resignFirstResponder];
@@ -113,7 +113,7 @@
 /* Boton volver*/
 - (IBAction)clickCancel:(id)sender
 {
-    DDLogDegub(@"registerWithCertificateName::Volvemos a la vista anterior...");
+    DDLogDebug(@"registerWithCertificateName::Volvemos a la vista anterior...");
     [self.navigationController popViewControllerAnimated:YES];
 }
 
