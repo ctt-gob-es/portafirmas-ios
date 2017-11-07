@@ -7,8 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "StoredData.h"
 
 @interface PushNotificationService : NSObject
+
+@property (nonatomic, strong) StoredData* storedData;
 
 + (PushNotificationService *)instance;
 

@@ -89,6 +89,7 @@
 		BCAF65E11FAC9BCC00D30E54 /* PushNotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAF65E01FAC9BCC00D30E54 /* PushNotificationService.m */; };
 		BCAF65E31FAC9E1900D30E54 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCAF65E21FAC9E0700D30E54 /* UserNotifications.framework */; };
 		BCAF65E61FACA96500D30E54 /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAF65E51FACA96500D30E54 /* NSData+Conversion.m */; };
+		BCEF37A51FB2196E00374541 /* StoredData.m in Sources */ = {isa = PBXBuildFile; fileRef = BCEF37A41FB2196E00374541 /* StoredData.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -238,6 +239,8 @@
 		BCAF65E21FAC9E0700D30E54 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		BCAF65E41FACA96500D30E54 /* NSData+Conversion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Conversion.h"; sourceTree = "<group>"; };
 		BCAF65E51FACA96500D30E54 /* NSData+Conversion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Conversion.m"; sourceTree = "<group>"; };
+		BCEF37A31FB2196E00374541 /* StoredData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoredData.h; sourceTree = "<group>"; };
+		BCEF37A41FB2196E00374541 /* StoredData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoredData.m; sourceTree = "<group>"; };
 		E616382C6011BCF1C72ABE60 /* Pods-PortaFirmasUniv.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortaFirmasUniv.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv.debug.xcconfig"; sourceTree = "<group>"; };
 		EE0A9AB702FDB8ACDEBFCF67 /* libPods-PortaFirmasUniv.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PortaFirmasUniv.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -409,6 +412,7 @@
 		3CA898EC1AA5BC740035012D /* src */ = {
 			isa = PBXGroup;
 			children = (
+				BCEF37A21FB2194F00374541 /* Persistence */,
 				BCAF65DE1FAC9B8500D30E54 /* Services */,
 				3CA898ED1AA5BC870035012D /* categories */,
 				3CA899201AA607FB0035012D /* core */,
@@ -677,6 +681,15 @@
 			name = Services;
 			sourceTree = "<group>";
 		};
+		BCEF37A21FB2194F00374541 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				BCEF37A31FB2196E00374541 /* StoredData.h */,
+				BCEF37A41FB2196E00374541 /* StoredData.m */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -824,6 +837,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCEF37A51FB2196E00374541 /* StoredData.m in Sources */,
 				3C00ADD91AB71B1700EF6886 /* RejectXMLController.m in Sources */,
 				3CC4037D1AB96D29006F8803 /* SettingsVC.m in Sources */,
 				3C00ADE31AB71B4400EF6886 /* NSDateFormatter+Utils.m in Sources */,
