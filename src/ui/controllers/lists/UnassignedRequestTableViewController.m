@@ -68,6 +68,7 @@
 {
     [super viewDidLoad];
     [self.navigationItem setRightBarButtonItems:@[_filterButtonItem, self.navigationItem.rightBarButtonItem] animated:YES];
+    [self assignMainTabToAppDelegate];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -98,6 +99,12 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void) assignMainTabToAppDelegate {
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    UINavigationController *nav = (UINavigationController *)self.presentingViewController;
+    appDelegate.mainTab = (UITabBarController *)nav.presentedViewController;
 }
 
 #pragma mark - Network Calls

@@ -8,10 +8,12 @@
 
 #import "AppDelegate.h"
 #import "NSData+Conversion.h"
+#import "UnassignedRequestTableViewController.h"
 
 @implementation AppDelegate
 // @synthesize certificate, appConfig=_appConfig;
 @synthesize  appConfig = _appConfig;
+@synthesize mainTab = _mainTab;
 
 - (id)init
 {
@@ -121,6 +123,16 @@ void uncaughtExceptionHandler(NSException *exception)
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     DDLogDebug(@"Receive remote notification: %@", userInfo);
+    [self openPendingTabAndLoadData];
+}
+
+- (void) openPendingTabAndLoadData {
+    if (self.mainTab) {
+        [self.mainTab setSelectedIndex:0];
+        UINavigationController *nav = [self.mainTab.viewControllers objectAtIndex:0];
+        UnassignedRequestTableViewController *pendingViewController = (UnassignedRequestTableViewController *)nav.rootViewController;
+        [pendingViewController loadData];
+    }
 }
 
 @end
