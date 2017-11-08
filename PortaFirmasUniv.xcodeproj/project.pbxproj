@@ -90,6 +90,7 @@
 		BCAF65E31FAC9E1900D30E54 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCAF65E21FAC9E0700D30E54 /* UserNotifications.framework */; };
 		BCAF65E61FACA96500D30E54 /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAF65E51FACA96500D30E54 /* NSData+Conversion.m */; };
 		BCEF37A51FB2196E00374541 /* StoredData.m in Sources */ = {isa = PBXBuildFile; fileRef = BCEF37A41FB2196E00374541 /* StoredData.m */; };
+		BCEF37B51FB338E500374541 /* PushNotificationNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = BCEF37B41FB338E500374541 /* PushNotificationNetwork.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -241,6 +242,8 @@
 		BCAF65E51FACA96500D30E54 /* NSData+Conversion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Conversion.m"; sourceTree = "<group>"; };
 		BCEF37A31FB2196E00374541 /* StoredData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoredData.h; sourceTree = "<group>"; };
 		BCEF37A41FB2196E00374541 /* StoredData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoredData.m; sourceTree = "<group>"; };
+		BCEF37B31FB338E500374541 /* PushNotificationNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PushNotificationNetwork.h; sourceTree = "<group>"; };
+		BCEF37B41FB338E500374541 /* PushNotificationNetwork.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PushNotificationNetwork.m; sourceTree = "<group>"; };
 		E616382C6011BCF1C72ABE60 /* Pods-PortaFirmasUniv.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortaFirmasUniv.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv.debug.xcconfig"; sourceTree = "<group>"; };
 		EE0A9AB702FDB8ACDEBFCF67 /* libPods-PortaFirmasUniv.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PortaFirmasUniv.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -412,6 +415,7 @@
 		3CA898EC1AA5BC740035012D /* src */ = {
 			isa = PBXGroup;
 			children = (
+				BCEF37B21FB338BC00374541 /* Network */,
 				BCEF37A21FB2194F00374541 /* Persistence */,
 				BCAF65DE1FAC9B8500D30E54 /* Services */,
 				3CA898ED1AA5BC870035012D /* categories */,
@@ -690,6 +694,15 @@
 			path = Persistence;
 			sourceTree = "<group>";
 		};
+		BCEF37B21FB338BC00374541 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				BCEF37B31FB338E500374541 /* PushNotificationNetwork.h */,
+				BCEF37B41FB338E500374541 /* PushNotificationNetwork.m */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -846,6 +859,7 @@
 				3C00AD871AB71A8700EF6886 /* UnassignedRequestTableViewController.m in Sources */,
 				3C00ADE01AB71B3100EF6886 /* NSDate+Utils.m in Sources */,
 				3CA899601AA60E6C0035012D /* RequestCell.m in Sources */,
+				BCEF37B51FB338E500374541 /* PushNotificationNetwork.m in Sources */,
 				3C00ADDA1AB71B1700EF6886 /* RequestListXMLController.m in Sources */,
 				3C00AD751AB71A6300EF6886 /* DetailTableViewController.m in Sources */,
 				3CC4036D1AB96D0F006F8803 /* AddServerVC.m in Sources */,

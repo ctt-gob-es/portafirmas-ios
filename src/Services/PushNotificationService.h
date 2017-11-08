@@ -16,6 +16,7 @@
 + (PushNotificationService *)instance;
 
 - (void) initializePushNotificationsService;
+- (void) updateTokenOfPushNotificationsService: (NSString *) deviceToken;
 
 @end
 

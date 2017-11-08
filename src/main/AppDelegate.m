@@ -66,6 +66,7 @@ void uncaughtExceptionHandler(NSException *exception)
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    UIApplication.sharedApplication.applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -109,7 +110,9 @@ void uncaughtExceptionHandler(NSException *exception)
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(nonnull NSData *)deviceToken {
     NSString *tokenHex = [deviceToken hexadecimalString];
-    DDLogDebug(@"Device Registered for notifications, token: %@", [tokenHex uppercaseString]);
+    DDLogDebug(@"Device Token for notifications, token: %@", [tokenHex uppercaseString]);
+    
+    [[PushNotificationService instance] updateTokenOfPushNotificationsService: [tokenHex uppercaseString]];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(nonnull NSError *)error {

@@ -8,6 +8,7 @@
 
 #import "PushNotificationService.h"
 #import <UserNotifications/UserNotifications.h>
+#import "PushNotificationNetwork.h"
 
 @implementation PushNotificationService
 
@@ -58,13 +59,14 @@
 - (void) updateTokenOfPushNotificationsService: (NSString *) deviceToken {
     
     if (![deviceToken isEqualToString: [[self storedData] devicePushNotificationToken]] &&  [[self storedData] getUserNotificationPermissionIsEnabled]) {
-        
-        //TODO: Call to the endpoint to send the new device token
-        
-        //When success:
-        
-        [[self storedData] updateData:deviceToken notificationPermisionState:TrueValue];
-        DDLogDebug(@"Push Notification Token Registered");
+
+        [PushNotificationNetwork subscribeToken:deviceToken success:^{
+            [[self storedData] updateData:deviceToken notificationPermisionState:TrueValue];
+            DDLogDebug(@"Push Notification Token Registered");
+        } failure:^(NSError * error) {
+            DDLogError(@"Error subscribing token");
+            DDLogError(@"Error: %@", error);
+        }];
     } else {
         DDLogDebug(@"Push Notification Token Not Registered because is registered");
     }
