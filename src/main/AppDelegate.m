@@ -107,12 +107,34 @@ void uncaughtExceptionHandler(NSException *exception)
         }
     }
 }
+    
+- (void)showAlertView: (NSString *) message {
+    
+    UIWindow* topWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    topWindow.rootViewController = [UIViewController new];
+    topWindow.windowLevel = UIWindowLevelAlert + 1;
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Token Registered" message:message preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",@"confirm") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        // continue your work
+        
+        // important to hide the window after work completed.
+        // this also keeps a reference to the window until the action is invoked.
+        topWindow.hidden = YES;
+    }]];
+    
+    [topWindow makeKeyAndVisible];
+    [topWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+}
 
 #pragma mark - Notifications Support
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(nonnull NSData *)deviceToken {
     NSString *tokenHex = [deviceToken hexadecimalString];
-    DDLogDebug(@"Device Token for notifications, token: %@", [tokenHex uppercaseString]);
+   // [DDLogDebug(@"Device Token for notifications, token: %@", [tokenHex uppercaseString]);
+     
+   // [self showAlertView:[tokenHex uppercaseString]];
     
     [[PushNotificationService instance] updateTokenOfPushNotificationsService: [tokenHex uppercaseString]];
 }

@@ -11,12 +11,18 @@
 @implementation PushNotificationNetwork
 
 + (void)subscribeToken:(NSString *)deviceToken success:(void(^)())success failure:(void(^)(NSError *))failure {
- 
-    NSData *postData = [deviceToken dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    
+    NSString *baseURL = @"https://pre-portafirmas.redsara.es/pfmovil_savetoken/token";
+    NSString *tokenParameter = @"token";
+    
+    NSString *postString = [NSString stringWithFormat:@"%@=%@", tokenParameter, deviceToken];
+    NSData *postData = [postString dataUsingEncoding:NSUTF8StringEncoding];
+    //NSData *postData = [deviceToken dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    
     NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:@"http://YourURL.com/FakeURL"]];
+    [request setURL:[NSURL URLWithString:baseURL]];
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody:postData];
