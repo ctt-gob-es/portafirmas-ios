@@ -91,6 +91,9 @@
 		BCAF65E61FACA96500D30E54 /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAF65E51FACA96500D30E54 /* NSData+Conversion.m */; };
 		BCEF37A51FB2196E00374541 /* StoredData.m in Sources */ = {isa = PBXBuildFile; fileRef = BCEF37A41FB2196E00374541 /* StoredData.m */; };
 		BCEF37B51FB338E500374541 /* PushNotificationNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = BCEF37B41FB338E500374541 /* PushNotificationNetwork.m */; };
+		BCF083321FC45A0900450FE7 /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF0832F1FC45A0900450FE7 /* Stack.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		BCF083331FC45A0900450FE7 /* XMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF083301FC45A0900450FE7 /* XMLParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		BCF083361FC46A8B00450FE7 /* Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF083351FC46A8B00450FE7 /* Parser.m */; };
 		BCF619A41FC42DC2009C5B50 /* LoginService.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF619A31FC42DC2009C5B50 /* LoginService.m */; };
 		BCF619A71FC4379D009C5B50 /* LoginNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF619A61FC4379D009C5B50 /* LoginNetwork.m */; };
 /* End PBXBuildFile section */
@@ -246,6 +249,12 @@
 		BCEF37A41FB2196E00374541 /* StoredData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoredData.m; sourceTree = "<group>"; };
 		BCEF37B31FB338E500374541 /* PushNotificationNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PushNotificationNetwork.h; sourceTree = "<group>"; };
 		BCEF37B41FB338E500374541 /* PushNotificationNetwork.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PushNotificationNetwork.m; sourceTree = "<group>"; };
+		BCF0832E1FC45A0900450FE7 /* XMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLParser.h; path = lib/XMLParser/XMLParser.h; sourceTree = "<group>"; };
+		BCF0832F1FC45A0900450FE7 /* Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Stack.m; path = lib/XMLParser/Stack.m; sourceTree = "<group>"; };
+		BCF083301FC45A0900450FE7 /* XMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLParser.m; path = lib/XMLParser/XMLParser.m; sourceTree = "<group>"; };
+		BCF083311FC45A0900450FE7 /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stack.h; path = lib/XMLParser/Stack.h; sourceTree = "<group>"; };
+		BCF083341FC46A8B00450FE7 /* Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
+		BCF083351FC46A8B00450FE7 /* Parser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Parser.m; sourceTree = "<group>"; };
 		BCF619A21FC42DC2009C5B50 /* LoginService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LoginService.h; path = Services/LoginService.h; sourceTree = "<group>"; };
 		BCF619A31FC42DC2009C5B50 /* LoginService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LoginService.m; path = Services/LoginService.m; sourceTree = "<group>"; };
 		BCF619A51FC4379D009C5B50 /* LoginNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginNetwork.h; sourceTree = "<group>"; };
@@ -307,6 +316,7 @@
 		3C0A7EBB1AB19DB200F793AA /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				BCF0832D1FC459F500450FE7 /* XMLParser */,
 				3C0A7EBC1AB19DB600F793AA /* KeyboardObserver */,
 			);
 			name = lib;
@@ -709,8 +719,21 @@
 				BCEF37B41FB338E500374541 /* PushNotificationNetwork.m */,
 				BCF619A51FC4379D009C5B50 /* LoginNetwork.h */,
 				BCF619A61FC4379D009C5B50 /* LoginNetwork.m */,
+				BCF083341FC46A8B00450FE7 /* Parser.h */,
+				BCF083351FC46A8B00450FE7 /* Parser.m */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		BCF0832D1FC459F500450FE7 /* XMLParser */ = {
+			isa = PBXGroup;
+			children = (
+				BCF083311FC45A0900450FE7 /* Stack.h */,
+				BCF0832F1FC45A0900450FE7 /* Stack.m */,
+				BCF0832E1FC45A0900450FE7 /* XMLParser.h */,
+				BCF083301FC45A0900450FE7 /* XMLParser.m */,
+			);
+			name = XMLParser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -868,6 +891,7 @@
 				3C00AD9D1AB71ACB00EF6886 /* PFRequestResult.m in Sources */,
 				3C00AD871AB71A8700EF6886 /* UnassignedRequestTableViewController.m in Sources */,
 				3C00ADE01AB71B3100EF6886 /* NSDate+Utils.m in Sources */,
+				BCF083361FC46A8B00450FE7 /* Parser.m in Sources */,
 				3CA899601AA60E6C0035012D /* RequestCell.m in Sources */,
 				BCEF37B51FB338E500374541 /* PushNotificationNetwork.m in Sources */,
 				3C00ADDA1AB71B1700EF6886 /* RequestListXMLController.m in Sources */,
@@ -877,6 +901,7 @@
 				3CB68F611AB81BAD00BEB067 /* ServersListCell.m in Sources */,
 				3C00AD9E1AB71ACB00EF6886 /* Preview.m in Sources */,
 				3C00ADB51AB71B0B00EF6886 /* CertificateUtils.m in Sources */,
+				BCF083331FC45A0900450FE7 /* XMLParser.m in Sources */,
 				3CC403861AB9EDBA006F8803 /* CertificateCell.m in Sources */,
 				3C00AD741AB71A6300EF6886 /* AttachmentViewController.m in Sources */,
 				3CC403771AB96D18006F8803 /* DocumentCertificatesViewController.m in Sources */,
@@ -902,6 +927,7 @@
 				3C00ADDB1AB71B1700EF6886 /* RequestSignerController.m in Sources */,
 				3C00AD761AB71A6300EF6886 /* PreviewViewController.m in Sources */,
 				3C00ADD41AB71B1700EF6886 /* BaseXMLController.m in Sources */,
+				BCF083321FC45A0900450FE7 /* Stack.m in Sources */,
 				3C00ADB81AB71B0B00EF6886 /* PFHelper.m in Sources */,
 				3C00AD991AB71ACB00EF6886 /* Detail.m in Sources */,
 				3C00ADB41AB71B0B00EF6886 /* Base64Utils.m in Sources */,

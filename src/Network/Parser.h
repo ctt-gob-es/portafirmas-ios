@@ -1,5 +1,5 @@
 //
-//  LoginNetwork.h
+//  Parser.h
 //  PortaFirmasUniv
 //
 //  Created by Gonzalo Gonzalez  on 21/11/17.
@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface LoginNetwork : NSObject
-
-+ (void) loginProcess:(void(^)(NSString *token))success failure:(void(^)(NSError *error))failure;
-
+@interface Parser : NSObject
+- (void) parseAuthData: (NSData *)data success: (void(^)(NSString *token))success failure:(void(^)(NSError *))failure;
 @end

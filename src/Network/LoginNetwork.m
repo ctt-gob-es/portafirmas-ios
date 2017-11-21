@@ -8,12 +8,13 @@
 
 #import "LoginNetwork.h"
 #import "NSData+Base64.h"
+#import "Parser.h"
 
 #define SERVER_URL ((NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyCurrentServer])[kPFUserDefaultsKeyURL]
 
 @implementation LoginNetwork
 
-+ (void) loginProcess:(void(^)())success failure:(void(^)(NSError *))failure {
++ (void) loginProcess:(void(^)(NSString *token))success failure:(void(^)(NSError *error))failure {
     
    // NSString *opParameter = @"op";
    // NSString *datParameter = @"dat";
@@ -39,9 +40,15 @@
         if (error) {
             failure(error);
         } else  {
-            NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-            NSLog(@"Request reply: %@", requestReply);
-            success();
+            //NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+            //NSLog(@"Request reply: %@", requestReply);
+            Parser *parser = [Parser new];
+            
+            [parser parseAuthData:data success:^(NSString *token) {
+                success(token);
+            } failure:^(NSError *error) {
+                failure(error);
+            }];
         }
     }] resume];
 }

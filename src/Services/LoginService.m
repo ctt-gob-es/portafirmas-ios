@@ -33,11 +33,14 @@
 }
 
 - (void) authID {
-    [LoginNetwork loginProcess:^{
-         DDLogDebug(@"Login Proccess completed");
-    } failure:^(NSError * error) {
+    
+    [LoginNetwork loginProcess:^(NSString *token) {
+        NSLog(@"Token = %@", token);
+    } failure:^(NSError *error) {
         DDLogError(@"Error starting login process");
         DDLogError(@"Error: %@", error);
     }];
+    
+    
 }
 @end
