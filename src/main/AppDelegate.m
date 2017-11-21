@@ -7,11 +7,13 @@
 //
 
 #import "AppDelegate.h"
+#import "NSData+Conversion.h"
+#import "UnassignedRequestTableViewController.h"
 
 @implementation AppDelegate
-
 // @synthesize certificate, appConfig=_appConfig;
 @synthesize  appConfig = _appConfig;
+@synthesize mainTab = _mainTab;
 
 - (id)init
 {
@@ -22,6 +24,7 @@
 
     // Load the file content and read the data into arrays
     _appConfig = [[NSDictionary alloc] initWithContentsOfFile:path];
+    
 
     return self;
 }
@@ -39,6 +42,8 @@ void uncaughtExceptionHandler(NSException *exception)
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     [self customizeAppearance];
     [self loadSelectedCertificate];
+    
+    [[PushNotificationService instance] initializePushNotificationsService];
     
     return YES;
 }
@@ -63,6 +68,7 @@ void uncaughtExceptionHandler(NSException *exception)
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    UIApplication.sharedApplication.applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -99,6 +105,55 @@ void uncaughtExceptionHandler(NSException *exception)
         if (currentCertificateName && [[CertificateUtils sharedWrapper] searchIdentityByName:currentCertificateName] == YES) {
             [[CertificateUtils sharedWrapper] setSelectedCertificateName:currentCertificateName];
         }
+    }
+}
+    
+- (void)showAlertView: (NSString *) message {
+    
+    UIWindow* topWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    topWindow.rootViewController = [UIViewController new];
+    topWindow.windowLevel = UIWindowLevelAlert + 1;
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Token Registered" message:message preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",@"confirm") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        // continue your work
+        
+        // important to hide the window after work completed.
+        // this also keeps a reference to the window until the action is invoked.
+        topWindow.hidden = YES;
+    }]];
+    
+    [topWindow makeKeyAndVisible];
+    [topWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark - Notifications Support
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(nonnull NSData *)deviceToken {
+    NSString *tokenHex = [deviceToken hexadecimalString];
+   // [DDLogDebug(@"Device Token for notifications, token: %@", [tokenHex uppercaseString]);
+     
+   // [self showAlertView:[tokenHex uppercaseString]];
+    
+    [[PushNotificationService instance] updateTokenOfPushNotificationsService: [tokenHex uppercaseString]];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(nonnull NSError *)error {
+    DDLogError(@"Error Register for remote notifications: %@", error);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    DDLogDebug(@"Receive remote notification: %@", userInfo);
+    [self openPendingTabAndLoadData];
+}
+
+- (void) openPendingTabAndLoadData {
+    if (self.mainTab) {
+        [self.mainTab setSelectedIndex:0];
+        UINavigationController *nav = [self.mainTab.viewControllers objectAtIndex:0];
+        UnassignedRequestTableViewController *pendingViewController = (UnassignedRequestTableViewController *)nav.rootViewController;
+        [pendingViewController loadData];
     }
 }
 
