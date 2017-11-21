@@ -9,6 +9,10 @@
 #import "LoginService.h"
 #import "LoginNetwork.h"
 
+#import "CertificateUtils.h"
+#import "Base64Utils.h"
+#import "NSData+Base64.h"
+
 @interface LoginService ()
 @property (nonatomic, strong) StoredData* storedData;
 @end
@@ -36,11 +40,23 @@
     
     [LoginNetwork loginProcess:^(NSString *token) {
         NSLog(@"Token = %@", token);
+        NSString *signToken = [self signToken:token];
+        NSLog(@"Sign Token = %@", signToken);
+        
+        
+        
     } failure:^(NSError *error) {
         DDLogError(@"Error starting login process");
         DDLogError(@"Error: %@", error);
     }];
+}
+
+- (NSString *) signToken: (NSString *) token {
     
+    NSData *tokenData = [token dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *result = [[CertificateUtils sharedWrapper] getSignatureBytesSHA256:tokenData];
     
+    NSString *tokenSigned = [NSString stringWithFormat: @"%@",[result base64EncodedString]];
+    return tokenSigned;
 }
 @end
