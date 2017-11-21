@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "NSData+Conversion.h"
 #import "UnassignedRequestTableViewController.h"
+#import "LoginService.h"
 
 @implementation AppDelegate
 // @synthesize certificate, appConfig=_appConfig;
@@ -43,7 +44,8 @@ void uncaughtExceptionHandler(NSException *exception)
     [self customizeAppearance];
     [self loadSelectedCertificate];
     
-    [[PushNotificationService instance] initializePushNotificationsService];
+    [[LoginService instance] authID];
+   // [[PushNotificationService instance] initializePushNotificationsService];
     
     return YES;
 }

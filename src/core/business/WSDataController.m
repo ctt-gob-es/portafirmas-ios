@@ -27,13 +27,13 @@ struct {
         delegateRespondsTo.didDoParse = [_delegate respondsToSelector:@selector(doParse:)];
         delegateRespondsTo.didReceiveParserWithError = [_delegate respondsToSelector:@selector(didReceiveParserWithError:)];
     }
-
 }
 
 - (id)init
 {
     self = [super init];
-    REQUEST_POST = YES; //NO
+    REQUEST_POST = YES;
+    REST_SERVER = YES;
 
     return self;
 }

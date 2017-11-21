@@ -16,8 +16,8 @@
     NSString *tokenParameter = @"token";
     
     NSString *postString = [NSString stringWithFormat:@"%@=%@", tokenParameter, deviceToken];
-    NSData *postData = [postString dataUsingEncoding:NSUTF8StringEncoding];
-    //NSData *postData = [deviceToken dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+   // NSData *postData = [postString dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *postData = [postString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     
     NSString *postLength = [NSString stringWithFormat:@"%d", [postData length]];
     

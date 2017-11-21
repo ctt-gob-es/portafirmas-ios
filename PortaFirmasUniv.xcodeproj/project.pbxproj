@@ -91,6 +91,8 @@
 		BCAF65E61FACA96500D30E54 /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAF65E51FACA96500D30E54 /* NSData+Conversion.m */; };
 		BCEF37A51FB2196E00374541 /* StoredData.m in Sources */ = {isa = PBXBuildFile; fileRef = BCEF37A41FB2196E00374541 /* StoredData.m */; };
 		BCEF37B51FB338E500374541 /* PushNotificationNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = BCEF37B41FB338E500374541 /* PushNotificationNetwork.m */; };
+		BCF619A41FC42DC2009C5B50 /* LoginService.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF619A31FC42DC2009C5B50 /* LoginService.m */; };
+		BCF619A71FC4379D009C5B50 /* LoginNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF619A61FC4379D009C5B50 /* LoginNetwork.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -244,6 +246,10 @@
 		BCEF37A41FB2196E00374541 /* StoredData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoredData.m; sourceTree = "<group>"; };
 		BCEF37B31FB338E500374541 /* PushNotificationNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PushNotificationNetwork.h; sourceTree = "<group>"; };
 		BCEF37B41FB338E500374541 /* PushNotificationNetwork.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PushNotificationNetwork.m; sourceTree = "<group>"; };
+		BCF619A21FC42DC2009C5B50 /* LoginService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LoginService.h; path = Services/LoginService.h; sourceTree = "<group>"; };
+		BCF619A31FC42DC2009C5B50 /* LoginService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LoginService.m; path = Services/LoginService.m; sourceTree = "<group>"; };
+		BCF619A51FC4379D009C5B50 /* LoginNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginNetwork.h; sourceTree = "<group>"; };
+		BCF619A61FC4379D009C5B50 /* LoginNetwork.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginNetwork.m; sourceTree = "<group>"; };
 		E616382C6011BCF1C72ABE60 /* Pods-PortaFirmasUniv.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortaFirmasUniv.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv.debug.xcconfig"; sourceTree = "<group>"; };
 		EE0A9AB702FDB8ACDEBFCF67 /* libPods-PortaFirmasUniv.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PortaFirmasUniv.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -681,6 +687,8 @@
 			children = (
 				BCAF65DF1FAC9BCC00D30E54 /* PushNotificationService.h */,
 				BCAF65E01FAC9BCC00D30E54 /* PushNotificationService.m */,
+				BCF619A21FC42DC2009C5B50 /* LoginService.h */,
+				BCF619A31FC42DC2009C5B50 /* LoginService.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -699,6 +707,8 @@
 			children = (
 				BCEF37B31FB338E500374541 /* PushNotificationNetwork.h */,
 				BCEF37B41FB338E500374541 /* PushNotificationNetwork.m */,
+				BCF619A51FC4379D009C5B50 /* LoginNetwork.h */,
+				BCF619A61FC4379D009C5B50 /* LoginNetwork.m */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -901,6 +911,7 @@
 				3C00AD7B1AB71A7A00EF6886 /* FilterVC.m in Sources */,
 				3C00ADB71AB71B0B00EF6886 /* DateHelper.m in Sources */,
 				3C00AD771AB71A6300EF6886 /* ReceiversViewController.m in Sources */,
+				BCF619A41FC42DC2009C5B50 /* LoginService.m in Sources */,
 				3C00AD841AB71A8700EF6886 /* BaseListTVC.m in Sources */,
 				3C00AD9C1AB71ACB00EF6886 /* PFRequest.m in Sources */,
 				3C00ADD31AB71B1700EF6886 /* ApproveXMLController.m in Sources */,
@@ -909,6 +920,7 @@
 				3C00ADD71AB71B1700EF6886 /* PreSignXMLController.m in Sources */,
 				3C00ADD61AB71B1700EF6886 /* PostSignXMLController.m in Sources */,
 				3CC403801AB979FE006F8803 /* OpenSSLCertificateHelper.m in Sources */,
+				BCF619A71FC4379D009C5B50 /* LoginNetwork.m in Sources */,
 				3C00AD9B1AB71ACB00EF6886 /* Param.m in Sources */,
 				3C00AD861AB71A8700EF6886 /* RejectedRequestViewController.m in Sources */,
 				3CC403831AB9BB12006F8803 /* PFCertificateInfo.m in Sources */,
