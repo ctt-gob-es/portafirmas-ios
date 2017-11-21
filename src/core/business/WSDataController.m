@@ -33,7 +33,7 @@ struct {
 - (id)init
 {
     self = [super init];
-    REQUEST_POST = NO;
+    REQUEST_POST = YES; //NO
 
     return self;
 }
