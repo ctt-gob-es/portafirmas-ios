@@ -30,14 +30,14 @@
     NSMutableString *mesg = [[NSMutableString alloc] initWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?><rqtlst state=\"%@\" pg=\"%d\" sz=\"%d\">\n", state, pageNumber, kRequestListXMLControllerPageSize];
 
     // CERTIFICADO
-    CertificateUtils *cert = [CertificateUtils sharedWrapper];
+   /* CertificateUtils *cert = [CertificateUtils sharedWrapper];
     NSString *certificado = [NSData base64EncodeData:[cert publicKeyBits]];
     // Formats lists message
     NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
 
     [certlabel appendFormat:@"%@\n", certificado];
     [certlabel appendString:@"</cert>\n"];
-    [mesg appendString:certlabel];
+    [mesg appendString:certlabel];*/
 
     NSMutableString *fmts = [[NSMutableString alloc] initWithString:@"<fmts>\n"];
     for (int i = 0; i < [formatArr count]; i++) {

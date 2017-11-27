@@ -11,5 +11,6 @@
 @interface LoginNetwork : NSObject
 
 + (void) loginProcess:(void(^)(NSString *token))success failure:(void(^)(NSError *error))failure;
++ (void) validateLogin:(NSString*)certificate withSignedToken:(NSString*)tokenSigned success: (void(^)())success failure:(void(^)(NSError *error))failure;
 
 @end

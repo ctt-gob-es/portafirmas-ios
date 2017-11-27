@@ -8,6 +8,7 @@
 
 #import "WSDataController.h"
 #import "NSData+Base64.h"
+#import "NSString+XMLSafe.h"
 
 #define SERVER_URL ((NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyCurrentServer])[kPFUserDefaultsKeyURL]
 
@@ -53,7 +54,6 @@ struct {
 
 - (void)loadPostRequestWithURL:(NSString *)wsURLString code:(NSInteger)code data:(NSString *)data
 {
-
     NSData *msgData = [data dataUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *request;
 
@@ -69,15 +69,42 @@ struct {
                                       timeoutInterval:60];
 
     } else {
-
-        NSString *post = [NSString stringWithFormat: @"op=%lu&dat=%@",
-                          (unsigned long)code, [msgData base64EncodedString]];
+        
+       // NSString *post = [NSString stringWithFormat: @"op=%lu",(unsigned long)code];
+        
+        NSString *post = [NSString stringWithFormat: @"op=%lu&dat=%@",(unsigned long)code, [msgData base64EncodedString]];
         NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
         NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
         NSLog(@"\n");
         NSLog(@"WSDataController -> Valor postLength ->    %@", postLength);
         NSLog(@"\n\n");
 
+        /*request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:wsURLString]
+                                          cachePolicy:NSURLRequestReloadIgnoringCacheData
+                                      timeoutInterval:60];*/
+        
+        NSHTTPCookie *cookieSession;
+        
+        for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
+        {
+            NSLog(@"name: '%@'\n",   [cookie name]);
+            NSLog(@"value: '%@'\n",  [cookie value]);
+            NSLog(@"domain: '%@'\n", [cookie domain]);
+            NSLog(@"path: '%@'\n",   [cookie path]);
+            
+            if ([cookie.name isEqualToString:@"JSESSIONID"]) {
+                cookieSession = cookie;
+            }
+        }
+        
+        
+        NSDictionary *cookieDict;
+        if (cookieSession != nil) {
+            NSArray *cookieArray = [NSArray arrayWithObject:cookieSession];
+            cookieDict = [NSHTTPCookie requestHeaderFieldsWithCookies:cookieArray];
+        }
+        
+        
         request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:wsURLString]
                                           cachePolicy:NSURLRequestReloadIgnoringCacheData
                                       timeoutInterval:60];
@@ -86,6 +113,11 @@ struct {
         [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
         [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
         [request setHTTPBody:postData];
+        
+        if (cookieDict != nil) {
+            [request setAllHTTPHeaderFields:cookieDict];
+            [request setHTTPShouldHandleCookies:YES];
+        }
     }
 
     // Clear out the existing connection if there is one
@@ -161,6 +193,9 @@ struct {
 - (void)doParse:(NSData *)data
 {
     DDLogDebug(@"doParse data: \n\n%@", [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding]);
+    
+    NSString *dataString = [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding];
+    
     [_delegate doParse: data];
 }
 

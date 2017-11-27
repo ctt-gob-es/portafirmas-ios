@@ -94,6 +94,7 @@
 		BCF083321FC45A0900450FE7 /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF0832F1FC45A0900450FE7 /* Stack.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BCF083331FC45A0900450FE7 /* XMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF083301FC45A0900450FE7 /* XMLParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BCF083361FC46A8B00450FE7 /* Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF083351FC46A8B00450FE7 /* Parser.m */; };
+		BCF083621FC72E3100450FE7 /* NSString+XMLSafe.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF083611FC72E3100450FE7 /* NSString+XMLSafe.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		BCF619A41FC42DC2009C5B50 /* LoginService.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF619A31FC42DC2009C5B50 /* LoginService.m */; };
 		BCF619A71FC4379D009C5B50 /* LoginNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF619A61FC4379D009C5B50 /* LoginNetwork.m */; };
 /* End PBXBuildFile section */
@@ -255,6 +256,8 @@
 		BCF083311FC45A0900450FE7 /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Stack.h; path = lib/XMLParser/Stack.h; sourceTree = "<group>"; };
 		BCF083341FC46A8B00450FE7 /* Parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
 		BCF083351FC46A8B00450FE7 /* Parser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Parser.m; sourceTree = "<group>"; };
+		BCF083601FC72E3100450FE7 /* NSString+XMLSafe.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+XMLSafe.h"; sourceTree = "<group>"; };
+		BCF083611FC72E3100450FE7 /* NSString+XMLSafe.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+XMLSafe.m"; sourceTree = "<group>"; };
 		BCF619A21FC42DC2009C5B50 /* LoginService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LoginService.h; path = Services/LoginService.h; sourceTree = "<group>"; };
 		BCF619A31FC42DC2009C5B50 /* LoginService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LoginService.m; path = Services/LoginService.m; sourceTree = "<group>"; };
 		BCF619A51FC4379D009C5B50 /* LoginNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginNetwork.h; sourceTree = "<group>"; };
@@ -446,6 +449,7 @@
 		3CA898ED1AA5BC870035012D /* categories */ = {
 			isa = PBXGroup;
 			children = (
+				BCF0835F1FC72E0300450FE7 /* NSString */,
 				3CD199A21AC2C90F007E9E35 /* UINavigationController */,
 				3CA4B3DE1AB1E2030082E480 /* NSDate */,
 				3CA4B3DA1AB1DE1C0082E480 /* NSDateFormatter */,
@@ -736,6 +740,15 @@
 			name = XMLParser;
 			sourceTree = "<group>";
 		};
+		BCF0835F1FC72E0300450FE7 /* NSString */ = {
+			isa = PBXGroup;
+			children = (
+				BCF083601FC72E3100450FE7 /* NSString+XMLSafe.h */,
+				BCF083611FC72E3100450FE7 /* NSString+XMLSafe.m */,
+			);
+			path = NSString;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -895,6 +908,7 @@
 				3CA899601AA60E6C0035012D /* RequestCell.m in Sources */,
 				BCEF37B51FB338E500374541 /* PushNotificationNetwork.m in Sources */,
 				3C00ADDA1AB71B1700EF6886 /* RequestListXMLController.m in Sources */,
+				BCF083621FC72E3100450FE7 /* NSString+XMLSafe.m in Sources */,
 				3C00AD751AB71A6300EF6886 /* DetailTableViewController.m in Sources */,
 				3CC4036D1AB96D0F006F8803 /* AddServerVC.m in Sources */,
 				3C00ADA61AB71AD800EF6886 /* main.m in Sources */,

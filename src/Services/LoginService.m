@@ -40,11 +40,17 @@
     
     [LoginNetwork loginProcess:^(NSString *token) {
         NSLog(@"Token = %@", token);
-        NSString *signToken = [self signToken:token];
+        NSString *decodedToken = [self decodeToken:token];
+        NSString *signToken = [self signToken:decodedToken];
         NSLog(@"Sign Token = %@", signToken);
+        NSString *certificate = [self certificateInBase64];
         
-        
-        
+        [LoginNetwork validateLogin:certificate withSignedToken:signToken success:^{
+            NSLog(@"Login validated");
+        } failure:^(NSError *error) {
+            DDLogError(@"Error starting login process");
+            DDLogError(@"Error: %@", error);
+        }];
     } failure:^(NSError *error) {
         DDLogError(@"Error starting login process");
         DDLogError(@"Error: %@", error);
@@ -55,8 +61,22 @@
     
     NSData *tokenData = [token dataUsingEncoding:NSUTF8StringEncoding];
     NSData *result = [[CertificateUtils sharedWrapper] getSignatureBytesSHA256:tokenData];
-    
     NSString *tokenSigned = [NSString stringWithFormat: @"%@",[result base64EncodedString]];
+    
+   // NSLog(@"Token signed: %@", tokenSigned);
+   // NSLog(@"Token lenght: %ld", [tokenSigned length]);
+    
     return tokenSigned;
+}
+
+- (NSString *) decodeToken: (NSString *) token {
+    NSData *data = [Base64Utils base64DecodeString:token];
+    return [[NSString alloc] initWithData:data
+                                 encoding:NSUTF8StringEncoding];
+}
+
+- (NSString *) certificateInBase64 {
+    NSData *certificateData = [CertificateUtils sharedWrapper].publicKeyBits;
+    return [Base64Utils base64EncodeData:certificateData];
 }
 @end

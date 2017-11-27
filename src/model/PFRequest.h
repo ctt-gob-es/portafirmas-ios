@@ -22,6 +22,9 @@
 @property (strong, nonatomic) NSString *view;
 @property (strong, nonatomic) NSString *date;
 @property (strong, nonatomic) NSString *status;
+    
+    //New server
+@property (strong, nonatomic) NSString *expdate;
 
 // Error codes
 @property (strong, nonatomic) NSString *errorMsg;
