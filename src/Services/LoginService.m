@@ -56,6 +56,35 @@
         DDLogError(@"Error: %@", error);
     }];
 }
+    
+- (void) loginWithCertificate:(void(^)())success failure:(void(^)(NSError *error))failure {
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    
+    [LoginNetwork loginProcess:^(NSString *token) {
+        NSLog(@"Token = %@", token);
+        NSString *decodedToken = [self decodeToken:token];
+        NSString *signToken = [self signToken:decodedToken];
+        NSLog(@"Sign Token = %@", signToken);
+        NSString *certificate = [self certificateInBase64];
+        
+        [LoginNetwork validateLogin:certificate withSignedToken:signToken success:^{
+            [SVProgressHUD dismiss];
+            NSLog(@"Login validated");
+            success();
+        } failure:^(NSError *error) {
+            [SVProgressHUD dismiss];
+            DDLogError(@"Error starting login process");
+            DDLogError(@"Error: %@", error);
+            failure(error);
+        }];
+    } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
+        DDLogError(@"Error starting login process");
+        DDLogError(@"Error: %@", error);
+        failure(error);
+    }];
+    
+}
 
 - (NSString *) signToken: (NSString *) token {
     

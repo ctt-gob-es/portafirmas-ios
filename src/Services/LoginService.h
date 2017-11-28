@@ -11,9 +11,8 @@
 
 @interface LoginService : NSObject
     
-
-    
 + (LoginService *)instance;
 - (void) authID;
+- (void) loginWithCertificate:(void(^)())success failure:(void(^)(NSError *error))failure;
 
 @end

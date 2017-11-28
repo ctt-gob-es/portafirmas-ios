@@ -66,11 +66,8 @@ struct {
 
         request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:newURL]
                                           cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                      timeoutInterval:60];
-
+                                      timeoutInterval:30];
     } else {
-        
-       // NSString *post = [NSString stringWithFormat: @"op=%lu",(unsigned long)code];
         
         NSString *post = [NSString stringWithFormat: @"op=%lu&dat=%@",(unsigned long)code, [msgData base64EncodedString]];
         NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
@@ -79,10 +76,7 @@ struct {
         NSLog(@"WSDataController -> Valor postLength ->    %@", postLength);
         NSLog(@"\n\n");
 
-        /*request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:wsURLString]
-                                          cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                      timeoutInterval:60];*/
-        
+        //TODO: Take out get cookie session in other method
         NSHTTPCookie *cookieSession;
         
         for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
@@ -107,7 +101,7 @@ struct {
         
         request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:wsURLString]
                                           cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                      timeoutInterval:60];
+                                      timeoutInterval:30];
 
         [request setHTTPMethod:@"POST"];
         [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
@@ -211,6 +205,7 @@ struct {
 - (void)startConnection
 {
     if (connectionInProgress) {
+        [connectionInProgress scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
         [connectionInProgress start];
     }
 }

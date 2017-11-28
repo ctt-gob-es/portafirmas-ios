@@ -24,14 +24,16 @@
     NSMutableString *mesg = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"];
 
     [mesg appendFormat:@"<rqtdtl id=\"%@\">\n", rqdtlid];
+    
+    //TODO: Add old server support
     // CERTIFICADO
-    CertificateUtils *cert = [CertificateUtils sharedWrapper];
+   /* CertificateUtils *cert = [CertificateUtils sharedWrapper];
     NSString *certificado = [NSData base64EncodeData:[cert publicKeyBits]];
     // Formats lists message
     NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
     [certlabel appendFormat:@"%@\n", certificado];
     [certlabel appendString:@"</cert>\n"];
-    [mesg appendString:certlabel];
+    [mesg appendString:certlabel];*/
     [mesg appendFormat:@"</rqtdtl>\n"];
 
     return mesg;

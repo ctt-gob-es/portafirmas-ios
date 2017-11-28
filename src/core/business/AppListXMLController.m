@@ -9,6 +9,7 @@
 #import "AppListXMLController.h"
 #import "CertificateUtils.h"
 #import "NSData+Base64.h"
+#import "LoginService.h"
 
 @interface AppListXMLController ()
 {
@@ -50,12 +51,14 @@ static AppListXMLController *_sharedInstance = nil;
 
 - (void)requestAppsList
 {
+    
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     NSString *requestString = [self buildRequest];
-   DDLogDebug(@"AppListXMLController::requestAppsList---\n%@", requestString);
+    DDLogDebug(@"AppListXMLController::requestAppsList---\n%@", requestString);
     DDLogDebug(@"AppListXMLController::requestAppsList---\n%@", requestString);
     [_wsDataController loadPostRequestWithData:requestString code:PFRequestCodeAppList];
     [_wsDataController startConnection];
+   
 }
 
 - (NSArray *)appsArray
@@ -69,7 +72,8 @@ static AppListXMLController *_sharedInstance = nil;
 {
     NSMutableString *requestString = [@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rqtconf>\n" mutableCopy];
 
-    [requestString appendString:[self certificateTag]];
+    //TODO: Add old server support
+   // [requestString appendString:[self certificateTag]];
     [requestString appendString:@"</rqtconf>"];
 
     return requestString;

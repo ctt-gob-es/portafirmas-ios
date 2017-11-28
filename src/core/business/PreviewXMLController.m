@@ -31,13 +31,14 @@
 
     [mesg appendFormat:@"<rqtprw docid=\"%@\">\n", id];
     // CERTIFICADO
-    CertificateUtils *cert = [CertificateUtils sharedWrapper];
+    //TODO: Add old server support
+   /* CertificateUtils *cert = [CertificateUtils sharedWrapper];
     NSString *certificado = [NSData base64EncodeData:[cert publicKeyBits]];
     // Formats lists message
     NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
     [certlabel appendFormat:@"%@\n", certificado];
     [certlabel appendString:@"</cert>\n"];
-    [mesg appendString:certlabel];
+    [mesg appendString:certlabel];*/
     [mesg appendFormat:@"</rqtprw>\n"];
 
     return mesg;

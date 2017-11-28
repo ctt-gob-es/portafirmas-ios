@@ -20,7 +20,8 @@
 {
     NSLog(@"+++++++ Presign +++++++");
     NSMutableString *mesg = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rqttri>\n"];
-    [mesg appendFormat:@"<cert>%@</cert>\n", cert];
+    //TODO: Mantain with old server connection
+   // [mesg appendFormat:@"<cert>%@</cert>\n", cert];
 
     // Filters list message
     NSMutableString *requestsMsg = [[NSMutableString alloc] initWithString:@"<reqs>"];

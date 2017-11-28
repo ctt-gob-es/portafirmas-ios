@@ -10,6 +10,7 @@
 #import "SettingsCell.h"
 #import "CertificateUtils.h"
 #import "AppListXMLController.h"
+#import "LoginService.h"
 
 static NSString *const kSettingsVCSectionTitleServerURL = @"Servidor";
 static NSString *const kSettingsVCCellIdentifier = @"SettingsCell";
@@ -117,6 +118,26 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 }
 
 #pragma mark - Navigation Methods
+    
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    __block BOOL segue = NO;
+    if ([identifier isEqualToString:kSettingsVCSegueIdentifierAccess]) {
+        
+        [[LoginService instance] loginWithCertificate:^{
+            segue = YES;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self performSegueWithIdentifier:identifier sender:self];
+            });
+         } failure:^(NSError *error) {
+             segue = NO;
+             //TODO show alert view
+         }];
+    } else {
+        segue = YES;
+    }
+
+    return segue;
+}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -145,9 +166,13 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 - (void)prepareForAccessSegue:(UIStoryboardSegue *)segue
 {
-    
     [[AppListXMLController sharedInstance] requestAppsList];
 }
+    
+/*- (void) performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    
+    [[AppListXMLController sharedInstance] requestAppsList];
+}*/
 
 #pragma mark - ServerListTVCDelegate
 

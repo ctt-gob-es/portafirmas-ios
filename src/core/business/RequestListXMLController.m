@@ -28,6 +28,8 @@
 + (NSString *)buildRequestWithState:(NSString *)state format:(NSArray *)formatArr filters:(NSDictionary *)filters pageNumber:(int)pageNumber
 {
     NSMutableString *mesg = [[NSMutableString alloc] initWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?><rqtlst state=\"%@\" pg=\"%d\" sz=\"%d\">\n", state, pageNumber, kRequestListXMLControllerPageSize];
+    
+    //TODO: Manage when is neccesary have the Certificate in the request.
 
     // CERTIFICADO
    /* CertificateUtils *cert = [CertificateUtils sharedWrapper];

@@ -461,7 +461,6 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (isSuccessReject) {
-        
         isSuccessReject = NO;
         [(BaseListTVC *)self.navigationController.previousViewController refreshInfo];
         [self.navigationController popViewControllerAnimated:YES];

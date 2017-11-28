@@ -21,7 +21,8 @@
 {
     NSLog(@"certificado => %@", cert);
     NSMutableString *mesg = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rqttri>\n"];
-    [mesg appendFormat:@"<cert>%@</cert>\n", cert];
+    //TODO: Manage with old versions
+   // [mesg appendFormat:@"<cert>%@</cert>\n", cert];
 
     // Filters list message
     NSMutableString *requestsMsg = [[NSMutableString alloc] initWithString:@"<reqs>"];

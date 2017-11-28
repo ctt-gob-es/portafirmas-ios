@@ -57,8 +57,8 @@
 }
 
 + (void) validateLogin:(NSString*)certificate withSignedToken:(NSString*)tokenSigned success: (void(^)())success failure:(void(^)(NSError *error))failure {
-    // NSString *opParameter = @"op";
-    // NSString *datParameter = @"dat";
+    NSString *opParameter = @"op";
+    NSString *datParameter = @"dat";
     NSString *baseURL = SERVER_URL;
     NSInteger operation = 11;
     NSString *dataStringOne = @"<rqtvl><cert>";
@@ -69,8 +69,8 @@
     
     NSString *xmlSafeString = [dataString xmlSafeString];
     NSData *data = [xmlSafeString  dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *params = [NSString stringWithFormat: @"op=%lu&dat=%@",
-                        (unsigned long)operation, [data base64EncodedString]];
+    NSString *params = [NSString stringWithFormat: @"%@=%lu&%@=%@", opParameter,
+                        (unsigned long)operation,datParameter, [data base64EncodedString]];
 
     NSData *postData = [params dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
