@@ -45,7 +45,7 @@ void uncaughtExceptionHandler(NSException *exception)
     [self loadSelectedCertificate];
     
     //[[LoginService instance] authID];
-   [[PushNotificationService instance] initializePushNotificationsService];
+   //[[PushNotificationService instance] initializePushNotificationsService];
     
     return YES;
 }
