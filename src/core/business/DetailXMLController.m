@@ -13,6 +13,7 @@
 #import "Document.h"
 #import "CertificateUtils.h"
 #import "NSData+Base64.h"
+#import "LoginService.h"
 
 @implementation DetailXMLController
 
@@ -25,15 +26,17 @@
 
     [mesg appendFormat:@"<rqtdtl id=\"%@\">\n", rqdtlid];
     
-    //TODO: Add old server support
-    // CERTIFICADO
-   /* CertificateUtils *cert = [CertificateUtils sharedWrapper];
-    NSString *certificado = [NSData base64EncodeData:[cert publicKeyBits]];
-    // Formats lists message
-    NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
-    [certlabel appendFormat:@"%@\n", certificado];
-    [certlabel appendString:@"</cert>\n"];
-    [mesg appendString:certlabel];*/
+    if (![[LoginService instance] serverSupportLogin]) {
+        // CERTIFICADO
+        CertificateUtils *cert = [CertificateUtils sharedWrapper];
+         NSString *certificado = [NSData base64EncodeData:[cert publicKeyBits]];
+         // Formats lists message
+         NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
+         [certlabel appendFormat:@"%@\n", certificado];
+         [certlabel appendString:@"</cert>\n"];
+         [mesg appendString:certlabel];
+    }
+    
     [mesg appendFormat:@"</rqtdtl>\n"];
 
     return mesg;

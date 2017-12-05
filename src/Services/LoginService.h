@@ -10,6 +10,8 @@
 #import "StoredData.h"
 
 @interface LoginService : NSObject
+
+@property (nonatomic) BOOL serverSupportLogin;
     
 + (LoginService *)instance;
 - (void) authID;

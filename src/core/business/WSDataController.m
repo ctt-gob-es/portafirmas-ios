@@ -9,6 +9,8 @@
 #import "WSDataController.h"
 #import "NSData+Base64.h"
 #import "NSString+XMLSafe.h"
+#import "CookieTools.h"
+#import "LoginService.h"
 
 #define SERVER_URL ((NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyCurrentServer])[kPFUserDefaultsKeyURL]
 
@@ -20,6 +22,8 @@ struct {
     unsigned int didReceiveParserWithError : 2;
 
 } delegateRespondsTo;
+
+NSInteger const timeout = 30;
 
 - (void)setDelegate:(id <WSDelegate>)aDelegate
 {
@@ -34,8 +38,6 @@ struct {
 {
     self = [super init];
     REQUEST_POST = YES;
-    REST_SERVER = YES;
-
     return self;
 }
 
@@ -43,7 +45,6 @@ struct {
 {
     self = [super init];
     REQUEST_POST = isPOSTRequest;
-
     return self;
 }
 
@@ -66,7 +67,7 @@ struct {
 
         request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:newURL]
                                           cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                      timeoutInterval:30];
+                                      timeoutInterval:timeout];
     } else {
         
         NSString *post = [NSString stringWithFormat: @"op=%lu&dat=%@",(unsigned long)code, [msgData base64EncodedString]];
@@ -76,41 +77,22 @@ struct {
         NSLog(@"WSDataController -> Valor postLength ->    %@", postLength);
         NSLog(@"\n\n");
 
-        //TODO: Take out get cookie session in other method
-        NSHTTPCookie *cookieSession;
-        
-        for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
-        {
-            NSLog(@"name: '%@'\n",   [cookie name]);
-            NSLog(@"value: '%@'\n",  [cookie value]);
-            NSLog(@"domain: '%@'\n", [cookie domain]);
-            NSLog(@"path: '%@'\n",   [cookie path]);
-            
-            if ([cookie.name isEqualToString:@"JSESSIONID"]) {
-                cookieSession = cookie;
-            }
-        }
-        
-        
-        NSDictionary *cookieDict;
-        if (cookieSession != nil) {
-            NSArray *cookieArray = [NSArray arrayWithObject:cookieSession];
-            cookieDict = [NSHTTPCookie requestHeaderFieldsWithCookies:cookieArray];
-        }
-        
-        
         request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:wsURLString]
                                           cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                      timeoutInterval:30];
+                                      timeoutInterval:timeout];
 
         [request setHTTPMethod:@"POST"];
         [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
         [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
         [request setHTTPBody:postData];
         
-        if (cookieDict != nil) {
-            [request setAllHTTPHeaderFields:cookieDict];
-            [request setHTTPShouldHandleCookies:YES];
+        if ([[LoginService instance] serverSupportLogin]) {
+            NSDictionary *cookieDict = [CookieTools JSessionID];
+            
+            if (cookieDict != nil) {
+                [request setAllHTTPHeaderFields:cookieDict];
+                [request setHTTPShouldHandleCookies:YES];
+            }
         }
     }
 
@@ -134,7 +116,7 @@ struct {
     // Create a request object with that URL
     NSURLRequest *request = [NSURLRequest requestWithURL:url
                                              cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                         timeoutInterval:60];
+                                         timeoutInterval:timeout];
 
     // Clear out the existing connection if there is one
     if (connectionInProgress) {

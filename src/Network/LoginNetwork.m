@@ -17,21 +17,21 @@
 
 + (void) loginProcess:(void(^)(NSString *token))success failure:(void(^)(NSError *error))failure {
     
-   // NSString *opParameter = @"op";
-   // NSString *datParameter = @"dat";
+    NSString *opParameter = @"op";
+    NSString *datParameter = @"dat";
     NSString *baseURL = SERVER_URL;
     NSInteger operation = 10;
     NSString *dataString = @"<lgnrq />";
     NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
     
-    NSString *params = [NSString stringWithFormat: @"op=%lu&dat=%@",
-                      (unsigned long)operation, [data base64EncodedString]];
+    NSString *params = [NSString stringWithFormat: @"%@=%lu&%@=%@", opParameter,
+                      (unsigned long)operation, datParameter, [data base64EncodedString]];
     
     NSData *postData = [params dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:SERVER_URL]];
+    [request setURL:[NSURL URLWithString:baseURL]];
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody:postData];
@@ -43,8 +43,8 @@
         if (error) {
             failure(error);
         } else  {
-            //NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-            //NSLog(@"Request reply: %@", requestReply);
+            NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+            NSLog(@"Request reply: %@", requestReply);
             Parser *parser = [Parser new];
             
             [parser parseAuthData:data success:^(NSString *token) {
@@ -76,7 +76,7 @@
     NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:[NSURL URLWithString:SERVER_URL]];
+    [request setURL:[NSURL URLWithString:baseURL]];
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody:postData];

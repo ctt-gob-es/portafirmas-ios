@@ -26,7 +26,6 @@
     // Load the file content and read the data into arrays
     _appConfig = [[NSDictionary alloc] initWithContentsOfFile:path];
     
-
     return self;
 }
 

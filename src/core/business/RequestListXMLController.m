@@ -11,6 +11,7 @@
 #import "Document.h"
 #import "CertificateUtils.h"
 #import "NSData+Base64.h"
+#import "LoginService.h"
 
 @implementation RequestListXMLController
 @synthesize dataSource = _dataSource;
@@ -29,17 +30,16 @@
 {
     NSMutableString *mesg = [[NSMutableString alloc] initWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?><rqtlst state=\"%@\" pg=\"%d\" sz=\"%d\">\n", state, pageNumber, kRequestListXMLControllerPageSize];
     
-    //TODO: Manage when is neccesary have the Certificate in the request.
-
-    // CERTIFICADO
-   /* CertificateUtils *cert = [CertificateUtils sharedWrapper];
-    NSString *certificado = [NSData base64EncodeData:[cert publicKeyBits]];
-    // Formats lists message
-    NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
-
-    [certlabel appendFormat:@"%@\n", certificado];
-    [certlabel appendString:@"</cert>\n"];
-    [mesg appendString:certlabel];*/
+    if (![[LoginService instance] serverSupportLogin]) {
+        CertificateUtils *cert = [CertificateUtils sharedWrapper];
+        NSString *certificado = [NSData base64EncodeData:[cert publicKeyBits]];
+        // Formats lists message
+        NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
+        
+        [certlabel appendFormat:@"%@\n", certificado];
+        [certlabel appendString:@"</cert>\n"];
+        [mesg appendString:certlabel];
+    }
 
     NSMutableString *fmts = [[NSMutableString alloc] initWithString:@"<fmts>\n"];
     for (int i = 0; i < [formatArr count]; i++) {

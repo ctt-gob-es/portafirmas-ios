@@ -86,9 +86,11 @@
 		3CC403861AB9EDBA006F8803 /* CertificateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC403851AB9EDBA006F8803 /* CertificateCell.m */; };
 		3CD199A51AC2C952007E9E35 /* UINavigationController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */; };
 		992987C2AA230FF0604BD234 /* libPods-PortaFirmasUniv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0A9AB702FDB8ACDEBFCF67 /* libPods-PortaFirmasUniv.a */; };
+		BC46A0E91FD6CBEB004D0C33 /* PFError.m in Sources */ = {isa = PBXBuildFile; fileRef = BC46A0E81FD6CBEB004D0C33 /* PFError.m */; };
 		BCAF65E11FAC9BCC00D30E54 /* PushNotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAF65E01FAC9BCC00D30E54 /* PushNotificationService.m */; };
 		BCAF65E31FAC9E1900D30E54 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCAF65E21FAC9E0700D30E54 /* UserNotifications.framework */; };
 		BCAF65E61FACA96500D30E54 /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAF65E51FACA96500D30E54 /* NSData+Conversion.m */; };
+		BCE470F51FD70CEF00702306 /* CookieTools.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE470F41FD70CEF00702306 /* CookieTools.m */; };
 		BCEF37A51FB2196E00374541 /* StoredData.m in Sources */ = {isa = PBXBuildFile; fileRef = BCEF37A41FB2196E00374541 /* StoredData.m */; };
 		BCEF37B51FB338E500374541 /* PushNotificationNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = BCEF37B41FB338E500374541 /* PushNotificationNetwork.m */; };
 		BCF083321FC45A0900450FE7 /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF0832F1FC45A0900450FE7 /* Stack.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -241,11 +243,15 @@
 		3CD199A31AC2C952007E9E35 /* UINavigationController+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationController+Utils.h"; path = "UINavigationController/UINavigationController+Utils.h"; sourceTree = "<group>"; };
 		3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+Utils.m"; path = "UINavigationController/UINavigationController+Utils.m"; sourceTree = "<group>"; };
 		862DBE2D1FC5F494A173087E /* Pods-PortaFirmasUniv.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortaFirmasUniv.release.xcconfig"; path = "Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv.release.xcconfig"; sourceTree = "<group>"; };
+		BC46A0E71FD6CBEB004D0C33 /* PFError.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PFError.h; sourceTree = "<group>"; };
+		BC46A0E81FD6CBEB004D0C33 /* PFError.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PFError.m; sourceTree = "<group>"; };
 		BCAF65DF1FAC9BCC00D30E54 /* PushNotificationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PushNotificationService.h; path = Services/PushNotificationService.h; sourceTree = "<group>"; };
 		BCAF65E01FAC9BCC00D30E54 /* PushNotificationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PushNotificationService.m; path = Services/PushNotificationService.m; sourceTree = "<group>"; };
 		BCAF65E21FAC9E0700D30E54 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		BCAF65E41FACA96500D30E54 /* NSData+Conversion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Conversion.h"; sourceTree = "<group>"; };
 		BCAF65E51FACA96500D30E54 /* NSData+Conversion.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Conversion.m"; sourceTree = "<group>"; };
+		BCE470F31FD70CEF00702306 /* CookieTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CookieTools.h; sourceTree = "<group>"; };
+		BCE470F41FD70CEF00702306 /* CookieTools.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CookieTools.m; sourceTree = "<group>"; };
 		BCEF37A31FB2196E00374541 /* StoredData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StoredData.h; sourceTree = "<group>"; };
 		BCEF37A41FB2196E00374541 /* StoredData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StoredData.m; sourceTree = "<group>"; };
 		BCEF37B31FB338E500374541 /* PushNotificationNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PushNotificationNetwork.h; sourceTree = "<group>"; };
@@ -725,6 +731,10 @@
 				BCF619A61FC4379D009C5B50 /* LoginNetwork.m */,
 				BCF083341FC46A8B00450FE7 /* Parser.h */,
 				BCF083351FC46A8B00450FE7 /* Parser.m */,
+				BC46A0E71FD6CBEB004D0C33 /* PFError.h */,
+				BC46A0E81FD6CBEB004D0C33 /* PFError.m */,
+				BCE470F31FD70CEF00702306 /* CookieTools.h */,
+				BCE470F41FD70CEF00702306 /* CookieTools.m */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -782,8 +792,8 @@
 				ORGANIZATIONNAME = "Solid Gear Projects S.L.";
 				TargetAttributes = {
 					1C9F200E163E93C3007A170B = {
-						DevelopmentTeam = 2H36E8KFN2;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = Q7737AAR99;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -908,6 +918,7 @@
 				3CA899601AA60E6C0035012D /* RequestCell.m in Sources */,
 				BCEF37B51FB338E500374541 /* PushNotificationNetwork.m in Sources */,
 				3C00ADDA1AB71B1700EF6886 /* RequestListXMLController.m in Sources */,
+				BC46A0E91FD6CBEB004D0C33 /* PFError.m in Sources */,
 				BCF083621FC72E3100450FE7 /* NSString+XMLSafe.m in Sources */,
 				3C00AD751AB71A6300EF6886 /* DetailTableViewController.m in Sources */,
 				3CC4036D1AB96D0F006F8803 /* AddServerVC.m in Sources */,
@@ -924,6 +935,7 @@
 				BCAF65E61FACA96500D30E54 /* NSData+Conversion.m in Sources */,
 				3CC403681AB96D05006F8803 /* PFBaseVC.m in Sources */,
 				3C00AD781AB71A6300EF6886 /* SendersViewController.m in Sources */,
+				BCE470F51FD70CEF00702306 /* CookieTools.m in Sources */,
 				3CA899611AA60E6C0035012D /* RequestCellNoUI.m in Sources */,
 				3C00AD691AB71A0700EF6886 /* SettingsCell.m in Sources */,
 				3C00AD9F1AB71ACB00EF6886 /* SignLine.m in Sources */,
@@ -1041,17 +1053,17 @@
 				CODE_SIGN_ENTITLEMENTS = res/conf/PortaFirmasUniv.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 2H36E8KFN2;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Q7737AAR99;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "src/main/PortaFirmasUniv-Prefix.pch";
 				INFOPLIST_FILE = "src/main/PortaFirmasUniv-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				PRODUCT_BUNDLE_IDENTIFIER = es.gob.afirma.Portafirmas;
+				PRODUCT_BUNDLE_IDENTIFIER = com.solidgeargroup.portalfirmas;
 				PRODUCT_NAME = "Port@firmas";
-				PROVISIONING_PROFILE = "7300a5b1-9066-42c4-a569-8ec55acfc318";
-				PROVISIONING_PROFILE_SPECIFIER = Portafirmas_DES_Emilio2;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1066,17 +1078,17 @@
 				CODE_SIGN_ENTITLEMENTS = res/conf/PortaFirmasUniv.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 2H36E8KFN2;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = Q7737AAR99;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "src/main/PortaFirmasUniv-Prefix.pch";
 				INFOPLIST_FILE = "src/main/PortaFirmasUniv-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				PRODUCT_BUNDLE_IDENTIFIER = es.gob.afirma.Portafirmas;
+				PRODUCT_BUNDLE_IDENTIFIER = com.solidgeargroup.portalfirmas;
 				PRODUCT_NAME = "Port@firmas";
-				PROVISIONING_PROFILE = "7300a5b1-9066-42c4-a569-8ec55acfc318";
-				PROVISIONING_PROFILE_SPECIFIER = Portafirmas_DES_Emilio2;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

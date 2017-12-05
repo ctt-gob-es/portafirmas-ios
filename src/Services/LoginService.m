@@ -8,10 +8,10 @@
 
 #import "LoginService.h"
 #import "LoginNetwork.h"
-
 #import "CertificateUtils.h"
 #import "Base64Utils.h"
 #import "NSData+Base64.h"
+#import "PFError.h"
 
 @interface LoginService ()
 @property (nonatomic, strong) StoredData* storedData;
@@ -58,9 +58,10 @@
 }
     
 - (void) loginWithCertificate:(void(^)())success failure:(void(^)(NSError *error))failure {
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     [LoginNetwork loginProcess:^(NSString *token) {
+        self.serverSupportLogin = YES;
         NSLog(@"Token = %@", token);
         NSString *decodedToken = [self decodeToken:token];
         NSString *signToken = [self signToken:decodedToken];
@@ -75,12 +76,18 @@
             [SVProgressHUD dismiss];
             DDLogError(@"Error starting login process");
             DDLogError(@"Error: %@", error);
+            self.serverSupportLogin = NO;
             failure(error);
         }];
     } failure:^(NSError *error) {
         [SVProgressHUD dismiss];
         DDLogError(@"Error starting login process");
-        DDLogError(@"Error: %@", error);
+        
+        //Check if is old server
+        if (error != nil && error.code == PFLoginNotSupported) {
+            self.serverSupportLogin = NO;
+            DDLogError(@"Error: %@", error);
+        }
         failure(error);
     }];
     

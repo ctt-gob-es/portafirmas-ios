@@ -11,6 +11,7 @@
 #import "CertificateUtils.h"
 #import "AppListXMLController.h"
 #import "LoginService.h"
+#import "PFError.h"
 
 static NSString *const kSettingsVCSectionTitleServerURL = @"Servidor";
 static NSString *const kSettingsVCCellIdentifier = @"SettingsCell";
@@ -129,8 +130,14 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
                 [self performSegueWithIdentifier:identifier sender:self];
             });
          } failure:^(NSError *error) {
-             segue = NO;
-             //TODO show alert view
+             if (error != nil && error.code == PFLoginNotSupported) {
+                 segue = YES;
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self performSegueWithIdentifier:identifier sender:self];
+                 });
+             } else {
+                 segue = NO;
+             }
          }];
     } else {
         segue = YES;

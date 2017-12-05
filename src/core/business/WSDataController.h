@@ -19,7 +19,6 @@
     NSURLConnection *connectionInProgress;
     NSMutableData *xmlData;
     BOOL REQUEST_POST;
-    BOOL REST_SERVER;
 
 }
 @property (nonatomic, weak) id <WSDelegate> delegate;

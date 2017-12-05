@@ -72,8 +72,9 @@ static AppListXMLController *_sharedInstance = nil;
 {
     NSMutableString *requestString = [@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rqtconf>\n" mutableCopy];
 
-    //TODO: Add old server support
-   // [requestString appendString:[self certificateTag]];
+    if (![[LoginService instance] serverSupportLogin]) {
+        [requestString appendString:[self certificateTag]];
+    }
     [requestString appendString:@"</rqtconf>"];
 
     return requestString;
