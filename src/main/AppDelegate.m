@@ -10,6 +10,7 @@
 #import "NSData+Conversion.h"
 #import "UnassignedRequestTableViewController.h"
 #import "LoginService.h"
+#import "DefaultServersData.h"
 
 @implementation AppDelegate
 // @synthesize certificate, appConfig=_appConfig;
@@ -45,6 +46,8 @@ void uncaughtExceptionHandler(NSException *exception)
     
     //[[LoginService instance] authID];
    //[[PushNotificationService instance] initializePushNotificationsService];
+    
+    [DefaultServersData createDefaultServersIsNotExist];
     
     return YES;
 }
