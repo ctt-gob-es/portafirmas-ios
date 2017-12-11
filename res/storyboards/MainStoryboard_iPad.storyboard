@@ -114,7 +114,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nie-yJ-6zf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-5877" y="-374"/>
+            <point key="canvasLocation" x="-5890" y="-304"/>
         </scene>
         <!--Destinatarios-->
         <scene sceneID="pcZ-JE-ekh">
@@ -1312,14 +1312,14 @@
                                 <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Certificado" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="A0h-Bk-K9m">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Certificado" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="A0h-Bk-K9m">
                                 <rect key="frame" x="20" y="198" width="70" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mkT-YB-zcw">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="mkT-YB-zcw">
                                 <rect key="frame" x="16" y="232" width="736" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
@@ -1327,9 +1327,6 @@
                                 <state key="normal" title="Sin especificar">
                                     <color key="titleColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <connections>
-                                    <segue destination="jzO-st-Ygm" kind="push" id="omx-jF-n6l"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1354,7 +1351,6 @@
                     <connections>
                         <outlet property="aliasTextField" destination="dgR-W9-dLb" id="IeF-dC-g52"/>
                         <outlet property="saveBarButtonItem" destination="PY0-M3-Jkc" id="ulc-0X-l4m"/>
-                        <outlet property="selectedCertificate" destination="mkT-YB-zcw" id="Lld-9N-UwM"/>
                         <outlet property="urlTextField" destination="rOH-YK-Eei" id="H3K-0x-E8H"/>
                     </connections>
                 </viewController>
@@ -1430,6 +1426,7 @@
                     <connections>
                         <outlet property="accessButton" destination="K5c-o9-GdF" id="MHz-aV-lPN"/>
                         <segue destination="Dr2-FO-7DU" kind="push" identifier="showServerListVC" id="2nz-fm-JQf"/>
+                        <segue destination="jzO-st-Ygm" kind="push" identifier="showRegisteredCertificates" id="Q9q-yG-0fu"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PMx-FN-I06" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -13,7 +13,10 @@
 #import "LoginService.h"
 #import "PFError.h"
 
+static const NSInteger kSettingsVCNumberOfSections = 2;
+static const NSInteger kSettingsVCNumberOfRowsPerSection = 1;
 static NSString *const kSettingsVCSectionTitleServerURL = @"Servidor";
+static NSString *const kSettingsVCSectionTitleCertificate = @"Certificado";
 static NSString *const kSettingsVCCellIdentifier = @"SettingsCell";
 static NSString *const kSettingsVCSegueIdentifierServerURLs = @"showServerListVC";
 static NSString *const kSettingsVCSegueIdentifierCertificates = @"showRegisteredCertificates";
@@ -66,18 +69,24 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return kSettingsVCNumberOfSections;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return kSettingsVCNumberOfRowsPerSection;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    
-    return kSettingsVCSectionTitleServerURL;
+    switch (section) {
+        case SettingsVCSectionServerURL:
+            return kSettingsVCSectionTitleServerURL;
+        case SettingsVCSectionCertificate:
+            return kSettingsVCSectionTitleCertificate;
+        default:
+            return nil;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -175,17 +184,11 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 {
     [[AppListXMLController sharedInstance] requestAppsList];
 }
-    
-/*- (void) performSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-    
-    [[AppListXMLController sharedInstance] requestAppsList];
-}*/
 
 #pragma mark - ServerListTVCDelegate
 
 - (void)serverListDidSelectServer:(NSDictionary *)serverInfo
 {
-    
     [self.tableView reloadData];
 }
 

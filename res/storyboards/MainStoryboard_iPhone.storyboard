@@ -34,9 +34,9 @@
                             <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" scrollEnabled="NO" indicatorStyle="black" editable="NO" text="Servidor a seleccionar" textAlignment="center" id="xYZ-4d-U1d">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="37"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" misplaced="YES" scrollEnabled="NO" indicatorStyle="black" editable="NO" text="Servidor a seleccionar" textAlignment="center" id="xYZ-4d-U1d">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="37"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" red="0.68627450980000004" green="0.13725490200000001" blue="0.10980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <accessibility key="accessibilityConfiguration">
                                         <bool key="isElement" value="NO"/>
@@ -107,7 +107,7 @@
                     </connections>
                 </barButtonItem>
             </objects>
-            <point key="canvasLocation" x="-2737" y="-1092"/>
+            <point key="canvasLocation" x="-2737.5" y="-1092.5"/>
         </scene>
         <!--LoginController-->
         <scene sceneID="cqN-kt-Ocj">
@@ -229,7 +229,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ybc-f5-aKu" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <barButtonItem title="Editar" id="WIy-kb-5CA"/>
             </objects>
-            <point key="canvasLocation" x="-2737" y="-1656"/>
+            <point key="canvasLocation" x="-2738" y="-1871"/>
         </scene>
         <!--Certicate Manager-->
         <scene sceneID="R1b-Vm-0Er">
@@ -1306,14 +1306,14 @@
                                 <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Certificado" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XOm-jI-Mc2">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Certificado" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XOm-jI-Mc2">
                                 <rect key="frame" x="16" y="184" width="70" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                 <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gxm-z8-m9w">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="gxm-z8-m9w">
                                 <rect key="frame" x="16" y="213" width="288" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
@@ -1321,9 +1321,6 @@
                                 <state key="normal" title=" Sin especificar">
                                     <color key="titleColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <connections>
-                                    <segue destination="Uhh-mb-l7B" kind="push" identifier="" id="SYA-QY-L7o"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1349,7 +1346,6 @@
                     <connections>
                         <outlet property="aliasTextField" destination="z1Q-If-adk" id="Zm9-0D-wdz"/>
                         <outlet property="saveBarButtonItem" destination="Ad0-Oq-k27" id="l9U-Ch-pfT"/>
-                        <outlet property="selectedCertificate" destination="gxm-z8-m9w" id="b5w-7h-IiF"/>
                         <outlet property="urlTextField" destination="pmf-gp-0dJ" id="pZe-Af-rOy"/>
                     </connections>
                 </viewController>
@@ -1502,7 +1498,8 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="accessButton" destination="t5A-Lb-UeK" id="xoU-bv-0NX"/>
-                        <segue destination="Rg6-FS-H8G" kind="push" identifier="showServerListVC" id="Pa9-4K-Pzp"/>
+                        <segue destination="Rg6-FS-H8G" kind="push" identifier="showServerListVC" id="3sw-My-AgM"/>
+                        <segue destination="Uhh-mb-l7B" kind="push" identifier="showRegisteredCertificates" id="6jN-LE-rix"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Wa-wo-vBt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1618,7 +1615,7 @@
         <image name="icn_firma" width="13" height="13"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="nx9-6d-emn"/>
+        <segue reference="tjX-Gu-uGQ"/>
         <segue reference="47P-jN-2H3"/>
         <segue reference="f7k-Dd-rat"/>
     </inferredMetricsTieBreakers>
