@@ -11,7 +11,7 @@
 @implementation CookieTools
 
 + (NSDictionary *) JSessionID {
-    
+    NSString *jsessionCookie = @"JSESSIONID";
     NSHTTPCookie *cookieSession;
     
     for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
@@ -21,7 +21,7 @@
         NSLog(@"domain: '%@'\n", [cookie domain]);
         NSLog(@"path: '%@'\n",   [cookie path]);
         
-        if ([cookie.name isEqualToString:@"JSESSIONID"]) {
+        if ([cookie.name isEqualToString:jsessionCookie]) {
             cookieSession = cookie;
         }
     }
