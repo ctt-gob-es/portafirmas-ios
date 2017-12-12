@@ -90,6 +90,21 @@
             </objects>
             <point key="canvasLocation" x="-4037" y="-2691"/>
         </scene>
+        <!--Help View Controller-->
+        <scene sceneID="SQ6-sS-QI4">
+            <objects>
+                <viewController id="ont-ma-xC2" customClass="HelpViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3Jk-Ud-fyN">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="XpS-lY-iEc"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qzk-n3-mSB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-6842" y="-300"/>
+        </scene>
         <!--MainTab-->
         <scene sceneID="wzw-IP-OwB">
             <objects>
@@ -1420,7 +1435,13 @@
                         </connections>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" title="Port@firmas v1.2.2" id="YUs-wN-60t"/>
+                    <navigationItem key="navigationItem" title="Port@firmas v1.2.2" id="YUs-wN-60t">
+                        <barButtonItem key="rightBarButtonItem" image="question" style="done" id="Y86-SB-LU6">
+                            <connections>
+                                <segue destination="ont-ma-xC2" kind="push" id="492-ob-1rL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
@@ -1601,6 +1622,7 @@
         <image name="ic_rechazada" width="25" height="25"/>
         <image name="icn_check" width="15" height="10"/>
         <image name="icn_firma" width="13" height="13"/>
+        <image name="question" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="vfb-eq-kIh"/>
