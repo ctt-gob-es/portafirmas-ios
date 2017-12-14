@@ -19,6 +19,7 @@
 #import "RequestCell.h"
 #import "RequestCellNoUI.h"
 #import "ApproveXMLController.h"
+#import "LoginService.h"
 
 #define TAB_BAR_HIDDEN_FRAME CGRectMake(-10, -10, 0, 0)
 
@@ -192,8 +193,21 @@
 
 - (IBAction)didTapOnBackButton:(id)sender
 {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
+    //TODO Launch logout process if server has login support
+    if ([LoginService instance].serverSupportLogin){
+        
+        [[LoginService instance] logout:^{
+             [self closeView];
+        } failure:^(NSError *error) {
+             [self closeView];
+        }];
+        
+    } else {
+        [self closeView];
+    }
 }
+
 
 - (IBAction)editAction:(id)sender
 {
@@ -202,6 +216,10 @@
         NSLog(@"Editing => %d", self.editing);
         [self setEditing: !self.editing animated: !self.editing];
     }
+}
+
+- (void) closeView {
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)signAction:(id)sender

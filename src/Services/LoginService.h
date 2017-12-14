@@ -16,5 +16,6 @@
 + (LoginService *)instance;
 - (void) authID;
 - (void) loginWithCertificate:(void(^)())success failure:(void(^)(NSError *error))failure;
+- (void) logout:(void(^)())success failure:(void(^)(NSError *error))failure;
 
 @end

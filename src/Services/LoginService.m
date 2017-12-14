@@ -12,9 +12,11 @@
 #import "Base64Utils.h"
 #import "NSData+Base64.h"
 #import "PFError.h"
+#import "CookieTools.h"
 
 @interface LoginService ()
 @property (nonatomic, strong) StoredData* storedData;
+@property (nonatomic, strong) NSString *currentSignToken;
 @end
 
 @implementation LoginService
@@ -64,11 +66,11 @@
         self.serverSupportLogin = YES;
         NSLog(@"Token = %@", token);
         NSString *decodedToken = [self decodeToken:token];
-        NSString *signToken = [self signToken:decodedToken];
-        NSLog(@"Sign Token = %@", signToken);
+        self.currentSignToken = [self signToken:decodedToken];
+        NSLog(@"Sign Token = %@", self.currentSignToken);
         NSString *certificate = [self certificateInBase64];
         
-        [LoginNetwork validateLogin:certificate withSignedToken:signToken success:^{
+        [LoginNetwork validateLogin:certificate withSignedToken:self.currentSignToken success:^{
             [SVProgressHUD dismiss];
             NSLog(@"Login validated");
             success();
@@ -91,6 +93,25 @@
         failure(error);
     }];
     
+}
+
+- (void) logout:(void(^)())success failure:(void(^)(NSError *error))failure {
+    
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    
+    [LoginNetwork logout:^{
+        [SVProgressHUD dismiss];
+        NSLog(@"Logout finish with success");
+        self.currentSignToken = @"";
+        [CookieTools removeJSessionIDCookies];
+        success();
+    } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
+        NSLog(@"Logout finish with failure");
+        self.currentSignToken = @"";
+        [CookieTools removeJSessionIDCookies];
+        failure(error);
+    }];
 }
 
 - (NSString *) signToken: (NSString *) token {

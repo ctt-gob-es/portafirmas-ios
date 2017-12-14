@@ -10,4 +10,5 @@
 
 @interface CookieTools : NSObject
 + (NSDictionary *) JSessionID;
++ (void) removeJSessionIDCookies;
 @end

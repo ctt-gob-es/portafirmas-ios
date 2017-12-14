@@ -61,7 +61,7 @@
     NSString *datParameter = @"dat";
     NSString *baseURL = SERVER_URL;
     NSInteger operation = 11;
-    NSString *dataStringOne = @"<rqtvl><cert>";
+   NSString *dataStringOne = @"<rqtvl><cert>";
     NSString *dataStringTwo = @"</cert><pkcs1>";
     NSString *dataStringThree = @"</pkcs1></rqtvl>";
     
@@ -72,6 +72,41 @@
     NSString *params = [NSString stringWithFormat: @"%@=%lu&%@=%@", opParameter,
                         (unsigned long)operation,datParameter, [data base64EncodedString]];
 
+    NSData *postData = [params dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+    [request setURL:[NSURL URLWithString:baseURL]];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+    [request setHTTPBody:postData];
+    [request setHTTPShouldHandleCookies:YES];
+    
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (error) {
+            failure(error);
+        } else  {
+            NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+            NSLog(@"Request reply: %@", requestReply);
+            success();
+        }
+    }] resume];
+}
+
++ (void) logout:(void(^)())success failure:(void(^)(NSError *error))failure {
+    NSString *opParameter = @"op";
+    NSString *datParameter = @"dat";
+    NSString *baseURL = SERVER_URL;
+    NSInteger operation = 12;
+    NSString *dataString = @"<lgorq/>";
+    
+    NSString *xmlSafeString = [dataString xmlSafeString];
+    
+    NSData *data = [xmlSafeString  dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *params = [NSString stringWithFormat: @"%@=%lu&%@=%@", opParameter,
+                        (unsigned long)operation,datParameter, [data base64EncodedString]];
+    
     NSData *postData = [params dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
     

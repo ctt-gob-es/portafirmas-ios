@@ -16,10 +16,10 @@
     
     for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
     {
-        NSLog(@"name: '%@'\n",   [cookie name]);
+       /* NSLog(@"name: '%@'\n",   [cookie name]);
         NSLog(@"value: '%@'\n",  [cookie value]);
         NSLog(@"domain: '%@'\n", [cookie domain]);
-        NSLog(@"path: '%@'\n",   [cookie path]);
+        NSLog(@"path: '%@'\n",   [cookie path]);*/
         
         if ([cookie.name isEqualToString:jsessionCookie]) {
             cookieSession = cookie;
@@ -33,6 +33,18 @@
     }
     
     return cookieDict;
+}
+
++ (void) removeJSessionIDCookies {
+    NSString *jsessionCookie = @"JSESSIONID";
+    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    
+    for (NSHTTPCookie *cookie in [cookieStorage cookies])
+    {
+        if ([cookie.name isEqualToString:jsessionCookie]) {
+            [cookieStorage deleteCookie:cookie];
+        }
+    }
 }
 
 @end
