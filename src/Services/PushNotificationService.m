@@ -9,11 +9,15 @@
 #import "PushNotificationService.h"
 #import <UserNotifications/UserNotifications.h>
 #import "PushNotificationNetwork.h"
+#import "LoginService.h"
+
+@interface PushNotificationService ()
+@property (nonatomic, strong) NSString* lastTokenObtained;
+@end
 
 @implementation PushNotificationService
 
 @synthesize storedData = _storedData;
-
 
 + (PushNotificationService *)instance {
     static PushNotificationService *pushNotificationService = nil;
@@ -58,19 +62,35 @@
 
 - (void) updateTokenOfPushNotificationsService: (NSString *) deviceToken {
     
-    if (![deviceToken isEqualToString: [[self storedData] devicePushNotificationToken]] &&  [[self storedData] getUserNotificationPermissionIsEnabled]) {
-
-        [PushNotificationNetwork subscribeToken:deviceToken success:^{
+    self.lastTokenObtained = deviceToken;
+   // [self updateTokenOnServer];
+   /* if (![deviceToken isEqualToString: [[self storedData] devicePushNotificationToken]] &&  [[self storedData] getUserNotificationPermissionIsEnabled]) {
+        
+        NSString *certificate = [[LoginService instance] certificateInBase64];
+        
+        [PushNotificationNetwork subscribeDevice:deviceToken withCertificate:certificate success:^{
             [[self storedData] updateData:deviceToken notificationPermisionState:TrueValue];
             DDLogDebug(@"Push Notification Token Registered");
-        } failure:^(NSError * error) {
+        } failure:^(NSError *error) {
             DDLogError(@"Error subscribing token");
             DDLogError(@"Error: %@", error);
         }];
     } else {
         DDLogDebug(@"Push Notification Token Not Registered because is registered");
-    }
+    }*/
+}
+
+- (void) updateTokenOnServer {
     
+    NSString *certificate = [[LoginService instance] certificateInBase64];
+    
+    [PushNotificationNetwork subscribeDevice:self.lastTokenObtained withCertificate:certificate success:^{
+     //   [[self storedData] updateData:self.lastTokenObtained notificationPermisionState:TrueValue];
+        DDLogDebug(@"Push Notification Token Registered");
+    } failure:^(NSError *error) {
+        DDLogError(@"Error subscribing token");
+        DDLogError(@"Error: %@", error);
+    }];
 }
 
 #pragma mark - Utils

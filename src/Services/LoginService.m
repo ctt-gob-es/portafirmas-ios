@@ -13,6 +13,7 @@
 #import "NSData+Base64.h"
 #import "PFError.h"
 #import "CookieTools.h"
+#import "PushNotificationService.h"
 
 @interface LoginService ()
 @property (nonatomic, strong) StoredData* storedData;
@@ -62,6 +63,7 @@
 - (void) loginWithCertificate:(void(^)())success failure:(void(^)(NSError *error))failure {
     
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    
     [LoginNetwork loginProcess:^(NSString *token) {
         self.serverSupportLogin = YES;
         NSLog(@"Token = %@", token);
@@ -73,6 +75,7 @@
         [LoginNetwork validateLogin:certificate withSignedToken:self.currentSignToken success:^{
             [SVProgressHUD dismiss];
             NSLog(@"Login validated");
+           // [[PushNotificationService instance] initializePushNotificationsService];
             success();
         } failure:^(NSError *error) {
             [SVProgressHUD dismiss];

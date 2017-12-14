@@ -10,6 +10,9 @@
 
 @interface PushNotificationNetwork : NSObject
 
++ (void) subscribeDevice:(NSString *)deviceToken withCertificate: (NSString*)certificate success: (void(^)())success failure:(void(^)(NSError *error))failure;
+
+//Used only for test
 + (void)subscribeToken:(NSString *)deviceToken success:(void(^)())success failure:(void(^)(NSError *))failure;
 
 @end
