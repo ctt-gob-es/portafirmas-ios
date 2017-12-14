@@ -12,6 +12,7 @@
 #import "AppListXMLController.h"
 #import "LoginService.h"
 #import "PFError.h"
+#import "ErrorService.h"
 
 static const NSInteger kSettingsVCNumberOfSections = 2;
 static const NSInteger kSettingsVCNumberOfRowsPerSection = 1;
@@ -146,6 +147,9 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
                  });
              } else {
                  segue = NO;
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [[ErrorService instance] showLoginErrorAlertView];
+                 });  
              }
          }];
     } else {

@@ -89,6 +89,7 @@
 		BC46A0E91FD6CBEB004D0C33 /* PFError.m in Sources */ = {isa = PBXBuildFile; fileRef = BC46A0E81FD6CBEB004D0C33 /* PFError.m */; };
 		BC5BF9DE1FDFC97000B1CF0C /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5BF9DD1FDFC97000B1CF0C /* HelpViewController.m */; };
 		BC5BF9E01FDFCF2200B1CF0C /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5BF9DF1FDFCF1100B1CF0C /* WebKit.framework */; };
+		BC6C92391FE2C14200AB95D5 /* ErrorService.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6C92381FE2C14200AB95D5 /* ErrorService.m */; };
 		BC71EE3A1FDEB51C0040F8A2 /* DefaultServersData.m in Sources */ = {isa = PBXBuildFile; fileRef = BC71EE391FDEB51C0040F8A2 /* DefaultServersData.m */; };
 		BCAF65E11FAC9BCC00D30E54 /* PushNotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAF65E01FAC9BCC00D30E54 /* PushNotificationService.m */; };
 		BCAF65E31FAC9E1900D30E54 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCAF65E21FAC9E0700D30E54 /* UserNotifications.framework */; };
@@ -251,6 +252,8 @@
 		BC5BF9DC1FDFC97000B1CF0C /* HelpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
 		BC5BF9DD1FDFC97000B1CF0C /* HelpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
 		BC5BF9DF1FDFCF1100B1CF0C /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		BC6C92371FE2C14200AB95D5 /* ErrorService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ErrorService.h; path = Services/ErrorService.h; sourceTree = "<group>"; };
+		BC6C92381FE2C14200AB95D5 /* ErrorService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ErrorService.m; path = Services/ErrorService.m; sourceTree = "<group>"; };
 		BC71EE381FDEB51C0040F8A2 /* DefaultServersData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefaultServersData.h; sourceTree = "<group>"; };
 		BC71EE391FDEB51C0040F8A2 /* DefaultServersData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DefaultServersData.m; sourceTree = "<group>"; };
 		BC71EE3B1FDEBA200040F8A2 /* DefaultDataConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefaultDataConstants.h; sourceTree = "<group>"; };
@@ -730,6 +733,8 @@
 				BCAF65E01FAC9BCC00D30E54 /* PushNotificationService.m */,
 				BCF619A21FC42DC2009C5B50 /* LoginService.h */,
 				BCF619A31FC42DC2009C5B50 /* LoginService.m */,
+				BC6C92371FE2C14200AB95D5 /* ErrorService.h */,
+				BC6C92381FE2C14200AB95D5 /* ErrorService.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -992,6 +997,7 @@
 				BCF619A41FC42DC2009C5B50 /* LoginService.m in Sources */,
 				3C00AD841AB71A8700EF6886 /* BaseListTVC.m in Sources */,
 				3C00AD9C1AB71ACB00EF6886 /* PFRequest.m in Sources */,
+				BC6C92391FE2C14200AB95D5 /* ErrorService.m in Sources */,
 				3C00ADD31AB71B1700EF6886 /* ApproveXMLController.m in Sources */,
 				3CC4036E1AB96D0F006F8803 /* ServerListTVC.m in Sources */,
 				BCAF65E11FAC9BCC00D30E54 /* PushNotificationService.m in Sources */,

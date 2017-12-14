@@ -16,5 +16,7 @@
 @property (strong, nonatomic) NSString *certificateName;
 @property (strong, nonatomic) NSDictionary *appConfig;
 @property (strong, nonatomic) UITabBarController *mainTab;
-//@property (strong, nonatomic) CertificateUtils *certificate;
+
++ (UIViewController*) presentingViewController;
+
 @end

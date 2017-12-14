@@ -89,7 +89,19 @@
         } else  {
             NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
             NSLog(@"Request reply: %@", requestReply);
-            success();
+            Parser *parser = [Parser new];
+            
+            [parser parseValidateData:data success:^(BOOL isValid) {
+                if (isValid) {
+                    success();
+                } else {
+                   failure(nil);
+                }
+                
+            } failure:^(NSError *error) {
+                failure(error);
+            }];
+            
         }
     }] resume];
 }
