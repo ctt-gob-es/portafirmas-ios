@@ -63,7 +63,7 @@
 - (void) updateTokenOfPushNotificationsService: (NSString *) deviceToken {
     
     self.lastTokenObtained = deviceToken;
-   // [self updateTokenOnServer];
+    [self updateTokenOnServer];
    /* if (![deviceToken isEqualToString: [[self storedData] devicePushNotificationToken]] &&  [[self storedData] getUserNotificationPermissionIsEnabled]) {
         
         NSString *certificate = [[LoginService instance] certificateInBase64];
@@ -82,10 +82,10 @@
 
 - (void) updateTokenOnServer {
     
-    NSString *certificate = [[LoginService instance] certificateInBase64];
+    NSString *IDVendor = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     
-    [PushNotificationNetwork subscribeDevice:self.lastTokenObtained withCertificate:certificate success:^{
-     //   [[self storedData] updateData:self.lastTokenObtained notificationPermisionState:TrueValue];
+    [PushNotificationNetwork subscribeDevice:IDVendor withToken:self.lastTokenObtained success:^{
+        //   [[self storedData] updateData:self.lastTokenObtained notificationPermisionState:TrueValue];
         DDLogDebug(@"Push Notification Token Registered");
     } failure:^(NSError *error) {
         DDLogError(@"Error subscribing token");

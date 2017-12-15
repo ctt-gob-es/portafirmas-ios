@@ -89,6 +89,8 @@
 		BC46A0E91FD6CBEB004D0C33 /* PFError.m in Sources */ = {isa = PBXBuildFile; fileRef = BC46A0E81FD6CBEB004D0C33 /* PFError.m */; };
 		BC5BF9DE1FDFC97000B1CF0C /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5BF9DD1FDFC97000B1CF0C /* HelpViewController.m */; };
 		BC5BF9E01FDFCF2200B1CF0C /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5BF9DF1FDFCF1100B1CF0C /* WebKit.framework */; };
+		BC65EFD61FE3D856003AF04F /* Server.m in Sources */ = {isa = PBXBuildFile; fileRef = BC65EFD51FE3D856003AF04F /* Server.m */; };
+		BC65EFD91FE3D914003AF04F /* ServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC65EFD81FE3D914003AF04F /* ServerManager.m */; };
 		BC6C92391FE2C14200AB95D5 /* ErrorService.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6C92381FE2C14200AB95D5 /* ErrorService.m */; };
 		BC71EE3A1FDEB51C0040F8A2 /* DefaultServersData.m in Sources */ = {isa = PBXBuildFile; fileRef = BC71EE391FDEB51C0040F8A2 /* DefaultServersData.m */; };
 		BCAF65E11FAC9BCC00D30E54 /* PushNotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAF65E01FAC9BCC00D30E54 /* PushNotificationService.m */; };
@@ -252,6 +254,10 @@
 		BC5BF9DC1FDFC97000B1CF0C /* HelpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
 		BC5BF9DD1FDFC97000B1CF0C /* HelpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
 		BC5BF9DF1FDFCF1100B1CF0C /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		BC65EFD41FE3D856003AF04F /* Server.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Server.h; sourceTree = "<group>"; };
+		BC65EFD51FE3D856003AF04F /* Server.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Server.m; sourceTree = "<group>"; };
+		BC65EFD71FE3D914003AF04F /* ServerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerManager.h; sourceTree = "<group>"; };
+		BC65EFD81FE3D914003AF04F /* ServerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ServerManager.m; sourceTree = "<group>"; };
 		BC6C92371FE2C14200AB95D5 /* ErrorService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ErrorService.h; path = Services/ErrorService.h; sourceTree = "<group>"; };
 		BC6C92381FE2C14200AB95D5 /* ErrorService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ErrorService.m; path = Services/ErrorService.m; sourceTree = "<group>"; };
 		BC71EE381FDEB51C0040F8A2 /* DefaultServersData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefaultServersData.h; sourceTree = "<group>"; };
@@ -742,6 +748,10 @@
 		BCEF37A21FB2194F00374541 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				BC65EFD41FE3D856003AF04F /* Server.h */,
+				BC65EFD51FE3D856003AF04F /* Server.m */,
+				BC65EFD71FE3D914003AF04F /* ServerManager.h */,
+				BC65EFD81FE3D914003AF04F /* ServerManager.m */,
 				BCEF37A31FB2196E00374541 /* StoredData.h */,
 				BCEF37A41FB2196E00374541 /* StoredData.m */,
 				BC71EE3B1FDEBA200040F8A2 /* DefaultDataConstants.h */,
@@ -954,6 +964,7 @@
 				3CC4036D1AB96D0F006F8803 /* AddServerVC.m in Sources */,
 				3C00ADA61AB71AD800EF6886 /* main.m in Sources */,
 				3CB68F611AB81BAD00BEB067 /* ServersListCell.m in Sources */,
+				BC65EFD61FE3D856003AF04F /* Server.m in Sources */,
 				3C00AD9E1AB71ACB00EF6886 /* Preview.m in Sources */,
 				3C00ADB51AB71B0B00EF6886 /* CertificateUtils.m in Sources */,
 				BCF083331FC45A0900450FE7 /* XMLParser.m in Sources */,
@@ -998,6 +1009,7 @@
 				3C00AD841AB71A8700EF6886 /* BaseListTVC.m in Sources */,
 				3C00AD9C1AB71ACB00EF6886 /* PFRequest.m in Sources */,
 				BC6C92391FE2C14200AB95D5 /* ErrorService.m in Sources */,
+				BC65EFD91FE3D914003AF04F /* ServerManager.m in Sources */,
 				3C00ADD31AB71B1700EF6886 /* ApproveXMLController.m in Sources */,
 				3CC4036E1AB96D0F006F8803 /* ServerListTVC.m in Sources */,
 				BCAF65E11FAC9BCC00D30E54 /* PushNotificationService.m in Sources */,

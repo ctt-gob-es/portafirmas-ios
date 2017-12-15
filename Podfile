@@ -6,5 +6,5 @@ target 'PortaFirmasUniv' do
     pod 'OpenSSL-Universal', '~> 1.0.2.11'
     pod 'CocoaLumberjack', '~> 3.3.0'
     pod 'UICKeyChainStore', '~> 2.1.1'
+    pod 'Realm', '~> 3.0.2'
 end
-

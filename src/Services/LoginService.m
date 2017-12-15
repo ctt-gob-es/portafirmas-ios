@@ -75,7 +75,7 @@
         [LoginNetwork validateLogin:certificate withSignedToken:self.currentSignToken success:^{
             [SVProgressHUD dismiss];
             NSLog(@"Login validated");
-           // [[PushNotificationService instance] initializePushNotificationsService];
+            [[PushNotificationService instance] initializePushNotificationsService];
             success();
         } failure:^(NSError *error) {
             [SVProgressHUD dismiss];

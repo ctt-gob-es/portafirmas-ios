@@ -11,5 +11,6 @@
 
 @interface Parser : NSObject
 - (void) parseAuthData: (NSData *)data success: (void(^)(NSString *token))success failure:(void(^)(NSError *))failure;
-- (void) parseValidateData: (NSData *)data success: (void(^)(BOOL isValid))success failure:(void(^)(NSError *))failure ;
+- (void) parseValidateData: (NSData *)data success: (void(^)(BOOL isValid))success failure:(void(^)(NSError *))failure;
+- (void) parseValidateSubscription: (NSData *)data success: (void(^)(BOOL isValid))success failure:(void(^)(NSError *))failure;
 @end

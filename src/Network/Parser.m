@@ -22,6 +22,9 @@ NSString *logValidateKey = @"vllgnrq";
 NSString *logValidateErrorKey = @"er";
 NSString *logValidateOkKey = @"ok";
 
+NSString *subscriptionKey = @"reg";
+NSString *subscriptionValidateOkKey = @"ok";
+
 - (void) parseAuthData: (NSData *)data success: (void(^)(NSString *token))success failure:(void(^)(NSError *))failure {
     
     XMLParser *parser = [[XMLParser alloc] init];
@@ -69,8 +72,6 @@ NSString *logValidateOkKey = @"ok";
     
     XMLParser *parser = [[XMLParser alloc] init];
     
-    __block NSString *pfUnivErrorDomain = PFUnivErrorDomain;
-    
     [parser parseData:data success:^(id parsedData) {
         //NSLog(@"Data: %@", parsedData);
         if (parsedData != nil) {
@@ -89,18 +90,37 @@ NSString *logValidateOkKey = @"ok";
                 success(isValid);
                 return;
             }
+        }
+        
+        failure(nil);
+        
+    } failure:^(NSError *error) {
+        NSLog(@"Error: %@", error);
+        failure(error);
+    }];
+}
+
+- (void) parseValidateSubscription: (NSData *)data success: (void(^)(BOOL isValid))success failure:(void(^)(NSError *))failure {
+    
+    XMLParser *parser = [[XMLParser alloc] init];
+    
+    [parser parseData:data success:^(id parsedData) {
+        //NSLog(@"Data: %@", parsedData);
+        if (parsedData != nil) {
+            NSDictionary *parsedDataDict = (NSDictionary *)parsedData;
+            NSDictionary *validationDict = [parsedDataDict objectForKey:subscriptionKey];
             
-            NSDictionary *errorDict = [parsedDataDict objectForKey:errorKey];
-            
-            if (errorDict != nil) {
+            if (validationDict != nil) {
+                NSString *validation = [validationDict objectForKey:subscriptionValidateOkKey];
                 
-                NSString *errorValue = [errorDict objectForKey:cdKey];
+                BOOL isValid = false;
                 
-                if ([errorValue isEqualToString:loginNotSupportedError]) {
-                    NSError *customError = [NSError errorWithDomain:pfUnivErrorDomain code:PFLoginNotSupported userInfo:nil];
-                    failure(customError);
-                    return;
+                if ([validation isEqualToString:@"true"]) {
+                    isValid = true;
                 }
+                
+                success(isValid);
+                return;
             }
         }
         
