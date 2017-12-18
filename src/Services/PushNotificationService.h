@@ -11,7 +11,6 @@
 
 @interface PushNotificationService : NSObject
 
-@property (nonatomic, strong) StoredData* storedData;
 
 + (PushNotificationService *)instance;
 

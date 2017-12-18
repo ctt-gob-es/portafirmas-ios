@@ -10,14 +10,16 @@
 #import <UserNotifications/UserNotifications.h>
 #import "PushNotificationNetwork.h"
 #import "LoginService.h"
+#import "Server.h"
+#import "ServerManager.h"
+
+#define SERVER_URL ((NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyCurrentServer])[kPFUserDefaultsKeyURL]
 
 @interface PushNotificationService ()
-@property (nonatomic, strong) NSString* lastTokenObtained;
+@property (nonatomic, strong) Server *currentServer;
 @end
 
 @implementation PushNotificationService
-
-@synthesize storedData = _storedData;
 
 + (PushNotificationService *)instance {
     static PushNotificationService *pushNotificationService = nil;
@@ -28,64 +30,48 @@
     return pushNotificationService;
 }
 
-- (StoredData *)storedData {
-    if (!_storedData) {
-        _storedData = [[StoredData alloc] init];
-        [_storedData loadData];
-    }
-    return _storedData;
+- (Server *) currentServer {
+    NSString *certificate = [[LoginService instance] certificateInBase64];
+    _currentServer = [[ServerManager instance] serverWithUrl:SERVER_URL andCertificate:certificate];
+    return _currentServer;
 }
 
 - (void) initializePushNotificationsService {
-    
-    if ([[self storedData] getUserNotificationPermissionIsEnabled]) {
-        if (IOS_NEWER_OR_EQUAL_TO_10) {
-            UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-            
-            [center requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error){
-                if(!error){
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                         [[UIApplication sharedApplication] registerForRemoteNotifications];
-                    });
-                } else {
-                    [[self storedData] updateUserNotificationState:FalseValue];
-                }
-            }];
-        } else {
-            UIUserNotificationType types = UIUserNotificationTypeSound | UIUserNotificationTypeBadge | UIUserNotificationTypeAlert;
-            UIUserNotificationSettings *notificationSettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
-            [UIApplication.sharedApplication registerUserNotificationSettings:notificationSettings];
-            [[UIApplication sharedApplication] registerForRemoteNotifications];
-        }
+    if (IOS_NEWER_OR_EQUAL_TO_10) {
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        
+        [center requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error){
+            if(!error){
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[UIApplication sharedApplication] registerForRemoteNotifications];
+                });
+            } else {
+                NSString *certificate = [[LoginService instance] certificateInBase64];
+                [[ServerManager instance] addServer:SERVER_URL withToken:@"" withCertificate:certificate andUserNotificationPermisionState:false];
+            }
+        }];
+    } else {
+        UIUserNotificationType types = UIUserNotificationTypeSound | UIUserNotificationTypeBadge | UIUserNotificationTypeAlert;
+        UIUserNotificationSettings *notificationSettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
+        [UIApplication.sharedApplication registerUserNotificationSettings:notificationSettings];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
     }
 }
 
 - (void) updateTokenOfPushNotificationsService: (NSString *) deviceToken {
     
-    self.lastTokenObtained = deviceToken;
-    [self updateTokenOnServer];
-   /* if (![deviceToken isEqualToString: [[self storedData] devicePushNotificationToken]] &&  [[self storedData] getUserNotificationPermissionIsEnabled]) {
-        
-        NSString *certificate = [[LoginService instance] certificateInBase64];
-        
-        [PushNotificationNetwork subscribeDevice:deviceToken withCertificate:certificate success:^{
-            [[self storedData] updateData:deviceToken notificationPermisionState:TrueValue];
-            DDLogDebug(@"Push Notification Token Registered");
-        } failure:^(NSError *error) {
-            DDLogError(@"Error subscribing token");
-            DDLogError(@"Error: %@", error);
-        }];
-    } else {
-        DDLogDebug(@"Push Notification Token Not Registered because is registered");
-    }*/
+    if (![self.currentServer.token isEqualToString:deviceToken]) {
+        [self updateToken:deviceToken];
+    }
 }
 
-- (void) updateTokenOnServer {
+- (void) updateToken: (NSString *) token {
     
     NSString *IDVendor = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
     
-    [PushNotificationNetwork subscribeDevice:IDVendor withToken:self.lastTokenObtained success:^{
-        //   [[self storedData] updateData:self.lastTokenObtained notificationPermisionState:TrueValue];
+    [PushNotificationNetwork subscribeDevice:IDVendor withToken:token success:^{
+        NSString *certificate = [[LoginService instance] certificateInBase64];
+        [[ServerManager instance] addServer:SERVER_URL withToken:token withCertificate:certificate andUserNotificationPermisionState:true];
         DDLogDebug(@"Push Notification Token Registered");
     } failure:^(NSError *error) {
         DDLogError(@"Error subscribing token");
@@ -108,11 +94,7 @@
 }
 
 - (BOOL) isNotificationEnabledLocally {
-    if ([[[self storedData] devicePushNotificationToken] isEqualToString:@""]) {
-        return false;
-    }
-    
-    return true;
+    return _currentServer.userNotificationPermisionState;
 }
 
 @end

@@ -7,7 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Server.h"
+#import <Realm/Realm.h>
 
 @interface ServerManager : NSObject
-- (void) addServer: (NSString *) url withToken: (NSString *) token;
+@property (nonatomic, strong) RLMRealm *realm;
+
++ (ServerManager *)instance;
+- (void) addServer: (NSString *) url withToken: (NSString *) token withCertificate: (NSString *)certificate andUserNotificationPermisionState: (BOOL) notificationState;
+- (Server *) serverWithUrl: (NSString *) url andCertificate: (NSString *)certificate;
+
 @end

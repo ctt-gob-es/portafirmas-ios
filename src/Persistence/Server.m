@@ -9,4 +9,15 @@
 #import "Server.h"
 
 @implementation Server
++ (NSString *)primaryKey {
+    return @"url";
+}
+
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+    }
+    return self;
+}
+
 @end

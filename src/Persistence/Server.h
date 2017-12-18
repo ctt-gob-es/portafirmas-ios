@@ -11,5 +11,7 @@
 
 @interface Server : RLMObject
 @property NSString *url;
+@property NSString *certificate;
 @property NSString *token;
+@property BOOL userNotificationPermisionState;
 @end
