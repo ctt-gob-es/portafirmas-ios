@@ -11,6 +11,7 @@
 #import "NSDate+Utils.h"
 #import "AppListXMLController.h"
 #import "BaseListTVC.h"
+#import "LoginService.h"
 
 #define SORT_CRITERIA_ARRAY @[@"Fecha", @"Asunto", @"Aplicación"]
 
@@ -36,6 +37,11 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet UISwitch *enableFiltersSwitch;
 
+@property (nonatomic, strong) IBOutlet UILabel *notificationTitleLabel;
+@property (nonatomic, strong) IBOutlet UILabel *notificationStateLabel;
+@property (nonatomic, strong) IBOutlet UIView *notificationView;
+@property (nonatomic, strong) IBOutlet UISwitch *notificationSwitch;
+
 @end
 
 @implementation FilterVC
@@ -58,8 +64,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     [self addToolbar];
+    [self shouldShowNotificationsSection];
     [self hidePickers];
     [self setupPickers];
 
@@ -85,6 +91,15 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 - (void)dealloc
 {
     [[KeyboardObserver getInstance] removeObserver:self];
+}
+
+- (void) shouldShowNotificationsSection {
+    if (![[LoginService instance] serverSupportLogin]) {
+        self.notificationTitleLabel.hidden = true;
+        self.notificationView.hidden = true;
+        self.notificationStateLabel.hidden = true;
+        self.notificationSwitch.hidden = true;
+    }
 }
 
 #pragma mark - Delegate Popover
