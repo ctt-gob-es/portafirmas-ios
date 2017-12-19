@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "StoredData.h"
 
 @interface LoginService : NSObject
 

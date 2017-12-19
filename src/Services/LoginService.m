@@ -16,7 +16,6 @@
 #import "PushNotificationService.h"
 
 @interface LoginService ()
-@property (nonatomic, strong) StoredData* storedData;
 @property (nonatomic, strong) NSString *currentSignToken;
 @end
 
@@ -29,14 +28,6 @@
         loginService = [[self alloc] init];
     });
     return loginService;
-}
-
-- (StoredData *)storedData {
-    if (!_storedData) {
-        _storedData = [[StoredData alloc] init];
-        [_storedData loadData];
-    }
-    return _storedData;
 }
 
 - (void) authID {

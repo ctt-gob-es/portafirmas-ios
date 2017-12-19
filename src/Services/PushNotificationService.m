@@ -85,7 +85,6 @@
     if ([self isNotificationEnabledOnSystem] && [self isNotificationEnabledLocally]) {
         return true;
     }
-    
     return false;
 }
 
