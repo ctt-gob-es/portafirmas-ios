@@ -144,6 +144,7 @@ void uncaughtExceptionHandler(NSException *exception)
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(nonnull NSError *)error {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
     DDLogError(@"Error Register for remote notifications: %@", error);
 }
 

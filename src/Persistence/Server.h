@@ -10,6 +10,7 @@
 #import <Realm/Realm.h>
 
 @interface Server : RLMObject
+@property int serverId;
 @property NSString *url;
 @property NSString *certificate;
 @property NSString *token;

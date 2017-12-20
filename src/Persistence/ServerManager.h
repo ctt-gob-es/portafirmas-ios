@@ -11,7 +11,8 @@
 #import <Realm/Realm.h>
 
 @interface ServerManager : NSObject
-@property (nonatomic, strong) RLMRealm *realm;
+
+@property (nonatomic, strong) NSString *realPath;
 
 + (ServerManager *)instance;
 - (void) addServer: (NSString *) url withToken: (NSString *) token withCertificate: (NSString *)certificate andUserNotificationPermisionState: (BOOL) notificationState;

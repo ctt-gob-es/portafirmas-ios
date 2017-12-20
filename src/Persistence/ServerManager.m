@@ -8,7 +8,6 @@
 
 #import "ServerManager.h"
 
-
 @implementation ServerManager
 
 + (ServerManager *)instance {
@@ -23,7 +22,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.realm = [RLMRealm defaultRealm];
+        self.realPath = [[NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) lastObject]stringByAppendingString:@"/portafirmas.realm"];
     }
     return self;
 }
@@ -32,23 +31,31 @@
     
     Server *server = [self serverWithUrl:url andCertificate:certificate];
     
-    [_realm beginWriteTransaction];
+    RLMRealm *realm = [RLMRealm realmWithURL:[NSURL URLWithString:self.realPath]];
+    [realm beginWriteTransaction];
     
-    if (!server.url) {
-        server.url = url;
+    if (!server.serverId) {
+        int max = [[Server allObjectsInRealm:realm] maxOfProperty:@"serverId"];
+        
+        if (max) {
+           server.serverId = max + 1;
+        } else {
+           server.serverId = 0;
+        }
     }
-
+    server.url = url;
     server.token = token;
     server.certificate = certificate;
     server.userNotificationPermisionState = notificationState;
+  
+    [realm addOrUpdateObject:server];
+    [realm commitWriteTransaction];
     
-    [_realm addOrUpdateObject:server];
-    [_realm commitWriteTransaction];
 }
 
 - (Server *) serverWithUrl: (NSString *) url andCertificate: (NSString *)certificate {
-    
-    RLMResults *results = [Server objectsInRealm:_realm where:@"(url like %@) AND (certificate like %@)", url, certificate];
+    RLMRealm *realm = [RLMRealm realmWithURL:[NSURL URLWithString:self.realPath]];
+    RLMResults *results = [Server objectsInRealm:realm where:@"(url like %@) AND (certificate like %@)", url, certificate];
     
     if (results.count > 0) {
         return results[0];

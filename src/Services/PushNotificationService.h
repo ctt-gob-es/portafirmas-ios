@@ -7,15 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Server.h"
 
 @interface PushNotificationService : NSObject
-
+@property (nonatomic, strong) Server *currentServer;
 
 + (PushNotificationService *)instance;
 
 - (void) initializePushNotificationsService;
 - (void) updateTokenOfPushNotificationsService: (NSString *) deviceToken;
 - (void) updateTokenOnServer;
+- (BOOL) isNotificationEnabledOnSystem;
 
 @end
 

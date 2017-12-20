@@ -14,6 +14,7 @@
 #import "PFError.h"
 #import "CookieTools.h"
 #import "PushNotificationService.h"
+#import "Server.h"
 
 @interface LoginService ()
 @property (nonatomic, strong) NSString *currentSignToken;
@@ -66,7 +67,9 @@
         [LoginNetwork validateLogin:certificate withSignedToken:self.currentSignToken success:^{
             [SVProgressHUD dismiss];
             NSLog(@"Login validated");
-            [[PushNotificationService instance] initializePushNotificationsService];
+            if ([PushNotificationService instance].currentServer.userNotificationPermisionState) {
+                [[PushNotificationService instance] initializePushNotificationsService];
+            }
             success();
         } failure:^(NSError *error) {
             [SVProgressHUD dismiss];

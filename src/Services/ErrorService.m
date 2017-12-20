@@ -25,9 +25,19 @@
     [self showAlertViewWithMessage:msg];
 }
 
+- (void) showNotAllowNotifications {
+    NSString * title = @"Las notificaciones estan deshabilitadas";
+    NSString * msg = @"Has de ir a ajustes en tu dispositivo y luego a Notificaciones buscar PortaFirmas y permitir notificaciones";
+    [self showAlertViewWithTitle:title andMessage:msg];
+}
+
 - (void) showAlertViewWithMessage: (NSString *) message {
-    
-    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@""
+    [self showAlertViewWithTitle:@"" andMessage:message]
+    ;
+}
+
+- (void) showAlertViewWithTitle: (NSString *) title andMessage: (NSString*) message {
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:title
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
     

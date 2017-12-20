@@ -10,13 +10,13 @@
 #import <UserNotifications/UserNotifications.h>
 #import "PushNotificationNetwork.h"
 #import "LoginService.h"
-#import "Server.h"
 #import "ServerManager.h"
+#import "ErrorService.h"
 
 #define SERVER_URL ((NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyCurrentServer])[kPFUserDefaultsKeyURL]
 
 @interface PushNotificationService ()
-@property (nonatomic, strong) Server *currentServer;
+
 @end
 
 @implementation PushNotificationService
@@ -36,20 +36,28 @@
     return _currentServer;
 }
 
+
+
+
 - (void) initializePushNotificationsService {
     if (IOS_NEWER_OR_EQUAL_TO_10) {
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
         
-        [center requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error){
-            if(!error){
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [[UIApplication sharedApplication] registerForRemoteNotifications];
-                });
-            } else {
-                NSString *certificate = [[LoginService instance] certificateInBase64];
-                [[ServerManager instance] addServer:SERVER_URL withToken:@"" withCertificate:certificate andUserNotificationPermisionState:false];
+        [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+            switch (settings.authorizationStatus) {
+                case UNAuthorizationStatusNotDetermined:
+                    [self regiterForRemoteNotifications];
+                    break;
+                case UNAuthorizationStatusDenied:
+                    [[ErrorService instance] showNotAllowNotifications];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
+                    break;
+                default:
+                    [self regiterForRemoteNotifications];
+                    break;
             }
         }];
+        
     } else {
         UIUserNotificationType types = UIUserNotificationTypeSound | UIUserNotificationTypeBadge | UIUserNotificationTypeAlert;
         UIUserNotificationSettings *notificationSettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
@@ -58,22 +66,44 @@
     }
 }
 
+- (void) regiterForRemoteNotifications {
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    
+    [center requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error){
+        if(!error){
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[UIApplication sharedApplication] registerForRemoteNotifications];
+            });
+        } else {
+            NSString *certificate = [[LoginService instance] certificateInBase64];
+            [[ServerManager instance] addServer:SERVER_URL withToken:@"" withCertificate:certificate andUserNotificationPermisionState:false];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
+        }
+    }];
+}
+
 - (void) updateTokenOfPushNotificationsService: (NSString *) deviceToken {
     
     if (![self.currentServer.token isEqualToString:deviceToken]) {
         [self updateToken:deviceToken];
+    } else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
     }
 }
 
 - (void) updateToken: (NSString *) token {
     
     NSString *IDVendor = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    
+    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     [PushNotificationNetwork subscribeDevice:IDVendor withToken:token success:^{
+        [SVProgressHUD dismiss];
         NSString *certificate = [[LoginService instance] certificateInBase64];
         [[ServerManager instance] addServer:SERVER_URL withToken:token withCertificate:certificate andUserNotificationPermisionState:true];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
         DDLogDebug(@"Push Notification Token Registered");
     } failure:^(NSError *error) {
+        [SVProgressHUD dismiss];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
         DDLogError(@"Error subscribing token");
         DDLogError(@"Error: %@", error);
     }];

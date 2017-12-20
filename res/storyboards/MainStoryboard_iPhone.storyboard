@@ -752,6 +752,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <connections>
                                             <action selector="didUpdateValueForFilterSwitch:" destination="nea-Eq-j4m" eventType="valueChanged" id="MBz-f1-DVb"/>
+                                            <action selector="switchChanged:" destination="nea-Eq-j4m" eventType="valueChanged" id="w4O-F0-Jif"/>
                                         </connections>
                                     </switch>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Asunto" minimumFontSize="17" id="7Oh-OH-kuF">

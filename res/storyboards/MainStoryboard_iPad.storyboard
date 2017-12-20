@@ -1154,6 +1154,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <connections>
                                             <action selector="didUpdateValueForFilterSwitch:" destination="XTo-ts-Sbg" eventType="valueChanged" id="QFR-uS-fOq"/>
+                                            <action selector="switchChanged:" destination="XTo-ts-Sbg" eventType="valueChanged" id="cgS-KY-zsz"/>
                                         </connections>
                                     </switch>
                                 </subviews>

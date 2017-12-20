@@ -11,5 +11,6 @@
 @interface ErrorService : NSObject
 + (ErrorService *)instance;
 - (void) showLoginErrorAlertView;
+- (void) showNotAllowNotifications;
 @end
 

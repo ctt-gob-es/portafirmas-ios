@@ -10,7 +10,7 @@
 
 @implementation Server
 + (NSString *)primaryKey {
-    return @"url";
+    return @"serverId";
 }
 
 - (instancetype)init {
@@ -19,5 +19,7 @@
     }
     return self;
 }
+
+
 
 @end
