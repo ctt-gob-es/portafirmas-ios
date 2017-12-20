@@ -21,13 +21,13 @@
 }
 
 - (void) showLoginErrorAlertView {
-    NSString * msg = @"No ha sido posible completar el proceso de identificación";
+    NSString * msg = NSLocalizedString(@"Alert_View_Login_Failure_Message", nil);
     [self showAlertViewWithMessage:msg];
 }
 
 - (void) showNotAllowNotifications {
-    NSString * title = @"Las notificaciones estan deshabilitadas";
-    NSString * msg = @"Has de ir a ajustes en tu dispositivo y luego a Notificaciones buscar PortaFirmas y permitir notificaciones";
+    NSString * title = NSLocalizedString(@"Alert_View_Disable_Notifications_Title", nil);
+    NSString * msg = NSLocalizedString(@"Alert_View_Disable_Notifications_Message", nil);
     [self showAlertViewWithTitle:title andMessage:msg];
 }
 
@@ -41,7 +41,7 @@
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Alert_View_Ok_Option", nil) style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {}];
     
     [alert addAction:defaultAction];

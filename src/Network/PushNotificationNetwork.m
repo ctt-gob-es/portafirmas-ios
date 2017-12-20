@@ -16,7 +16,7 @@
 
 @implementation PushNotificationNetwork
 
-+ (void)subscribeToken:(NSString *)deviceToken success:(void(^)())success failure:(void(^)(NSError *))failure {
+/*+ (void)subscribeToken:(NSString *)deviceToken success:(void(^)())success failure:(void(^)(NSError *))failure {
     
     NSString *baseURL = @"https://pre-portafirmas.redsara.es/pfmovil_savetoken/token";
     NSString *tokenParameter = @"token";
@@ -42,7 +42,7 @@
             success();
         }
     }] resume];
-}
+}*/
 
 + (void) subscribeDevice:(NSString *)deviceID withToken: (NSString*)token success: (void(^)())success failure:(void(^)(NSError *error))failure {
     NSString *opParameter = @"op";

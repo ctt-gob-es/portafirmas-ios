@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  PortaFirmasUniv
+
+  Created by Gonzalo Gonzalez  on 20/12/17.
+  Copyright © 2017 Solid Gear Projects S.L. All rights reserved.
+*/
+// Alert view messages
+
+"Alert_View_Login_Failure_Message" = "No ha sido posible completar el proceso de identificación";
+"Alert_View_Disable_Notifications_Title" = "Las notificaciones estan deshabilitadas";
+"Alert_View_Disable_Notifications_Message" = "Has de ir a ajustes en tu dispositivo y luego a Notificaciones buscar PortaFirmas y permitir notificaciones";
+"Alert_View_Ok_Option" = "OK";

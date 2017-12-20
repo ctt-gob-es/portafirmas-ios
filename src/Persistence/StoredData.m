@@ -32,7 +32,6 @@ static NSString *const falseValue = @"FalseValue";
     return self;
 }
 
-
 - (NSString *) getUserNotificationPermisionStateStringValue: (BoolType) type {
     if (type == FalseValue) {
         return falseValue;

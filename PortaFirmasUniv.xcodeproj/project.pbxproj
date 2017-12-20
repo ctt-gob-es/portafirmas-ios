@@ -91,6 +91,7 @@
 		BC5BF9E01FDFCF2200B1CF0C /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC5BF9DF1FDFCF1100B1CF0C /* WebKit.framework */; };
 		BC65EFD61FE3D856003AF04F /* Server.m in Sources */ = {isa = PBXBuildFile; fileRef = BC65EFD51FE3D856003AF04F /* Server.m */; };
 		BC65EFD91FE3D914003AF04F /* ServerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC65EFD81FE3D914003AF04F /* ServerManager.m */; };
+		BC65EFFC1FEA7ECA003AF04F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC65EFFE1FEA7ECA003AF04F /* Localizable.strings */; };
 		BC6C92391FE2C14200AB95D5 /* ErrorService.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6C92381FE2C14200AB95D5 /* ErrorService.m */; };
 		BC71EE3A1FDEB51C0040F8A2 /* DefaultServersData.m in Sources */ = {isa = PBXBuildFile; fileRef = BC71EE391FDEB51C0040F8A2 /* DefaultServersData.m */; };
 		BCAF65E11FAC9BCC00D30E54 /* PushNotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAF65E01FAC9BCC00D30E54 /* PushNotificationService.m */; };
@@ -258,6 +259,7 @@
 		BC65EFD51FE3D856003AF04F /* Server.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Server.m; sourceTree = "<group>"; };
 		BC65EFD71FE3D914003AF04F /* ServerManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerManager.h; sourceTree = "<group>"; };
 		BC65EFD81FE3D914003AF04F /* ServerManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ServerManager.m; sourceTree = "<group>"; };
+		BC65EFFF1FEA7EEE003AF04F /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BC6C92371FE2C14200AB95D5 /* ErrorService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ErrorService.h; path = Services/ErrorService.h; sourceTree = "<group>"; };
 		BC6C92381FE2C14200AB95D5 /* ErrorService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ErrorService.m; path = Services/ErrorService.m; sourceTree = "<group>"; };
 		BC71EE381FDEB51C0040F8A2 /* DefaultServersData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefaultServersData.h; sourceTree = "<group>"; };
@@ -461,6 +463,7 @@
 		3CA898EC1AA5BC740035012D /* src */ = {
 			isa = PBXGroup;
 			children = (
+				BC65EFF91FEA7EA7003AF04F /* Language */,
 				BCEF37B21FB338BC00374541 /* Network */,
 				BCEF37A21FB2194F00374541 /* Persistence */,
 				BCAF65DE1FAC9B8500D30E54 /* Services */,
@@ -732,6 +735,14 @@
 			path = help;
 			sourceTree = "<group>";
 		};
+		BC65EFF91FEA7EA7003AF04F /* Language */ = {
+			isa = PBXGroup;
+			children = (
+				BC65EFFE1FEA7ECA003AF04F /* Localizable.strings */,
+			);
+			path = Language;
+			sourceTree = "<group>";
+		};
 		BCAF65DE1FAC9B8500D30E54 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -846,7 +857,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
+				es,
 			);
 			mainGroup = 1C9F2004163E93C3007A170B;
 			productRefGroup = 1C9F2010163E93C3007A170B /* Products */;
@@ -867,6 +878,7 @@
 				3CA899101AA606E90035012D /* prueba.xml in Resources */,
 				3CA8990A1AA605C60035012D /* PFActivoFirSHA1.pfx in Resources */,
 				3CA898F31AA5BD210035012D /* MainStoryboard_iPad.storyboard in Resources */,
+				BC65EFFC1FEA7ECA003AF04F /* Localizable.strings in Resources */,
 				3CA898FC1AA605B70035012D /* PortaFirmasUniv.entitlements in Resources */,
 				3CA898F61AA5BEA80035012D /* main_assets.xcassets in Resources */,
 				3CA899151AA607840035012D /* configPRE in Resources */,
@@ -1026,11 +1038,23 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		BC65EFFE1FEA7ECA003AF04F /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BC65EFFF1FEA7EEE003AF04F /* es */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		1C9F2034163E93C3007A170B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1063,6 +1087,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
