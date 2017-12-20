@@ -1105,7 +1105,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1pW-mX-qhG" sceneMemberID="firstResponder"/>
-                <barButtonItem image="ic_filter" id="32N-2o-xBM">
+                <barButtonItem image="settings" id="32N-2o-xBM">
                     <connections>
                         <segue destination="nea-Eq-j4m" kind="push" id="47P-jN-2H3"/>
                     </connections>
@@ -1195,7 +1195,7 @@
                                 <action selector="didTapOnBackButton:" destination="8DN-aW-qmn" id="uSG-YW-ahg"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="ic_filter" id="JYb-9A-3MV">
+                        <barButtonItem key="rightBarButtonItem" image="settings" id="JYb-9A-3MV">
                             <connections>
                                 <segue destination="nea-Eq-j4m" kind="push" id="8G8-nU-8OZ"/>
                             </connections>
@@ -1294,7 +1294,7 @@
                                 <action selector="didTapOnBackButton:" destination="Ah9-tv-AT6" id="Mrr-EP-Tl0"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="ic_filter" id="Brx-kQ-pif">
+                        <barButtonItem key="rightBarButtonItem" image="settings" id="Brx-kQ-pif">
                             <connections>
                                 <segue destination="nea-Eq-j4m" kind="push" id="o3i-sS-1ar"/>
                             </connections>
@@ -1659,13 +1659,13 @@
     </scenes>
     <resources>
         <image name="ic_calendar" width="15" height="15"/>
-        <image name="ic_filter" width="20" height="20"/>
         <image name="ic_firmadas" width="25" height="25"/>
         <image name="ic_pendientes" width="25" height="25"/>
         <image name="ic_rechazada" width="25" height="25"/>
         <image name="icn_check" width="15" height="10"/>
         <image name="icn_firma" width="13" height="13"/>
         <image name="question" width="25" height="25"/>
+        <image name="settings" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tjX-Gu-uGQ"/>

@@ -452,7 +452,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Sa-x3-c4L" sceneMemberID="firstResponder"/>
-                <barButtonItem image="ic_filter" id="eU2-Cq-Dn4">
+                <barButtonItem image="settings" id="eU2-Cq-Dn4">
                     <connections>
                         <segue destination="XTo-ts-Sbg" kind="popover" popoverAnchorBarButtonItem="eU2-Cq-Dn4" id="UAU-nZ-4R4">
                             <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
@@ -544,7 +544,7 @@
                                 <action selector="didTapOnBackButton:" destination="Hu4-5w-4Vj" id="M0k-5H-z0i"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="ic_filter" id="d1x-EM-C4B">
+                        <barButtonItem key="rightBarButtonItem" image="settings" id="d1x-EM-C4B">
                             <connections>
                                 <segue destination="XTo-ts-Sbg" kind="popover" popoverAnchorBarButtonItem="d1x-EM-C4B" id="XZP-R4-sPf">
                                     <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
@@ -643,7 +643,7 @@
                                 <action selector="didTapOnBackButton:" destination="KYc-hT-CUV" id="IQV-I6-ph0"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="ic_filter" id="Liz-1p-VDi">
+                        <barButtonItem key="rightBarButtonItem" image="settings" id="Liz-1p-VDi">
                             <connections>
                                 <segue destination="XTo-ts-Sbg" kind="popover" popoverAnchorBarButtonItem="Liz-1p-VDi" id="DTK-nm-9wS">
                                     <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
@@ -1647,13 +1647,13 @@
     </scenes>
     <resources>
         <image name="ic_calendar" width="15" height="15"/>
-        <image name="ic_filter" width="20" height="20"/>
         <image name="ic_firmadas" width="25" height="25"/>
         <image name="ic_pendientes" width="25" height="25"/>
         <image name="ic_rechazada" width="25" height="25"/>
         <image name="icn_check" width="15" height="10"/>
         <image name="icn_firma" width="13" height="13"/>
         <image name="question" width="25" height="25"/>
+        <image name="settings" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="vfb-eq-kIh"/>
