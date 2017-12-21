@@ -44,9 +44,6 @@ void uncaughtExceptionHandler(NSException *exception)
     [self customizeAppearance];
     [self loadSelectedCertificate];
     
-    //[[LoginService instance] authID];
-   //[[PushNotificationService instance] initializePushNotificationsService];
-    
     [DefaultServersData createDefaultServersIsNotExist];
     
     return YES;
@@ -140,7 +137,13 @@ void uncaughtExceptionHandler(NSException *exception)
      
    // [self showAlertView:[tokenHex uppercaseString]];
     
-    [[PushNotificationService instance] updateTokenOfPushNotificationsService: [tokenHex uppercaseString]];
+    /*if (!IOS_NEWER_OR_EQUAL_TO_10 && [[PushNotificationService instance] hasUserAllowNotifications] == false) {
+        [[PushNotificationService instance] resetNotificationRequired];
+    }*/
+    
+    if ([LoginService instance].serverSupportLogin) {
+       [[PushNotificationService instance] updateTokenOfPushNotificationsService: [tokenHex uppercaseString]];
+    }
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(nonnull NSError *)error {

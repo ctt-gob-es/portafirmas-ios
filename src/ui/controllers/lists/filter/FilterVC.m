@@ -69,7 +69,6 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [super viewDidLoad];
     [self addToolbar];
     [self shouldShowNotificationsSection];
-    [self listenNotificationAboutPushNotifications];
     [self hidePickers];
     [self setupPickers];
 
@@ -79,6 +78,16 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
         [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation: UIStatusBarAnimationSlide];
     }
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self listenNotificationAboutPushNotifications];
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self removeNotificationAboutPushNotifications];
 }
 
 - (void)didReceiveMemoryWarning
@@ -149,9 +158,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 - (void) initSubscriptionProcess {
     
     if ([self.notificationSwitch isOn]) {
-         [[PushNotificationService instance] initializePushNotificationsService];
+         [[PushNotificationService instance] initializePushNotificationsService:true];
     } else {
-        NSLog(@"notificaciones desabilitadas");
          [self showNotificationSectionState];
     }
     

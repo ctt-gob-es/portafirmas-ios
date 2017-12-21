@@ -35,14 +35,9 @@
     [realm beginWriteTransaction];
     
     if (!server.serverId) {
-        int max = [[Server allObjectsInRealm:realm] maxOfProperty:@"serverId"];
-        
-        if (max) {
-           server.serverId = max + 1;
-        } else {
-           server.serverId = 0;
-        }
+        server.serverId = [self nextIdOfServer];
     }
+    
     server.url = url;
     server.token = token;
     server.certificate = certificate;
@@ -62,5 +57,19 @@
     }
     
     return [Server new];
+}
+
+- (int) nextIdOfServer {
+    RLMRealm *realm = [RLMRealm realmWithURL:[NSURL URLWithString:self.realPath]];
+    RLMResults *results = [Server allObjectsInRealm:realm];
+    int maxValue = 0;
+    
+    for (Server *server in results) {
+        if (server.serverId > maxValue) {
+            maxValue = server.serverId;
+        }
+    }
+    
+    return maxValue + 1;
 }
 @end

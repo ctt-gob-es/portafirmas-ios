@@ -68,7 +68,7 @@
             [SVProgressHUD dismiss];
             NSLog(@"Login validated");
             if ([PushNotificationService instance].currentServer.userNotificationPermisionState) {
-                [[PushNotificationService instance] initializePushNotificationsService];
+                [[PushNotificationService instance] initializePushNotificationsService:false];
             }
             success();
         } failure:^(NSError *error) {

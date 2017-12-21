@@ -11,13 +11,15 @@
 
 @interface PushNotificationService : NSObject
 @property (nonatomic, strong) Server *currentServer;
+@property (nonatomic) BOOL isNotificationRequired;
 
 + (PushNotificationService *)instance;
 
-- (void) initializePushNotificationsService;
+- (void) initializePushNotificationsService: (BOOL) optionTappedByUser;
 - (void) updateTokenOfPushNotificationsService: (NSString *) deviceToken;
-- (void) updateTokenOnServer;
 - (BOOL) isNotificationEnabledOnSystem;
+- (BOOL) hasUserAllowNotifications;
+- (void) resetNotificationRequired ;
 
 @end
 

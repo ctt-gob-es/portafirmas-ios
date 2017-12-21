@@ -30,63 +30,119 @@
     return pushNotificationService;
 }
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.isNotificationRequired = false;
+    }
+    return self;
+}
+
 - (Server *) currentServer {
     NSString *certificate = [[LoginService instance] certificateInBase64];
     _currentServer = [[ServerManager instance] serverWithUrl:SERVER_URL andCertificate:certificate];
     return _currentServer;
 }
 
-
-
-
-- (void) initializePushNotificationsService {
+- (void) initializePushNotificationsService: (BOOL) optionTappedByUser {
+    
+    self.isNotificationRequired = true;
+    
     if (IOS_NEWER_OR_EQUAL_TO_10) {
         UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
         
         [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
             switch (settings.authorizationStatus) {
                 case UNAuthorizationStatusNotDetermined:
-                    [self regiterForRemoteNotifications];
+                    [self registerForRemoteNotificationsSinceiOS10];
                     break;
-                case UNAuthorizationStatusDenied:
-                    [[ErrorService instance] showNotAllowNotifications];
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
+                case UNAuthorizationStatusDenied: {
+                    [self createServerWithEmptyToken];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
+                    });
+                    
+                    if (optionTappedByUser) {
+                         [[ErrorService instance] showNotAllowNotifications];
+                    }
+                    
+                    self.isNotificationRequired = false;
                     break;
+                }
+                    
                 default:
-                    [self regiterForRemoteNotifications];
+                    [self registerForRemoteNotificationsSinceiOS10];
                     break;
             }
         }];
         
     } else {
-        UIUserNotificationType types = UIUserNotificationTypeSound | UIUserNotificationTypeBadge | UIUserNotificationTypeAlert;
-        UIUserNotificationSettings *notificationSettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
-        [UIApplication.sharedApplication registerUserNotificationSettings:notificationSettings];
-        [[UIApplication sharedApplication] registerForRemoteNotifications];
+        
+        if ([self isFirstInitWithPushNotificationPopUpAnswered]) {
+            
+            [self registerForRemoteNotificationsUntiliOS10];
+            
+            [self createServerWithEmptyToken];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
+            });
+            
+        } else {
+            if ([self isNotificationEnabledOnSystem]) {
+                [self registerForRemoteNotificationsUntiliOS10];
+            } else {
+                
+                if (optionTappedByUser) {
+                   [[ErrorService instance] showNotAllowNotifications];
+                }
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
+                });
+            }
+        }
     }
 }
 
-- (void) regiterForRemoteNotifications {
+- (void) createServerWithEmptyToken {
+    NSString *certificate = [[LoginService instance] certificateInBase64];
+    [[ServerManager instance] addServer:SERVER_URL withToken:@"" withCertificate:certificate andUserNotificationPermisionState:false];
+}
+
+- (void) registerForRemoteNotificationsUntiliOS10 {
+    UIUserNotificationType types = UIUserNotificationTypeSound | UIUserNotificationTypeBadge | UIUserNotificationTypeAlert;
+    UIUserNotificationSettings *notificationSettings = [UIUserNotificationSettings settingsForTypes:types categories:nil];
+    [UIApplication.sharedApplication registerUserNotificationSettings:notificationSettings];
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
+}
+
+- (void) registerForRemoteNotificationsSinceiOS10 {
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
     
     [center requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error){
-        if(!error){
+        if (granted) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[UIApplication sharedApplication] registerForRemoteNotifications];
             });
         } else {
-            NSString *certificate = [[LoginService instance] certificateInBase64];
-            [[ServerManager instance] addServer:SERVER_URL withToken:@"" withCertificate:certificate andUserNotificationPermisionState:false];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
+            [self createServerWithEmptyToken];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
+            });
+            self.isNotificationRequired = false;
         }
     }];
 }
 
 - (void) updateTokenOfPushNotificationsService: (NSString *) deviceToken {
     
-    if (![self.currentServer.token isEqualToString:deviceToken]) {
+    if (![self.currentServer.token isEqualToString:deviceToken] && self.isNotificationRequired) {
         [self updateToken:deviceToken];
     } else {
+        self.isNotificationRequired = false;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
     }
 }
@@ -97,11 +153,13 @@
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
     [PushNotificationNetwork subscribeDevice:IDVendor withToken:token success:^{
         [SVProgressHUD dismiss];
+        self.isNotificationRequired = false;
         NSString *certificate = [[LoginService instance] certificateInBase64];
         [[ServerManager instance] addServer:SERVER_URL withToken:token withCertificate:certificate andUserNotificationPermisionState:true];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
         DDLogDebug(@"Push Notification Token Registered");
     } failure:^(NSError *error) {
+        self.isNotificationRequired = false;
         [SVProgressHUD dismiss];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
         DDLogError(@"Error subscribing token");
@@ -111,19 +169,37 @@
 
 #pragma mark - Utils
 
-- (BOOL) isSubscriptionEnabled {
-    if ([self isNotificationEnabledOnSystem] && [self isNotificationEnabledLocally]) {
-        return true;
-    }
-    return false;
+- (void) resetNotificationRequired {
+    self.isNotificationRequired = false;
 }
 
 - (BOOL) isNotificationEnabledOnSystem {
     return [UIApplication.sharedApplication isRegisteredForRemoteNotifications];
 }
 
-- (BOOL) isNotificationEnabledLocally {
-    return _currentServer.userNotificationPermisionState;
+- (BOOL) isFirstInitWithPushNotificationPopUpAnswered {
+    NSString *firstInitWithPushNotificationPopUpAnswered = @"hasUserAnswerToPushNotificationPopUp";
+    
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:firstInitWithPushNotificationPopUpAnswered])
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:firstInitWithPushNotificationPopUpAnswered];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (BOOL) hasUserAllowNotifications {
+    
+    UIUserNotificationSettings *grantedSettings = [[UIApplication sharedApplication] currentUserNotificationSettings];
+    
+    if (grantedSettings.types == UIUserNotificationTypeNone) {
+        return false;
+    }
+    else {
+        return true;
+    }
 }
 
 @end
