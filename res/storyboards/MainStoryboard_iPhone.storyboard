@@ -1159,7 +1159,7 @@
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icn_check" id="BHn-hc-lbk">
-                                            <rect key="frame" x="264" y="13" width="15" height="15"/>
+                                            <rect key="frame" x="264" y="12" width="15" height="15"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Petición" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5uy-zo-2V6">
@@ -1477,7 +1477,7 @@
             </objects>
             <point key="canvasLocation" x="-3748" y="-1086"/>
         </scene>
-        <!--Port@firmas v1.2.2-->
+        <!--Port@firmas v1.3-->
         <scene sceneID="zBu-CA-uoj">
             <objects>
                 <tableViewController id="Xui-MK-YVw" customClass="SettingsVC" sceneMemberID="viewController">
@@ -1539,7 +1539,7 @@
                         </connections>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" title="Port@firmas v1.2.2" id="mnL-dK-15a">
+                    <navigationItem key="navigationItem" title="Port@firmas v1.3" id="mnL-dK-15a">
                         <barButtonItem key="rightBarButtonItem" image="question" id="72N-f2-Vwz">
                             <connections>
                                 <segue destination="fDG-m0-dC6" kind="push" id="W38-ok-sXp"/>
