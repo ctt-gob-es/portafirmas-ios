@@ -11,6 +11,7 @@
 #import "UnassignedRequestTableViewController.h"
 #import "LoginService.h"
 #import "DefaultServersData.h"
+#import "NotificationHandler.h"
 
 @implementation AppDelegate
 // @synthesize certificate, appConfig=_appConfig;
@@ -153,7 +154,12 @@ void uncaughtExceptionHandler(NSException *exception)
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     DDLogDebug(@"Receive remote notification: %@", userInfo);
-    [self openPendingTabAndLoadData];
+    
+    if (userInfo != nil) {
+        if ([NotificationHandler isNotificationForUserLogged:userInfo]){
+            [self openPendingTabAndLoadData];
+        }
+    }
 }
 
 - (void) openPendingTabAndLoadData {

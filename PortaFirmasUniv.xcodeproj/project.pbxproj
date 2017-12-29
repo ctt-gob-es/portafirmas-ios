@@ -94,6 +94,8 @@
 		BC65EFFC1FEA7ECA003AF04F /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC65EFFE1FEA7ECA003AF04F /* Localizable.strings */; };
 		BC6C92391FE2C14200AB95D5 /* ErrorService.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6C92381FE2C14200AB95D5 /* ErrorService.m */; };
 		BC71EE3A1FDEB51C0040F8A2 /* DefaultServersData.m in Sources */ = {isa = PBXBuildFile; fileRef = BC71EE391FDEB51C0040F8A2 /* DefaultServersData.m */; };
+		BCA133D31FF63DD200818EC7 /* NotificationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA133D21FF63DD200818EC7 /* NotificationHandler.m */; };
+		BCA133D71FF63EB500818EC7 /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = BCA133D61FF63EB500818EC7 /* Notification.m */; };
 		BCAF65E11FAC9BCC00D30E54 /* PushNotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAF65E01FAC9BCC00D30E54 /* PushNotificationService.m */; };
 		BCAF65E31FAC9E1900D30E54 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCAF65E21FAC9E0700D30E54 /* UserNotifications.framework */; };
 		BCAF65E61FACA96500D30E54 /* NSData+Conversion.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAF65E51FACA96500D30E54 /* NSData+Conversion.m */; };
@@ -265,6 +267,10 @@
 		BC71EE381FDEB51C0040F8A2 /* DefaultServersData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefaultServersData.h; sourceTree = "<group>"; };
 		BC71EE391FDEB51C0040F8A2 /* DefaultServersData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DefaultServersData.m; sourceTree = "<group>"; };
 		BC71EE3B1FDEBA200040F8A2 /* DefaultDataConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DefaultDataConstants.h; sourceTree = "<group>"; };
+		BCA133D11FF63DD200818EC7 /* NotificationHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationHandler.h; sourceTree = "<group>"; };
+		BCA133D21FF63DD200818EC7 /* NotificationHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationHandler.m; sourceTree = "<group>"; };
+		BCA133D51FF63EB500818EC7 /* Notification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
+		BCA133D61FF63EB500818EC7 /* Notification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Notification.m; sourceTree = "<group>"; };
 		BCAF65DF1FAC9BCC00D30E54 /* PushNotificationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PushNotificationService.h; path = Services/PushNotificationService.h; sourceTree = "<group>"; };
 		BCAF65E01FAC9BCC00D30E54 /* PushNotificationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = PushNotificationService.m; path = Services/PushNotificationService.m; sourceTree = "<group>"; };
 		BCAF65E21FAC9E0700D30E54 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
@@ -463,6 +469,7 @@
 		3CA898EC1AA5BC740035012D /* src */ = {
 			isa = PBXGroup;
 			children = (
+				BCA133D41FF63E9900818EC7 /* Notification */,
 				BC65EFF91FEA7EA7003AF04F /* Language */,
 				BCEF37B21FB338BC00374541 /* Network */,
 				BCEF37A21FB2194F00374541 /* Persistence */,
@@ -743,6 +750,17 @@
 			path = Language;
 			sourceTree = "<group>";
 		};
+		BCA133D41FF63E9900818EC7 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				BCA133D11FF63DD200818EC7 /* NotificationHandler.h */,
+				BCA133D21FF63DD200818EC7 /* NotificationHandler.m */,
+				BCA133D51FF63EB500818EC7 /* Notification.h */,
+				BCA133D61FF63EB500818EC7 /* Notification.m */,
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
 		BCAF65DE1FAC9B8500D30E54 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -987,6 +1005,7 @@
 				3C00ADD21AB71B1700EF6886 /* AppListXMLController.m in Sources */,
 				BCAF65E61FACA96500D30E54 /* NSData+Conversion.m in Sources */,
 				3CC403681AB96D05006F8803 /* PFBaseVC.m in Sources */,
+				BCA133D31FF63DD200818EC7 /* NotificationHandler.m in Sources */,
 				3C00AD781AB71A6300EF6886 /* SendersViewController.m in Sources */,
 				BCE470F51FD70CEF00702306 /* CookieTools.m in Sources */,
 				3CA899611AA60E6C0035012D /* RequestCellNoUI.m in Sources */,
@@ -1004,6 +1023,7 @@
 				3C00ADE61AB71B5300EF6886 /* NSData+Base64.m in Sources */,
 				3C00AD9A1AB71ACB00EF6886 /* Document.m in Sources */,
 				3C00ADDB1AB71B1700EF6886 /* RequestSignerController.m in Sources */,
+				BCA133D71FF63EB500818EC7 /* Notification.m in Sources */,
 				3C00AD761AB71A6300EF6886 /* PreviewViewController.m in Sources */,
 				3C00ADD41AB71B1700EF6886 /* BaseXMLController.m in Sources */,
 				BCF083321FC45A0900450FE7 /* Stack.m in Sources */,
