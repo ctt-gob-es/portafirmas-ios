@@ -163,7 +163,7 @@ void uncaughtExceptionHandler(NSException *exception)
 }
 
 - (void) openPendingTabAndLoadData {
-    if (self.mainTab) {
+    if (self.mainTab && [[LoginService instance] serverSupportLogin]) {
         [self.mainTab setSelectedIndex:0];
         UINavigationController *nav = [self.mainTab.viewControllers objectAtIndex:0];
         UnassignedRequestTableViewController *pendingViewController = (UnassignedRequestTableViewController *)nav.rootViewController;

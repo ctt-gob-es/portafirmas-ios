@@ -99,12 +99,14 @@
     [LoginNetwork logout:^{
         [SVProgressHUD dismiss];
         NSLog(@"Logout finish with success");
+        self.serverSupportLogin = false;
         self.currentSignToken = @"";
         [CookieTools removeJSessionIDCookies];
         success();
     } failure:^(NSError *error) {
         [SVProgressHUD dismiss];
         NSLog(@"Logout finish with failure");
+        self.serverSupportLogin = false;
         self.currentSignToken = @"";
         [CookieTools removeJSessionIDCookies];
         failure(error);
