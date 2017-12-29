@@ -20,6 +20,4 @@
     return self;
 }
 
-
-
 @end

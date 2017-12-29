@@ -12,6 +12,6 @@
 NSString * const serverAlias1 = @"Portafirmas General AGE";
 NSString * const serverURL1 = @"https://servicios.seap.minhap.es/pfmovil/signfolder";
 NSString * const serverAlias2 = @"Portafirmas RedSARA";
-NSString * const serverURL2 = @"https://pre-portafirmas.redsara.es/pfmovil_new/pf";
+NSString * const serverURL2 = @"https://portafirmas.redsara.es/pfmovil/pf";
 
 #endif /* DefaultDataConstants_h */
