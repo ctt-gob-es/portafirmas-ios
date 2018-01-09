@@ -32,6 +32,9 @@
 #pragma mark - Documents list
 @property (strong, nonatomic) NSMutableArray *documents;
 
+#pragma mark - Attached  document list
+@property (strong, nonatomic) NSMutableArray *attachedDocs;
+
 #pragma mark - Error codes
 @property (strong, nonatomic) NSString *errorMsg;
 @property (nonatomic) NSInteger errorCode;
