@@ -7,6 +7,7 @@
 //
 
 #import "PFHelper.h"
+#import "Source.h"
 
 static NSString *const kPFHelperClassNameSignedList = @"ProcessedRequestViewController";
 static NSString *const kPFHelperClassNameRejectedList = @"RejectedRequestViewController";
@@ -51,21 +52,17 @@ static NSString *const kPFHelperClassNamePendingList = @"UnassignedRequestTableV
     return nil;
 }
 
-+ (PFRequestCode)getPFRequestCodeForSection:(NSInteger)section
++ (PFRequestCode)getPFRequestCodeForSection:(PFAttachmentVCSection)section
 {
     switch (section) {
-        case 0:
-
+        case PFAttachmentVCSectionDocuments:
             return PFRequestCodeDocumentPreview;
-        case 1:
-
+        case PFAttachmentVCSectionSignatures:
             return PFRequestCodeDocumentPreviewSign;
-        case 2:
-
+        case PFAttachmentVCSectionSignaturesReport:
             return PFRequestCodeDocumentPreviewReport;
-        default:
-
-            return nil;
+        case PFAttachmentVCSectionAttachedDocs:
+            return PFRequestCodeDocumentPreview;
     }
 }
 

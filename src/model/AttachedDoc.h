@@ -18,4 +18,6 @@
 @property (strong, nonatomic) NSString *mdalgo;
 @property (strong, nonatomic) NSArray *params;
 
+- (void)prepareForRequestWithCode:(PFRequestCode)code;
+
 @end

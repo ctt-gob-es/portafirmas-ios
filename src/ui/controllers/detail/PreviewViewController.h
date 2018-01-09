@@ -10,6 +10,7 @@
 #import "WSDataController.h"
 
 @class Document;
+@class AttachedDoc;
 @class WSDataController;
 
 @interface PreviewViewController : UIViewController<WSDelegate, UIWebViewDelegate, UIAlertViewDelegate>
@@ -19,8 +20,9 @@
 
 @property (strong, nonatomic) NSString *docId;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
-@property (strong, nonatomic) Document *dataSource;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (strong, nonatomic) Document *documentDataSource;
+@property (strong, nonatomic) AttachedDoc *attachedDataSource;
 @property (assign, nonatomic) PFRequestCode *requestCode;
 
 @end

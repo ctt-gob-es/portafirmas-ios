@@ -166,17 +166,27 @@
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
 
     if ([segue.identifier isEqualToString:@"segueShowPreview"]) {
-
+        
         PreviewViewController *previewViewController = [segue destinationViewController];
-        // Configure the cell...
-        Document *selectedDoc = _documentsDataSource[selectedIndexPath.row];
-        DDLogDebug(@"AttachmentViewController::prepareForSegue document Id:%@", [selectedDoc docid]);
-
-        PFRequestCode requestCode = [PFHelper getPFRequestCodeForSection:selectedIndexPath.section];
-        [selectedDoc prepareForRequestWithCode:requestCode];
-        [previewViewController setRequestCode:requestCode];
-        [previewViewController setDocId:selectedDoc.docid];
-        [previewViewController setDataSource:selectedDoc];
+        Source *sourceSection = [[self sections] objectAtIndex:selectedIndexPath.section];
+        PFRequestCode requestCode = [PFHelper getPFRequestCodeForSection:sourceSection.subType];
+        
+        if (sourceSection.type == PFAttachmentTypeDocument) {
+            Document *selectedDoc = _documentsDataSource[selectedIndexPath.row];
+            DDLogDebug(@"AttachmentViewController::prepareForSegue document Id:%@", [selectedDoc docid]);
+            [selectedDoc prepareForRequestWithCode:requestCode];
+            [previewViewController setDocId:selectedDoc.docid];
+            previewViewController.requestCode = requestCode;
+            previewViewController.documentDataSource = selectedDoc;
+            
+        } else {
+            AttachedDoc *selectedDoc = _attachedDocsDataSource[selectedIndexPath.row];
+            DDLogDebug(@"AttachmentViewController::prepareForSegue document Id:%@", [selectedDoc docid]);
+            [selectedDoc prepareForRequestWithCode:requestCode];
+            [previewViewController setDocId:selectedDoc.docid];
+            previewViewController.requestCode = requestCode;
+            previewViewController.attachedDataSource = selectedDoc;
+        }
     }
 }
 

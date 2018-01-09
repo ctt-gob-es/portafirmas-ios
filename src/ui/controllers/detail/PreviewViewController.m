@@ -8,11 +8,12 @@
 
 #import "PreviewViewController.h"
 #import "PreviewXMLController.h"
-// #import "NSData+Base64.h"
 #import "WSDataController.h"
 #import "AppDelegate.h"
 #import "Base64Utils.h"
 #import "XMLController.h"
+#import "AttachedDoc.h"
+#import "Document.h"
 
 @interface PreviewViewController ()
 {
@@ -23,7 +24,7 @@
 
 @implementation PreviewViewController
 @synthesize webView = _webView;
-@synthesize  docId = _docId, dataSource = _dataSource;
+@synthesize  docId = _docId, documentDataSource = _documentDataSource, attachedDataSource = _attachedDataSource;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -110,9 +111,17 @@
             return;
         }
     }
+    
+    NSString *mmtp;
+    
+    if (_documentDataSource != nil) {
+        mmtp = _documentDataSource.mmtp;
+    } else {
+        mmtp = _attachedDataSource.mmtp;
+    }
 
     [_webView loadData:data
-              MIMEType:_dataSource.mmtp
+              MIMEType:mmtp
               textEncodingName:@"UTF-8"
               baseURL: [NSURL URLWithString:@"http://"]
      ];
