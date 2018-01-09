@@ -222,7 +222,8 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
         DDLogDebug(@"DetailTableViewController::prepareForSegue number of attachments=%lu", (unsigned long)[_dataSource.documents count]);
 
         AttachmentViewController *attachmentController = [segue destinationViewController];
-        attachmentController.dataSource = _dataSource.documents;
+        attachmentController.documentsDataSource = _dataSource.documents;
+        attachmentController.attachedDocsDataSource = _dataSource.attachedDocs;
         [attachmentController setDetail:_dataSource];
         [attachmentController setRequestStatus:[PFHelper getPFRequestStatusFromString:_dataSourceRequest.view]];
     }

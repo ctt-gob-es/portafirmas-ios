@@ -9,22 +9,16 @@
 #import "AttachmentViewController.h"
 #import "PreviewViewController.h"
 #import "Document.h"
-
-#define SECTIONS_TITLES @[@"Documentos", @"Firmas", @"Informes de firmas"]
-
-typedef NS_ENUM (NSInteger, PFAttachmentVCSection)
-{
-    PFAttachmentVCSectionDocuments,
-    PFAttachmentVCSectionSignatures,
-    PFAttachmentVCSectionSignaturesReport
-};
+#import "AttachedDoc.h"
+#import "Source.h"
 
 @interface AttachmentViewController ()
 
 @end
 
 @implementation AttachmentViewController
-@synthesize dataSource = _dataSource;
+@synthesize documentsDataSource = _documentsDataSource;
+@synthesize attachedDocsDataSource = _attachedDocsDataSource;
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -52,27 +46,63 @@ typedef NS_ENUM (NSInteger, PFAttachmentVCSection)
     // Dispose of any resources that can be recreated.
 }
 
+- (NSMutableArray *) sections {
+    NSMutableArray *sections = [NSMutableArray new];
+    
+    Source *docSource = [Source new];
+    docSource.title = @"Documentos";
+    docSource.type = PFAttachmentTypeDocument;
+    docSource.subType = PFAttachmentVCSectionDocuments;
+    docSource.elements = _documentsDataSource.count;
+    
+    [sections addObject:docSource];
+    
+    if (_detail && _detail.type == PFRequestTypeSign && _requestStatus == PFRequestStatusSigned) {
+        
+        Source *docSignSource = [Source new];
+        docSignSource.title = @"Firmas";
+        docSignSource.type = PFAttachmentTypeDocument;
+        docSignSource.subType = PFAttachmentVCSectionSignatures;
+        docSignSource.elements = _documentsDataSource.count;
+        
+        Source *docReportSignSource = [Source new];
+        docReportSignSource.title = @"Informes de firmas";
+        docReportSignSource.type = PFAttachmentTypeDocument;
+        docReportSignSource.subType = PFAttachmentVCSectionSignaturesReport;
+        docReportSignSource.elements = _documentsDataSource.count;
+        
+        [sections addObject:docSignSource];
+        [sections addObject:docReportSignSource];
+    }
+    
+    if (_attachedDocsDataSource != nil && _attachedDocsDataSource.count > 0) {
+        Source *attachedDocSource = [Source new];
+        attachedDocSource.title = @"Anexos";
+        attachedDocSource.type = PFAttachmentTypeAttachedDoc;
+        attachedDocSource.subType = PFAttachmentVCSectionAttachedDocs;
+        attachedDocSource.elements = _attachedDocsDataSource.count;
+        
+        [sections addObject:attachedDocSource];
+    }
+    return sections;
+}
+
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    NSInteger numberOfSections = 1;
-
-    if (_detail && _detail.type == PFRequestTypeSign && _requestStatus == PFRequestStatusSigned) {
-        numberOfSections = 3;
-    }
-
-    return numberOfSections;
+    return [self sections].count;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return SECTIONS_TITLES[section];
+    Source *sourceSection = [[self sections] objectAtIndex:section];
+    return sourceSection.title;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    DDLogDebug(@"AttachmentViewController::numberOfRowsInSection=%ld. rows=%ld", (long)section, (unsigned long)[_dataSource count]);
-
-    return [_dataSource count];
+   Source *sourceSection = [[self sections] objectAtIndex:section];
+   return sourceSection.elements;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -82,29 +112,51 @@ typedef NS_ENUM (NSInteger, PFAttachmentVCSection)
     static NSString *CellIdentifier = @"AttachmentsCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
-    if (cell == nil) {
-        DDLogError(@"AttachmentViewController::cell is nill");
+    Source *sourceSection = [[self sections] objectAtIndex:indexPath.section];
+    
+    if (sourceSection.type == PFAttachmentTypeDocument) {
+        [self configureCell:cell forDocument:_documentsDataSource[indexPath.row] ofType:sourceSection.type ofSubType:sourceSection.subType];
+       
+    } else {
+         [self configureCell:cell forDocument:_attachedDocsDataSource[indexPath.row] ofType:sourceSection.type ofSubType:sourceSection.subType];
     }
-
-    [self configureCell:cell forDocument:_dataSource[indexPath.row] inSection:indexPath.section];
 
     return cell;
 }
 
-- (void)configureCell:(UITableViewCell *)cell forDocument:(Document *)document inSection:(NSInteger)section
+- (void)configureCell:(UITableViewCell *)cell forDocument:(id)item ofType:(PFAttachmentType)type ofSubType:(PFAttachmentVCSection)subType
 {
-    switch (section) {
+    
+    Document *document;
+    AttachedDoc *attachedDoc;
+    
+    switch (type) {
+        case PFAttachmentTypeDocument:
+            document = (Document *) item;
+            break;
+            
+        case PFAttachmentTypeAttachedDoc:
+            attachedDoc = (AttachedDoc *) item;
+            break;
+    }
+    
+    switch (subType) {
         case PFAttachmentVCSectionDocuments:
             [cell.textLabel setText:document.nm];
             break;
+            
         case PFAttachmentVCSectionSignatures:
             [cell.textLabel setText:[NSString stringWithFormat:@"%@_firmado.%@", document.nm, [document getSignatureExtension]]];
             break;
         case PFAttachmentVCSectionSignaturesReport:
             [cell.textLabel setText:[NSString stringWithFormat:@"report_%@.pdf", document.nm]];
             break;
+        case PFAttachmentVCSectionAttachedDocs:
+            [cell.textLabel setText:attachedDoc.nm];
+            break;
     }
 }
+
 
 #pragma mark - Navigation
 
@@ -117,7 +169,7 @@ typedef NS_ENUM (NSInteger, PFAttachmentVCSection)
 
         PreviewViewController *previewViewController = [segue destinationViewController];
         // Configure the cell...
-        Document *selectedDoc = _dataSource[selectedIndexPath.row];
+        Document *selectedDoc = _documentsDataSource[selectedIndexPath.row];
         DDLogDebug(@"AttachmentViewController::prepareForSegue document Id:%@", [selectedDoc docid]);
 
         PFRequestCode requestCode = [PFHelper getPFRequestCodeForSection:selectedIndexPath.section];
