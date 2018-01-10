@@ -12,15 +12,5 @@
 
 static NSString *const kDocumentMimeTypePDF = @"application/pdf";
 
-- (void)prepareForRequestWithCode:(PFRequestCode)code
-{
-    switch (code) {
-        case PFRequestCodeDocumentPreviewReport:
-            _mmtp = kDocumentMimeTypePDF;
-            break;
-        default:
-            break;
-    }
-}
 
 @end

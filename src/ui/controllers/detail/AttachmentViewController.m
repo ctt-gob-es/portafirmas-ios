@@ -182,7 +182,6 @@
         } else {
             AttachedDoc *selectedDoc = _attachedDocsDataSource[selectedIndexPath.row];
             DDLogDebug(@"AttachmentViewController::prepareForSegue document Id:%@", [selectedDoc docid]);
-            [selectedDoc prepareForRequestWithCode:requestCode];
             [previewViewController setDocId:selectedDoc.docid];
             previewViewController.requestCode = requestCode;
             previewViewController.attachedDataSource = selectedDoc;
