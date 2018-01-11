@@ -13,6 +13,7 @@
 @class Detail;
 @class Document;
 @class SignLine;
+@class AttachedDoc;
 
 @interface DetailXMLController : XMLController<NSXMLParserDelegate>{
    
@@ -27,6 +28,13 @@
     Document *document;
     // array of documents objects
     NSMutableArray *documents;
+    
+    //waiting for attached doc
+    BOOL waitingForAttachedDoc;
+    // Attached object
+    AttachedDoc *attachedDoc;
+    // array of attached docs
+    NSMutableArray *attachedDocs;
     
     // waiting for Signline
     BOOL waitingForSignline;

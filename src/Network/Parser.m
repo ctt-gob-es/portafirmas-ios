@@ -73,7 +73,7 @@ NSString *subscriptionValidateOkKey = @"ok";
     XMLParser *parser = [[XMLParser alloc] init];
     
     [parser parseData:data success:^(id parsedData) {
-        //NSLog(@"Data: %@", parsedData);
+        NSLog(@"Data: %@", parsedData);
         if (parsedData != nil) {
             NSDictionary *parsedDataDict = (NSDictionary *)parsedData;
             NSDictionary *validationDict = [parsedDataDict objectForKey:logValidateKey];
