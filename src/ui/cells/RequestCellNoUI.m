@@ -15,6 +15,7 @@
     [_title setText:request.snder];
     [_detail setText:request.subj];
     [_inputDate setText:request.date];
+    [_expirationDate setText:request.expdate];
     [self setupRequestTypeIcon:request.type];
     [self setBackgroundColor:request.isNew ? ThemeColorWithAlpha(0.08):[UIColor clearColor]];
 }

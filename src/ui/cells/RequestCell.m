@@ -24,10 +24,24 @@
     [_title setText:request.snder];
     [_detail setText:request.subj];
     [_inputDate setText:request.date];
-
+    [self getExpirationLabelValue:request.expdate];
     [self setupPriorityIcon:request.priority];
     [self setupRequestTypeIcon:request.type];
-    [self setBackgroundColor:request.isNew ? ThemeColorWithAlpha(0.08):[UIColor clearColor]];
+    //Prepare the Background for hightlight
+    [self setBackgroundColor: [self isNearToExpire:request.date] ? [UIColor redColor] : (request.isNew ? ThemeColorWithAlpha(0.08) : [UIColor clearColor])];
+}
+
+- (void)getExpirationLabelValue:(NSString *)expirationDate {
+    _expirationDate.hidden = expirationDate == nil;
+    if (expirationDate){
+        NSString* expirationDateText = [NSLocalizedString(@"Expiration_text_message", nil) stringByAppendingString:expirationDate];
+        [_expirationDate setText:expirationDateText];
+    }
+}
+
+- (BOOL)isNearToExpire: (NSString *)expirationDate {
+    //Do the logic to know if the expiration is in three days.
+    return true;
 }
 
 - (void)setupPriorityIcon:(NSString *)priority

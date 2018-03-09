@@ -22,3 +22,5 @@
 "Sign_Report_Section" = "Informes de firmas";
 "Annexes_Section" = "Anexos";
 
+//Cell text
+"Expiration_text_message" = "Expira: ";
