@@ -8,6 +8,7 @@
 
 #import "RequestCell.h"
 #import "PFCellContentFactory.h"
+#import "DateHelper.h"
 
 @interface RequestCell ()
 {
@@ -27,8 +28,7 @@
     [self getExpirationLabelValue:request.expdate];
     [self setupPriorityIcon:request.priority];
     [self setupRequestTypeIcon:request.type];
-    //Prepare the Background for hightlight
-    [self setBackgroundColor: [self isNearToExpire:request.date] ? [UIColor redColor] : (request.isNew ? ThemeColorWithAlpha(0.08) : [UIColor clearColor])];
+    [self setBackgroundColor: [DateHelper isNearToExpire:request.expdate inDays:DAYS_TO_EXPIRE_FOR_HIGHLIGHT] ? [UIColor redColor] : (request.isNew ? ThemeColorWithAlpha(0.08) : [UIColor clearColor])];
 }
 
 - (void)getExpirationLabelValue:(NSString *)expirationDate {
@@ -37,11 +37,6 @@
         NSString* expirationDateText = [NSLocalizedString(@"Expiration_text_message", nil) stringByAppendingString:expirationDate];
         [_expirationDate setText:expirationDateText];
     }
-}
-
-- (BOOL)isNearToExpire: (NSString *)expirationDate {
-    //Do the logic to know if the expiration is in three days.
-    return true;
 }
 
 - (void)setupPriorityIcon:(NSString *)priority
