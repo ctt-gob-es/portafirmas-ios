@@ -11,6 +11,7 @@
 #import "RequestCell.h"
 #import "RequestCellNoUI.h"
 #import "DetailTableViewController.h"
+#import "ArrayHelper.h"
 
 @interface BaseListTVC ()
 
@@ -131,7 +132,6 @@
         if (!finishOK) {
             DDLogError(@"Error  parsing  document!");
             [self didReceiveParserWithError:[NSString stringWithFormat:@"Mensaje del servidor:%@(%@)", [parser err], [parser errorCode]]];
-
             return;
         }
 
@@ -141,6 +141,7 @@
             [self.dataArray addObjectsFromArray:[parser dataSource]];
         }
 
+        self.dataArray = [ArrayHelper getSortedArrayByExpirationDateAndDate: self.dataArray];
         [self setMoreDataAvailable:[parser dataSource].count > 0 && [parser dataSource].count % kRequestListXMLControllerPageSize == 0];
         [self.tableViewFooter setHidden:!self.moreDataAvailable];
 
