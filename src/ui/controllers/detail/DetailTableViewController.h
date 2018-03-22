@@ -27,9 +27,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *inputDateLbl;
 @property (weak, nonatomic) IBOutlet UILabel *applicationLbl;
 @property (weak, nonatomic) IBOutlet UILabel *subject;
+@property (strong, nonatomic) IBOutlet UILabel *inputExpirationDateLbl;
 @property (strong, nonatomic) NSString *requestId;
 @property (strong, nonatomic) Detail *dataSource;
 @property (strong, nonatomic) PFRequest *dataSourceRequest;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *btnDocumentAction;
+@property (strong, nonatomic) IBOutlet UITableViewCell *expirationTableViewCell;
+@property (strong, nonatomic) IBOutletCollection(UITableViewCell) NSArray *cellBehindExpirationDate;
 @property (readwrite, nonatomic) BOOL signEnabled;
 @end

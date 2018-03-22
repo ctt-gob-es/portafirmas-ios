@@ -245,6 +245,7 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 {
     self.referenceLbl.text = _dataSource.ref;
     self.inputDateLbl.text = _dataSource.date;
+    [self showExpirationDateIfExists];
     self.subject.text = _dataSource.subj;
     self.applicationLbl.text = _dataSource.app;
 
@@ -252,6 +253,21 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     PFRequest *detailRequest = [[PFRequest alloc] initWithId:_requestId];
     detailRequest.documents = _dataSource.documents;
     _selectedRows = [[NSArray alloc] initWithObjects:detailRequest, nil];
+    
+}
+
+// Hide or show the expiration date
+- (void)showExpirationDateIfExists
+{
+    //Next line is created to test an expiration date until the server works.
+    // _dataSource.expdate = @"17/3/2018";
+    self.inputExpirationDateLbl.text = _dataSource.expdate;
+    if (!_dataSource.expdate){
+        [self.expirationTableViewCell setHidden: true];
+        CGFloat expirationTableViewCellHeight =  _expirationTableViewCell.frame.size.height;
+        for(UITableViewCell *cell in self.cellBehindExpirationDate) {
+            [cell setFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y - expirationTableViewCellHeight, cell.frame.size.width, cell.frame.size.height)];    }
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
