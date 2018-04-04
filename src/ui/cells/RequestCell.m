@@ -28,7 +28,7 @@
     [self getExpirationLabelValue:request.expdate];
     [self setupPriorityIcon:request.priority];
     [self setupRequestTypeIcon:request.type];
-    [self setBackgroundColor: [DateHelper isNearToExpire:request.expdate inDays:DAYS_TO_EXPIRE_FOR_HIGHLIGHT] ? [UIColor redColor] : (request.isNew ? ThemeColorWithAlpha(0.08) : [UIColor clearColor])];
+    [self setBackgroundColor: [DateHelper isNearToExpire:request.expdate inDays:DAYS_TO_EXPIRE_FOR_HIGHLIGHT] ? HIGHLIGHT_COLOR_FOR_NEAR_TO_EXPIRE_CELLS : (request.isNew ? ThemeColorWithAlpha(0.08) : [UIColor clearColor])];
 }
 
 - (void)getExpirationLabelValue:(NSString *)expirationDate {
