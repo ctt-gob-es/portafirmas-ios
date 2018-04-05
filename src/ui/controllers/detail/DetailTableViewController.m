@@ -260,13 +260,14 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 - (void)showExpirationDateIfExists
 {
     //Next line is created to test an expiration date until the server works.
-    // _dataSource.expdate = @"17/3/2018";
+//     _dataSource.expdate = @"17/3/2018";
     self.inputExpirationDateLbl.text = _dataSource.expdate;
     if (!_dataSource.expdate){
         [self.expirationTableViewCell setHidden: true];
         CGFloat expirationTableViewCellHeight =  _expirationTableViewCell.frame.size.height;
         for(UITableViewCell *cell in self.cellBehindExpirationDate) {
-            [cell setFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y - expirationTableViewCellHeight, cell.frame.size.width, cell.frame.size.height)];    }
+            [cell setFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y - expirationTableViewCellHeight, cell.frame.size.width, cell.frame.size.height)];
+        }
     }
 }
 
@@ -482,6 +483,13 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
         [(BaseListTVC *)self.navigationController.previousViewController refreshInfo];
         [self.navigationController popViewControllerAnimated:YES];
     }
+}
+
+#pragma mark - Handle rotation for this view
+
+// When the device rotates we need to re-adapt the cells below the expiration date cell if it doesn't exist.
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+        [self showExpirationDateIfExists];
 }
 
 @end
