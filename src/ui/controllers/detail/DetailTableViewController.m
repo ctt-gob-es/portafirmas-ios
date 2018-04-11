@@ -261,7 +261,6 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 - (void)showExpirationDateIfExists
 {
     //Next line is created to test an expiration date until the server works.
-//     _dataSource.expdate = @"17/3/2018";
     self.inputExpirationDateLbl.text = _dataSource.expdate;
     if (!_dataSource.expdate){
         [self.expirationTableViewCell setHidden: true];
