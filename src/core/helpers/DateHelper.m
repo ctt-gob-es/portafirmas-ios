@@ -58,12 +58,12 @@
     return sortedDatesArray[0];
 }
 
-+ (BOOL)isNearToExpire: (NSString *)expirationDate inDays: (int) days{
++ (BOOL)isNearToExpire: (NSString *)expirationDate inDays: (int) days {
     NSDate *dateForExpiration = [DateHelper getDateFromString:expirationDate];
     NSDate *currentDate = [NSDate date];
     NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDateComponents *components = [gregorianCalendar components:NSCalendarUnitDay fromDate:dateForExpiration toDate:currentDate options:0];
-    return ([components day] < days) && expirationDate? true : false;
+    NSDateComponents *components = [gregorianCalendar components:NSCalendarUnitDay fromDate:currentDate toDate:dateForExpiration options:0];
+    return ([components day] < days) && expirationDate ? true : false;
 }
 
 @end
