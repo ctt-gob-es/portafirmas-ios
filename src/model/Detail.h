@@ -20,9 +20,9 @@
 #pragma mark - Fields
 @property (strong, nonatomic) NSString *subj;
 @property (strong, nonatomic) NSString *date;
+@property (strong, nonatomic) NSString *expdate;
 @property (strong, nonatomic) NSString *app;
 @property (strong, nonatomic) NSString *ref;
-@property (strong, nonatomic) NSString *expdate;
 @property (strong, nonatomic) NSString *signlinestype;
 
 #pragma mark - Senders list
