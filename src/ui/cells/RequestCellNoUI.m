@@ -7,6 +7,7 @@
 //
 
 #import "RequestCellNoUI.h"
+#import "DateHelper.h"
 
 @implementation RequestCellNoUI
 
@@ -15,8 +16,17 @@
     [_title setText:request.snder];
     [_detail setText:request.subj];
     [_inputDate setText:request.date];
+    [self getExpirationLabelValue:request.expdate];
     [self setupRequestTypeIcon:request.type];
-    [self setBackgroundColor:request.isNew ? ThemeColorWithAlpha(0.08):[UIColor clearColor]];
+    [self setBackgroundColor: [DateHelper isNearToExpire:request.expdate inDays:DAYS_TO_EXPIRE_FOR_HIGHLIGHT] ? HIGHLIGHT_COLOR_FOR_NEAR_TO_EXPIRE_CELLS : (request.isNew ? ThemeColorWithAlpha(0.08) : [UIColor clearColor])];
+}
+
+- (void)getExpirationLabelValue:(NSString *)expirationDate {
+    _expirationDate.hidden = expirationDate == nil;
+    if (expirationDate){
+        NSString* expirationDateText = [NSLocalizedString(@"Expiration_text_message", nil) stringByAppendingString:expirationDate];
+        [_expirationDate setText:expirationDateText];
+    }
 }
 
 - (void)setupRequestTypeIcon:(PFRequestType)type

@@ -86,6 +86,7 @@
 		3CC403861AB9EDBA006F8803 /* CertificateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC403851AB9EDBA006F8803 /* CertificateCell.m */; };
 		3CD199A51AC2C952007E9E35 /* UINavigationController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */; };
 		992987C2AA230FF0604BD234 /* libPods-PortaFirmasUniv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0A9AB702FDB8ACDEBFCF67 /* libPods-PortaFirmasUniv.a */; };
+		B2E4AEBE20599935000DD0C3 /* ArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B2E4AEBC20599934000DD0C3 /* ArrayHelper.m */; };
 		BC0D3E1A2004C3A900CB73BB /* AttachedDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0D3E192004C3A900CB73BB /* AttachedDoc.m */; };
 		BC33AAA0200518FF00B33CBB /* Source.m in Sources */ = {isa = PBXBuildFile; fileRef = BC33AA9F200518FF00B33CBB /* Source.m */; };
 		BC46A0E91FD6CBEB004D0C33 /* PFError.m in Sources */ = {isa = PBXBuildFile; fileRef = BC46A0E81FD6CBEB004D0C33 /* PFError.m */; };
@@ -254,6 +255,8 @@
 		3CD199A31AC2C952007E9E35 /* UINavigationController+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationController+Utils.h"; path = "UINavigationController/UINavigationController+Utils.h"; sourceTree = "<group>"; };
 		3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+Utils.m"; path = "UINavigationController/UINavigationController+Utils.m"; sourceTree = "<group>"; };
 		862DBE2D1FC5F494A173087E /* Pods-PortaFirmasUniv.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortaFirmasUniv.release.xcconfig"; path = "Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv.release.xcconfig"; sourceTree = "<group>"; };
+		B2E4AEBC20599934000DD0C3 /* ArrayHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArrayHelper.m; sourceTree = "<group>"; };
+		B2E4AEBD20599935000DD0C3 /* ArrayHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArrayHelper.h; sourceTree = "<group>"; };
 		BC0D3E182004C3A900CB73BB /* AttachedDoc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttachedDoc.h; sourceTree = "<group>"; };
 		BC0D3E192004C3A900CB73BB /* AttachedDoc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AttachedDoc.m; sourceTree = "<group>"; };
 		BC33AA9E200518FF00B33CBB /* Source.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Source.h; sourceTree = "<group>"; };
@@ -588,6 +591,8 @@
 		3CA899211AA608000035012D /* helpers */ = {
 			isa = PBXGroup;
 			children = (
+				B2E4AEBD20599935000DD0C3 /* ArrayHelper.h */,
+				B2E4AEBC20599934000DD0C3 /* ArrayHelper.m */,
 				3C00ADA81AB71B0B00EF6886 /* Base64Utils.h */,
 				3C00ADA91AB71B0B00EF6886 /* Base64Utils.m */,
 				3C00ADAA1AB71B0B00EF6886 /* CertificateUtils.h */,
@@ -1056,6 +1061,7 @@
 				BC33AAA0200518FF00B33CBB /* Source.m in Sources */,
 				3C00ADD31AB71B1700EF6886 /* ApproveXMLController.m in Sources */,
 				3CC4036E1AB96D0F006F8803 /* ServerListTVC.m in Sources */,
+				B2E4AEBE20599935000DD0C3 /* ArrayHelper.m in Sources */,
 				BCAF65E11FAC9BCC00D30E54 /* PushNotificationService.m in Sources */,
 				3C00ADD71AB71B1700EF6886 /* PreSignXMLController.m in Sources */,
 				3C00ADD61AB71B1700EF6886 /* PostSignXMLController.m in Sources */,

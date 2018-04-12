@@ -27,3 +27,6 @@
 #define STATUSBAR_ORIENTATION            [UIApplication sharedApplication].statusBarOrientation
 #define NAV_BAR_HEIGHT                                  44
 #define STATUS_BAR_HEIGHT                               20
+
+#pragma mark - Cells
+#define DAYS_TO_EXPIRE_FOR_HIGHLIGHT                    3
