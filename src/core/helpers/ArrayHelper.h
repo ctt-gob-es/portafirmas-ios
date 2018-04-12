@@ -10,6 +10,6 @@
 
 @interface ArrayHelper : NSObject
 
-+ (NSMutableArray *)getSortedArrayByExpirationDateAndDate: (NSMutableArray *)array;
++ (NSMutableArray *)getSortedArrayByExpirationDate: (NSMutableArray *)array;
 
 @end

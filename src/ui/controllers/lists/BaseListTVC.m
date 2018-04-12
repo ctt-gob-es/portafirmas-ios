@@ -141,10 +141,9 @@
             [self.dataArray addObjectsFromArray:[parser dataSource]];
         }
 
-        self.dataArray = [ArrayHelper getSortedArrayByExpirationDateAndDate: self.dataArray];
+        self.dataArray = [ArrayHelper getSortedArrayByExpirationDate: self.dataArray];
         [self setMoreDataAvailable:[parser dataSource].count > 0 && [parser dataSource].count % kRequestListXMLControllerPageSize == 0];
         [self.tableViewFooter setHidden:!self.moreDataAvailable];
-
         [self.tableView reloadData];
     } else {
         DDLogError(@"Error parsing document!");
