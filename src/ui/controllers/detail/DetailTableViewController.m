@@ -274,8 +274,6 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 // Hide or show the reject explanation
 - (void)showRejectExplanationIfExists
 {
-    //Next line is created to test an expiration date until the server works.
-//     _dataSource.rejt = @"Usuario no autorizado.";
     self.rejectLbl.text = _dataSource.rejt;
     if (!_dataSource.rejt){
         [self.rejectExplanationTableViewCell setHidden: true];
