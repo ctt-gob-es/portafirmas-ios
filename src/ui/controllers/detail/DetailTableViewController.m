@@ -248,6 +248,7 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     [self showExpirationDateIfExists];
     self.subject.text = _dataSource.subj;
     self.applicationLbl.text = _dataSource.app;
+    [self showRejectExplanationIfExists];
 
     _selectedRows = nil;
     PFRequest *detailRequest = [[PFRequest alloc] initWithId:_requestId];
@@ -267,6 +268,15 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
         for(UITableViewCell *cell in self.cellBehindExpirationDate) {
             [cell setFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y - expirationTableViewCellHeight, cell.frame.size.width, cell.frame.size.height)];
         }
+    }
+}
+
+// Hide or show the reject explanation
+- (void)showRejectExplanationIfExists
+{
+    self.rejectLbl.text = _dataSource.rejt;
+    if (!_dataSource.rejt){
+        [self.rejectExplanationTableViewCell setHidden: true];
     }
 }
 

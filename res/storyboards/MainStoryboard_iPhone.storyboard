@@ -546,6 +546,31 @@
                                             <segue destination="XhH-Lx-0ZQ" kind="push" identifier="segueShowSenders" id="Xgo-fU-9ui"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="AOS-fj-gJU">
+                                        <rect key="frame" x="0.0" y="352" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AOS-fj-gJU" id="wVL-mf-tgQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="Motivo del rechazo:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gXQ-In-CVk">
+                                                    <rect key="frame" x="9" y="0.0" width="142" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
+                                                    <color key="textColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="8" id="g2p-oh-OGK">
+                                                    <rect key="frame" x="150" y="0.0" width="209" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
+                                                    <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -570,6 +595,8 @@
                         <outlet property="inputDateLbl" destination="nX2-WL-Pfi" id="eHa-0T-ree"/>
                         <outlet property="inputExpirationDateLbl" destination="8iA-3e-gAA" id="dlS-AK-9qF"/>
                         <outlet property="referenceLbl" destination="wEb-UO-XVR" id="ZwN-nK-WTz"/>
+                        <outlet property="rejectExplanationTableViewCell" destination="AOS-fj-gJU" id="qkm-9Y-Mwt"/>
+                        <outlet property="rejectLbl" destination="g2p-oh-OGK" id="xwK-N6-SAk"/>
                         <outlet property="subject" destination="7pu-xW-tcR" id="U9m-Pc-0Zg"/>
                         <outlet property="view" destination="1Ek-a1-fwh" id="67P-ng-3Ka"/>
                         <outletCollection property="cellBehindExpirationDate" destination="mGE-2t-G1a" id="TkS-OK-nef"/>
@@ -578,7 +605,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ROH-LQ-nGE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1175" y="337"/>
+            <point key="canvasLocation" x="-1175.5" y="336.5"/>
         </scene>
         <!--Destinatarios-->
         <scene sceneID="6RY-XA-396">
@@ -1698,7 +1725,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tjX-Gu-uGQ"/>
-        <segue reference="47P-jN-2H3"/>
-        <segue reference="f7k-Dd-rat"/>
+        <segue reference="o3i-sS-1ar"/>
+        <segue reference="P10-3g-cwm"/>
     </inferredMetricsTieBreakers>
 </document>
