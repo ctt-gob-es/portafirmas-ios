@@ -23,7 +23,7 @@
 @interface RequestSignerController : NSObject<WSDelegate>
 {
     NSArray *preSignRequests;
-    NSArray *_dataSource;
+    NSMutableArray *_dataSource;
 
     BOOL waitingPreSign;
     BOOL waitingPostSign;
@@ -33,7 +33,9 @@
 
 }
 @property (nonatomic, strong) id <RequestSignerEvent> delegate;
-@property (nonatomic, strong) NSArray *dataSource;
+@property (nonatomic, strong) NSMutableArray *dataSource;
+@property (nonatomic, strong) NSMutableArray *pendingRequests;
+@property NSInteger pendingRequestIndex;
 
 - (void)loadPreSignRequestsWithCurrentCertificate:(NSArray *)requests;
 - (void)loadPreSignDetailWithCurrentCertificate:(Detail *)detail;
