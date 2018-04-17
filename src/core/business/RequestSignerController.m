@@ -42,10 +42,15 @@
     DDLogDebug(@"RequestSignerController::loadPreSignRequestsWithCurrentCertificate...");
     waitingPreSign = TRUE;
 
+//    Code to make one sign fail.
+    NSMutableArray *fakeRequestArray = [[NSMutableArray alloc]initWithArray:requests];
+    PFRequest *fakeRequestElement = [[PFRequest alloc] init];
+    [fakeRequestArray replaceObjectAtIndex: 0 withObject:fakeRequestElement];
+
     NSData *certificateData = [[CertificateUtils sharedWrapper] publicKeyBits];
     NSString *certificateB64 = [Base64Utils base64EncodeData:certificateData];
     NSLog(@"Presing - RequestSignerController");
-    NSString *data = [PreSignXMLController buildRequestWithCert:certificateB64 witRequestList:requests];
+    NSString *data = [PreSignXMLController buildRequestWithCert:certificateB64 witRequestList:fakeRequestArray];
 
     DDLogDebug(@"RequestSignerController::loadPreSignRequestsWithCurrentCertificate data=%@", data);
 
