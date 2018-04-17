@@ -477,7 +477,8 @@
                           otherButtonTitles:nil] show];
     } else {
         // Operacion finalizada con errores
-        NSString *msg = requestsWithError.count == 1 ? @"Ocurrio un error al firmar la peticion seleccionada" : @"Ocurrio un error al firmar algunas de las peticiones seleccionadas.";
+        NSString *msg = requestsWithError.count == 1 && requestsSigned.count == 1? @"Ocurrió un error al firmar la peticion seleccionada" : requestsWithError.count == 1 && requestsSigned.count > 1?  @"Ocurrió un error al firmar una de las peticiones seleccionadas." : @"Ocurrió un error al firmar algunas de las peticiones seleccionadas";
+        
         [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"")
                                     message:msg
                                    delegate:nil
