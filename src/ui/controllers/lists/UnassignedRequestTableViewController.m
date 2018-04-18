@@ -139,7 +139,7 @@
 
 - (void)startSendingSignRequests
 {
-    
+    [self enableUserInteraction:false];
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
 
     requestSignerController = [RequestSignerController new];
@@ -262,6 +262,10 @@
                           cancelButtonTitle:@"Cancelar"
                           otherButtonTitles:@"Continuar", nil] show];
     }
+}
+
+- (void)enableUserInteraction: (BOOL)value {
+    [self.parentViewController.view setUserInteractionEnabled:value];
 }
 
 #pragma mark - UITableViewDelegate
@@ -461,6 +465,7 @@
 - (void)didReceiveSignerRequestResult:(NSArray *)requestsSigned
 {
     DDLogDebug(@"UnsignedRequestTableViewController::didReceiveSignerRequestResult - reqs count: %lu", (unsigned long)[requestsSigned count]);
+    [self enableUserInteraction: true];
     [SVProgressHUD dismiss];
 
     NSIndexSet *requestsWithError = [requestsSigned indexesOfObjectsPassingTest:^BOOL (PFRequest *request, NSUInteger idx, BOOL *stop) {
@@ -529,9 +534,7 @@
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex > 0) {
-        
         if (reject) {
-            
             reject = NO;
             [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
             
