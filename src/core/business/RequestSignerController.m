@@ -41,16 +41,9 @@
 - (void)loadPreSignRequestsWithCurrentCertificate:(NSArray *)requests
 {
     DDLogDebug(@"RequestSignerController::loadPreSignRequestsWithCurrentCertificate...");
-
     _pendingRequestIndex = 0;
     _pendingRequests = [[NSMutableArray alloc] initWithArray: requests];
     _dataSource = [[NSMutableArray alloc] init];
-    
-//    Code to make one or multiple requests fail
-//    PFRequest *fakeRequest = [[PFRequest alloc] init];
-//    [_pendingRequests replaceObjectAtIndex: 0 withObject:fakeRequest];
-//    [_pendingRequests replaceObjectAtIndex: 1 withObject:fakeRequest];
-    
     [self sendNextRequest];
 }
 
