@@ -420,12 +420,12 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 
 - (void)didFinisParsingWithParser:(DetailXMLController *)parser
 {
-    
     BOOL finishOK = ![parser finishWithError];
-
     if (!finishOK) {
-        DDLogError(@"Error  parsing  document!");
-        [self didReceiveParserWithError:[NSString stringWithFormat:@"Mensaje del servidor:%@(%@)", [parser err], [parser errorCode]]];
+        NSString *errorCode = [parser errorCode] == nil ? @"" : [parser errorCode];
+        NSString *err = [parser err] == nil ? @"" : [parser err];
+        [self didReceiveError: [NSString stringWithFormat: @"Mensaje del servidor:%@(%@)", err, errorCode]];
+        [_requestSignerController didReceiveParserWithError: [NSString stringWithFormat: @"Mensaje del servidor:%@(%@)", err, errorCode]];
     } else {
         DDLogDebug(@"DetailTableViewController:: Parsing Detail XML message with no errors ");
         _dataSource = [parser dataSource];
