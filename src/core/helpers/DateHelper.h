@@ -15,5 +15,6 @@
 + (NSDate *)getDateFromString:(NSString *)stringDate;
 + (NSDate *)getDateFromString:(NSString *)stringDate withFormat:(NSString *)format;
 + (NSDate *)getGreaterDate:(NSArray *)datesArray;
++ (BOOL)isNearToExpire: (NSString *)expirationDate inDays: (int) days;
 
 @end

@@ -261,7 +261,6 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 - (void)showExpirationDateIfExists
 {
     //Next line is created to test an expiration date until the server works.
-//     _dataSource.expdate = @"17/3/2018";
     self.inputExpirationDateLbl.text = _dataSource.expdate;
     if (!_dataSource.expdate){
         [self.expirationTableViewCell setHidden: true];
@@ -275,8 +274,6 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 // Hide or show the reject explanation
 - (void)showRejectExplanationIfExists
 {
-    //Next line is created to test an expiration date until the server works.
-//     _dataSource.rejt = @"Usuario no autorizado.";
     self.rejectLbl.text = _dataSource.rejt;
     if (!_dataSource.rejt){
         [self.rejectExplanationTableViewCell setHidden: true];
@@ -423,12 +420,12 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 
 - (void)didFinisParsingWithParser:(DetailXMLController *)parser
 {
-    
     BOOL finishOK = ![parser finishWithError];
-
     if (!finishOK) {
-        DDLogError(@"Error  parsing  document!");
-        [self didReceiveParserWithError:[NSString stringWithFormat:@"Mensaje del servidor:%@(%@)", [parser err], [parser errorCode]]];
+        NSString *errorCode = [parser errorCode] == nil ? @"" : [parser errorCode];
+        NSString *err = [parser err] == nil ? @"" : [parser err];
+        [self didReceiveError: [NSString stringWithFormat: @"Mensaje del servidor:%@(%@)", err, errorCode]];
+        [_requestSignerController didReceiveParserWithError: [NSString stringWithFormat: @"Mensaje del servidor:%@(%@)", err, errorCode]];
     } else {
         DDLogDebug(@"DetailTableViewController:: Parsing Detail XML message with no errors ");
         _dataSource = [parser dataSource];
