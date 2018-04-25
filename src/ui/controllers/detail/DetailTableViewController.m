@@ -249,8 +249,7 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     self.subject.text = _dataSource.subj;
     self.applicationLbl.text = _dataSource.app;
     [self showRejectExplanationIfExists];
-    NSString *signLinesType = _dataSource.signlinestype;
-    NSLog(@"SSSSSSSSS %@ ",signLinesType);
+    self.signLinesTypeLbl.text = _dataSource.signlinestype;
 
     _selectedRows = nil;
     PFRequest *detailRequest = [[PFRequest alloc] initWithId:_requestId];
