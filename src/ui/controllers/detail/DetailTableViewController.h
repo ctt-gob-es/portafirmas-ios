@@ -24,6 +24,7 @@
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *referenceLbl;
+@property (strong, nonatomic) IBOutlet UILabel *signLinesTypeLbl;
 @property (weak, nonatomic) IBOutlet UILabel *inputDateLbl;
 @property (weak, nonatomic) IBOutlet UILabel *applicationLbl;
 @property (strong, nonatomic) IBOutlet UILabel *rejectLbl;
