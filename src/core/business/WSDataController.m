@@ -172,6 +172,14 @@ NSInteger const timeout = 30;
     
     NSString *dataString = [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding];
     
+    // Reformat every possible fail in the data format.
+    dataString = [dataString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    dataString = [dataString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+    dataString = [dataString stringByReplacingOccurrencesOfString:@"&_lt;" withString:@""];
+    dataString = [dataString stringByReplacingOccurrencesOfString:@"&_gt;" withString:@""];
+    data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *dataStringAfter = [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding];
+
     [_delegate doParse: data];
 }
 
