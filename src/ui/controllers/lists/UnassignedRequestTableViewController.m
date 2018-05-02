@@ -139,7 +139,7 @@
 
 - (void)startSendingSignRequests
 {
-    
+    [self enableUserInteraction:false];
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
 
     requestSignerController = [RequestSignerController new];
@@ -262,6 +262,10 @@
                           cancelButtonTitle:@"Cancelar"
                           otherButtonTitles:@"Continuar", nil] show];
     }
+}
+
+- (void)enableUserInteraction: (BOOL)value {
+    [self.parentViewController.view setUserInteractionEnabled:value];
 }
 
 #pragma mark - UITableViewDelegate
@@ -461,6 +465,7 @@
 - (void)didReceiveSignerRequestResult:(NSArray *)requestsSigned
 {
     DDLogDebug(@"UnsignedRequestTableViewController::didReceiveSignerRequestResult - reqs count: %lu", (unsigned long)[requestsSigned count]);
+    [self enableUserInteraction: true];
     [SVProgressHUD dismiss];
 
     NSIndexSet *requestsWithError = [requestsSigned indexesOfObjectsPassingTest:^BOOL (PFRequest *request, NSUInteger idx, BOOL *stop) {
@@ -471,13 +476,14 @@
     if (requestsWithError.count == 0) {
         // Peticiones firmadas corrrectamente
         [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"INFO", @"")
-                                    message:@"Peticiones firmadas correctamente"
+                                    message:NSLocalizedString(@"Alert_View_Everything_Signed_Correctly", nil)
                                    delegate:nil
                           cancelButtonTitle:NSLocalizedString(@"OK", @"")
                           otherButtonTitles:nil] show];
     } else {
         // Operacion finalizada con errores
-        NSString *msg = requestsWithError.count == 1 ? @"Ocurrio un error al firmar la peticion seleccionada" : @"Ocurrio un error al firmar algunas de las peticiones seleccionadas.";
+        NSString *msg = requestsWithError.count == 1 ? (requestsSigned.count == 1 ?  NSLocalizedString(@"Alert_View_One_Signature_Failed_In_Single_Request", nil) : NSLocalizedString(@"Alert_View_One_Signature_Failed_In_Multilple_Request", nil)) : NSLocalizedString(@"Alert_View_Multiple_Signatures_Failed_In_Multiple_Request", nil);
+        
         [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"")
                                     message:msg
                                    delegate:nil
@@ -528,9 +534,7 @@
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex > 0) {
-        
         if (reject) {
-            
             reject = NO;
             [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
             
