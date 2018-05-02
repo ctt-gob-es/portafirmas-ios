@@ -23,8 +23,6 @@ struct {
 
 } delegateRespondsTo;
 
-NSInteger const timeout = 30;
-
 - (void)setDelegate:(id <WSDelegate>)aDelegate
 {
     if (_delegate != aDelegate) {
@@ -67,7 +65,7 @@ NSInteger const timeout = 30;
 
         request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:newURL]
                                           cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                      timeoutInterval:timeout];
+                                      timeoutInterval:TIMEOUT_FOR_SERVER];
     } else {
         
         NSString *post = [NSString stringWithFormat: @"op=%lu&dat=%@",(unsigned long)code, [msgData base64EncodedString]];
@@ -79,7 +77,7 @@ NSInteger const timeout = 30;
 
         request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:wsURLString]
                                           cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                      timeoutInterval:timeout];
+                                      timeoutInterval:TIMEOUT_FOR_SERVER];
 
         [request setHTTPMethod:@"POST"];
         [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
@@ -116,7 +114,7 @@ NSInteger const timeout = 30;
     // Create a request object with that URL
     NSURLRequest *request = [NSURLRequest requestWithURL:url
                                              cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                         timeoutInterval:timeout];
+                                         timeoutInterval:TIMEOUT_FOR_SERVER];
 
     // Clear out the existing connection if there is one
     if (connectionInProgress) {

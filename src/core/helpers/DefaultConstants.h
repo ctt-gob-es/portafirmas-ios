@@ -30,3 +30,6 @@
 
 #pragma mark - Cells
 #define DAYS_TO_EXPIRE_FOR_HIGHLIGHT                    3
+
+#pragma mark - Server
+#define TIMEOUT_FOR_SERVER                              60
