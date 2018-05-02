@@ -22,5 +22,9 @@
 "Sign_Report_Section" = "Informes de firmas";
 "Annexes_Section" = "Anexos";
 
+//Detail view
+"Request_Type_Firma" = "Firma";
+"Request_Type_Visto_Bueno" = "Visto Bueno";
+
 //Cell text
 "Expiration_text_message" = "Expira: ";

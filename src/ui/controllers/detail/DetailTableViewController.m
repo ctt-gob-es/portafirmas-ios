@@ -250,6 +250,8 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     self.applicationLbl.text = _dataSource.app;
     [self showRejectExplanationIfExists];
     self.signLinesTypeLbl.text = _dataSource.signlinestype;
+    NSString *requestTypeText = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? NSLocalizedString(@"Request_Type_Firma", nil) : NSLocalizedString(@"Request_Type_Visto_Bueno", nil);
+    self.requestTypeLbl.text = requestTypeText;
 
     _selectedRows = nil;
     PFRequest *detailRequest = [[PFRequest alloc] initWithId:_requestId];
