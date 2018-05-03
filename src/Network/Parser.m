@@ -21,6 +21,7 @@ NSString *loginNotSupportedError = @"ERR-01";
 NSString *logValidateKey = @"vllgnrq";
 NSString *logValidateErrorKey = @"er";
 NSString *logValidateOkKey = @"ok";
+NSString *logValidateDNI = @"dni";
 
 NSString *subscriptionKey = @"reg";
 NSString *subscriptionValidateOkKey = @"ok";
@@ -85,6 +86,8 @@ NSString *subscriptionValidateOkKey = @"ok";
                 
                 if ([validation isEqualToString:@"true"]) {
                     isValid = true;
+                    //SET HERE THE DNI INTO A SINGLETON, CALL A METHOD??
+                    NSString *DNI = [validationDict objectForKey:logValidateDNI];
                 }
                 
                 success(isValid);

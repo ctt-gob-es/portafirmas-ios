@@ -96,6 +96,7 @@
             [parser parseValidateData:data success:^(BOOL isValid) {
                 if (isValid) {
                     success();
+                    //SET THE DNI HERE
                 } else {
                    failure(nil);
                 }
@@ -140,6 +141,7 @@
             NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
             NSLog(@"Request reply: %@", requestReply);
             success();
+            //Delete here the DNI
         }
     }] resume];
 }
