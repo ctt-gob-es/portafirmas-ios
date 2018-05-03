@@ -172,13 +172,11 @@ NSInteger const timeout = 30;
     
     NSString *dataString = [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding];
     
-    // Reformat every possible fail in the data format.
-    dataString = [dataString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    dataString = [dataString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
-    dataString = [dataString stringByReplacingOccurrencesOfString:@"&_lt;" withString:@""];
-    dataString = [dataString stringByReplacingOccurrencesOfString:@"&_gt;" withString:@""];
+    // Prepare the data to be valid even when there are XML escaped characters in the subject.
+    dataString = [dataString stringByReplacingOccurrencesOfString:@"&_lt;" withString:@"<![CDATA[<]]>"];
+    dataString = [dataString stringByReplacingOccurrencesOfString:@"&_gt;" withString:@"<![CDATA[>]]>"];
+    dataString = [dataString stringByReplacingOccurrencesOfString:@"&" withString:@"<![CDATA[&]]>"];
     data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
-    NSString *dataStringAfter = [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding];
 
     [_delegate doParse: data];
 }
