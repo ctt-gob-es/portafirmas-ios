@@ -37,6 +37,7 @@
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *btnDocumentAction;
 @property (strong, nonatomic) IBOutlet UITableViewCell *expirationTableViewCell;
 @property (strong, nonatomic) IBOutletCollection(UITableViewCell) NSArray *cellBehindExpirationDate;
+@property (strong, nonatomic) IBOutletCollection(UITableViewCell) NSArray *cellBehindRejectExplanation;
 @property (strong, nonatomic) IBOutlet UITableViewCell *rejectExplanationTableViewCell;
 @property (readwrite, nonatomic) BOOL signEnabled;
 @end

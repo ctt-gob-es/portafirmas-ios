@@ -278,8 +278,14 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 - (void)showRejectExplanationIfExists
 {
     self.rejectLbl.text = _dataSource.rejt;
-    if (!_dataSource.rejt){
+    // Avoid the strings only with whitespaces. By default from the server the reject object is @" " (length == 1)
+    NSString* trimmedTextString = [_dataSource.rejt stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (!_dataSource.rejt || [trimmedTextString length]==0 ){
         [self.rejectExplanationTableViewCell setHidden: true];
+        CGFloat expirationTableViewCellHeight =  _expirationTableViewCell.frame.size.height;
+        for(UITableViewCell *cell in self.cellBehindRejectExplanation) {
+            [cell setFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y - expirationTableViewCellHeight, cell.frame.size.width, cell.frame.size.height)];
+        }
     }
 }
 
