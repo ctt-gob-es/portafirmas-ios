@@ -170,6 +170,12 @@ struct {
     
     NSString *dataString = [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding];
     
+    // Prepare the data to be valid even when there are XML escaped characters in the subject.
+    dataString = [dataString stringByReplacingOccurrencesOfString:@"&_lt;" withString:@"<![CDATA[<]]>"];
+    dataString = [dataString stringByReplacingOccurrencesOfString:@"&_gt;" withString:@"<![CDATA[>]]>"];
+    dataString = [dataString stringByReplacingOccurrencesOfString:@"&" withString:@"<![CDATA[&]]>"];
+    data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+
     [_delegate doParse: data];
 }
 
