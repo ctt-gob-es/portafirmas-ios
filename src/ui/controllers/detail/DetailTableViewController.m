@@ -12,7 +12,6 @@
 #import "Detail.h"
 #import "AttachmentViewController.h"
 #import "ReceiversViewController.h"
-#import "SendersViewController.h"
 #import "WSDataController.h"
 #include "AppDelegate.h"
 #import "PFRequest.h"
@@ -228,12 +227,6 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
         [attachmentController setRequestStatus:[PFHelper getPFRequestStatusFromString:_dataSourceRequest.view]];
     }
 
-    if ([[segue identifier] isEqual:@"segueShowSenders"]) {
-        DDLogDebug(@"DetailTableViewController::prepareForSegue number of receivers=%lu", (unsigned long)[_dataSource.senders count]);
-        SendersViewController *sendersController = [segue destinationViewController];
-        sendersController.dataSource = _dataSource.senders;
-    }
-
     if ([[segue identifier] isEqual:@"segueShowReceivers"]) {
         DDLogDebug(@"DetailTableViewController::prepareForSegue number of receivers=%lu", (unsigned long)[_dataSource.senders count]);
         ReceiversViewController *receiversController = [segue destinationViewController];
@@ -252,7 +245,7 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     self.signLinesTypeLbl.text = _dataSource.signlinestype;
     NSString *requestTypeText = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? NSLocalizedString(@"Request_Type_Firma", nil) : NSLocalizedString(@"Request_Type_Visto_Bueno", nil);
     self.requestTypeLbl.text = requestTypeText;
-
+    [self showSenders];
     _selectedRows = nil;
     PFRequest *detailRequest = [[PFRequest alloc] initWithId:_requestId];
     detailRequest.documents = _dataSource.documents;
@@ -287,6 +280,13 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
             [cell setFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y - expirationTableViewCellHeight, cell.frame.size.width, cell.frame.size.height)];
         }
     }
+}
+
+- (void)showSenders
+{
+    NSMutableArray* senders = _dataSource.senders;
+    NSString *joinedSenders = [senders componentsJoinedByString:@"\r"];
+    self.sendersLbl.text = joinedSenders;src/ui/controllers/detail/DetailTableViewController.m
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
