@@ -668,8 +668,6 @@
                         <outletCollection property="cellBehindRejectExplanation" destination="Cnn-qj-WKU" id="jDk-0v-I27"/>
                         <outletCollection property="cellBehindRejectExplanation" destination="vRj-jw-Avp" id="yhJ-KE-Y5H"/>
                         <outletCollection property="cellBehindRejectExplanation" destination="mGE-2t-G1a" id="YbO-JV-Fp2"/>
-                        <outletCollection property="cellBehindExpirationDate" destination="Bjw-8L-u3b" id="ZHc-8p-Hkp"/>
-                        <outletCollection property="cellBehindRejectExplanation" destination="Bjw-8L-u3b" id="0br-gS-lDT"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ROH-LQ-nGE" userLabel="First Responder" sceneMemberID="firstResponder"/>
