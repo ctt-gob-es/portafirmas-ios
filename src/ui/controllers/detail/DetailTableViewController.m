@@ -286,7 +286,7 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 {
     NSMutableArray* senders = _dataSource.senders;
     NSString *joinedSenders = [senders componentsJoinedByString:@"\r"];
-    self.sendersLbl.text = joinedSenders;src/ui/controllers/detail/DetailTableViewController.m
+    self.sendersLbl.text = joinedSenders;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
