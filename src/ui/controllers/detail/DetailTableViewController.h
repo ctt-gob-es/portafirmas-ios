@@ -28,11 +28,12 @@
 @property (strong, nonatomic) IBOutlet UILabel *requestTypeLbl;
 @property (weak, nonatomic) IBOutlet UILabel *inputDateLbl;
 @property (weak, nonatomic) IBOutlet UILabel *applicationLbl;
+@property (strong, nonatomic) IBOutlet UITextView *applicationTitleTextView;
 @property (strong, nonatomic) IBOutlet UITextView *applicationTextView;
 @property (strong, nonatomic) IBOutlet UILabel *rejectLbl;
-//@property (strong, nonatomic) IBOutlet UILabel *sendersLbl;
+@property (strong, nonatomic) IBOutlet UITextView *sendersTitleTextView;
 @property (strong, nonatomic) IBOutlet UITextView *sendersTextView;
-//@property (weak, nonatomic) IBOutlet UILabel *subject;
+@property (strong, nonatomic) IBOutlet UITextView *subjectTitleTextView;
 @property (strong, nonatomic) IBOutlet UITextView *subjectTextView;
 @property (strong, nonatomic) IBOutlet UILabel *inputExpirationDateLbl;
 @property (strong, nonatomic) NSString *requestId;

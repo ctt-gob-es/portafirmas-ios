@@ -238,10 +238,8 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     self.referenceLbl.text = _dataSource.ref;
     self.inputDateLbl.text = _dataSource.date;
     [self showExpirationDateIfExists];
-//    self.subject.text = _dataSource.subj;
-    self.subjectTextView.text = _dataSource.subj;
-//    self.applicationLbl.text = _dataSource.app;
-    self.applicationTextView.text = _dataSource.app;
+    [self showSubject];
+    [self showApplication];
     [self showRejectExplanationIfExists];
     self.signLinesTypeLbl.text = _dataSource.signlinestype;
     NSString *requestTypeText = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? NSLocalizedString(@"Request_Type_Firma", nil) : NSLocalizedString(@"Request_Type_Visto_Bueno", nil);
@@ -267,6 +265,23 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
         }
     }
 }
+- (void)showSubject
+{
+    [self.subjectTitleTextView setTextContainerInset:UIEdgeInsetsZero];
+    self.subjectTitleTextView.textContainer.lineFragmentPadding = 0;
+    [self.subjectTextView setTextContainerInset:UIEdgeInsetsZero];
+    self.subjectTextView.textContainer.lineFragmentPadding = 0;
+    self.subjectTextView.text = _dataSource.subj;
+}
+
+- (void)showApplication
+{
+    [self.applicationTitleTextView setTextContainerInset:UIEdgeInsetsZero];
+    self.applicationTitleTextView.textContainer.lineFragmentPadding = 0;
+    [self.applicationTextView setTextContainerInset:UIEdgeInsetsZero];
+    self.applicationTextView.textContainer.lineFragmentPadding = 0;
+    self.applicationTextView.text = _dataSource.app;
+}
 
 // Hide or show the reject explanation
 - (void)showRejectExplanationIfExists
@@ -285,10 +300,16 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 
 - (void)showSenders
 {
+    [self.sendersTitleTextView setTextContainerInset:UIEdgeInsetsZero];
+    self.sendersTitleTextView.textContainer.lineFragmentPadding = 0;
     [self.sendersTextView setTextContainerInset:UIEdgeInsetsZero];
-    self.sendersTextView .textContainer.lineFragmentPadding = 0;
+    self.sendersTextView.textContainer.lineFragmentPadding = 0;
     NSMutableArray* senders = _dataSource.senders;
+    [senders addObject:@"Second sender"];
+    [senders addObject:@"Second sender"];
+    [senders addObject:@"Second sender"];
 //    [senders addObject:@"Second sender"];
+
     NSString *joinedSenders = [senders componentsJoinedByString:@"\r"];
     self.sendersTextView.text = joinedSenders;
 }

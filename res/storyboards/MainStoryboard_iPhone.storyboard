@@ -363,7 +363,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" editable="NO" text="De:" textAlignment="natural" id="6Mb-cd-HhK">
-                                                    <rect key="frame" x="5" y="-1" width="76" height="44"/>
+                                                    <rect key="frame" x="8" y="0.0" width="76" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
@@ -389,7 +389,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" editable="NO" text="Asunto:" textAlignment="natural" id="bzF-Bl-D0k">
-                                                    <rect key="frame" x="5" y="-5" width="72" height="44"/>
+                                                    <rect key="frame" x="8" y="0.0" width="72" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
@@ -621,7 +621,7 @@
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" editable="NO" text="Aplicación:" textAlignment="natural" id="bEd-Zd-fzk">
-                                                    <rect key="frame" x="5" y="0.0" width="90" height="44"/>
+                                                    <rect key="frame" x="8" y="0.0" width="90" height="44"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="textColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -651,6 +651,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="applicationTextView" destination="HDP-UX-5qS" id="IQG-3u-l4S"/>
+                        <outlet property="applicationTitleTextView" destination="bEd-Zd-fzk" id="Y2Q-Fu-0MD"/>
                         <outlet property="btnDocumentAction" destination="pSv-Hs-Zyh" id="e1l-4c-kT2"/>
                         <outlet property="expirationTableViewCell" destination="vRj-jw-Avp" id="a6U-4S-4mi"/>
                         <outlet property="inputDateLbl" destination="nX2-WL-Pfi" id="eHa-0T-ree"/>
@@ -660,8 +661,10 @@
                         <outlet property="rejectLbl" destination="g2p-oh-OGK" id="xwK-N6-SAk"/>
                         <outlet property="requestTypeLbl" destination="hMY-pO-Acf" id="HpG-bU-hYs"/>
                         <outlet property="sendersTextView" destination="W8P-w8-8Ev" id="hOF-wX-4Et"/>
+                        <outlet property="sendersTitleTextView" destination="6Mb-cd-HhK" id="Wzb-Or-9Op"/>
                         <outlet property="signLinesTypeLbl" destination="BFX-6i-tsi" id="DWF-ep-cIj"/>
                         <outlet property="subjectTextView" destination="DUx-Vt-IyK" id="v1n-oB-vh1"/>
+                        <outlet property="subjectTitleTextView" destination="bzF-Bl-D0k" id="GZC-kQ-SsY"/>
                         <outlet property="view" destination="1Ek-a1-fwh" id="67P-ng-3Ka"/>
                         <outletCollection property="cellBehindExpirationDate" destination="mGE-2t-G1a" id="TkS-OK-nef"/>
                         <outletCollection property="cellBehindRejectExplanation" destination="iW1-Ni-vC9" id="CzB-Yp-Vnj"/>
