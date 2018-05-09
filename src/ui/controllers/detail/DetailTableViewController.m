@@ -267,20 +267,28 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 }
 - (void)showSubject
 {
+    //Aling to the top the textviews for this Table View Cell
     [self.subjectTitleTextView setTextContainerInset:UIEdgeInsetsZero];
     self.subjectTitleTextView.textContainer.lineFragmentPadding = 0;
     [self.subjectTextView setTextContainerInset:UIEdgeInsetsZero];
     self.subjectTextView.textContainer.lineFragmentPadding = 0;
+    
     self.subjectTextView.text = _dataSource.subj;
+    // Scroll to the top
+    [self.subjectTextView scrollRangeToVisible:NSMakeRange(0,0)];
 }
 
 - (void)showApplication
 {
+    //Aling to the top the textviews for this Table View Cell
     [self.applicationTitleTextView setTextContainerInset:UIEdgeInsetsZero];
     self.applicationTitleTextView.textContainer.lineFragmentPadding = 0;
     [self.applicationTextView setTextContainerInset:UIEdgeInsetsZero];
     self.applicationTextView.textContainer.lineFragmentPadding = 0;
+    
     self.applicationTextView.text = _dataSource.app;
+    // Scroll to the top
+    [self.applicationTextView scrollRangeToVisible:NSMakeRange(0,0)];
 }
 
 // Hide or show the reject explanation
@@ -300,18 +308,17 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 
 - (void)showSenders
 {
+    //Aling to the top the textviews for this Table View Cell
     [self.sendersTitleTextView setTextContainerInset:UIEdgeInsetsZero];
     self.sendersTitleTextView.textContainer.lineFragmentPadding = 0;
     [self.sendersTextView setTextContainerInset:UIEdgeInsetsZero];
     self.sendersTextView.textContainer.lineFragmentPadding = 0;
+    
     NSMutableArray* senders = _dataSource.senders;
-    [senders addObject:@"Second sender"];
-    [senders addObject:@"Second sender"];
-    [senders addObject:@"Second sender"];
-//    [senders addObject:@"Second sender"];
-
     NSString *joinedSenders = [senders componentsJoinedByString:@"\r"];
     self.sendersTextView.text = joinedSenders;
+    // Scroll to the top
+    [self.sendersTextView scrollRangeToVisible:NSMakeRange(0,0)];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
