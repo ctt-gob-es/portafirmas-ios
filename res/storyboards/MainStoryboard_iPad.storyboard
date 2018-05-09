@@ -1023,9 +1023,7 @@
                         <outlet property="rejectExplanationTableViewCell" destination="Rkx-r3-rdX" id="jHh-Hb-JMD"/>
                         <outlet property="rejectLbl" destination="RPC-gz-Hfq" id="6dg-dd-BeA"/>
                         <outlet property="requestTypeLbl" destination="ZUP-ej-ltC" id="xYF-0p-kjZ"/>
-                        <outlet property="sendersLbl" destination="Xyw-lO-RuQ" id="MxF-1C-TOg"/>
                         <outlet property="signLinesTypeLbl" destination="2fR-2D-DBQ" id="qiM-Pu-0lb"/>
-                        <outlet property="subject" destination="4AK-HH-m2W" id="38h-jc-AR5"/>
                         <outlet property="view" destination="FRp-fG-woV" id="XPV-US-uHr"/>
                         <outletCollection property="cellBehindExpirationDate" destination="8d4-vW-VaC" id="Ua3-o4-0t1"/>
                         <outletCollection property="cellBehindRejectExplanation" destination="apj-DJ-W7i" id="gib-og-fOn"/>
