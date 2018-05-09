@@ -27,7 +27,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *signLinesTypeLbl;
 @property (strong, nonatomic) IBOutlet UILabel *requestTypeLbl;
 @property (weak, nonatomic) IBOutlet UILabel *inputDateLbl;
-@property (weak, nonatomic) IBOutlet UILabel *applicationLbl;
 @property (strong, nonatomic) IBOutlet UITextView *applicationTitleTextView;
 @property (strong, nonatomic) IBOutlet UITextView *applicationTextView;
 @property (strong, nonatomic) IBOutlet UILabel *rejectLbl;
