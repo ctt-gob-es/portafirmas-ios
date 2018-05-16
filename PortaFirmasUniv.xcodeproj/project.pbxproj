@@ -85,6 +85,7 @@
 		3CC403861AB9EDBA006F8803 /* CertificateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC403851AB9EDBA006F8803 /* CertificateCell.m */; };
 		3CD199A51AC2C952007E9E35 /* UINavigationController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */; };
 		992987C2AA230FF0604BD234 /* libPods-PortaFirmasUniv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0A9AB702FDB8ACDEBFCF67 /* libPods-PortaFirmasUniv.a */; };
+		B289830B20AC8BA600B7544A /* SendersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B289830920AC8BA600B7544A /* SendersViewController.m */; };
 		B2E4AEBE20599935000DD0C3 /* ArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B2E4AEBC20599934000DD0C3 /* ArrayHelper.m */; };
 		BC0D3E1A2004C3A900CB73BB /* AttachedDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0D3E192004C3A900CB73BB /* AttachedDoc.m */; };
 		BC33AAA0200518FF00B33CBB /* Source.m in Sources */ = {isa = PBXBuildFile; fileRef = BC33AA9F200518FF00B33CBB /* Source.m */; };
@@ -252,6 +253,8 @@
 		3CD199A31AC2C952007E9E35 /* UINavigationController+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationController+Utils.h"; path = "UINavigationController/UINavigationController+Utils.h"; sourceTree = "<group>"; };
 		3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+Utils.m"; path = "UINavigationController/UINavigationController+Utils.m"; sourceTree = "<group>"; };
 		862DBE2D1FC5F494A173087E /* Pods-PortaFirmasUniv.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortaFirmasUniv.release.xcconfig"; path = "Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv.release.xcconfig"; sourceTree = "<group>"; };
+		B289830920AC8BA600B7544A /* SendersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendersViewController.m; sourceTree = "<group>"; };
+		B289830A20AC8BA600B7544A /* SendersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendersViewController.h; sourceTree = "<group>"; };
 		B2E4AEBC20599934000DD0C3 /* ArrayHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArrayHelper.m; sourceTree = "<group>"; };
 		B2E4AEBD20599935000DD0C3 /* ArrayHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArrayHelper.h; sourceTree = "<group>"; };
 		BC0D3E182004C3A900CB73BB /* AttachedDoc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttachedDoc.h; sourceTree = "<group>"; };
@@ -424,6 +427,8 @@
 				3C00AD6F1AB71A6300EF6886 /* PreviewViewController.m */,
 				3C00AD701AB71A6300EF6886 /* ReceiversViewController.h */,
 				3C00AD711AB71A6300EF6886 /* ReceiversViewController.m */,
+				B289830A20AC8BA600B7544A /* SendersViewController.h */,
+				B289830920AC8BA600B7544A /* SendersViewController.m */,
 			);
 			path = detail;
 			sourceTree = "<group>";
@@ -1014,6 +1019,7 @@
 				3CC403771AB96D18006F8803 /* DocumentCertificatesViewController.m in Sources */,
 				3C0A7EBF1AB19DBE00F793AA /* KeyboardObserver.m in Sources */,
 				3C00ADD21AB71B1700EF6886 /* AppListXMLController.m in Sources */,
+				B289830B20AC8BA600B7544A /* SendersViewController.m in Sources */,
 				BCAF65E61FACA96500D30E54 /* NSData+Conversion.m in Sources */,
 				3CC403681AB96D05006F8803 /* PFBaseVC.m in Sources */,
 				BCA133D31FF63DD200818EC7 /* NotificationHandler.m in Sources */,

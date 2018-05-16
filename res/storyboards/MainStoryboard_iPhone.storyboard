@@ -376,6 +376,14 @@
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
+                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6VF-HP-5lz">
+                                                    <rect key="frame" x="292" y="14" width="80" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                    <state key="normal">
+                                                        <color key="titleColor" red="0.59864145520000001" green="0.0" blue="0.091977573930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
@@ -659,6 +667,7 @@
                         <outlet property="rejectExplanationTableViewCell" destination="AOS-fj-gJU" id="qkm-9Y-Mwt"/>
                         <outlet property="rejectLbl" destination="g2p-oh-OGK" id="xwK-N6-SAk"/>
                         <outlet property="requestTypeLbl" destination="hMY-pO-Acf" id="HpG-bU-hYs"/>
+                        <outlet property="sendersMoreButton" destination="6VF-HP-5lz" id="tkT-F1-VsT"/>
                         <outlet property="sendersTextView" destination="W8P-w8-8Ev" id="hOF-wX-4Et"/>
                         <outlet property="sendersTitleTextView" destination="6Mb-cd-HhK" id="Wzb-Or-9Op"/>
                         <outlet property="signLinesTypeLbl" destination="BFX-6i-tsi" id="DWF-ep-cIj"/>
@@ -1774,7 +1783,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="tjX-Gu-uGQ"/>
-        <segue reference="o3i-sS-1ar"/>
-        <segue reference="P10-3g-cwm"/>
+        <segue reference="47P-jN-2H3"/>
+        <segue reference="f7k-Dd-rat"/>
     </inferredMetricsTieBreakers>
 </document>

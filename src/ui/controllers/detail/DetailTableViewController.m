@@ -237,6 +237,7 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 {
     self.referenceLbl.text = _dataSource.ref;
     self.inputDateLbl.text = _dataSource.date;
+    self.sendersMoreButton.hidden = YES;
     [self showExpirationDateIfExists];
     [self showSubject];
     [self showApplication];
@@ -315,10 +316,28 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     self.sendersTextView.textContainer.lineFragmentPadding = 0;
     
     NSMutableArray* senders = _dataSource.senders;
+    [senders addObject:@"Second sender"];
+    [senders addObject:@"Second sender"];
+    [senders addObject:@"Second sender"];
+    [senders addObject:@"Second sender"];
+    [senders addObject:@"Second sender"];
+    [senders addObject:@"Second sender"];
+    [senders addObject:@"Second sender"];
+    [senders addObject:@"Second sender"];
     NSString *joinedSenders = [senders componentsJoinedByString:@"\r"];
     self.sendersTextView.text = joinedSenders;
     // Scroll to the top
     [self.sendersTextView scrollRangeToVisible:NSMakeRange(0,0)];
+    if ([senders count] > 2 ){
+        self.sendersMoreButton.hidden = NO;
+        NSString *textButton1 = @"y ";
+        NSString *textButton2 = @" más";
+        NSInteger *restOfSenders = [senders count] - 2;
+        NSString *textButton = [NSString stringWithFormat:@"%@%ld%@",textButton1, (long)restOfSenders, textButton2];
+        [self.sendersMoreButton setTitle:textButton forState:UIControlStateNormal];
+    } else{
+        self.sendersMoreButton.hidden = YES;
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

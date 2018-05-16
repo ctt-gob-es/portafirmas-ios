@@ -32,6 +32,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *rejectLbl;
 @property (strong, nonatomic) IBOutlet UITextView *sendersTitleTextView;
 @property (strong, nonatomic) IBOutlet UITextView *sendersTextView;
+@property (strong, nonatomic) IBOutlet UIButton *sendersMoreButton;
 @property (strong, nonatomic) IBOutlet UITextView *subjectTitleTextView;
 @property (strong, nonatomic) IBOutlet UITextView *subjectTextView;
 @property (strong, nonatomic) IBOutlet UILabel *inputExpirationDateLbl;
