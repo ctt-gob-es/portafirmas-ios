@@ -17,6 +17,7 @@
 #import "PFRequest.h"
 #import "RejectXMLController.h"
 #import "ApproveXMLController.h"
+#import "DetailCell.h"
 
 typedef NS_ENUM (NSInteger, PFDocumentAction)
 {
@@ -24,6 +25,20 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     PFDocumentActionSign,
     PFDocumentActionCancel
 };
+
+typedef enum cellTypes
+{
+    From,
+    Subject,
+    Reference,
+    AttachedDocument,
+    To,
+    ActionType,
+    SignType,
+    Date,
+    ExpirationDate,
+    Application
+} CellTypes;
 
 @interface DetailTableViewController ()
 {
@@ -52,6 +67,72 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     }
 
     return self;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    int numberOfRows = 9;
+    if (_dataSource.expdate) {
+        numberOfRows++;
+    }
+    if ([self rejectExplanationExists]) {
+        numberOfRows++;
+    }
+    return numberOfRows;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"poooo");
+    DetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"detailCell"];
+    if (cell == nil) {
+        [tableView registerNib:[UINib nibWithNibName:@"DetailCell" bundle:nil] forCellReuseIdentifier:@"detailCell"];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"detailCell"];
+    }
+    NSString *title = @"";
+    NSString *value = @"";
+    switch (indexPath.row) {
+        case From:
+            title = @"De: ";
+            value = [self getSenders];
+//            [cell setStandardStyle];
+//            [cell setLightStyle];
+            break;
+        case Subject:
+            cell.backgroundColor = [UIColor blueColor];
+            break;
+        case Reference:
+            cell.backgroundColor = [UIColor redColor];
+            break;
+        case AttachedDocument:
+            cell.backgroundColor = [UIColor blueColor];
+            break;
+        case To:
+            cell.backgroundColor = [UIColor redColor];
+            break;
+        case ActionType:
+            cell.backgroundColor = [UIColor blueColor];
+            break;
+        case SignType:
+            cell.backgroundColor = [UIColor redColor];
+            break;
+        case Date:
+            cell.backgroundColor = [UIColor blueColor];
+            break;
+        case ExpirationDate:
+            cell.backgroundColor = [UIColor redColor];
+            break;
+        case Application:
+            cell.backgroundColor = [UIColor blueColor];
+            break;
+    }
+    [cell setCellTitle: title];
+    [cell setCellValue: value];
+    return cell;
+}
+
+-(NSString *)getSenders
+{
+    NSMutableArray* senders = _dataSource.senders;
+    return [senders componentsJoinedByString:@"\r"];
 }
 
 - (void)loadWebService
@@ -295,9 +376,7 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 - (void)showRejectExplanationIfExists
 {
     self.rejectLbl.text = _dataSource.rejt;
-    // Avoid the strings only with whitespaces. By default from the server the reject object is @" " (length == 1)
-    NSString* trimmedTextString = [_dataSource.rejt stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if (!_dataSource.rejt || [trimmedTextString length]==0 ){
+    if (![self rejectExplanationExists]) {
         [self.rejectExplanationTableViewCell setHidden: true];
         CGFloat expirationTableViewCellHeight =  _expirationTableViewCell.frame.size.height;
         for(UITableViewCell *cell in self.cellBehindRejectExplanation) {
@@ -306,19 +385,23 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     }
 }
 
+- (BOOL)rejectExplanationExists
+{
+    // Avoid the strings only with whitespaces. By default from the server the reject object is @" " (length == 1)
+    NSString* trimmedTextString = [_dataSource.rejt stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    return (_dataSource.rejt && [trimmedTextString length] != 0);
+}
+
 - (void)showSenders
 {
     //Aling to the top the textviews for this Table View Cell
-    [self.sendersTitleTextView setTextContainerInset:UIEdgeInsetsZero];
-    self.sendersTitleTextView.textContainer.lineFragmentPadding = 0;
-    [self.sendersTextView setTextContainerInset:UIEdgeInsetsZero];
-    self.sendersTextView.textContainer.lineFragmentPadding = 0;
-    
-    NSMutableArray* senders = _dataSource.senders;
-    NSString *joinedSenders = [senders componentsJoinedByString:@"\r"];
-    self.sendersTextView.text = joinedSenders;
-    // Scroll to the top
-    [self.sendersTextView scrollRangeToVisible:NSMakeRange(0,0)];
+//    [self.sendersTitleTextView setTextContainerInset:UIEdgeInsetsZero];
+//    self.sendersTitleTextView.textContainer.lineFragmentPadding = 0;
+//    [self.sendersTextView setTextContainerInset:UIEdgeInsetsZero];
+//    self.sendersTextView.textContainer.lineFragmentPadding = 0;
+//
+//    // Scroll to the top
+//    [self.sendersTextView scrollRangeToVisible:NSMakeRange(0,0)];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -471,6 +554,7 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
         DDLogDebug(@"DetailTableViewController:: Parsing Detail XML message with no errors ");
         _dataSource = [parser dataSource];
         [self loadDetailInfo];
+        [self.tableView reloadData];
     }
 }
 

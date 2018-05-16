@@ -85,6 +85,8 @@
 		3CC403861AB9EDBA006F8803 /* CertificateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC403851AB9EDBA006F8803 /* CertificateCell.m */; };
 		3CD199A51AC2C952007E9E35 /* UINavigationController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */; };
 		992987C2AA230FF0604BD234 /* libPods-PortaFirmasUniv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0A9AB702FDB8ACDEBFCF67 /* libPods-PortaFirmasUniv.a */; };
+		B240774920AAEE0900A8EE1C /* DetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B240774820AAEE0900A8EE1C /* DetailCell.m */; };
+		B28B24E520AB907B00DC9C81 /* DetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B28B24E420AB907B00DC9C81 /* DetailCell.xib */; };
 		B2E4AEBE20599935000DD0C3 /* ArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B2E4AEBC20599934000DD0C3 /* ArrayHelper.m */; };
 		BC0D3E1A2004C3A900CB73BB /* AttachedDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0D3E192004C3A900CB73BB /* AttachedDoc.m */; };
 		BC33AAA0200518FF00B33CBB /* Source.m in Sources */ = {isa = PBXBuildFile; fileRef = BC33AA9F200518FF00B33CBB /* Source.m */; };
@@ -252,6 +254,9 @@
 		3CD199A31AC2C952007E9E35 /* UINavigationController+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationController+Utils.h"; path = "UINavigationController/UINavigationController+Utils.h"; sourceTree = "<group>"; };
 		3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+Utils.m"; path = "UINavigationController/UINavigationController+Utils.m"; sourceTree = "<group>"; };
 		862DBE2D1FC5F494A173087E /* Pods-PortaFirmasUniv.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortaFirmasUniv.release.xcconfig"; path = "Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv.release.xcconfig"; sourceTree = "<group>"; };
+		B240774720AAEE0900A8EE1C /* DetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailCell.h; sourceTree = "<group>"; };
+		B240774820AAEE0900A8EE1C /* DetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailCell.m; sourceTree = "<group>"; };
+		B28B24E420AB907B00DC9C81 /* DetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailCell.xib; sourceTree = "<group>"; };
 		B2E4AEBC20599934000DD0C3 /* ArrayHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArrayHelper.m; sourceTree = "<group>"; };
 		B2E4AEBD20599935000DD0C3 /* ArrayHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArrayHelper.h; sourceTree = "<group>"; };
 		BC0D3E182004C3A900CB73BB /* AttachedDoc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttachedDoc.h; sourceTree = "<group>"; };
@@ -690,6 +695,9 @@
 				3CB68F601AB81BAD00BEB067 /* ServersListCell.m */,
 				3CC403841AB9EDBA006F8803 /* CertificateCell.h */,
 				3CC403851AB9EDBA006F8803 /* CertificateCell.m */,
+				B240774720AAEE0900A8EE1C /* DetailCell.h */,
+				B240774820AAEE0900A8EE1C /* DetailCell.m */,
+				B28B24E420AB907B00DC9C81 /* DetailCell.xib */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -918,6 +926,7 @@
 				3CA899051AA605C60035012D /* ANF_PF_Activo.pfx in Resources */,
 				3CA899081AA605C60035012D /* CATCERT GENCAT SAFP PF Identidad y Firma Reconocida de Clase 1 Activo.p12 in Resources */,
 				3CA899161AA607840035012D /* iTunesArtwork in Resources */,
+				B28B24E520AB907B00DC9C81 /* DetailCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -990,6 +999,7 @@
 				3CC4037D1AB96D29006F8803 /* SettingsVC.m in Sources */,
 				3C00ADE31AB71B4400EF6886 /* NSDateFormatter+Utils.m in Sources */,
 				3C00ADB61AB71B0B00EF6886 /* ColorChart.m in Sources */,
+				B240774920AAEE0900A8EE1C /* DetailCell.m in Sources */,
 				3C00AD9D1AB71ACB00EF6886 /* PFRequestResult.m in Sources */,
 				3C00AD871AB71A8700EF6886 /* UnassignedRequestTableViewController.m in Sources */,
 				3C00ADE01AB71B3100EF6886 /* NSDate+Utils.m in Sources */,

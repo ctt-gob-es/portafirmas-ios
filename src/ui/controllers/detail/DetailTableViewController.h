@@ -12,7 +12,7 @@
 #import "RequestSignerController.h"
 #import "PFRequest.h"
 
-@interface DetailTableViewController : UITableViewController<WSDelegate, UIActionSheetDelegate, RequestSignerEvent, UIAlertViewDelegate>
+@interface DetailTableViewController : UITableViewController<WSDelegate, UIActionSheetDelegate, RequestSignerEvent, UIAlertViewDelegate, UITableViewDelegate, UITableViewDataSource>
 {
 
     Detail *_dataSource;
@@ -30,8 +30,6 @@
 @property (strong, nonatomic) IBOutlet UITextView *applicationTitleTextView;
 @property (strong, nonatomic) IBOutlet UITextView *applicationTextView;
 @property (strong, nonatomic) IBOutlet UILabel *rejectLbl;
-@property (strong, nonatomic) IBOutlet UITextView *sendersTitleTextView;
-@property (strong, nonatomic) IBOutlet UITextView *sendersTextView;
 @property (strong, nonatomic) IBOutlet UITextView *subjectTitleTextView;
 @property (strong, nonatomic) IBOutlet UITextView *subjectTextView;
 @property (strong, nonatomic) IBOutlet UILabel *inputExpirationDateLbl;
