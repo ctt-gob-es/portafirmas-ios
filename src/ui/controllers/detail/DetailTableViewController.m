@@ -31,14 +31,17 @@ typedef enum cellTypes
     From,
     Subject,
     Reference,
+    RejectExplanation,
     AttachedDocument,
-    To,
-    ActionType,
+    Receivers,
+    RequestType,
     SignType,
     Date,
     ExpirationDate,
     Application
 } CellTypes;
+
+NSInteger *const numberOfRows = 11;
 
 @interface DetailTableViewController ()
 {
@@ -70,13 +73,6 @@ typedef enum cellTypes
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    int numberOfRows = 9;
-    if (_dataSource.expdate) {
-        numberOfRows++;
-    }
-    if ([self rejectExplanationExists]) {
-        numberOfRows++;
-    }
     return numberOfRows;
 }
 
@@ -93,35 +89,73 @@ typedef enum cellTypes
         case From:
             title = @"De: ";
             value = [self getSenders];
-//            [cell setStandardStyle];
+            [cell setHeaderStyle];
 //            [cell setLightStyle];
             break;
         case Subject:
-            cell.backgroundColor = [UIColor blueColor];
+            title = @"Asunto: ";
+            value = [self getSubject];
+            [cell setHeaderStyle];
+            [cell setBoldStyle];
+
+//            [cell setLightStyle];
             break;
         case Reference:
-            cell.backgroundColor = [UIColor redColor];
+            self.referenceLbl.text = _dataSource.ref;
+            title = @"Referencia: ";
+            value = [self getReference];
+            [cell setHeaderStyle];
+//            [cell setLightStyle];
+            break;
+        case RejectExplanation:
+            title = @"Motivo del rechazo";
+            value = [self getRejectExplanation];
+            //            [cell setOnlyTitleStyle];
+            //            [cell setLightStyle];
             break;
         case AttachedDocument:
-            cell.backgroundColor = [UIColor blueColor];
+            title = @"Documentos adjuntos";
+            [cell setValueInNewViewStyle];
+            //no value
+            //            [cell setOnlyTitleStyle];
+            //            [cell setLightStyle];
             break;
-        case To:
-            cell.backgroundColor = [UIColor redColor];
+        case Receivers:
+            title = @"Destinatarios";
+            [cell setValueInNewViewStyle];
+            //no value
+            //            [cell setOnlyTitleStyle];
+            //            [cell setLightStyle];
             break;
-        case ActionType:
-            cell.backgroundColor = [UIColor blueColor];
+        case RequestType:
+            title = @"Operación: ";
+            value = [self getRequestType];
+            //            [cell setStandardStyle];
+            //            [cell setLightStyle];
             break;
         case SignType:
-            cell.backgroundColor = [UIColor redColor];
+            title = @"Tipo de firma: ";
+            value = [self getSignType];
+            //            [cell setStandardStyle];
+            //            [cell setLightStyle];
             break;
         case Date:
-            cell.backgroundColor = [UIColor blueColor];
+//            self.inputDateLbl.text = _dataSource.date;
+            title = @"Fecha: ";
+            value = [self getDate];
+            //            [cell setStandardStyle];
+            //            [cell setLightStyle];
             break;
         case ExpirationDate:
-            cell.backgroundColor = [UIColor redColor];
+            //show expiration date if exists
+            title = @"Expira: ";
+            value = [self getExpirationDate];
+            //            [cell setStandardStyle];
+            //            [cell setLightStyle];
             break;
         case Application:
-            cell.backgroundColor = [UIColor blueColor];
+            title = @"Aplicación: ";
+            value = [self getApplication];
             break;
     }
     [cell setCellTitle: title];
@@ -134,6 +168,60 @@ typedef enum cellTypes
     NSMutableArray* senders = _dataSource.senders;
     return [senders componentsJoinedByString:@"\r"];
 }
+
+-(NSString *)getSubject
+{
+    NSString *subject = _dataSource.subj;
+    return subject;
+}
+
+-(NSString *)getReference
+{
+    NSString *reference = _dataSource.ref;
+    return reference;
+}
+
+-(NSString *)getRejectExplanation
+{
+    NSString *reference = _dataSource.rejt;
+    return reference;
+}
+
+-(NSString *)getRequestType
+{
+    NSString *requestType = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? NSLocalizedString(@"Request_Type_Firma", nil) : NSLocalizedString(@"Request_Type_Visto_Bueno", nil);
+    return requestType;
+}
+
+-(NSString *)getSignType
+{
+    NSString *signType = _dataSource.signlinestype;
+    return signType;
+}
+
+-(NSString *)getDate
+{
+    NSString *date = _dataSource.date;
+    return date;
+}
+
+-(NSString *)getExpirationDate
+{
+    NSString *expirationDate = _dataSource.expdate;
+    return expirationDate;
+}
+
+-(NSString *)getApplication
+{
+    NSString *expirationDate = _dataSource.app;
+    return expirationDate;
+}
+
+
+// Set the cell styles
+
+
+
 
 - (void)loadWebService
 {
@@ -316,16 +404,16 @@ typedef enum cellTypes
 
 - (void)loadDetailInfo
 {
-    self.referenceLbl.text = _dataSource.ref;
-    self.inputDateLbl.text = _dataSource.date;
-    [self showExpirationDateIfExists];
-    [self showSubject];
+//    self.referenceLbl.text = _dataSource.ref;
+//    self.inputDateLbl.text = _dataSource.date;
+//    [self showExpirationDateIfExists];
+//    [self showSubject];
     [self showApplication];
-    [self showRejectExplanationIfExists];
-    self.signLinesTypeLbl.text = _dataSource.signlinestype;
-    NSString *requestTypeText = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? NSLocalizedString(@"Request_Type_Firma", nil) : NSLocalizedString(@"Request_Type_Visto_Bueno", nil);
-    self.requestTypeLbl.text = requestTypeText;
-    [self showSenders];
+//    [self showRejectExplanationIfExists];
+//    self.signLinesTypeLbl.text = _dataSource.signlinestype;
+//    NSString *requestTypeText = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? NSLocalizedString(@"Request_Type_Firma", nil) : NSLocalizedString(@"Request_Type_Visto_Bueno", nil);
+//    self.requestTypeLbl.text = requestTypeText;
+//    [self showSenders];
     _selectedRows = nil;
     PFRequest *detailRequest = [[PFRequest alloc] initWithId:_requestId];
     detailRequest.documents = _dataSource.documents;
@@ -334,30 +422,31 @@ typedef enum cellTypes
 }
 
 // Hide or show the expiration date
-- (void)showExpirationDateIfExists
-{
-    //Next line is created to test an expiration date until the server works.
-    self.inputExpirationDateLbl.text = _dataSource.expdate;
-    if (!_dataSource.expdate){
-        [self.expirationTableViewCell setHidden: true];
-        CGFloat expirationTableViewCellHeight =  _expirationTableViewCell.frame.size.height;
-        for(UITableViewCell *cell in self.cellBehindExpirationDate) {
-            [cell setFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y - expirationTableViewCellHeight, cell.frame.size.width, cell.frame.size.height)];
-        }
-    }
-}
-- (void)showSubject
-{
-    //Aling to the top the textviews for this Table View Cell
-    [self.subjectTitleTextView setTextContainerInset:UIEdgeInsetsZero];
-    self.subjectTitleTextView.textContainer.lineFragmentPadding = 0;
-    [self.subjectTextView setTextContainerInset:UIEdgeInsetsZero];
-    self.subjectTextView.textContainer.lineFragmentPadding = 0;
-    
-    self.subjectTextView.text = _dataSource.subj;
-    // Scroll to the top
-    [self.subjectTextView scrollRangeToVisible:NSMakeRange(0,0)];
-}
+//- (void)showExpirationDateIfExists
+//{
+//    //Next line is created to test an expiration date until the server works.
+//    self.inputExpirationDateLbl.text = _dataSource.expdate;
+//    if (!_dataSource.expdate){
+//        [self.expirationTableViewCell setHidden: true];
+//        CGFloat expirationTableViewCellHeight =  _expirationTableViewCell.frame.size.height;
+//        for(UITableViewCell *cell in self.cellBehindExpirationDate) {
+//            [cell setFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y - expirationTableViewCellHeight, cell.frame.size.width, cell.frame.size.height)];
+//        }
+//    }
+//}
+//- (void)showSubject
+//{
+//    //Aling to the top the textviews for this Table View Cell
+//    [self.subjectTitleTextView setTextContainerInset:UIEdgeInsetsZero];
+//    self.subjectTitleTextView.textContainer.lineFragmentPadding = 0;
+//    [self.subjectTextView setTextContainerInset:UIEdgeInsetsZero];
+//    self.subjectTextView.textContainer.lineFragmentPadding = 0;
+//
+//    self.subjectTextView.text = _dataSource.subj;
+//    // Scroll to the top
+//    [self.subjectTextView scrollRangeToVisible:NSMakeRange(0,0)];
+//
+//}
 
 - (void)showApplication
 {
@@ -373,17 +462,17 @@ typedef enum cellTypes
 }
 
 // Hide or show the reject explanation
-- (void)showRejectExplanationIfExists
-{
-    self.rejectLbl.text = _dataSource.rejt;
-    if (![self rejectExplanationExists]) {
-        [self.rejectExplanationTableViewCell setHidden: true];
-        CGFloat expirationTableViewCellHeight =  _expirationTableViewCell.frame.size.height;
-        for(UITableViewCell *cell in self.cellBehindRejectExplanation) {
-            [cell setFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y - expirationTableViewCellHeight, cell.frame.size.width, cell.frame.size.height)];
-        }
-    }
-}
+//- (void)showRejectExplanationIfExists
+//{
+//    self.rejectLbl.text = _dataSource.rejt;
+//    if (![self rejectExplanationExists]) {
+//        [self.rejectExplanationTableViewCell setHidden: true];
+//        CGFloat expirationTableViewCellHeight =  _expirationTableViewCell.frame.size.height;
+//        for(UITableViewCell *cell in self.cellBehindRejectExplanation) {
+//            [cell setFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y - expirationTableViewCellHeight, cell.frame.size.width, cell.frame.size.height)];
+//        }
+//    }
+//}
 
 - (BOOL)rejectExplanationExists
 {
@@ -392,8 +481,8 @@ typedef enum cellTypes
     return (_dataSource.rejt && [trimmedTextString length] != 0);
 }
 
-- (void)showSenders
-{
+//- (void)showSenders
+//{
     //Aling to the top the textviews for this Table View Cell
 //    [self.sendersTitleTextView setTextContainerInset:UIEdgeInsetsZero];
 //    self.sendersTitleTextView.textContainer.lineFragmentPadding = 0;
@@ -402,7 +491,7 @@ typedef enum cellTypes
 //
 //    // Scroll to the top
 //    [self.sendersTextView scrollRangeToVisible:NSMakeRange(0,0)];
-}
+//}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -619,11 +708,11 @@ typedef enum cellTypes
     }
 }
 
-#pragma mark - Handle rotation for this view
-
-// When the device rotates we need to re-adapt the cells below the expiration date cell if it doesn't exist.
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-        [self showExpirationDateIfExists];
-}
+//#pragma mark - Handle rotation for this view
+//
+//// When the device rotates we need to re-adapt the cells below the expiration date cell if it doesn't exist.
+//- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+//        [self showExpirationDateIfExists];
+//}
 
 @end

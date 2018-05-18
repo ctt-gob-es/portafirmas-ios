@@ -23,12 +23,31 @@
 
 -(void)setCellTitle:(NSString *)value
 {
-    self.sendersTitleTextView.text = value;
+    self.titleLabel.text = value;
 }
 
 -(void)setCellValue:(NSString *)value
 {
-    self.sendersTextView.text = value;
+    self.valueLabel.text = value;
+}
+
+-(void)setHeaderStyle
+{
+    UIFont *headerFont = [ UIFont fontWithName: @"Helvetica" size: 17.0 ];
+    self.titleLabel.font = headerFont;
+    self.valueLabel.font = headerFont;
+}
+
+-(void)setBoldStyle
+{
+    UIFont *currentFont = self.valueLabel.font;
+    UIFont *newBoldFont = [UIFont fontWithName:[NSString stringWithFormat:@"%@-Bold",currentFont.fontName] size:currentFont.pointSize];
+    self.valueLabel.font = newBoldFont;
+}
+
+-(void)setValueInNewViewStyle
+{
+    
 }
 
 @end

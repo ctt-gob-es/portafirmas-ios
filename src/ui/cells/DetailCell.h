@@ -12,8 +12,11 @@
 
 -(void)setCellValue:(NSString *)value;
 -(void)setCellTitle:(NSString *)value;
+-(void)setHeaderStyle;
+-(void)setBoldStyle;
+-(void)setValueInNewViewStyle;
 
-@property (strong, nonatomic) IBOutlet UITextView *sendersTitleTextView;
-@property (strong, nonatomic) IBOutlet UITextView *sendersTextView;
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+@property (strong, nonatomic) IBOutlet UILabel *valueLabel;
 
 @end

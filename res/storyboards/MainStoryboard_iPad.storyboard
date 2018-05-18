@@ -752,10 +752,6 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <outlet property="sendersTextView" destination="5ZS-MO-FBx" id="Ump-2B-dcO"/>
-                                            <outlet property="sendersTitleTextView" destination="09S-Bb-eL6" id="nl3-SB-oAc"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="uTg-4p-Ie1">
                                         <rect key="frame" x="0.0" y="79" width="768" height="44"/>
