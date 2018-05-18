@@ -31,22 +31,40 @@
     self.valueLabel.text = value;
 }
 
--(void)setHeaderStyle
+-(void)setDarkStyle
 {
     UIFont *headerFont = [ UIFont fontWithName: @"Helvetica" size: 17.0 ];
     self.titleLabel.font = headerFont;
     self.valueLabel.font = headerFont;
 }
 
--(void)setBoldStyle
+-(UIFont*)setBoldStyle
 {
     UIFont *currentFont = self.valueLabel.font;
-    UIFont *newBoldFont = [UIFont fontWithName:[NSString stringWithFormat:@"%@-Bold",currentFont.fontName] size:currentFont.pointSize];
-    self.valueLabel.font = newBoldFont;
+    return [UIFont fontWithName:[NSString stringWithFormat:@"%@-Bold",currentFont.fontName] size:currentFont.pointSize];;
 }
 
 -(void)setValueInNewViewStyle
 {
+    CGRect frameRect = self.titleLabel.frame;
+    frameRect.size.width = 300;
+    self.titleLabel.frame = frameRect;
+    self.titleLabel.font =[self setBoldStyle];
+}
+
+-(void)setClearStyle{
+    UIFont *titleFont = [ UIFont fontWithName: @"Helvetica" size: 16.0 ];
+    self.titleLabel.font = titleFont;
+    self.titleLabel.textColor = [UIColor colorWithRed:160.0f/255.0f
+                                                green:160.0f/255.0f
+                                                blue:160.0f/255.0f
+                                                alpha:1.0f];
+    UIFont *valueFont = [ UIFont fontWithName: @"Helvetica" size: 14.0 ];
+    self.valueLabel.font = valueFont;
+    self.valueLabel.textColor = [UIColor colorWithRed:87.0f/255.0f
+                                                green:87.0f/255.0f
+                                                 blue:87.0f/255.0f
+                                                alpha:1.0f];
     
 }
 

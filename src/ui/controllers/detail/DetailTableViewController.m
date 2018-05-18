@@ -89,73 +89,58 @@ NSInteger *const numberOfRows = 11;
         case From:
             title = @"De: ";
             value = [self getSenders];
-            [cell setHeaderStyle];
-//            [cell setLightStyle];
+            [cell setDarkStyle];
             break;
         case Subject:
             title = @"Asunto: ";
             value = [self getSubject];
-            [cell setHeaderStyle];
-            [cell setBoldStyle];
-
-//            [cell setLightStyle];
+            [cell setDarkStyle];
+            cell.valueLabel.font = [cell setBoldStyle];
             break;
         case Reference:
             self.referenceLbl.text = _dataSource.ref;
             title = @"Referencia: ";
             value = [self getReference];
-            [cell setHeaderStyle];
-//            [cell setLightStyle];
+            [cell setDarkStyle];
             break;
         case RejectExplanation:
             title = @"Motivo del rechazo";
             value = [self getRejectExplanation];
-            //            [cell setOnlyTitleStyle];
-            //            [cell setLightStyle];
+            [cell setDarkStyle];
             break;
         case AttachedDocument:
             title = @"Documentos adjuntos";
             [cell setValueInNewViewStyle];
-            //no value
-            //            [cell setOnlyTitleStyle];
-            //            [cell setLightStyle];
             break;
         case Receivers:
             title = @"Destinatarios";
             [cell setValueInNewViewStyle];
-            //no value
-            //            [cell setOnlyTitleStyle];
-            //            [cell setLightStyle];
             break;
         case RequestType:
             title = @"Operación: ";
             value = [self getRequestType];
-            //            [cell setStandardStyle];
-            //            [cell setLightStyle];
+            [cell setClearStyle];
+            cell.valueLabel.font = [cell setBoldStyle];
             break;
         case SignType:
             title = @"Tipo de firma: ";
             value = [self getSignType];
-            //            [cell setStandardStyle];
-            //            [cell setLightStyle];
+            [cell setClearStyle];
             break;
         case Date:
-//            self.inputDateLbl.text = _dataSource.date;
             title = @"Fecha: ";
             value = [self getDate];
-            //            [cell setStandardStyle];
-            //            [cell setLightStyle];
+            [cell setClearStyle];
             break;
         case ExpirationDate:
-            //show expiration date if exists
             title = @"Expira: ";
             value = [self getExpirationDate];
-            //            [cell setStandardStyle];
-            //            [cell setLightStyle];
+            [cell setClearStyle];
             break;
         case Application:
             title = @"Aplicación: ";
             value = [self getApplication];
+            [cell setClearStyle];
             break;
     }
     [cell setCellTitle: title];
