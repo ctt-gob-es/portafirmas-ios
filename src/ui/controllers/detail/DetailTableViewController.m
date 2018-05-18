@@ -77,7 +77,6 @@ NSInteger *const numberOfRows = 11;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"poooo");
     DetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"detailCell"];
     if (cell == nil) {
         [tableView registerNib:[UINib nibWithNibName:@"DetailCell" bundle:nil] forCellReuseIdentifier:@"detailCell"];
@@ -146,6 +145,27 @@ NSInteger *const numberOfRows = 11;
     [cell setCellTitle: title];
     [cell setCellValue: value];
     return cell;
+}
+
+
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    DetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"detailCell"];
+    if (cell == nil) {
+        [tableView registerNib:[UINib nibWithNibName:@"DetailCell" bundle:nil] forCellReuseIdentifier:@"detailCell"];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"detailCell"];
+    }
+    CGFloat height= cell.frame.size.height;
+    switch (indexPath.row) {
+        case RejectExplanation:
+            return height;
+            break;
+        case ExpirationDate:
+            return height;
+            break;
+    }
+    return height;
 }
 
 -(NSString *)getSenders
