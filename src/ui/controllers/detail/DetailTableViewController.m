@@ -42,6 +42,8 @@ typedef enum cellTypes
 } CellTypes;
 
 NSInteger *const numberOfRows = 11;
+CGFloat const defaultCellHeight = 44;
+CGFloat const noCellHeight = 0;
 
 @interface DetailTableViewController ()
 {
@@ -106,6 +108,7 @@ NSInteger *const numberOfRows = 11;
             title = @"Motivo del rechazo";
             value = [self getRejectExplanation];
             [cell setDarkStyle];
+            [cell hideLabels];
             break;
         case AttachedDocument:
             title = @"Documentos adjuntos";
@@ -135,6 +138,7 @@ NSInteger *const numberOfRows = 11;
             title = @"Expira: ";
             value = [self getExpirationDate];
             [cell setClearStyle];
+            [cell hideLabels];
             break;
         case Application:
             title = @"Aplicación: ";
@@ -151,21 +155,15 @@ NSInteger *const numberOfRows = 11;
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"detailCell"];
-    if (cell == nil) {
-        [tableView registerNib:[UINib nibWithNibName:@"DetailCell" bundle:nil] forCellReuseIdentifier:@"detailCell"];
-        cell = [tableView dequeueReusableCellWithIdentifier:@"detailCell"];
-    }
-    CGFloat height= cell.frame.size.height;
     switch (indexPath.row) {
         case RejectExplanation:
-            return height;
+            return noCellHeight;
             break;
         case ExpirationDate:
-            return height;
+            return noCellHeight;
             break;
     }
-    return height;
+    return defaultCellHeight;
 }
 
 -(NSString *)getSenders

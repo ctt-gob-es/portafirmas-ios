@@ -16,8 +16,10 @@
 -(UIFont*)setBoldStyle;
 -(void)setValueInNewViewStyle;
 -(void)setClearStyle;
+-(void)hideLabels;
 
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *valueLabel;
+@property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *labels;
 
 @end

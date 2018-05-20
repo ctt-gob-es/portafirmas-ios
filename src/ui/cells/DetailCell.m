@@ -52,7 +52,8 @@
     self.titleLabel.font =[self setBoldStyle];
 }
 
--(void)setClearStyle{
+-(void)setClearStyle
+{
     UIFont *titleFont = [ UIFont fontWithName: @"Helvetica" size: 16.0 ];
     self.titleLabel.font = titleFont;
     self.titleLabel.textColor = [UIColor colorWithRed:160.0f/255.0f
@@ -66,6 +67,13 @@
                                                  blue:87.0f/255.0f
                                                 alpha:1.0f];
     
+}
+
+-(void)hideLabels
+{
+    for (UILabel* label in self.labels) {
+        label.hidden = YES;
+    }
 }
 
 @end

@@ -19,14 +19,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2GW-xB-267">
-                        <rect key="frame" x="0.0" y="0.0" width="117" height="44"/>
+                        <rect key="frame" x="14" y="0.0" width="100" height="44"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gXs-Jw-XLL">
-                        <rect key="frame" x="144" y="0.0" width="624" height="44"/>
+                        <rect key="frame" x="122" y="0.0" width="646" height="44"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
@@ -38,6 +38,8 @@
             <connections>
                 <outlet property="titleLabel" destination="2GW-xB-267" id="v5z-tb-2d0"/>
                 <outlet property="valueLabel" destination="gXs-Jw-XLL" id="ip6-Do-F8D"/>
+                <outletCollection property="labels" destination="2GW-xB-267" id="a36-9T-3jQ"/>
+                <outletCollection property="labels" destination="gXs-Jw-XLL" id="uaw-f9-2vS"/>
             </connections>
         </tableViewCell>
     </objects>
