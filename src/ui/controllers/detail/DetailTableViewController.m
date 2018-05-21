@@ -238,14 +238,14 @@ CGFloat const largeTitleCellWidth = 200;
             [attachmentController setDetail:_dataSource];
             [attachmentController setRequestStatus:[PFHelper getPFRequestStatusFromString:_dataSourceRequest.view]];
             [self.navigationController pushViewController:attachmentController animated:YES];
-        }
             break;
+        }
         case Receivers: {
             ReceiversViewController *receiversController =  (ReceiversViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ReceiversListView"];
             receiversController.dataSource = _dataSource.signlines;
             [self.navigationController pushViewController:receiversController animated:YES];
-        }
             break;
+        }
     }
 }
 
