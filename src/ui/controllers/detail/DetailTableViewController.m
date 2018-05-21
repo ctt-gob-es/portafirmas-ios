@@ -44,6 +44,8 @@ typedef enum cellTypes
 NSInteger *const numberOfRows = 11;
 CGFloat const defaultCellHeight = 44;
 CGFloat const noCellHeight = 0;
+CGFloat const rejectCellTitleCellWidth = 150;
+CGFloat const largeTitleCellWidth = 200;
 
 @interface DetailTableViewController ()
 {
@@ -105,18 +107,21 @@ CGFloat const noCellHeight = 0;
             [cell setDarkStyle];
             break;
         case RejectExplanation:
-            title = @"Motivo del rechazo";
+            title = @"Motivo del rechazo: ";
             value = [self getRejectExplanation];
             [cell setDarkStyle];
+            [cell increaseTitleLabelWidth: rejectCellTitleCellWidth];
             [cell hideLabelsIfNeeded: ![self rejectExplanationExists]];
             break;
         case AttachedDocument:
             title = @"Documentos adjuntos";
             [cell setValueInNewViewStyle];
+            [cell increaseTitleLabelWidth:largeTitleCellWidth];
             break;
         case Receivers:
             title = @"Destinatarios";
             [cell setValueInNewViewStyle];
+            [cell increaseTitleLabelWidth: largeTitleCellWidth];
             break;
         case RequestType:
             title = @"Operación: ";

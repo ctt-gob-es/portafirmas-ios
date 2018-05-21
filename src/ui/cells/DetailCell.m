@@ -76,4 +76,9 @@
     }
 }
 
+-(void)increaseTitleLabelWidth:(CGFloat)width
+{
+    self.titleConstraintWidth.constant = width;
+}
+
 @end

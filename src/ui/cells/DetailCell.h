@@ -17,7 +17,9 @@
 -(void)setValueInNewViewStyle;
 -(void)setClearStyle;
 -(void)hideLabelsIfNeeded:(BOOL)hidden;
+-(void)increaseTitleLabelWidth:(CGFloat)width;
 
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *titleConstraintWidth;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *valueLabel;
 @property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *labels;

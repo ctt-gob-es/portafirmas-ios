@@ -46,6 +46,7 @@
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
             <connections>
+                <outlet property="titleConstraintWidth" destination="3ry-VX-w7w" id="a85-jL-Hk9"/>
                 <outlet property="titleLabel" destination="2GW-xB-267" id="v5z-tb-2d0"/>
                 <outlet property="valueLabel" destination="gXs-Jw-XLL" id="ip6-Do-F8D"/>
                 <outletCollection property="labels" destination="2GW-xB-267" id="a36-9T-3jQ"/>
