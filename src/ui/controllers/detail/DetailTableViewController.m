@@ -108,7 +108,7 @@ CGFloat const noCellHeight = 0;
             title = @"Motivo del rechazo";
             value = [self getRejectExplanation];
             [cell setDarkStyle];
-            [cell hideLabels];
+            [cell hideLabelsIfNeeded: ![self rejectExplanationExists]];
             break;
         case AttachedDocument:
             title = @"Documentos adjuntos";
@@ -138,7 +138,7 @@ CGFloat const noCellHeight = 0;
             title = @"Expira: ";
             value = [self getExpirationDate];
             [cell setClearStyle];
-            [cell hideLabels];
+            [cell hideLabelsIfNeeded: !_dataSource.expdate];
             break;
         case Application:
             title = @"Aplicación: ";
@@ -157,10 +157,10 @@ CGFloat const noCellHeight = 0;
 {
     switch (indexPath.row) {
         case RejectExplanation:
-            return noCellHeight;
+            return (![self rejectExplanationExists])? noCellHeight : defaultCellHeight;
             break;
         case ExpirationDate:
-            return noCellHeight;
+            return (!_dataSource.expdate)? noCellHeight : defaultCellHeight;
             break;
     }
     return defaultCellHeight;

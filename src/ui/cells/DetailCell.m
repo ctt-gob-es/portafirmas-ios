@@ -69,10 +69,10 @@
     
 }
 
--(void)hideLabels
+-(void)hideLabelsIfNeeded:(BOOL)hidden
 {
     for (UILabel* label in self.labels) {
-        label.hidden = YES;
+        label.hidden = hidden;
     }
 }
 
