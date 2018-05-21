@@ -226,10 +226,28 @@ CGFloat const largeTitleCellWidth = 200;
 }
 
 
-// Set the cell styles
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
 
-
-
+    switch (indexPath.row) {
+        case AttachedDocument: {
+            AttachmentViewController *attachmentController =  (AttachmentViewController *)[storyboard instantiateViewControllerWithIdentifier:@"AttachmentsListView"];
+            attachmentController.documentsDataSource = _dataSource.documents;
+            attachmentController.attachedDocsDataSource = _dataSource.attachedDocs;
+            [attachmentController setDetail:_dataSource];
+            [attachmentController setRequestStatus:[PFHelper getPFRequestStatusFromString:_dataSourceRequest.view]];
+            [self.navigationController pushViewController:attachmentController animated:YES];
+        }
+            break;
+        case Receivers: {
+            ReceiversViewController *receiversController =  (ReceiversViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ReceiversListView"];
+            receiversController.dataSource = _dataSource.signlines;
+            [self.navigationController pushViewController:receiversController animated:YES];
+        }
+            break;
+    }
+}
 
 - (void)loadWebService
 {
@@ -387,28 +405,28 @@ CGFloat const largeTitleCellWidth = 200;
     [wsController startConnection];
 }
 
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    DDLogDebug(@"DetailTableViewController::prepareForSegue sender=%@", [segue identifier]);
-
-    if ([[segue identifier] isEqual:@"segueAttachments"]) {
-        DDLogDebug(@"DetailTableViewController::prepareForSegue number of attachments=%lu", (unsigned long)[_dataSource.documents count]);
-
-        AttachmentViewController *attachmentController = [segue destinationViewController];
-        attachmentController.documentsDataSource = _dataSource.documents;
-        attachmentController.attachedDocsDataSource = _dataSource.attachedDocs;
-        [attachmentController setDetail:_dataSource];
-        [attachmentController setRequestStatus:[PFHelper getPFRequestStatusFromString:_dataSourceRequest.view]];
-    }
-
-    if ([[segue identifier] isEqual:@"segueShowReceivers"]) {
-        DDLogDebug(@"DetailTableViewController::prepareForSegue number of receivers=%lu", (unsigned long)[_dataSource.senders count]);
-        ReceiversViewController *receiversController = [segue destinationViewController];
-        receiversController.dataSource = _dataSource.signlines;
-    }
-}
+//#pragma mark - Navigation
+//
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+//{
+//    DDLogDebug(@"DetailTableViewController::prepareForSegue sender=%@", [segue identifier]);
+//
+//    if ([[segue identifier] isEqual:@"segueAttachments"]) {
+//        DDLogDebug(@"DetailTableViewController::prepareForSegue number of attachments=%lu", (unsigned long)[_dataSource.documents count]);
+//
+//        AttachmentViewController *attachmentController = [segue destinationViewController];
+//        attachmentController.documentsDataSource = _dataSource.documents;
+//        attachmentController.attachedDocsDataSource = _dataSource.attachedDocs;
+//        [attachmentController setDetail:_dataSource];
+//        [attachmentController setRequestStatus:[PFHelper getPFRequestStatusFromString:_dataSourceRequest.view]];
+//    }
+//
+//    if ([[segue identifier] isEqual:@"segueShowReceivers"]) {
+//        DDLogDebug(@"DetailTableViewController::prepareForSegue number of receivers=%lu", (unsigned long)[_dataSource.senders count]);
+//        ReceiversViewController *receiversController = [segue destinationViewController];
+//        receiversController.dataSource = _dataSource.signlines;
+//    }
+//}
 
 - (void)loadDetailInfo
 {
