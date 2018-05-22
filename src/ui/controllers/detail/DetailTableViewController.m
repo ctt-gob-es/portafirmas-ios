@@ -393,7 +393,7 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void)loadDetailInfo
 {
-    [self showApplication];
+    self.applicationTextView.text = _dataSource.app;
     _selectedRows = nil;
     PFRequest *detailRequest = [[PFRequest alloc] initWithId:_requestId];
     detailRequest.documents = _dataSource.documents;
@@ -419,19 +419,6 @@ CGFloat const largeTitleCellWidth = 200;
             break;
     }
     return tableView.rowHeight;
-}
-
-- (void)showApplication
-{
-    //Aling to the top the textviews for this Table View Cell
-    [self.applicationTitleTextView setTextContainerInset:UIEdgeInsetsZero];
-    self.applicationTitleTextView.textContainer.lineFragmentPadding = 0;
-    [self.applicationTextView setTextContainerInset:UIEdgeInsetsZero];
-    self.applicationTextView.textContainer.lineFragmentPadding = 0;
-    
-    self.applicationTextView.text = _dataSource.app;
-    // Scroll to the top
-    [self.applicationTextView scrollRangeToVisible:NSMakeRange(0,0)];
 }
 
 - (BOOL)rejectExplanationExists
