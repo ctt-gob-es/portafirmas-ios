@@ -18,8 +18,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="768" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2GW-xB-267">
-                        <rect key="frame" x="8" y="0.0" width="100" height="44"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2GW-xB-267">
+                        <rect key="frame" x="8" y="8" width="100" height="20.5"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="100" id="3ry-VX-w7w"/>
                         </constraints>
@@ -27,8 +27,8 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gXs-Jw-XLL">
-                        <rect key="frame" x="116" y="0.0" width="644" height="44"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gXs-Jw-XLL">
+                        <rect key="frame" x="116" y="8" width="644" height="28"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -36,12 +36,12 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="2GW-xB-267" firstAttribute="leading" secondItem="gPg-St-G5F" secondAttribute="leading" constant="8" id="15v-aD-Z6n"/>
-                    <constraint firstItem="gXs-Jw-XLL" firstAttribute="top" secondItem="gPg-St-G5F" secondAttribute="top" id="3uW-3n-3n1"/>
+                    <constraint firstItem="gXs-Jw-XLL" firstAttribute="top" secondItem="gPg-St-G5F" secondAttribute="top" constant="8" id="3uW-3n-3n1"/>
                     <constraint firstAttribute="trailing" secondItem="gXs-Jw-XLL" secondAttribute="trailing" constant="8" id="6Ab-BJ-yZv"/>
-                    <constraint firstAttribute="bottom" secondItem="2GW-xB-267" secondAttribute="bottom" constant="-0.5" id="CWY-gZ-AQ4"/>
                     <constraint firstItem="gXs-Jw-XLL" firstAttribute="leading" secondItem="2GW-xB-267" secondAttribute="trailing" constant="8" id="JCc-45-gVW"/>
-                    <constraint firstAttribute="bottom" secondItem="gXs-Jw-XLL" secondAttribute="bottom" constant="-0.5" id="Mo9-89-4SP"/>
-                    <constraint firstItem="2GW-xB-267" firstAttribute="top" secondItem="gPg-St-G5F" secondAttribute="top" id="yeZ-ix-7tH"/>
+                    <constraint firstAttribute="bottom" secondItem="gXs-Jw-XLL" secondAttribute="bottom" constant="7.5" id="Mo9-89-4SP"/>
+                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="2GW-xB-267" secondAttribute="bottom" constant="7.5" id="RM4-To-k9C"/>
+                    <constraint firstItem="2GW-xB-267" firstAttribute="top" secondItem="gPg-St-G5F" secondAttribute="top" constant="8" id="yeZ-ix-7tH"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>

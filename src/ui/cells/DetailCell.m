@@ -24,6 +24,8 @@
 -(void)setCellTitle:(NSString *)value
 {
     self.titleLabel.text = value;
+    [self.titleLabel sizeToFit];
+    self.titleLabel.textAlignment = NSTextAlignmentLeft;
 }
 
 -(void)setCellValue:(NSString *)value
@@ -38,10 +40,21 @@
     self.valueLabel.font = headerFont;
 }
 
--(UIFont*)setBoldStyle
+-(void)setValueBoldStyle
 {
-    UIFont *currentFont = self.valueLabel.font;
-    return [UIFont fontWithName:[NSString stringWithFormat:@"%@-Bold",currentFont.fontName] size:currentFont.pointSize];;
+    [self setBoldStyle: self.valueLabel];
+}
+
+-(void)setTitleBoldStyle
+{
+    [self setBoldStyle: self.titleLabel];
+}
+
+-(void)setBoldStyle:(UILabel*)label
+{
+    if (![label.font.fontName containsString: @"Bold"]) {
+    label.font = [UIFont fontWithName:[NSString stringWithFormat:@"%@-Bold",label.font.fontName] size:label.font.pointSize];
+    }
 }
 
 -(void)setValueInNewViewStyle
@@ -49,7 +62,7 @@
     CGRect frameRect = self.titleLabel.frame;
     frameRect.size.width = 300;
     self.titleLabel.frame = frameRect;
-    self.titleLabel.font =[self setBoldStyle];
+    [self setTitleBoldStyle];
 }
 
 -(void)setClearStyle

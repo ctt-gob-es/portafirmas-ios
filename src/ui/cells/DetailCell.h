@@ -13,11 +13,11 @@
 -(void)setCellValue:(NSString *)value;
 -(void)setCellTitle:(NSString *)value;
 -(void)setDarkStyle;
--(UIFont*)setBoldStyle;
 -(void)setValueInNewViewStyle;
 -(void)setClearStyle;
 -(void)hideLabelsIfNeeded:(BOOL)hidden;
 -(void)increaseTitleLabelWidth:(CGFloat)width;
+-(void)setValueBoldStyle;
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *titleConstraintWidth;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;

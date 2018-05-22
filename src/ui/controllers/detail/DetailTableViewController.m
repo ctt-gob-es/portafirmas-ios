@@ -98,7 +98,7 @@ CGFloat const largeTitleCellWidth = 200;
             title = @"Asunto: ";
             value = [self getSubject];
             [cell setDarkStyle];
-            cell.valueLabel.font = [cell setBoldStyle];
+            [cell setValueBoldStyle];
             break;
         case Reference:
             self.referenceLbl.text = _dataSource.ref;
@@ -117,17 +117,19 @@ CGFloat const largeTitleCellWidth = 200;
             title = @"Documentos adjuntos";
             [cell setValueInNewViewStyle];
             [cell increaseTitleLabelWidth:largeTitleCellWidth];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         case Receivers:
             title = @"Destinatarios";
             [cell setValueInNewViewStyle];
             [cell increaseTitleLabelWidth: largeTitleCellWidth];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         case RequestType:
             title = @"Operación: ";
             value = [self getRequestType];
             [cell setClearStyle];
-            cell.valueLabel.font = [cell setBoldStyle];
+            [cell setValueBoldStyle];
             break;
         case SignType:
             title = @"Tipo de firma: ";
@@ -154,21 +156,6 @@ CGFloat const largeTitleCellWidth = 200;
     [cell setCellTitle: title];
     [cell setCellValue: value];
     return cell;
-}
-
-
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    switch (indexPath.row) {
-        case RejectExplanation:
-            return (![self rejectExplanationExists])? noCellHeight : defaultCellHeight;
-            break;
-        case ExpirationDate:
-            return (!_dataSource.expdate)? noCellHeight : defaultCellHeight;
-            break;
-    }
-    return defaultCellHeight;
 }
 
 -(NSString *)getSenders
@@ -288,6 +275,8 @@ CGFloat const largeTitleCellWidth = 200;
     // Enable or disable  action button
     [_btnDocumentAction setEnabled:_signEnabled];
     [self loadWebService];
+    self.tableView.estimatedRowHeight = defaultCellHeight;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
 - (void)viewDidUnload
@@ -445,6 +434,26 @@ CGFloat const largeTitleCellWidth = 200;
     detailRequest.documents = _dataSource.documents;
     _selectedRows = [[NSArray alloc] initWithObjects:detailRequest, nil];
     
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch (indexPath.row) {
+        case RejectExplanation:
+            return (![self rejectExplanationExists]) ? noCellHeight : defaultCellHeight;
+            break;
+        case ExpirationDate:
+            return (!_dataSource.expdate)? noCellHeight : defaultCellHeight;
+            break;
+            return defaultCellHeight;
+        case AttachedDocument:
+            return defaultCellHeight;
+            break;
+        case Receivers:
+            return defaultCellHeight;
+            break;
+    }
+    return tableView.rowHeight;
 }
 
 // Hide or show the expiration date
