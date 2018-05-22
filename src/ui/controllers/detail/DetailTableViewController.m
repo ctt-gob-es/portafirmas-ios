@@ -76,6 +76,41 @@ CGFloat const largeTitleCellWidth = 200;
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    DDLogDebug(@"DetailTableViewController::viewWillAppear");
+    self.navigationController.toolbarHidden = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [wsController cancelConnection];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    DDLogDebug(@"DetailTableViewController::viewDidLoad");
+    [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+    // Enable or disable  action button
+    [_btnDocumentAction setEnabled:_signEnabled];
+    [self loadWebService];
+    self.tableView.estimatedRowHeight = defaultCellHeight;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+}
+
+- (void)viewDidUnload
+{
+    [self setBtnDocumentAction:nil];
+    [super viewDidUnload];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return numberOfRows;
 }
@@ -248,44 +283,6 @@ CGFloat const largeTitleCellWidth = 200;
     _waitingResponseType = PFWaitingResponseTypeDetail;
     [wsController loadPostRequestWithData:data code:4];
     [wsController startConnection];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    DDLogDebug(@"DetailTableViewController::viewWillAppear");
-
-    self.navigationController.toolbarHidden = YES;
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [wsController cancelConnection];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    DDLogDebug(@"DetailTableViewController::viewDidLoad");
-
-    [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
-
-    // Enable or disable  action button
-    [_btnDocumentAction setEnabled:_signEnabled];
-    [self loadWebService];
-    self.tableView.estimatedRowHeight = defaultCellHeight;
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
-}
-
-- (void)viewDidUnload
-{
-    [self setBtnDocumentAction:nil];
-    [super viewDidUnload];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - UIActionSheet methods
