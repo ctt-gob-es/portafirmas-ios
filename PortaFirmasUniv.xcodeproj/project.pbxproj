@@ -16,7 +16,6 @@
 		3C00AD751AB71A6300EF6886 /* DetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C00AD6D1AB71A6300EF6886 /* DetailTableViewController.m */; };
 		3C00AD761AB71A6300EF6886 /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C00AD6F1AB71A6300EF6886 /* PreviewViewController.m */; };
 		3C00AD771AB71A6300EF6886 /* ReceiversViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C00AD711AB71A6300EF6886 /* ReceiversViewController.m */; };
-		3C00AD781AB71A6300EF6886 /* SendersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C00AD731AB71A6300EF6886 /* SendersViewController.m */; };
 		3C00AD7B1AB71A7A00EF6886 /* FilterVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C00AD7A1AB71A7A00EF6886 /* FilterVC.m */; };
 		3C00AD841AB71A8700EF6886 /* BaseListTVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C00AD7D1AB71A8700EF6886 /* BaseListTVC.m */; };
 		3C00AD851AB71A8700EF6886 /* ProcessedRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C00AD7F1AB71A8700EF6886 /* ProcessedRequestViewController.m */; };
@@ -129,8 +128,6 @@
 		3C00AD6F1AB71A6300EF6886 /* PreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreviewViewController.m; sourceTree = "<group>"; };
 		3C00AD701AB71A6300EF6886 /* ReceiversViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReceiversViewController.h; sourceTree = "<group>"; };
 		3C00AD711AB71A6300EF6886 /* ReceiversViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReceiversViewController.m; sourceTree = "<group>"; };
-		3C00AD721AB71A6300EF6886 /* SendersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendersViewController.h; sourceTree = "<group>"; };
-		3C00AD731AB71A6300EF6886 /* SendersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendersViewController.m; sourceTree = "<group>"; };
 		3C00AD791AB71A7A00EF6886 /* FilterVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterVC.h; sourceTree = "<group>"; };
 		3C00AD7A1AB71A7A00EF6886 /* FilterVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterVC.m; sourceTree = "<group>"; };
 		3C00AD7C1AB71A8700EF6886 /* BaseListTVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseListTVC.h; sourceTree = "<group>"; };
@@ -427,8 +424,6 @@
 				3C00AD6F1AB71A6300EF6886 /* PreviewViewController.m */,
 				3C00AD701AB71A6300EF6886 /* ReceiversViewController.h */,
 				3C00AD711AB71A6300EF6886 /* ReceiversViewController.m */,
-				3C00AD721AB71A6300EF6886 /* SendersViewController.h */,
-				3C00AD731AB71A6300EF6886 /* SendersViewController.m */,
 			);
 			path = detail;
 			sourceTree = "<group>";
@@ -1022,7 +1017,6 @@
 				BCAF65E61FACA96500D30E54 /* NSData+Conversion.m in Sources */,
 				3CC403681AB96D05006F8803 /* PFBaseVC.m in Sources */,
 				BCA133D31FF63DD200818EC7 /* NotificationHandler.m in Sources */,
-				3C00AD781AB71A6300EF6886 /* SendersViewController.m in Sources */,
 				BCE470F51FD70CEF00702306 /* CookieTools.m in Sources */,
 				3CA899611AA60E6C0035012D /* RequestCellNoUI.m in Sources */,
 				3C00AD691AB71A0700EF6886 /* SettingsCell.m in Sources */,

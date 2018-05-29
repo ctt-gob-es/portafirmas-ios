@@ -12,7 +12,6 @@
 #import "Detail.h"
 #import "AttachmentViewController.h"
 #import "ReceiversViewController.h"
-#import "SendersViewController.h"
 #import "WSDataController.h"
 #include "AppDelegate.h"
 #import "PFRequest.h"
@@ -98,7 +97,6 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 
 - (void)viewDidUnload
 {
-    [self setSubject:nil];
     [self setBtnDocumentAction:nil];
     [super viewDidUnload];
 }
@@ -228,12 +226,6 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
         [attachmentController setRequestStatus:[PFHelper getPFRequestStatusFromString:_dataSourceRequest.view]];
     }
 
-    if ([[segue identifier] isEqual:@"segueShowSenders"]) {
-        DDLogDebug(@"DetailTableViewController::prepareForSegue number of receivers=%lu", (unsigned long)[_dataSource.senders count]);
-        SendersViewController *sendersController = [segue destinationViewController];
-        sendersController.dataSource = _dataSource.senders;
-    }
-
     if ([[segue identifier] isEqual:@"segueShowReceivers"]) {
         DDLogDebug(@"DetailTableViewController::prepareForSegue number of receivers=%lu", (unsigned long)[_dataSource.senders count]);
         ReceiversViewController *receiversController = [segue destinationViewController];
@@ -246,13 +238,13 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     self.referenceLbl.text = _dataSource.ref;
     self.inputDateLbl.text = _dataSource.date;
     [self showExpirationDateIfExists];
-    self.subject.text = _dataSource.subj;
-    self.applicationLbl.text = _dataSource.app;
+    [self showSubject];
+    [self showApplication];
     [self showRejectExplanationIfExists];
     self.signLinesTypeLbl.text = _dataSource.signlinestype;
     NSString *requestTypeText = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? NSLocalizedString(@"Request_Type_Firma", nil) : NSLocalizedString(@"Request_Type_Visto_Bueno", nil);
     self.requestTypeLbl.text = requestTypeText;
-
+    [self showSenders];
     _selectedRows = nil;
     PFRequest *detailRequest = [[PFRequest alloc] initWithId:_requestId];
     detailRequest.documents = _dataSource.documents;
@@ -273,14 +265,60 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
         }
     }
 }
+- (void)showSubject
+{
+    //Aling to the top the textviews for this Table View Cell
+    [self.subjectTitleTextView setTextContainerInset:UIEdgeInsetsZero];
+    self.subjectTitleTextView.textContainer.lineFragmentPadding = 0;
+    [self.subjectTextView setTextContainerInset:UIEdgeInsetsZero];
+    self.subjectTextView.textContainer.lineFragmentPadding = 0;
+    
+    self.subjectTextView.text = _dataSource.subj;
+    // Scroll to the top
+    [self.subjectTextView scrollRangeToVisible:NSMakeRange(0,0)];
+}
+
+- (void)showApplication
+{
+    //Aling to the top the textviews for this Table View Cell
+    [self.applicationTitleTextView setTextContainerInset:UIEdgeInsetsZero];
+    self.applicationTitleTextView.textContainer.lineFragmentPadding = 0;
+    [self.applicationTextView setTextContainerInset:UIEdgeInsetsZero];
+    self.applicationTextView.textContainer.lineFragmentPadding = 0;
+    
+    self.applicationTextView.text = _dataSource.app;
+    // Scroll to the top
+    [self.applicationTextView scrollRangeToVisible:NSMakeRange(0,0)];
+}
 
 // Hide or show the reject explanation
 - (void)showRejectExplanationIfExists
 {
     self.rejectLbl.text = _dataSource.rejt;
-    if (!_dataSource.rejt){
+    // Avoid the strings only with whitespaces. By default from the server the reject object is @" " (length == 1)
+    NSString* trimmedTextString = [_dataSource.rejt stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if (!_dataSource.rejt || [trimmedTextString length]==0 ){
         [self.rejectExplanationTableViewCell setHidden: true];
+        CGFloat expirationTableViewCellHeight =  _expirationTableViewCell.frame.size.height;
+        for(UITableViewCell *cell in self.cellBehindRejectExplanation) {
+            [cell setFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y - expirationTableViewCellHeight, cell.frame.size.width, cell.frame.size.height)];
+        }
     }
+}
+
+- (void)showSenders
+{
+    //Aling to the top the textviews for this Table View Cell
+    [self.sendersTitleTextView setTextContainerInset:UIEdgeInsetsZero];
+    self.sendersTitleTextView.textContainer.lineFragmentPadding = 0;
+    [self.sendersTextView setTextContainerInset:UIEdgeInsetsZero];
+    self.sendersTextView.textContainer.lineFragmentPadding = 0;
+    
+    NSMutableArray* senders = _dataSource.senders;
+    NSString *joinedSenders = [senders componentsJoinedByString:@"\r"];
+    self.sendersTextView.text = joinedSenders;
+    // Scroll to the top
+    [self.sendersTextView scrollRangeToVisible:NSMakeRange(0,0)];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
