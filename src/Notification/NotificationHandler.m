@@ -10,6 +10,7 @@
 #import "Notification.h"
 
 #define SERVER_URL ((NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyCurrentServer])[kPFUserDefaultsKeyURL]
+#define SERVER_DNI (NSString *)[[NSUserDefaults standardUserDefaults] stringForKey:kPFUserDefaultsKeyDNI]
 
 @implementation NotificationHandler
 
@@ -18,7 +19,8 @@
     Notification *notification = [[Notification alloc] initWithUserInfo:userInfo];
     
     if (notification != nil) {
-        if ([[NotificationHandler extractServerUrlOfBody:notification.alertBody] isEqualToString:SERVER_URL]) {
+        if ([[NotificationHandler extractServerUrlOfBody:notification.alertBody] isEqualToString:SERVER_URL]
+            && [[NotificationHandler extractServerDNIOfBody:notification.alertBody] isEqualToString:SERVER_DNI]) {
             return true;
         }
     }
@@ -33,6 +35,11 @@
         return items.firstObject;
     }
     return @"";
+}
+
++(NSString *) extractServerDNIOfBody: (NSString *) body {
+    //Create the logic when we can test with notifications.
+    return @"11111111H";
 }
 
 @end

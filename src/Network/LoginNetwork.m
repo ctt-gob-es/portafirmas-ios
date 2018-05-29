@@ -10,6 +10,7 @@
 #import "NSData+Base64.h"
 #import "Parser.h"
 #import "NSString+XMLSafe.h"
+#import "userDNIManager.h"
 
 #define SERVER_URL ((NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyCurrentServer])[kPFUserDefaultsKeyURL]
 
@@ -96,7 +97,8 @@
             [parser parseValidateData:data success:^(BOOL isValid) {
                 if (isValid) {
                     success();
-                    //SET THE DNI HERE
+                    //SET THE DNI FROM THE NOTIFICATION WHEN WE CAN TEST IT
+                    [userDNIManager setUserDNI:@"11111111H"];
                 } else {
                    failure(nil);
                 }
@@ -141,7 +143,7 @@
             NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
             NSLog(@"Request reply: %@", requestReply);
             success();
-            //Delete here the DNI
+            [userDNIManager deleteUserDNI];
         }
     }] resume];
 }

@@ -20,6 +20,7 @@
 #import "RequestCellNoUI.h"
 #import "ApproveXMLController.h"
 #import "LoginService.h"
+#import "userDNIManager.h"
 
 #define TAB_BAR_HIDDEN_FRAME CGRectMake(-10, -10, 0, 0)
 
