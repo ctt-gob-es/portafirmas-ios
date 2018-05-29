@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -28,7 +28,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gXs-Jw-XLL">
-                        <rect key="frame" x="116" y="8" width="644" height="28"/>
+                        <rect key="frame" x="116" y="8" width="644" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -39,7 +39,7 @@
                     <constraint firstItem="gXs-Jw-XLL" firstAttribute="top" secondItem="gPg-St-G5F" secondAttribute="top" constant="8" id="3uW-3n-3n1"/>
                     <constraint firstAttribute="trailing" secondItem="gXs-Jw-XLL" secondAttribute="trailing" constant="8" id="6Ab-BJ-yZv"/>
                     <constraint firstItem="gXs-Jw-XLL" firstAttribute="leading" secondItem="2GW-xB-267" secondAttribute="trailing" constant="8" id="JCc-45-gVW"/>
-                    <constraint firstAttribute="bottom" secondItem="gXs-Jw-XLL" secondAttribute="bottom" constant="7.5" id="Mo9-89-4SP"/>
+                    <constraint firstAttribute="bottom" secondItem="gXs-Jw-XLL" secondAttribute="bottom" constant="15" id="Mo9-89-4SP"/>
                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="2GW-xB-267" secondAttribute="bottom" constant="7.5" id="RM4-To-k9C"/>
                     <constraint firstItem="2GW-xB-267" firstAttribute="top" secondItem="gPg-St-G5F" secondAttribute="top" constant="8" id="yeZ-ix-7tH"/>
                 </constraints>
