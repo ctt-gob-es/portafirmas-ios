@@ -9,6 +9,7 @@
 #import "Parser.h"
 #import "XMLParser.h"
 #import "PFError.h"
+#import "userDNIManager.h"
 
 @implementation Parser
 
@@ -86,8 +87,7 @@ NSString *subscriptionValidateOkKey = @"ok";
                 
                 if ([validation isEqualToString:@"true"]) {
                     isValid = true;
-                    //SET HERE THE DNI INTO A SINGLETON, CALL A METHOD??
-                    NSString *DNI = [validationDict objectForKey:logValidateDNI];
+                    [userDNIManager setUserDNI:[validationDict objectForKey:logValidateDNI]];
                 }
                 
                 success(isValid);

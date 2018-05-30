@@ -97,8 +97,6 @@
             [parser parseValidateData:data success:^(BOOL isValid) {
                 if (isValid) {
                     success();
-                    //SET THE DNI FROM THE NOTIFICATION WHEN WE CAN TEST IT
-                    [userDNIManager setUserDNI:@"11111111H"];
                 } else {
                    failure(nil);
                 }
