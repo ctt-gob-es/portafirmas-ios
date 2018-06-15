@@ -1504,7 +1504,7 @@
             </objects>
             <point key="canvasLocation" x="-4037" y="-1518"/>
         </scene>
-        <!--Port@firmas v1.3-->
+        <!--Port@firmas v1.3.1-->
         <scene sceneID="zVl-8G-GYc">
             <objects>
                 <tableViewController id="fwv-3B-fMx" customClass="SettingsVC" sceneMemberID="viewController">
@@ -1566,7 +1566,7 @@
                         </connections>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" title="Port@firmas v1.3" id="YUs-wN-60t">
+                    <navigationItem key="navigationItem" title="Port@firmas v1.3.1" id="YUs-wN-60t">
                         <barButtonItem key="rightBarButtonItem" image="question" style="done" id="Y86-SB-LU6">
                             <connections>
                                 <segue destination="ont-ma-xC2" kind="push" id="492-ob-1rL"/>
