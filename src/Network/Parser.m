@@ -32,7 +32,6 @@ NSString *subscriptionValidateOkKey = @"ok";
     __block NSString *pfUnivErrorDomain = PFUnivErrorDomain;
     
     [parser parseData:data success:^(id parsedData) {
-        //NSLog(@"Data: %@", parsedData);
         if (parsedData != nil) {
             NSDictionary *parsedDataDict = (NSDictionary *)parsedData;
             NSDictionary *loginDict = [parsedDataDict objectForKey:loginKey];
@@ -63,7 +62,7 @@ NSString *subscriptionValidateOkKey = @"ok";
         failure(nil);
         
     } failure:^(NSError *error) {
-        NSLog(@"Error: %@", error);
+        DDLogError(@"Error: %@", error);
         failure(error);
     }];
 }
@@ -73,7 +72,7 @@ NSString *subscriptionValidateOkKey = @"ok";
     XMLParser *parser = [[XMLParser alloc] init];
     
     [parser parseData:data success:^(id parsedData) {
-        NSLog(@"Data: %@", parsedData);
+        DDLogDebug(@"Data: %@", parsedData);
         if (parsedData != nil) {
             NSDictionary *parsedDataDict = (NSDictionary *)parsedData;
             NSDictionary *validationDict = [parsedDataDict objectForKey:logValidateKey];
@@ -95,7 +94,7 @@ NSString *subscriptionValidateOkKey = @"ok";
         failure(nil);
         
     } failure:^(NSError *error) {
-        NSLog(@"Error: %@", error);
+        DDLogError(@"Error: %@", error);
         failure(error);
     }];
 }
@@ -105,7 +104,6 @@ NSString *subscriptionValidateOkKey = @"ok";
     XMLParser *parser = [[XMLParser alloc] init];
     
     [parser parseData:data success:^(id parsedData) {
-        //NSLog(@"Data: %@", parsedData);
         if (parsedData != nil) {
             NSDictionary *parsedDataDict = (NSDictionary *)parsedData;
             NSDictionary *validationDict = [parsedDataDict objectForKey:subscriptionKey];
@@ -127,7 +125,7 @@ NSString *subscriptionValidateOkKey = @"ok";
         failure(nil);
         
     } failure:^(NSError *error) {
-        NSLog(@"Error: %@", error);
+        DDLogError(@"Error: %@", error);
         failure(error);
     }];
 }
