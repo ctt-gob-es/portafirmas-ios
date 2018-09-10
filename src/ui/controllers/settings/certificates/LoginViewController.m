@@ -79,7 +79,7 @@
 {
     OSStatus status = noErr;
 
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     // Load certificate from Documents directory
     status = [OpenSSLCertificateHelper deleteCertificate:certificateInfo];
     [SVProgressHUD dismiss];
@@ -179,7 +179,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     PFCertificateInfo *selectedCertificate = arrayCerts[selectedIndexPath.row];
     

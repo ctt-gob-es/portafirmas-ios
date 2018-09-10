@@ -140,7 +140,7 @@
 - (void)startSendingSignRequests
 {
     [self enableUserInteraction:false];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
 
     requestSignerController = [RequestSignerController new];
     [requestSignerController setDelegate:self];
@@ -150,7 +150,7 @@
 
 - (void)startSendingApproveRequests
 {
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
 
     _waitingResponseType = PFWaitingResponseTypeApproval;
     NSString *requestData = [ApproveXMLController buildRequestWithRequestArray:_selectedRequestSetToApprove.allObjects];
@@ -536,7 +536,7 @@
     if (buttonIndex > 0) {
         if (reject) {
             reject = NO;
-            [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
             
             NSString *data = [RejectXMLController buildRequestWithIds:selectedRows motivoR:motivoRechazo];
             

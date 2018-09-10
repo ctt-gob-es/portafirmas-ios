@@ -88,7 +88,7 @@
 - (void)loadDataWithProgressIndicator:(BOOL)showProgressIndicator
 {
     if (showProgressIndicator) {
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     }
 
     NSString *data = [RequestListXMLController buildDefaultRequestWithState:_dataStatus pageNumber:_currentPage filters:_filtersDict];
@@ -227,7 +227,7 @@
 
 - (void)prepareForDetailSegue:(UIStoryboardSegue *)segue enablingSigning:(BOOL)enableSign
 {
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
 
     NSInteger selectedRow = [self.tableView indexPathForSelectedRow].row;
     DetailTableViewController *detailVC = [segue destinationViewController];

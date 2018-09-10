@@ -73,7 +73,7 @@
 
 - (void)loadWebService
 {
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     NSString *data = [PreviewXMLController buildRequestWithId:_docId];
 
     DDLogDebug(@"PreviewXMLController::loadWebService.message data=%@", data);

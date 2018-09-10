@@ -166,7 +166,7 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     else {
         
         DDLogDebug(@"UnassignedRequestTableViewController::Reject request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
         
         NSString *data = [RejectXMLController buildRequestWithIds:_selectedRows motivoR: motivoRechazo];
         DDLogDebug(@"UnassignedRequestTableViewController::rejectRequest input Data=%@", data);
@@ -181,7 +181,7 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 {
     DDLogDebug(@"Sign Action....\nAccept request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
 
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
 
     if ([(Detail *)_dataSource type] == PFRequestTypeSign) {
         [self startSignRequest];
