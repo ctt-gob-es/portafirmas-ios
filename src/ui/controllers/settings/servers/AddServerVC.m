@@ -24,8 +24,8 @@
     
     isEdit = NO;
     
-    NSLog(@"Texto recibido Alias-> %@", aliasReceived);
-    NSLog(@"URL   -> %@", urlRecived);
+    DDLogDebug(@"Texto recibido Alias-> %@", aliasReceived);
+    DDLogDebug(@"URL   -> %@", urlRecived);
     
     if (aliasReceived != NULL && urlRecived != NULL) {
         

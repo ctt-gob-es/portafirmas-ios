@@ -28,7 +28,7 @@ static NSString *const kSettingsCellUndefinedTitle = @"Sin especificar";
 {
     NSDictionary *typeDict = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:KEYS_ARRAY[type]];
     
-    NSLog(@"TypeDict -> %@", [typeDict allKeys]);
+    DDLogDebug(@"TypeDict -> %@", [typeDict allKeys]);
     if (typeDict && [typeDict.allKeys containsObject:kPFUserDefaultsKeyAlias]) {
         
         [_titleLabel setText:typeDict[kPFUserDefaultsKeyAlias]];

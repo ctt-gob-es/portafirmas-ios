@@ -126,7 +126,7 @@
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
     NSString *strNew = [string stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    NSLog(@"string -> %@", string);
+    DDLogDebug(@"string -> %@", string);
     strNew = [strNew stringByReplacingOccurrencesOfString:@"\t" withString:@""];
     strNew = [strNew stringByReplacingOccurrencesOfString:@"&_lt;" withString:@"<"];
     strNew = [strNew stringByReplacingOccurrencesOfString:@"&_gt;" withString:@">"];

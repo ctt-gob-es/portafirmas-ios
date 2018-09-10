@@ -34,14 +34,14 @@
 - (void) authID {
     
     [LoginNetwork loginProcess:^(NSString *token) {
-        NSLog(@"Token = %@", token);
+        DDLogDebug(@"Token = %@", token);
         NSString *decodedToken = [self decodeToken:token];
         NSString *signToken = [self signToken:decodedToken];
-        NSLog(@"Sign Token = %@", signToken);
+        DDLogDebug(@"Sign Token = %@", signToken);
         NSString *certificate = [self certificateInBase64];
         
         [LoginNetwork validateLogin:certificate withSignedToken:signToken success:^{
-            NSLog(@"Login validated");
+            DDLogDebug(@"Login validated");
         } failure:^(NSError *error) {
             DDLogError(@"Error starting login process");
             DDLogError(@"Error: %@", error);
@@ -58,15 +58,15 @@
     
     [LoginNetwork loginProcess:^(NSString *token) {
         self.serverSupportLogin = YES;
-        NSLog(@"Token = %@", token);
+        DDLogDebug(@"Token = %@", token);
         NSString *decodedToken = [self decodeToken:token];
         self.currentSignToken = [self signToken:decodedToken];
-        NSLog(@"Sign Token = %@", self.currentSignToken);
+        DDLogDebug(@"Sign Token = %@", self.currentSignToken);
         NSString *certificate = [self certificateInBase64];
         
         [LoginNetwork validateLogin:certificate withSignedToken:self.currentSignToken success:^{
             [SVProgressHUD dismiss];
-            NSLog(@"Login validated");
+            DDLogDebug(@"Login validated");
             if ([PushNotificationService instance].currentServer.userNotificationPermisionState) {
                 [[PushNotificationService instance] initializePushNotificationsService:false];
             }
@@ -98,14 +98,14 @@
     
     [LoginNetwork logout:^{
         [SVProgressHUD dismiss];
-        NSLog(@"Logout finish with success");
+        DDLogDebug(@"Logout finish with success");
         self.serverSupportLogin = false;
         self.currentSignToken = @"";
         [CookieTools removeJSessionIDCookies];
         success();
     } failure:^(NSError *error) {
         [SVProgressHUD dismiss];
-        NSLog(@"Logout finish with failure");
+        DDLogDebug(@"Logout finish with failure");
         self.serverSupportLogin = false;
         self.currentSignToken = @"";
         [CookieTools removeJSessionIDCookies];
@@ -118,9 +118,6 @@
     NSData *tokenData = [token dataUsingEncoding:NSUTF8StringEncoding];
     NSData *result = [[CertificateUtils sharedWrapper] getSignatureBytesSHA256:tokenData];
     NSString *tokenSigned = [NSString stringWithFormat: @"%@",[result base64EncodedString]];
-    
-   // NSLog(@"Token signed: %@", tokenSigned);
-   // NSLog(@"Token lenght: %ld", [tokenSigned length]);
     
     return tokenSigned;
 }

@@ -19,7 +19,7 @@
 // Builds Web Service Request message
 + (NSString *)buildRequestWithCert:(NSString *)cert witRequestList:(NSArray *)requests;
 {
-    NSLog(@"+++++++ Presign +++++++");
+    DDLogDebug(@"+++++++ Presign +++++++");
     NSMutableString *mesg = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rqttri>\n"];
     
     if (![[LoginService instance] serverSupportLogin]) {

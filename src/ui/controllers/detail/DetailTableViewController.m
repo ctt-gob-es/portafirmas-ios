@@ -158,10 +158,10 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
 
     motivoRechazo = [[alertView textFieldAtIndex:0] text];
-    NSLog(@"Entered: %@",[[alertView textFieldAtIndex:0] text]);
+    DDLogDebug(@"Entered: %@",[[alertView textFieldAtIndex:0] text]);
     if (buttonIndex == [alertView cancelButtonIndex]) {
         // DO anything
-        NSLog(@"El usuario ha clicado en la opción cancelar");
+        DDLogDebug(@"El usuario ha clicado en la opción cancelar");
     }
     else {
         

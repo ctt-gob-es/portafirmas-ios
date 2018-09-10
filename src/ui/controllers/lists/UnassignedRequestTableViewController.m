@@ -144,7 +144,7 @@
 
     requestSignerController = [RequestSignerController new];
     [requestSignerController setDelegate:self];
-    NSLog(@"Filas seleccionadas -> ");
+    DDLogDebug(@"Filas seleccionadas -> ");
     [requestSignerController loadPreSignRequestsWithCurrentCertificate:_selectedRequestsSetToSign.allObjects];
 }
 
@@ -213,7 +213,7 @@
 {
     if ([self.dataArray count] > 0) {
         
-        NSLog(@"Editing => %d", self.editing);
+        DDLogDebug(@"Editing => %d", self.editing);
         [self setEditing: !self.editing animated: !self.editing];
     }
 }

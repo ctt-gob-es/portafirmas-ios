@@ -161,7 +161,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSLog(@"Segue -> %@", sender);
+    DDLogDebug(@"Segue -> %@", sender);
     
     if ([segue.identifier isEqualToString:kSettingsVCSegueIdentifierAccess]) {
         

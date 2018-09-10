@@ -54,7 +54,7 @@
         
         NSData *certificateData = [[CertificateUtils sharedWrapper] publicKeyBits];
         NSString *certificateB64 = [Base64Utils base64EncodeData:certificateData];
-        NSLog(@"Presing - RequestSignerController");
+        DDLogDebug(@"Presing - RequestSignerController");
         NSString *data = [PreSignXMLController buildRequestWithCert:certificateB64 witRequestList: nextRequest];
         
         DDLogDebug(@"RequestSignerController::loadPreSignRequestsWithCurrentCertificate data=%@", data);
@@ -89,13 +89,13 @@
     // dataFromBase64String
     // NSString *certificateB64 = [certificateData base64EncodedString];
     NSString *certificateB64 = [Base64Utils base64EncodeData:certificateData];
-    NSLog(@"**************** PostSign - RequestSignerController ****************");
-    NSLog(@"certificateB64 => \n%@", certificateB64);
+    DDLogDebug(@"**************** PostSign - RequestSignerController ****************");
+    DDLogDebug(@"certificateB64 => \n%@", certificateB64);
     NSString *data = [PostSignXMLController buildRequestWithCert:certificateB64 witRequestList:requests];
 
-    NSLog(@"\n \n");
+    DDLogDebug(@"\n \n");
     DDLogDebug(@"loadPreSignRequest::loadPostSignRequest data => \n\n%@", data);
-    NSLog(@"\n \n \n");
+    DDLogDebug(@"\n \n \n");
     
     waitingPostSign = YES;
 
@@ -183,7 +183,7 @@
 
         // test the result
         if (success) {
-            NSLog(@"doParse:: Parsing XML with no errors ");
+            DDLogDebug(@"doParse:: Parsing XML with no errors ");
             // get array of users here
             [_dataSource addObjectsFromArray: [parser dataSource]];
             [self sendNextRequest];
