@@ -16,11 +16,6 @@
     
     for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies])
     {
-       /* NSLog(@"name: '%@'\n",   [cookie name]);
-        NSLog(@"value: '%@'\n",  [cookie value]);
-        NSLog(@"domain: '%@'\n", [cookie domain]);
-        NSLog(@"path: '%@'\n",   [cookie path]);*/
-        
         if ([cookie.name isEqualToString:jsessionCookie]) {
             cookieSession = cookie;
         }
