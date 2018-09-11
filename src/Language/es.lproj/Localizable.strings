@@ -30,6 +30,9 @@
 //Detail view
 "Request_Type_Firma" = "Firma";
 "Request_Type_Visto_Bueno" = "Visto Bueno";
+"Info" = "INFO";
+"Correctly_rejected_requests" = "Peticiones rechazadas correctamente.";
+"Ok" = "OK";
 
 //Cell text
 "Expiration_text_message" = "Expira: ";
