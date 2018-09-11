@@ -76,7 +76,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [_enableFiltersSwitch setFrame:CGRectMake(self.view.frame.size.width - _enableFiltersSwitch.frame.size.width - kFilterVCDefaultMargin, _enableFiltersSwitch.frame.origin.y, _enableFiltersSwitch.frame.size.width, _enableFiltersSwitch.frame.size.height)];
 
     if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation: UIStatusBarAnimationSlide];
+        UIApplication.sharedApplication.statusBarHidden=NO;
+
     }
 }
 
