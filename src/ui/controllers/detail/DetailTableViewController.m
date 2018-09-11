@@ -27,7 +27,7 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 
 @interface DetailTableViewController ()
 {
-    UIActionSheet *_documentActionSheet;
+    UIAlertController *_documentActionSheet;
     RequestSignerController *_requestSignerController;
     PFWaitingResponseType _waitingResponseType;
     NSString *motivoRechazo;
@@ -111,36 +111,27 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 
 - (IBAction)didTapDocumentActionButton:(id)sender
 {
-    NSString *signButtonTitle = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? @"Firmar" : @"Visto Bueno";
-
-    _documentActionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancelar"
-                                         destructiveButtonTitle:nil
-                                              otherButtonTitles:@"Rechazar", signButtonTitle, nil];
-
-    [_documentActionSheet showInView:self.view];
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    switch (buttonIndex) {
-            
-        case PFDocumentActionReject:
-            [self rejectAction];
-            break;
-
-        case PFDocumentActionSign:
-            [self signAction];
-            break;
-
-        case PFDocumentActionCancel:
-            DDLogDebug(@"Cancel Action....");
-            break;
-
-        default:
-            break;
-    }
+    NSString *signButtonTitle = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? NSLocalizedString(@"Sign", nil) : NSLocalizedString(@"Approval", nil);
+    _documentActionSheet =[UIAlertController alertControllerWithTitle:nil
+                                                              message:nil
+                                                       preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction* reject = [UIAlertAction actionWithTitle:NSLocalizedString(@"Reject", nil)
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * action)
+                             {
+                                 [self rejectAction];
+                             }];
+    UIAlertAction* sign = [UIAlertAction actionWithTitle:signButtonTitle
+                                                   style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction * action)
+                           {
+                               [self signAction];
+                           }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
+    [_documentActionSheet addAction:reject];
+    [_documentActionSheet addAction:sign];
+    [_documentActionSheet addAction:cancel];
+    [self presentViewController:_documentActionSheet animated:YES completion:nil];
 }
 
 - (void)rejectAction
@@ -401,8 +392,10 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
         [alertController addAction:actionOk];
         [self presentViewController:alertController animated:YES completion:nil];
     }
+    
+// TEST THIS
+    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
 
-    [_documentActionSheet dismissWithClickedButtonIndex:-1 animated:YES];
 }
 
 - (void)didReceivedRejectionResponse:(NSData *)responseData
@@ -458,7 +451,9 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
         [self didReceiveError:errorMessage];
     }
 
-    [_documentActionSheet dismissWithClickedButtonIndex:-1 animated:YES];
+// TEST THIS
+    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 - (void)didFinisParsingWithParser:(DetailXMLController *)parser
@@ -520,8 +515,8 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     } else {
         [self didReceiveError:msg];
     }
-
-    [_documentActionSheet dismissWithClickedButtonIndex:-1 animated:YES];
+// TEST THIS
+    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
     [(BaseListTVC *)self.navigationController.previousViewController refreshInfo];
     [self.navigationController popViewControllerAnimated:YES];
 }

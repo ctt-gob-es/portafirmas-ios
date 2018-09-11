@@ -33,6 +33,10 @@
 "Info" = "INFO";
 "Correctly_rejected_requests" = "Peticiones rechazadas correctamente.";
 "Ok" = "OK";
+"Sign" = "Firmar";
+"Approval" = "Visto Bueno";
+"Reject" = "Rechazar";
+"Cancel" = "Cancel";
 
 //Cell text
 "Expiration_text_message" = "Expira: ";
