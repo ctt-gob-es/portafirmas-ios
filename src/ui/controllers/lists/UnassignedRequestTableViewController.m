@@ -520,11 +520,14 @@
         _waitingResponseType = PFWaitingResponseTypeList;
         [super loadData];
         // Peticiones rechazadas corrrectamente
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"INFO", @"")
-                                    message:@"Peticiones rechazadas correctamente"
-                                   delegate:nil
-                          cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                          otherButtonTitles:nil] show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil)
+                                                                                 message:NSLocalizedString(@"Correctly_rejected_requests", nil)
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:nil];
+        [alertController addAction:actionOk];
+        [self presentViewController:alertController animated:YES completion:nil];
     }
     [self cancelEditing];
 }
