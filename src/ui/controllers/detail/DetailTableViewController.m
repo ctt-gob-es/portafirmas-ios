@@ -497,11 +497,13 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 
     if (processedOK) {
         // @" Peticiones firmadas corrrectamente"
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"INFO", @"")
-                                    message:@"Peticiones firmadas correctamente"
-                                   delegate:self
-                          cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                          otherButtonTitles:nil] show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil)
+                                                                                 message:NSLocalizedString(@"Alert_View_Everything_Signed_Correctly", nil)
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:cancel];
+        [self presentViewController:alertController animated:YES completion:nil];
+        
     } else {
         [self didReceiveError:msg];
     }
