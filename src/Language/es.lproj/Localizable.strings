@@ -37,10 +37,14 @@
 "Approval" = "Visto Bueno";
 "Reject" = "Rechazar";
 "Cancel" = "Cancel";
+"Rejection_of_requests" = "Rechazo de peticiones";
+"Indicate_Reason_For_Rejection" = "Indique el motivo del rechazo";
+"Continue" = "Continuar";
+"Reason_For_Rejection" = "Motivo del rechazo";
 
 //Cell text
 "Expiration_text_message" = "Expira: ";
 
 // Certificates
-"Certificate_removed_correctly" = "Se ha eliminado el certificado correctamente";
-"An_error_has_ocurred" = "Se ha producido un error";
+"Certificate_Removed_Correctly" = "Se ha eliminado el certificado correctamente";
+"An_Error_Has_Ocurred" = "Se ha producido un error";

@@ -138,34 +138,24 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 {
     DDLogDebug(@"Reject Action....");
     // Preguntamos el por qué del rechazo
-    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Rechazo de peticiones" message:@"Indique el motivo del rechazo" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Continuar", nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    UITextField * alertTextField = [alert textFieldAtIndex:0];
-    alertTextField.keyboardType = UIKeyboardTypeDefault;
-    alertTextField.placeholder = @"Motivo del rechazo";
-    [alert show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-
-    motivoRechazo = [[alertView textFieldAtIndex:0] text];
-    DDLogDebug(@"Entered: %@",[[alertView textFieldAtIndex:0] text]);
-    if (buttonIndex == [alertView cancelButtonIndex]) {
-        // DO anything
-        DDLogDebug(@"El usuario ha clicado en la opción cancelar");
-    }
-    else {
-        
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Rejection_of_requests", nil) message:NSLocalizedString(@"Indicate_Reason_For_Rejection", nil) preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *conti = [UIAlertAction actionWithTitle:NSLocalizedString(@"Continue", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         DDLogDebug(@"UnassignedRequestTableViewController::Reject request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-        
         NSString *data = [RejectXMLController buildRequestWithIds:_selectedRows motivoR: motivoRechazo];
         DDLogDebug(@"UnassignedRequestTableViewController::rejectRequest input Data=%@", data);
-        
         _waitingResponseType = PFWaitingResponseTypeRejection;
         [wsController loadPostRequestWithData:data code:PFRequestCodeReject];
         [wsController startConnection];
-    }
+    }];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = NSLocalizedString(@"Reason_For_Rejection", nil);
+        textField.keyboardType = UIKeyboardTypeDefault;
+    }];
+    [alert addAction:cancel];
+    [alert addAction:conti];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)signAction

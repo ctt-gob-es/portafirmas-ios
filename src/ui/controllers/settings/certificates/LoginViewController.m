@@ -149,14 +149,14 @@
             switch (status) {
                 case noErr :
                 case errSecItemNotFound:
-                    _infoLabel = NSLocalizedString(@"Certificate_removed_correctly", nil);
+                    _infoLabel = NSLocalizedString(@"Certificate_Removed_Correctly", nil);
                     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyCurrentCertificate];
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     [[CertificateUtils sharedWrapper] setSelectedCertificateName:nil];
         
                     break;
                 default:
-                    _infoLabel = NSLocalizedString(@"An_error_has_ocurred", nil);
+                    _infoLabel = NSLocalizedString(@"An_Error_Has_Ocurred", nil);
                     break;
             }
         
