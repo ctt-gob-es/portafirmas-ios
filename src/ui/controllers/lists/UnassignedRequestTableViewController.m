@@ -123,12 +123,33 @@
     DDLogDebug(@"Reject Action....");
     
     // Preguntamos el por qué del rechazo
-    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Rechazo de peticiones" message:@"Indique el motivo del rechazo" delegate:self cancelButtonTitle:@"Cancelar" otherButtonTitles:@"Continuar", nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    UITextField * alertTextField = [alert textFieldAtIndex:0];
-    alertTextField.keyboardType = UIKeyboardTypeDefault;
-    alertTextField.placeholder = @"Motivo del rechazo";
-    [alert show];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Rejection_of_requests", nil) message:NSLocalizedString(@"Indicate_Reason_For_Rejection", nil) preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *conti = [UIAlertAction actionWithTitle:NSLocalizedString(@"Continue", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+                if (reject) {
+                    reject = NO;
+                    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+                            NSString *data = [RejectXMLController buildRequestWithIds:selectedRows motivoR:motivoRechazo];
+                    DDLogDebug(@"UnassignedRequestTableViewController::rejectRequest input Data=%@", data);
+                    _waitingResponseType = PFWaitingResponseTypeRejection;
+                    [self.wsDataController loadPostRequestWithData:data code:PFRequestCodeReject];
+                    [self.wsDataController startConnection];
+                }
+                else if (_selectedRequestsSetToSign && _selectedRequestsSetToSign.count > 0) {
+                    [self startSendingSignRequests];
+                }
+                else if (_selectedRequestSetToApprove && _selectedRequestSetToApprove.count > 0) {
+                    [self startSendingApproveRequests];
+                }
+    }];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = NSLocalizedString(@"Reason_For_Rejection", nil);
+        textField.keyboardType = UIKeyboardTypeDefault;
+    }];
+    [alert addAction:cancel];
+    [alert addAction:conti];
+    [self presentViewController:alert animated:YES completion:nil];
+        
 }
 
 - (IBAction)cancelAction:(id)sender
@@ -533,30 +554,6 @@
 }
 
 #pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex > 0) {
-        if (reject) {
-            reject = NO;
-            [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-            
-            NSString *data = [RejectXMLController buildRequestWithIds:selectedRows motivoR:motivoRechazo];
-            
-            DDLogDebug(@"UnassignedRequestTableViewController::rejectRequest input Data=%@", data);
-            
-            _waitingResponseType = PFWaitingResponseTypeRejection;
-            [self.wsDataController loadPostRequestWithData:data code:PFRequestCodeReject];
-            [self.wsDataController startConnection];
-        }
-        else if (_selectedRequestsSetToSign && _selectedRequestsSetToSign.count > 0) {
-            [self startSendingSignRequests];
-        }
-        else if (_selectedRequestSetToApprove && _selectedRequestSetToApprove.count > 0) {
-            [self startSendingApproveRequests];
-        }
-    }
-}
 
 - (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
     
