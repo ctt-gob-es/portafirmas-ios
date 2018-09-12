@@ -40,3 +40,7 @@
 
 //Cell text
 "Expiration_text_message" = "Expira: ";
+
+// Certificates
+"Certificate_removed_correctly" = "Se ha eliminado el certificado correctamente";
+"An_error_has_ocurred" = "Se ha producido un error";
