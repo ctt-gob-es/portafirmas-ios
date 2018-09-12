@@ -160,8 +160,12 @@
                     break;
             }
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:_infoLabel message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:_infoLabel message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:nil];
+        [alert addAction:actionOk];
+        [self presentViewController:alert animated:YES completion:nil];
         
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
             
