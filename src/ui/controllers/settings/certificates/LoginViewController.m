@@ -149,18 +149,18 @@
             switch (status) {
                 case noErr :
                 case errSecItemNotFound:
-                    _infoLabel = @"Se ha eliminado el certificado correctamente";
+                    _infoLabel = NSLocalizedString(@"Certificate_removed_correctly", nil);
                     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyCurrentCertificate];
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     [[CertificateUtils sharedWrapper] setSelectedCertificateName:nil];
         
                     break;
                 default:
-                    _infoLabel = @"Se ha producido un error";
+                    _infoLabel = NSLocalizedString(@"An_error_has_ocurred", nil);
                     break;
             }
         
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:_infoLabel message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:_infoLabel message:nil preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
                                                            style:UIAlertActionStyleDefault
                                                          handler:nil];
