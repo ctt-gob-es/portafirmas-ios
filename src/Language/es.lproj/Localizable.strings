@@ -17,6 +17,7 @@
 "Alert_View_Process_Sign" = "Se van a procesar %lu peticiones de firma.";
 "Alert_View_Request_Processed_Correctly" = "Peticiones procesadas correctamente";
 "Alert_View_Request_Signed_Correctly" = "Peticiones firmadas correctamente";
+"Alert_View_Error" = "Error";
 
 //Alert view messages after signing
 "Alert_View_Everything_Signed_Correctly" = "Peticiones firmadas correctamente";
