@@ -11,6 +11,11 @@
 "Alert_View_Disable_Notifications_Title" = "Las notificaciones estan deshabilitadas";
 "Alert_View_Disable_Notifications_Message" = "Has de ir a ajustes en tu dispositivo y luego a Notificaciones buscar PortaFirmas y permitir notificaciones";
 "Alert_View_Ok_Option" = "OK";
+"Alert_View_Notice" = "Aviso";
+"Alert_View_Process_Sign_and_Approve" = "Se van a procesar %lu peticiones de firma y %lu de visto bueno.";
+"Alert_View_Process_Approve" = "Se van a procesar %lu peticiones de visto bueno.";
+"Alert_View_Process_Sign" = "Se van a procesar %lu peticiones de firma.";
+
 //Alert view messages after signing
 "Alert_View_Everything_Signed_Correctly" = "Peticiones firmadas correctamente";
 "Alert_View_One_Signature_Failed_In_Single_Request" = "Ocurrió un error al firmar la peticion seleccionada";

@@ -253,17 +253,17 @@
     NSString *message;
 
     if (_selectedRequestSetToApprove && _selectedRequestSetToApprove.count > 0 && _selectedRequestsSetToSign && _selectedRequestsSetToSign.count > 0) {
-        message = [NSString stringWithFormat:@"Se van a procesar %lu peticiones de firma y %lu de visto bueno.", (unsigned long)_selectedRequestsSetToSign.count, (unsigned long)_selectedRequestSetToApprove.count];
+        message = [NSString stringWithFormat:NSLocalizedString(@"Alert_View_Process_Sign_and_Approve", nil), (unsigned long)_selectedRequestsSetToSign.count, (unsigned long)_selectedRequestSetToApprove.count];
     }
     else if (_selectedRequestSetToApprove && _selectedRequestSetToApprove.count > 0) {
-        message = [NSString stringWithFormat:@"Se van a procesar %lu peticiones de visto bueno.", (unsigned long)_selectedRequestSetToApprove.count];
+        message = [NSString stringWithFormat:NSLocalizedString(@"Alert_View_Process_Approve", nil), (unsigned long)_selectedRequestSetToApprove.count];
     }
     else if (_selectedRequestsSetToSign && _selectedRequestsSetToSign.count > 0) {
-        message = [NSString stringWithFormat:@"Se van a procesar %lu peticiones de firma.", (unsigned long)_selectedRequestsSetToSign.count];
+        message = [NSString stringWithFormat:NSLocalizedString(@"Alert_View_Process_Sign", nil), (unsigned long)_selectedRequestsSetToSign.count];
     }
 
     if (message) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Aviso" message:message preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Notice", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
         UIAlertAction *conti = [UIAlertAction actionWithTitle:NSLocalizedString(@"Continue", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             [self continueButtonClicked];
