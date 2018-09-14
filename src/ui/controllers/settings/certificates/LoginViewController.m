@@ -156,7 +156,7 @@
         
                     break;
                 default:
-                    _infoLabel = NSLocalizedString(@"An_Error_Has_Ocurred", nil);
+                    _infoLabel = NSLocalizedString(@"Alert_View_An_Error_Has_Ocurred", nil);
                     break;
             }
         

@@ -18,6 +18,8 @@
 "Alert_View_Request_Processed_Correctly" = "Peticiones procesadas correctamente";
 "Alert_View_Request_Signed_Correctly" = "Peticiones firmadas correctamente";
 "Alert_View_Error" = "Error";
+"Alert_View_certificated_removed_correctly" = "Se ha eliminado el certificado correctamente";
+"Alert_View_An_Error_Has_Ocurred" = "Se ha producido un error";
 
 //Alert view messages after signing
 "Alert_View_Everything_Signed_Correctly" = "Peticiones firmadas correctamente";
@@ -55,4 +57,3 @@
 
 // Certificates
 "Certificate_Removed_Correctly" = "Se ha eliminado el certificado correctamente";
-"An_Error_Has_Ocurred" = "Se ha producido un error";
