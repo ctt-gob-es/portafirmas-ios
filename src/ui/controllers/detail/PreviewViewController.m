@@ -164,11 +164,12 @@
 {
     if (!_isShowingAlertView) {
         _isShowingAlertView = YES;
-        [[[UIAlertView alloc] initWithTitle:@"Previsualización no disponible"
-                                    message:message
-                                   delegate:self
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil, nil] show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Preview_Not_Available", nil)
+                                                                                 message:message
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:cancel];
+        [self presentViewController:alertController animated:YES completion:nil];
     }
 }
 
