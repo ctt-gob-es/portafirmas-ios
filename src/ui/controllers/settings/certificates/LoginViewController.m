@@ -191,11 +191,9 @@
     DDLogDebug(@"LoginViewController:: certificado seleccionado -> %@", selectedCertificate.subject);
     
     if ([[CertificateUtils sharedWrapper] searchIdentityByName:selectedCertificate.subject] == YES) {
-        
         DDLogDebug(@"LoginViewController::prepareForSegue::selected certificate....");
         [[NSUserDefaults standardUserDefaults] setObject:@{kPFUserDefaultsKeyAlias:selectedCertificate.subject} forKey:kPFUserDefaultsKeyCurrentCertificate];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        
         [[CertificateUtils sharedWrapper] setSelectedCertificateName:selectedCertificate.subject];
         [SVProgressHUD dismiss];
         [self.navigationController popViewControllerAnimated:YES];
@@ -203,11 +201,12 @@
     else {
         
         [SVProgressHUD dismiss];
-        [[[UIAlertView alloc] initWithTitle:@"Se ha producido un error al cargar el certificado"
-                                    message:@""
-                                   delegate:nil
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil] show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Error_When_Loading_certificate", nil)
+                                                                                 message:nil
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:cancel];
+        [self presentViewController:alertController animated:YES completion:nil];
     }
 }
 
