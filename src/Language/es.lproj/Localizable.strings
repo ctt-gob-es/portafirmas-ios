@@ -20,6 +20,7 @@
 "Alert_View_Error" = "Error";
 "Alert_View_certificated_removed_correctly" = "Se ha eliminado el certificado correctamente";
 "Alert_View_An_Error_Has_Ocurred" = "Se ha producido un error";
+"Alert_View_Error_When_Processing_Request" = "Error al procesar la petición con codigo:%@";
 
 //Alert view messages after signing
 "Alert_View_Everything_Signed_Correctly" = "Peticiones firmadas correctamente";

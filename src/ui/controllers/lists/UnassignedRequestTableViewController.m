@@ -532,14 +532,15 @@
 - (void)didReceiveRejectResult:(NSArray *)requestsSigned
 {
     BOOL processedOK = TRUE;
-
     for (PFRequestResult *request in requestsSigned) {
         if ([[request status] isEqualToString:@"KO"]) {
-            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"")
-                                        message:[[NSString alloc] initWithFormat:@"Error al procesar la petición con codigo:%@", [request rejectid]]
-                                       delegate:nil
-                              cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                              otherButtonTitles:nil] show];
+            NSString *message = [[NSString alloc] initWithFormat:NSLocalizedString(@"Alert_View_Error_When_Processing_Request", nil), [request rejectid]];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
+                                                                                     message:message
+                                                                              preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+            [alertController addAction:cancel];
+            [self presentViewController:alertController animated:YES completion:nil];
             processedOK = FALSE;
         }
     }
