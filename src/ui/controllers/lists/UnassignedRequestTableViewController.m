@@ -512,12 +512,12 @@
     } else {
         // Operacion finalizada con errores
         NSString *msg = requestsWithError.count == 1 ? (requestsSigned.count == 1 ?  NSLocalizedString(@"Alert_View_One_Signature_Failed_In_Single_Request", nil) : NSLocalizedString(@"Alert_View_One_Signature_Failed_In_Multilple_Request", nil)) : NSLocalizedString(@"Alert_View_Multiple_Signatures_Failed_In_Multiple_Request", nil);
-        
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"")
-                                    message:msg
-                                   delegate:nil
-                          cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                          otherButtonTitles:nil] show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", @"")
+                                                                                 message:msg
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:cancel];
+        [self presentViewController:alertController animated:YES completion:nil];
     }
 
     if (_selectedRequestSetToApprove && _selectedRequestSetToApprove.count > 0) {
