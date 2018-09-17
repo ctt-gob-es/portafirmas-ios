@@ -24,6 +24,8 @@
 "Alert_View_Error_When_Loading_certificate" = "Se ha producido un error al cargar el certificado";
 "Alert_View_Preview_Not_Available" = "Previsualización no disponible";
 "Alert_View_Sorry_Preview_Not_Available" = "Lo sentimos pero la previsualización de este tipo de documentos no está disponible.";
+"Alert_View_Loaded_Certificate" = "Certificado cargado";
+"Alert_View_Loaded_Certificate_In_Your_App" = "El certificado se ha cargado correctamente en su aplicación.";
 
 //Alert view messages after signing
 "Alert_View_Everything_Signed_Correctly" = "Peticiones firmadas correctamente";
