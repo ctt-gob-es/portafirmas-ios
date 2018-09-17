@@ -174,12 +174,4 @@
     }
 }
 
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    _isShowingAlertView = NO;
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 @end
