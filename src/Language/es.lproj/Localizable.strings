@@ -26,6 +26,8 @@
 "Alert_View_Sorry_Preview_Not_Available" = "Lo sentimos pero la previsualización de este tipo de documentos no está disponible.";
 "Alert_View_Loaded_Certificate" = "Certificado cargado";
 "Alert_View_Loaded_Certificate_In_Your_App" = "El certificado se ha cargado correctamente en su aplicación.";
+"Alert_View_Server_Going_To_Be_Selected" = "Se va a seleccionar el servidor %@ con url %@.";
+"Alert_View_Accept" = "Aceptar";
 
 //Alert view messages after signing
 "Alert_View_Everything_Signed_Correctly" = "Peticiones firmadas correctamente";
