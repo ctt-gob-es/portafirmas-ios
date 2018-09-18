@@ -378,7 +378,9 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
                                                                           preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
                                                            style:UIAlertActionStyleDefault
-                                                         handler:nil];
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [self dismissSelfView];
+                                                         }];
         [alertController addAction:actionOk];
         [self presentViewController:alertController animated:YES completion:nil];
     }
@@ -421,6 +423,7 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
         [alertController addAction:cancel];
         [self presentViewController:alertController animated:YES completion:nil];
+        [self dismissSelfView];
     } else {
         NSString *errorMessage;
         if (idsForRequestsWithError.count == 1) {
@@ -433,9 +436,9 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
             errorMessage = [NSString stringWithFormat:@"Error al procesar las peticiones con códigos:%@", errorIDSString];
         }
         [self didReceiveError:errorMessage];
+        [self dismissSelfView];
     }
 
-// TEST THIS
     [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
 
 }
@@ -506,17 +509,6 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
     [(BaseListTVC *)self.navigationController.previousViewController refreshInfo];
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (isSuccessReject) {
-        isSuccessReject = NO;
-        [(BaseListTVC *)self.navigationController.previousViewController refreshInfo];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
 }
 
 #pragma mark - Handle rotation for this view
