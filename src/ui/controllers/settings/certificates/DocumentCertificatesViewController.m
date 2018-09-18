@@ -121,16 +121,19 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSString *fileToDelete = files[indexPath.row];
-        
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        
         NSString *filePath = [documentsPath stringByAppendingPathComponent:fileToDelete];
         NSError *error;
         NSString *message;
         BOOL success = [fileManager removeItemAtPath:filePath error:&error];
-        message = success ? @"Se ha eliminado el certificado correctamente" : @"Se ha producido un error";
-        [[[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        message = success ? NSLocalizedString(@"Alert_View_certificated_removed_correctly", nil) : NSLocalizedString(@"Alert_View_An_Error_Has_Ocurred", nil);
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                                 message:message
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:cancel];
+        [self presentViewController:alertController animated:YES completion:nil];
         files = [self findFiles:[NSArray arrayWithObjects:@"p12", @"pfx", nil]];
         [self.tableView reloadData];
     }

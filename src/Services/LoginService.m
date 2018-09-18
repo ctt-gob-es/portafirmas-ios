@@ -54,7 +54,7 @@
     
 - (void) loginWithCertificate:(void(^)())success failure:(void(^)(NSError *error))failure {
     
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
     [LoginNetwork loginProcess:^(NSString *token) {
         self.serverSupportLogin = YES;
@@ -94,7 +94,7 @@
 
 - (void) logout:(void(^)())success failure:(void(^)(NSError *error))failure {
     
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     
     [LoginNetwork logout:^{
         [SVProgressHUD dismiss];

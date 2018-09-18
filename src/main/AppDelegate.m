@@ -49,8 +49,6 @@ void uncaughtExceptionHandler(NSException *exception)
     [self loadSelectedCertificate];
     
     [DefaultServersData createDefaultServersIsNotExist];
-    DDLogDebug(@"SSSSSSSSSSSSSSSSSSS TESTING cocoalumberjack logs");
-    DDLogError(@"SSSSSSSSSSSSSSSSSSS TESTING ERROR cocoalumberjack logs");
 
     return YES;
 }

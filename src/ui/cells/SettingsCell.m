@@ -20,10 +20,6 @@ static NSString *const kSettingsCellUndefinedTitle = @"Sin especificar";
 
 @implementation SettingsCell
 
-- (void)awakeFromNib {
-    // Initialization code
-}
-
 - (void)setupForType:(SettingsCellType)type
 {
     NSDictionary *typeDict = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:KEYS_ARRAY[type]];

@@ -76,39 +76,27 @@
         }
     } else {
         _infoLabel = @"El certificado se ha cargado correctamente";
-
         DDLogDebug(@"registerWithCertificateName::Certificate is loaded");
-       
-        if (_delegate) {
-            [_delegate certificateAdded];
-        }
-
-        UIAlertView *alert = [[UIAlertView alloc]
-                              initWithTitle:@"Certificado cargado"
-                              message:@"El certificado se ha cargado correctamente en su aplicación."
-                              delegate:nil
-                              cancelButtonTitle:@"OK"
-                              otherButtonTitles:nil];
-        [alert show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Loaded_Certificate", nil)
+                                                                                 message:NSLocalizedString(@"Alert_View_Loaded_Certificate_In_Your_App", nil)
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
+            // Boton OK presionado - certificado cargado correctamente
+            DDLogDebug(@"registerWithCertificateName::Certificado cargado");
+            DDLogDebug(@"registerWithCertificateName::Volvemos a la vista anterior...");
+            [_passwordText resignFirstResponder];
+            [_passwordText removeFromSuperview];
+            if (_delegate) {
+                [_delegate certificateAdded];
+            }
+        }];
+        [alertController addAction:cancel];
+        [self presentViewController:alertController animated:YES completion:nil];
     }
     __messageView.text = _infoLabel;
-
     return;
 }
 
-- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    // Boton OK presionado - certificado cargado correctamente
-    if (buttonIndex == 0) {
-        DDLogDebug(@"registerWithCertificateName::Certificado cargado");
-        DDLogDebug(@"registerWithCertificateName::Volvemos a la vista anterior...");
-    }
-
-    [_passwordText resignFirstResponder];
-    [_passwordText removeFromSuperview];
-    //  [_passwordText = nil];
-
-}
 
 /* Boton volver*/
 - (IBAction)clickCancel:(id)sender

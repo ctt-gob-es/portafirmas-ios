@@ -73,7 +73,7 @@
 
 - (void)loadWebService
 {
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     NSString *data = [PreviewXMLController buildRequestWithId:_docId];
 
     DDLogDebug(@"PreviewXMLController::loadWebService.message data=%@", data);
@@ -87,11 +87,12 @@
 {
     [SVProgressHUD dismiss];
     DDLogDebug(@"UnassignedRequestTableViewController::didReceiveParserWithError: %@", errorString);
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"")
-                                message:errorString
-                               delegate:nil
-                      cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                      otherButtonTitles:nil] show];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
+                                                                             message:errorString
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+    [alertController addAction:cancel];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)doParse:(NSData *)data
@@ -164,20 +165,13 @@
 {
     if (!_isShowingAlertView) {
         _isShowingAlertView = YES;
-        [[[UIAlertView alloc] initWithTitle:@"Previsualización no disponible"
-                                    message:message
-                                   delegate:self
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil, nil] show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Preview_Not_Available", nil)
+                                                                                 message:message
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:cancel];
+        [self presentViewController:alertController animated:YES completion:nil];
     }
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    _isShowingAlertView = NO;
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

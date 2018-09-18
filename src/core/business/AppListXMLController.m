@@ -52,7 +52,7 @@ static AppListXMLController *_sharedInstance = nil;
 - (void)requestAppsList
 {
     
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     NSString *requestString = [self buildRequest];
     DDLogDebug(@"AppListXMLController::requestAppsList---\n%@", requestString);
     DDLogDebug(@"AppListXMLController::requestAppsList---\n%@", requestString);

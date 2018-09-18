@@ -150,7 +150,7 @@
 - (void) updateToken: (NSString *) token {
     
     NSString *IDVendor = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     [PushNotificationNetwork subscribeDevice:IDVendor withToken:token success:^{
         [SVProgressHUD dismiss];
         self.isNotificationRequired = false;
