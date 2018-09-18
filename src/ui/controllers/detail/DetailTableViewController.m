@@ -382,8 +382,6 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
         [alertController addAction:actionOk];
         [self presentViewController:alertController animated:YES completion:nil];
     }
-    
-// TEST THIS
     [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
 
 }
@@ -488,20 +486,23 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
             processedOK = FALSE;
         }
     }
-
     if (processedOK) {
         // @" Peticiones firmadas corrrectamente"
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil)
                                                                                  message:NSLocalizedString(@"Alert_View_Everything_Signed_Correctly", nil)
                                                                           preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [self dismissSelfView];
+        }];
         [alertController addAction:cancel];
         [self presentViewController:alertController animated:YES completion:nil];
-        
     } else {
         [self didReceiveError:msg];
+        [self dismissSelfView];
     }
-// TEST THIS
+}
+
+- (void)dismissSelfView {
     [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
     [(BaseListTVC *)self.navigationController.previousViewController refreshInfo];
     [self.navigationController popViewControllerAnimated:YES];
