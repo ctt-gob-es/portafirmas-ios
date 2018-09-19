@@ -190,7 +190,7 @@ static CertificateUtils *__sharedKeyWrapper = nil;
     // If a SecItem contains an access group attribute, SecItemAdd and SecItemUpdate on the
     // simulator will return -25243 (errSecNoAccessForItem).
 #else
-    [dict setObject:[CertificateUtils accessgroup] forKey:kSecAttrAccessGroup];
+    [dict setObject:[CertificateUtils accessgroup] forKey:(__bridge NSString *)kSecAttrAccessGroup];
 #endif
 
     status = SecItemCopyMatching((CFDictionaryRef)dict, &result);
@@ -412,7 +412,7 @@ static CertificateUtils *__sharedKeyWrapper = nil;
     // If a SecItem contains an access group attribute, SecItemAdd and SecItemUpdate on the
     // simulator will return -25243 (errSecNoAccessForItem).
 #else
-    [dict setObject:[CertificateUtils accessgroup] forKey:kSecAttrAccessGroup];
+    [dict setObject:[CertificateUtils accessgroup] forKey:(__bridge NSString*)kSecAttrAccessGroup];
 #endif
     // Remove any existing instance of the key
 

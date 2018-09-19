@@ -51,7 +51,7 @@ static long cellSelected;
 #pragma mark - User Interaction
 - (void)handleTapGesture:(UITapGestureRecognizer *)tapGesture {
     
-    NSLog(@"handleTapGesture");
+    DDLogDebug(@"handleTapGesture");
     [self becomeFirstResponder];
     CGPoint p = [tapGesture locationInView: self.tableView];
     NSIndexPath *indexPathCell = [self.tableView indexPathForRowAtPoint: p];
@@ -92,23 +92,32 @@ static long cellSelected;
 
 #pragma mark - UIMenuController Methods
 - (void)selectAction:(id)sender {
-    
-    NSLog(@"selectAction");
-    NSLog(@"Se ha seleccionado la celda %ld", cellSelected);
-    
+    DDLogDebug(@"selectAction");
+    DDLogDebug(@"Se ha seleccionado la celda %ld", cellSelected);
     NSDictionary *serverInfo = _serversArray[cellSelected];
-    [[[UIAlertView alloc] initWithTitle:@""
-                                message:[NSString stringWithFormat:@"Se va a seleccionar el servidor %@ con url %@.", serverInfo[kPFUserDefaultsKeyAlias],serverInfo[kPFUserDefaultsKeyURL]]
-                               delegate:self
-                      cancelButtonTitle:@"Cancelar"
-                      otherButtonTitles:@"Aceptar", nil]
-     show];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"", nil)
+                                                                             message:[NSString stringWithFormat:NSLocalizedString(@"Alert_View_Server_Going_To_Be_Selected", nil), serverInfo[kPFUserDefaultsKeyAlias],serverInfo[kPFUserDefaultsKeyURL]]
+                                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *accept = [UIAlertAction actionWithTitle:NSLocalizedString(@"Alert_View_Accept", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        NSDictionary *serverInfo = _serversArray[cellSelected];
+        [[NSUserDefaults standardUserDefaults] setObject:serverInfo forKey:kPFUserDefaultsKeyCurrentServer];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        if (_delegate) {
+            [_delegate serverListDidSelectServer:serverInfo];
+        }
+        [self.navigationController popViewControllerAnimated:YES];
+    }];
+    [alertController addAction:cancel];
+    [alertController addAction:accept];
+
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 -(void) editAction: (id)sender {
     
-    NSLog(@"editAction");
-    NSLog(@"Se preciona la celda -> %ld", cellSelected);
+    DDLogDebug(@"editAction");
+    DDLogDebug(@"Se preciona la celda -> %ld", cellSelected);
 
     [self performSegueWithIdentifier:@"showEditServerVC" sender:self];
 }
@@ -134,8 +143,8 @@ static long cellSelected;
         
         vc.aliasReceived = alias;
         vc.urlRecived = url;
-        NSLog(@"Alias %@", vc.aliasReceived);
-        NSLog(@"URL %@", vc.urlRecived);
+        DDLogDebug(@"Alias %@", vc.aliasReceived);
+        DDLogDebug(@"URL %@", vc.urlRecived);
 
     }
 }
@@ -194,22 +203,6 @@ static long cellSelected;
     NSDictionary *currentServerInfo = [[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyCurrentServer];
     if ([removedServerInfo isEqualToDictionary:currentServerInfo]) {
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyCurrentServer];
-    }
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex != kPFAlertViewCancelButtonIndex) {
-        NSDictionary *serverInfo = _serversArray[cellSelected];
-        [[NSUserDefaults standardUserDefaults] setObject:serverInfo forKey:kPFUserDefaultsKeyCurrentServer];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        if (_delegate) {
-            [_delegate serverListDidSelectServer:serverInfo];
-        }
-        
-        [self.navigationController popViewControllerAnimated:YES];
     }
 }
 

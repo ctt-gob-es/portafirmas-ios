@@ -11,6 +11,24 @@
 "Alert_View_Disable_Notifications_Title" = "Las notificaciones estan deshabilitadas";
 "Alert_View_Disable_Notifications_Message" = "Has de ir a ajustes en tu dispositivo y luego a Notificaciones buscar PortaFirmas y permitir notificaciones";
 "Alert_View_Ok_Option" = "OK";
+"Alert_View_Notice" = "Aviso";
+"Alert_View_Process_Sign_and_Approve" = "Se van a procesar %lu peticiones de firma y %lu de visto bueno.";
+"Alert_View_Process_Approve" = "Se van a procesar %lu peticiones de visto bueno.";
+"Alert_View_Process_Sign" = "Se van a procesar %lu peticiones de firma.";
+"Alert_View_Request_Processed_Correctly" = "Peticiones procesadas correctamente";
+"Alert_View_Request_Signed_Correctly" = "Peticiones firmadas correctamente";
+"Alert_View_Error" = "Error";
+"Alert_View_certificated_removed_correctly" = "Se ha eliminado el certificado correctamente";
+"Alert_View_An_Error_Has_Ocurred" = "Se ha producido un error";
+"Alert_View_Error_When_Processing_Request" = "Error al procesar la petición con codigo:%@";
+"Alert_View_Error_When_Loading_certificate" = "Se ha producido un error al cargar el certificado";
+"Alert_View_Preview_Not_Available" = "Previsualización no disponible";
+"Alert_View_Sorry_Preview_Not_Available" = "Lo sentimos pero la previsualización de este tipo de documentos no está disponible.";
+"Alert_View_Loaded_Certificate" = "Certificado cargado";
+"Alert_View_Loaded_Certificate_In_Your_App" = "El certificado se ha cargado correctamente en su aplicación.";
+"Alert_View_Server_Going_To_Be_Selected" = "Se va a seleccionar el servidor %@ con url %@.";
+"Alert_View_Accept" = "Aceptar";
+
 //Alert view messages after signing
 "Alert_View_Everything_Signed_Correctly" = "Peticiones firmadas correctamente";
 "Alert_View_One_Signature_Failed_In_Single_Request" = "Ocurrió un error al firmar la peticion seleccionada";
@@ -30,6 +48,20 @@
 //Detail view
 "Request_Type_Firma" = "Firma";
 "Request_Type_Visto_Bueno" = "Visto Bueno";
+"Info" = "INFO";
+"Correctly_rejected_requests" = "Peticiones rechazadas correctamente.";
+"Ok" = "OK";
+"Sign" = "Firmar";
+"Approval" = "Visto Bueno";
+"Reject" = "Rechazar";
+"Cancel" = "Cancel";
+"Rejection_of_requests" = "Rechazo de peticiones";
+"Indicate_Reason_For_Rejection" = "Indique el motivo del rechazo";
+"Continue" = "Continuar";
+"Reason_For_Rejection" = "Motivo del rechazo";
 
 //Cell text
 "Expiration_text_message" = "Expira: ";
+
+// Certificates
+"Certificate_Removed_Correctly" = "Se ha eliminado el certificado correctamente";

@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import "DDASLLogger.h"
+#import "DDTTYLogger.h"
+#import "DDFileLogger.h"
 #import "NSData+Conversion.h"
 #import "UnassignedRequestTableViewController.h"
 #import "LoginService.h"
@@ -46,7 +49,7 @@ void uncaughtExceptionHandler(NSException *exception)
     [self loadSelectedCertificate];
     
     [DefaultServersData createDefaultServersIsNotExist];
-    
+
     return YES;
 }
 
@@ -88,13 +91,10 @@ void uncaughtExceptionHandler(NSException *exception)
 
 - (void)setupLogger
 {
-    [DDLog addLogger:[DDTTYLogger sharedInstance]]; // TTY = Xcode console
-    [DDLog addLogger:[DDASLLogger sharedInstance]]; // ASL = Apple System Logs
-    
-    DDFileLogger *fileLogger = [[DDFileLogger alloc] init]; // File Logger
-    fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
-    fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
-    [DDLog addLogger:fileLogger];
+    // Configure CocoaLumberjack
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+
 }
 
 - (void)loadSelectedCertificate

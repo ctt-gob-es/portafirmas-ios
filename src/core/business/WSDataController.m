@@ -71,9 +71,9 @@ struct {
         NSString *post = [NSString stringWithFormat: @"op=%lu&dat=%@",(unsigned long)code, [msgData base64EncodedString]];
         NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
         NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
-        NSLog(@"\n");
-        NSLog(@"WSDataController -> Valor postLength ->    %@", postLength);
-        NSLog(@"\n\n");
+        DDLogDebug(@"\n");
+        DDLogDebug(@"WSDataController -> Valor postLength ->    %@", postLength);
+        DDLogDebug(@"\n\n");
 
         request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:wsURLString]
                                           cachePolicy:NSURLRequestReloadIgnoringCacheData

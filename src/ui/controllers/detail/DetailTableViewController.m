@@ -49,7 +49,7 @@ CGFloat const largeTitleCellWidth = 200;
 
 @interface DetailTableViewController ()
 {
-    UIActionSheet *_documentActionSheet;
+    UIAlertController *_documentActionSheet;
     RequestSignerController *_requestSignerController;
     PFWaitingResponseType _waitingResponseType;
     NSString *motivoRechazo;
@@ -289,77 +289,58 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (IBAction)didTapDocumentActionButton:(id)sender
 {
-    NSString *signButtonTitle = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? @"Firmar" : @"Visto Bueno";
-
-    _documentActionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancelar"
-                                         destructiveButtonTitle:nil
-                                              otherButtonTitles:@"Rechazar", signButtonTitle, nil];
-
-    [_documentActionSheet showInView:self.view];
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    switch (buttonIndex) {
-            
-        case PFDocumentActionReject:
-            [self rejectAction];
-            break;
-
-        case PFDocumentActionSign:
-            [self signAction];
-            break;
-
-        case PFDocumentActionCancel:
-            DDLogDebug(@"Cancel Action....");
-            break;
-
-        default:
-            break;
-    }
+    NSString *signButtonTitle = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? NSLocalizedString(@"Sign", nil) : NSLocalizedString(@"Approval", nil);
+    _documentActionSheet =[UIAlertController alertControllerWithTitle:nil
+                                                              message:nil
+                                                       preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction* reject = [UIAlertAction actionWithTitle:NSLocalizedString(@"Reject", nil)
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * action)
+                             {
+                                 [self rejectAction];
+                             }];
+    UIAlertAction* sign = [UIAlertAction actionWithTitle:signButtonTitle
+                                                   style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction * action)
+                           {
+                               [self signAction];
+                           }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
+    [_documentActionSheet addAction:reject];
+    [_documentActionSheet addAction:sign];
+    [_documentActionSheet addAction:cancel];
+    [self presentViewController:_documentActionSheet animated:YES completion:nil];
 }
 
 - (void)rejectAction
 {
     DDLogDebug(@"Reject Action....");
     // Preguntamos el por qué del rechazo
-    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Rechazo de peticiones" message:@"Indique el motivo del rechazo" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Continuar", nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    UITextField * alertTextField = [alert textFieldAtIndex:0];
-    alertTextField.keyboardType = UIKeyboardTypeDefault;
-    alertTextField.placeholder = @"Motivo del rechazo";
-    [alert show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-
-    motivoRechazo = [[alertView textFieldAtIndex:0] text];
-    NSLog(@"Entered: %@",[[alertView textFieldAtIndex:0] text]);
-    if (buttonIndex == [alertView cancelButtonIndex]) {
-        // DO anything
-        NSLog(@"El usuario ha clicado en la opción cancelar");
-    }
-    else {
-        
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Rejection_of_requests", nil) message:NSLocalizedString(@"Indicate_Reason_For_Rejection", nil) preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *conti = [UIAlertAction actionWithTitle:NSLocalizedString(@"Continue", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         DDLogDebug(@"UnassignedRequestTableViewController::Reject request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-        
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
         NSString *data = [RejectXMLController buildRequestWithIds:_selectedRows motivoR: motivoRechazo];
         DDLogDebug(@"UnassignedRequestTableViewController::rejectRequest input Data=%@", data);
-        
         _waitingResponseType = PFWaitingResponseTypeRejection;
         [wsController loadPostRequestWithData:data code:PFRequestCodeReject];
         [wsController startConnection];
-    }
+    }];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = NSLocalizedString(@"Reason_For_Rejection", nil);
+        textField.keyboardType = UIKeyboardTypeDefault;
+    }];
+    [alert addAction:cancel];
+    [alert addAction:conti];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)signAction
 {
     DDLogDebug(@"Sign Action....\nAccept request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
 
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
 
     if ([(Detail *)_dataSource type] == PFRequestTypeSign) {
         [self startSignRequest];
@@ -496,15 +477,19 @@ CGFloat const largeTitleCellWidth = 200;
     }
 
     if (processedOK) {
-        // @" Peticiones rechazadas corrrectamente"
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"INFO", @"")
-                                    message:@"Peticiones rechazadas correctamente"
-                                   delegate:self
-                          cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                          otherButtonTitles:nil] show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil)
+                                                                                 message:NSLocalizedString(@"Correctly_rejected_requests", nil)
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [self dismissSelfView];
+                                                         }];
+        [alertController addAction:actionOk];
+        [self presentViewController:alertController animated:YES completion:nil];
     }
+    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
 
-    [_documentActionSheet dismissWithClickedButtonIndex:-1 animated:YES];
 }
 
 - (void)didReceivedRejectionResponse:(NSData *)responseData
@@ -538,14 +523,13 @@ CGFloat const largeTitleCellWidth = 200;
 
     if (idsForRequestsWithError.count == 0) {
         // @" Peticiones firmadas corrrectamente"
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"INFO", @"")
-                                    message:@"Peticiones procesadas correctamente"
-                                   delegate:self
-                          cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                          otherButtonTitles:nil] show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil) message:NSLocalizedString(@"Alert_View_Request_Processed_Correctly", nil) preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:cancel];
+        [self presentViewController:alertController animated:YES completion:nil];
+        [self dismissSelfView];
     } else {
         NSString *errorMessage;
-
         if (idsForRequestsWithError.count == 1) {
             errorMessage = [NSString stringWithFormat:@"Error al procesar la petición con código:%@", idsForRequestsWithError[0]];
         } else {
@@ -553,14 +537,14 @@ CGFloat const largeTitleCellWidth = 200;
             [idsForRequestsWithError enumerateObjectsUsingBlock:^(NSString *requestID, NSUInteger idx, BOOL *stop) {
                  [errorIDSString appendFormat:@" %@", requestID];
              }];
-
             errorMessage = [NSString stringWithFormat:@"Error al procesar las peticiones con códigos:%@", errorIDSString];
         }
-
         [self didReceiveError:errorMessage];
+        [self dismissSelfView];
     }
 
-    [_documentActionSheet dismissWithClickedButtonIndex:-1 animated:YES];
+    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 - (void)didFinisParsingWithParser:(DetailXMLController *)parser
@@ -582,13 +566,11 @@ CGFloat const largeTitleCellWidth = 200;
 - (void)didReceiveError:(NSString *)errorString
 {
     [SVProgressHUD dismiss];
-
     DDLogDebug(@"UnassignedRequestTableViewController::didReceiveParserWithError: %@", errorString);
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"")
-                                message:errorString
-                               delegate:nil
-                      cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                      otherButtonTitles:nil] show];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Error", nil) message:errorString preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+    [alertController addAction:cancel];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - RequestSignerEvent
@@ -612,32 +594,26 @@ CGFloat const largeTitleCellWidth = 200;
             processedOK = FALSE;
         }
     }
-
     if (processedOK) {
         // @" Peticiones firmadas corrrectamente"
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"INFO", @"")
-                                    message:@"Peticiones firmadas correctamente"
-                                   delegate:self
-                          cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                          otherButtonTitles:nil] show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil)
+                                                                                 message:NSLocalizedString(@"Alert_View_Everything_Signed_Correctly", nil)
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [self dismissSelfView];
+        }];
+        [alertController addAction:cancel];
+        [self presentViewController:alertController animated:YES completion:nil];
     } else {
         [self didReceiveError:msg];
+        [self dismissSelfView];
     }
-
-    [_documentActionSheet dismissWithClickedButtonIndex:-1 animated:YES];
-    [(BaseListTVC *)self.navigationController.previousViewController refreshInfo];
-    [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (isSuccessReject) {
-        isSuccessReject = NO;
-        [(BaseListTVC *)self.navigationController.previousViewController refreshInfo];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
+- (void)dismissSelfView {
+    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
+    [(BaseListTVC *)self.navigationController.previousViewController refreshInfo];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

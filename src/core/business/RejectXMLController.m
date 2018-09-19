@@ -57,7 +57,7 @@
     [mesg appendString:reqrjcts];
     [mesg appendString:@"</reqrjcts>"];
     
-    NSLog(@"Lo que hay en el XML -> %@", mesg);
+    DDLogDebug(@"Lo que hay en el XML -> %@", mesg);
 
     return mesg;
 }
