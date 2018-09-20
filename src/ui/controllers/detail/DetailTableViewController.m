@@ -371,7 +371,17 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void)loadDetailInfo
 {
-    self.applicationTextView.text = _dataSource.app;
+    self.referenceLbl.text = _dataSource.ref;
+    self.inputDateLbl.text = _dataSource.date;
+    self.sendersMoreButton.hidden = YES;
+    [self showExpirationDateIfExists];
+    [self showSubject];
+    [self showApplication];
+    [self showRejectExplanationIfExists];
+    self.signLinesTypeLbl.text = _dataSource.signlinestype;
+    NSString *requestTypeText = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? NSLocalizedString(@"Request_Type_Firma", nil) : NSLocalizedString(@"Request_Type_Visto_Bueno", nil);
+    self.requestTypeLbl.text = requestTypeText;
+    [self showSenders];
     _selectedRows = nil;
     PFRequest *detailRequest = [[PFRequest alloc] initWithId:_requestId];
     detailRequest.documents = _dataSource.documents;
@@ -403,7 +413,46 @@ CGFloat const largeTitleCellWidth = 200;
 {
     // Avoid the strings only with whitespaces. By default from the server the reject object is @" " (length == 1)
     NSString* trimmedTextString = [_dataSource.rejt stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    return (_dataSource.rejt && [trimmedTextString length] != 0);
+    if (!_dataSource.rejt || [trimmedTextString length]==0 ){
+        [self.rejectExplanationTableViewCell setHidden: true];
+        CGFloat expirationTableViewCellHeight =  _expirationTableViewCell.frame.size.height;
+        for(UITableViewCell *cell in self.cellBehindRejectExplanation) {
+            [cell setFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y - expirationTableViewCellHeight, cell.frame.size.width, cell.frame.size.height)];
+        }
+    }
+}
+
+- (void)showSenders
+{
+    //Aling to the top the textviews for this Table View Cell
+    [self.sendersTitleTextView setTextContainerInset:UIEdgeInsetsZero];
+    self.sendersTitleTextView.textContainer.lineFragmentPadding = 0;
+    [self.sendersTextView setTextContainerInset:UIEdgeInsetsZero];
+    self.sendersTextView.textContainer.lineFragmentPadding = 0;
+    
+    NSMutableArray* senders = _dataSource.senders;
+    [senders addObject:@"Second sender"];
+    [senders addObject:@"Second sender"];
+    [senders addObject:@"Second sender"];
+    [senders addObject:@"Second sender"];
+    [senders addObject:@"Second sender"];
+    [senders addObject:@"Second sender"];
+    [senders addObject:@"Second sender"];
+    [senders addObject:@"Second sender"];
+    NSString *joinedSenders = [senders componentsJoinedByString:@"\r"];
+    self.sendersTextView.text = joinedSenders;
+    // Scroll to the top
+    [self.sendersTextView scrollRangeToVisible:NSMakeRange(0,0)];
+    if ([senders count] > 2 ){
+        self.sendersMoreButton.hidden = NO;
+        NSString *textButton1 = @"y ";
+        NSString *textButton2 = @" más";
+        NSInteger *restOfSenders = [senders count] - 2;
+        NSString *textButton = [NSString stringWithFormat:@"%@%ld%@",textButton1, (long)restOfSenders, textButton2];
+        [self.sendersMoreButton setTitle:textButton forState:UIControlStateNormal];
+    } else{
+        self.sendersMoreButton.hidden = YES;
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
