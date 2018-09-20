@@ -374,10 +374,6 @@ CGFloat const largeTitleCellWidth = 200;
     self.referenceLbl.text = _dataSource.ref;
     self.inputDateLbl.text = _dataSource.date;
     self.sendersMoreButton.hidden = YES;
-    [self showExpirationDateIfExists];
-    [self showSubject];
-    [self showApplication];
-    [self showRejectExplanationIfExists];
     self.signLinesTypeLbl.text = _dataSource.signlinestype;
     NSString *requestTypeText = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? NSLocalizedString(@"Request_Type_Firma", nil) : NSLocalizedString(@"Request_Type_Visto_Bueno", nil);
     self.requestTypeLbl.text = requestTypeText;
@@ -431,14 +427,6 @@ CGFloat const largeTitleCellWidth = 200;
     self.sendersTextView.textContainer.lineFragmentPadding = 0;
     
     NSMutableArray* senders = _dataSource.senders;
-    [senders addObject:@"Second sender"];
-    [senders addObject:@"Second sender"];
-    [senders addObject:@"Second sender"];
-    [senders addObject:@"Second sender"];
-    [senders addObject:@"Second sender"];
-    [senders addObject:@"Second sender"];
-    [senders addObject:@"Second sender"];
-    [senders addObject:@"Second sender"];
     NSString *joinedSenders = [senders componentsJoinedByString:@"\r"];
     self.sendersTextView.text = joinedSenders;
     // Scroll to the top
