@@ -290,9 +290,7 @@ CGFloat const largeTitleCellWidth = 200;
 - (IBAction)didTapDocumentActionButton:(id)sender
 {
     NSString *signButtonTitle = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? NSLocalizedString(@"Sign", nil) : NSLocalizedString(@"Approval", nil);
-    _documentActionSheet =[UIAlertController alertControllerWithTitle:nil
-                                                              message:nil
-                                                       preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *alertController = [self obtainAlertController];
     UIAlertAction* reject = [UIAlertAction actionWithTitle:NSLocalizedString(@"Reject", nil)
                                                      style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * action)
@@ -306,10 +304,30 @@ CGFloat const largeTitleCellWidth = 200;
                                [self signAction];
                            }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
-    [_documentActionSheet addAction:reject];
-    [_documentActionSheet addAction:sign];
-    [_documentActionSheet addAction:cancel];
-    [self presentViewController:_documentActionSheet animated:YES completion:nil];
+    [alertController addAction:reject];
+    [alertController addAction:sign];
+    [alertController addAction:cancel];
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        [alertController setModalPresentationStyle:UIModalPresentationPopover];
+        UIPopoverPresentationController *popPresenter = [alertController popoverPresentationController];
+        popPresenter.sourceView = self.view;
+        popPresenter.sourceRect = CGRectMake(100,100, 100, 100);
+    }
+    [self presentViewController:alertController animated:YES completion:nil];
+}
+
+- (UIAlertController *)obtainAlertController {
+    
+    
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        //iPad
+        return [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleAlert];
+    } else {
+        //    iPhone
+        return [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    }
 }
 
 - (void)rejectAction
