@@ -312,7 +312,6 @@ CGFloat const largeTitleCellWidth = 200;
         [alertController setModalPresentationStyle:UIModalPresentationPopover];
         UIPopoverPresentationController *popPresenter = [alertController popoverPresentationController];
         popPresenter.sourceView = self.view;
-        popPresenter.sourceRect = CGRectMake(100,100, 100, 100);
     }
     [self presentViewController:alertController animated:YES completion:nil];
 }
