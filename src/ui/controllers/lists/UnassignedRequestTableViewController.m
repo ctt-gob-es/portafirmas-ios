@@ -126,7 +126,7 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Rejection_of_requests", nil) message:NSLocalizedString(@"Indicate_Reason_For_Rejection", nil) preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *conti = [UIAlertAction actionWithTitle:NSLocalizedString(@"Continue", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        [self continueButtonClicked];
+        [self continueButtonClicked:alert];
     }];
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = NSLocalizedString(@"Reason_For_Rejection", nil);
@@ -266,7 +266,7 @@
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Notice", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
         UIAlertAction *conti = [UIAlertAction actionWithTitle:NSLocalizedString(@"Continue", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-            [self continueButtonClicked];
+            [self continueButtonClicked: alert];
         }];
         [alert addAction:cancel];
         [alert addAction:conti];
@@ -278,14 +278,17 @@
     [self.parentViewController.view setUserInteractionEnabled:value];
 }
 
-- (void)continueButtonClicked {
+- (void)continueButtonClicked: (UIAlertController *)alertController {
     if (reject) {
         reject = NO;
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+        if ([alertController.textFields count] != 0) {
+            NSArray *textfields = alertController.textFields;
+            UITextField *nameTextfield = textfields[0];
+            motivoRechazo = nameTextfield.text;
+        }
         NSString *data = [RejectXMLController buildRequestWithIds:selectedRows motivoR:motivoRechazo];
-        
         DDLogDebug(@"UnassignedRequestTableViewController::rejectRequest input Data=%@", data);
-        
         _waitingResponseType = PFWaitingResponseTypeRejection;
         [self.wsDataController loadPostRequestWithData:data code:PFRequestCodeReject];
         [self.wsDataController startConnection];
