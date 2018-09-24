@@ -167,14 +167,6 @@ struct {
 - (void)doParse:(NSData *)data
 {
     DDLogDebug(@"doParse data: \n\n%@", [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding]);
-    
-    NSString *dataString = [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding];
-    
-    // Prepare the data to be valid even when there are XML escaped characters in the subject.
-    dataString = [dataString stringByReplacingOccurrencesOfString:@"&_lt;" withString:@"<![CDATA[<]]>"];
-    dataString = [dataString stringByReplacingOccurrencesOfString:@"&_gt;" withString:@"<![CDATA[>]]>"];
-    data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
-
     [_delegate doParse: data];
 }
 
