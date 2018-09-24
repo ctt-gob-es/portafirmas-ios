@@ -338,6 +338,9 @@ CGFloat const largeTitleCellWidth = 200;
     UIAlertAction *conti = [UIAlertAction actionWithTitle:NSLocalizedString(@"Continue", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         DDLogDebug(@"UnassignedRequestTableViewController::Reject request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
         [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+        NSArray *textfields = alert.textFields;
+        UITextField *nameTextfield = textfields[0];
+        motivoRechazo = nameTextfield.text;
         NSString *data = [RejectXMLController buildRequestWithIds:_selectedRows motivoR: motivoRechazo];
         DDLogDebug(@"UnassignedRequestTableViewController::rejectRequest input Data=%@", data);
         _waitingResponseType = PFWaitingResponseTypeRejection;
