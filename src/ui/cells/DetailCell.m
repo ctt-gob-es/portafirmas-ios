@@ -7,6 +7,8 @@
 //
 
 #import "DetailCell.h"
+#import "UIFont+Styles.h"
+#import "UIColor+Styles.h"
 
 @implementation DetailCell
 
@@ -35,7 +37,7 @@
 
 -(void)setDarkStyle
 {
-    UIFont *headerFont = [ UIFont fontWithName: @"Helvetica" size: 17.0 ];
+    UIFont *headerFont = [UIFont headerFontStyle];
     self.titleLabel.font = headerFont;
     self.valueLabel.font = headerFont;
 }
@@ -67,19 +69,12 @@
 
 -(void)setClearStyle
 {
-    UIFont *titleFont = [ UIFont fontWithName: @"Helvetica" size: 16.0 ];
+    UIFont *titleFont = [UIFont clearStyleTitleDetailCell];
     self.titleLabel.font = titleFont;
-    self.titleLabel.textColor = [UIColor colorWithRed:160.0f/255.0f
-                                                green:160.0f/255.0f
-                                                blue:160.0f/255.0f
-                                                alpha:1.0f];
-    UIFont *valueFont = [ UIFont fontWithName: @"Helvetica" size: 14.0 ];
+    self.titleLabel.textColor = [UIColor clearStyleTitleDetailCell];
+    UIFont *valueFont = [UIFont clearStyleValueDetailCell];
     self.valueLabel.font = valueFont;
-    self.valueLabel.textColor = [UIColor colorWithRed:87.0f/255.0f
-                                                green:87.0f/255.0f
-                                                 blue:87.0f/255.0f
-                                                alpha:1.0f];
-    
+    self.valueLabel.textColor =[UIColor clearStyleValueDetailCell];
 }
 
 -(void)hideLabelsIfNeeded:(BOOL)hidden
