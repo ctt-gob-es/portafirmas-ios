@@ -85,6 +85,11 @@
 		3CC403861AB9EDBA006F8803 /* CertificateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC403851AB9EDBA006F8803 /* CertificateCell.m */; };
 		3CD199A51AC2C952007E9E35 /* UINavigationController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */; };
 		992987C2AA230FF0604BD234 /* libPods-PortaFirmasUniv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0A9AB702FDB8ACDEBFCF67 /* libPods-PortaFirmasUniv.a */; };
+		B240774920AAEE0900A8EE1C /* DetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B240774820AAEE0900A8EE1C /* DetailCell.m */; };
+		B289830B20AC8BA600B7544A /* SendersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B289830920AC8BA600B7544A /* SendersViewController.m */; };
+		B28B24E520AB907B00DC9C81 /* DetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B28B24E420AB907B00DC9C81 /* DetailCell.xib */; };
+		B29014EF21583802008A9B83 /* UIFont+Styles.m in Sources */ = {isa = PBXBuildFile; fileRef = B29014EE21583802008A9B83 /* UIFont+Styles.m */; };
+		B29014F4215839A2008A9B83 /* UIColor+Styles.m in Sources */ = {isa = PBXBuildFile; fileRef = B29014F3215839A2008A9B83 /* UIColor+Styles.m */; };
 		B2E4AEBE20599935000DD0C3 /* ArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B2E4AEBC20599934000DD0C3 /* ArrayHelper.m */; };
 		BC0D3E1A2004C3A900CB73BB /* AttachedDoc.m in Sources */ = {isa = PBXBuildFile; fileRef = BC0D3E192004C3A900CB73BB /* AttachedDoc.m */; };
 		BC33AAA0200518FF00B33CBB /* Source.m in Sources */ = {isa = PBXBuildFile; fileRef = BC33AA9F200518FF00B33CBB /* Source.m */; };
@@ -252,6 +257,15 @@
 		3CD199A31AC2C952007E9E35 /* UINavigationController+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationController+Utils.h"; path = "UINavigationController/UINavigationController+Utils.h"; sourceTree = "<group>"; };
 		3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+Utils.m"; path = "UINavigationController/UINavigationController+Utils.m"; sourceTree = "<group>"; };
 		862DBE2D1FC5F494A173087E /* Pods-PortaFirmasUniv.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortaFirmasUniv.release.xcconfig"; path = "Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv.release.xcconfig"; sourceTree = "<group>"; };
+		B240774720AAEE0900A8EE1C /* DetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailCell.h; sourceTree = "<group>"; };
+		B240774820AAEE0900A8EE1C /* DetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailCell.m; sourceTree = "<group>"; };
+		B289830920AC8BA600B7544A /* SendersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendersViewController.m; sourceTree = "<group>"; };
+		B289830A20AC8BA600B7544A /* SendersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendersViewController.h; sourceTree = "<group>"; };
+		B28B24E420AB907B00DC9C81 /* DetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailCell.xib; sourceTree = "<group>"; };
+		B29014ED21583802008A9B83 /* UIFont+Styles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+Styles.h"; sourceTree = "<group>"; };
+		B29014EE21583802008A9B83 /* UIFont+Styles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+Styles.m"; sourceTree = "<group>"; };
+		B29014F2215839A2008A9B83 /* UIColor+Styles.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+Styles.h"; sourceTree = "<group>"; };
+		B29014F3215839A2008A9B83 /* UIColor+Styles.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Styles.m"; sourceTree = "<group>"; };
 		B2E4AEBC20599934000DD0C3 /* ArrayHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ArrayHelper.m; sourceTree = "<group>"; };
 		B2E4AEBD20599935000DD0C3 /* ArrayHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArrayHelper.h; sourceTree = "<group>"; };
 		BC0D3E182004C3A900CB73BB /* AttachedDoc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AttachedDoc.h; sourceTree = "<group>"; };
@@ -424,6 +438,8 @@
 				3C00AD6F1AB71A6300EF6886 /* PreviewViewController.m */,
 				3C00AD701AB71A6300EF6886 /* ReceiversViewController.h */,
 				3C00AD711AB71A6300EF6886 /* ReceiversViewController.m */,
+				B289830A20AC8BA600B7544A /* SendersViewController.h */,
+				B289830920AC8BA600B7544A /* SendersViewController.m */,
 			);
 			path = detail;
 			sourceTree = "<group>";
@@ -490,6 +506,8 @@
 		3CA898ED1AA5BC870035012D /* categories */ = {
 			isa = PBXGroup;
 			children = (
+				B29014F021583955008A9B83 /* UIColor */,
+				B29014E8215829BE008A9B83 /* UIFont */,
 				BCF0835F1FC72E0300450FE7 /* NSString */,
 				3CD199A21AC2C90F007E9E35 /* UINavigationController */,
 				3CA4B3DE1AB1E2030082E480 /* NSDate */,
@@ -690,6 +708,9 @@
 				3CB68F601AB81BAD00BEB067 /* ServersListCell.m */,
 				3CC403841AB9EDBA006F8803 /* CertificateCell.h */,
 				3CC403851AB9EDBA006F8803 /* CertificateCell.m */,
+				B240774720AAEE0900A8EE1C /* DetailCell.h */,
+				B240774820AAEE0900A8EE1C /* DetailCell.m */,
+				B28B24E420AB907B00DC9C81 /* DetailCell.xib */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -741,6 +762,24 @@
 				862DBE2D1FC5F494A173087E /* Pods-PortaFirmasUniv.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		B29014E8215829BE008A9B83 /* UIFont */ = {
+			isa = PBXGroup;
+			children = (
+				B29014ED21583802008A9B83 /* UIFont+Styles.h */,
+				B29014EE21583802008A9B83 /* UIFont+Styles.m */,
+			);
+			path = UIFont;
+			sourceTree = "<group>";
+		};
+		B29014F021583955008A9B83 /* UIColor */ = {
+			isa = PBXGroup;
+			children = (
+				B29014F2215839A2008A9B83 /* UIColor+Styles.h */,
+				B29014F3215839A2008A9B83 /* UIColor+Styles.m */,
+			);
+			path = UIColor;
 			sourceTree = "<group>";
 		};
 		BC5BF9DB1FDFC94C00B1CF0C /* help */ = {
@@ -918,6 +957,7 @@
 				3CA899051AA605C60035012D /* ANF_PF_Activo.pfx in Resources */,
 				3CA899081AA605C60035012D /* CATCERT GENCAT SAFP PF Identidad y Firma Reconocida de Clase 1 Activo.p12 in Resources */,
 				3CA899161AA607840035012D /* iTunesArtwork in Resources */,
+				B28B24E520AB907B00DC9C81 /* DetailCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -990,6 +1030,7 @@
 				3CC4037D1AB96D29006F8803 /* SettingsVC.m in Sources */,
 				3C00ADE31AB71B4400EF6886 /* NSDateFormatter+Utils.m in Sources */,
 				3C00ADB61AB71B0B00EF6886 /* ColorChart.m in Sources */,
+				B240774920AAEE0900A8EE1C /* DetailCell.m in Sources */,
 				3C00AD9D1AB71ACB00EF6886 /* PFRequestResult.m in Sources */,
 				3C00AD871AB71A8700EF6886 /* UnassignedRequestTableViewController.m in Sources */,
 				3C00ADE01AB71B3100EF6886 /* NSDate+Utils.m in Sources */,
@@ -1014,6 +1055,7 @@
 				3CC403771AB96D18006F8803 /* DocumentCertificatesViewController.m in Sources */,
 				3C0A7EBF1AB19DBE00F793AA /* KeyboardObserver.m in Sources */,
 				3C00ADD21AB71B1700EF6886 /* AppListXMLController.m in Sources */,
+				B289830B20AC8BA600B7544A /* SendersViewController.m in Sources */,
 				BCAF65E61FACA96500D30E54 /* NSData+Conversion.m in Sources */,
 				3CC403681AB96D05006F8803 /* PFBaseVC.m in Sources */,
 				BCA133D31FF63DD200818EC7 /* NotificationHandler.m in Sources */,
@@ -1025,6 +1067,8 @@
 				3C00ADB91AB71B0B00EF6886 /* QuartzUtils.m in Sources */,
 				3C00AD851AB71A8700EF6886 /* ProcessedRequestViewController.m in Sources */,
 				3CC403781AB96D18006F8803 /* LoginViewController.m in Sources */,
+				B29014EF21583802008A9B83 /* UIFont+Styles.m in Sources */,
+				B29014F4215839A2008A9B83 /* UIColor+Styles.m in Sources */,
 				3CC4037A1AB96D18006F8803 /* NoCertificatesViewController.m in Sources */,
 				3C00ADA51AB71AD800EF6886 /* AppDelegate.m in Sources */,
 				3CC403671AB96D05006F8803 /* PFBaseTVC.m in Sources */,
