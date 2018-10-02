@@ -46,7 +46,7 @@
             failure(error);
         } else  {
             NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-            NSLog(@"Request reply: %@", requestReply);
+            DDLogDebug(@"Request reply: %@", requestReply);
             Parser *parser = [Parser new];
             
             [parser parseAuthData:data success:^(NSString *token) {
@@ -91,7 +91,7 @@
             failure(error);
         } else  {
             NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-            NSLog(@"Request reply: %@", requestReply);
+            DDLogDebug(@"Request reply: %@", requestReply);
             Parser *parser = [Parser new];
             
             [parser parseValidateData:data success:^(BOOL isValid) {
@@ -139,7 +139,7 @@
             failure(error);
         } else  {
             NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-            NSLog(@"Request reply: %@", requestReply);
+            DDLogDebug(@"Request reply: %@", requestReply);
             success();
             [userDNIManager deleteUserDNI];
         }

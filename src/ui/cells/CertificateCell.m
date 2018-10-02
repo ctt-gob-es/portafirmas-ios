@@ -66,6 +66,7 @@ static const NSTimeInterval kCertificateCellDate15DaysTimeInterval = -(15*24*60*
 
 - (void)prepareForReuse
 {
+    [super prepareForReuse];
     [_expirationIconLayer removeFromSuperlayer];
 }
 

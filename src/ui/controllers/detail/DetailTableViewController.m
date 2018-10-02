@@ -17,6 +17,7 @@
 #import "PFRequest.h"
 #import "RejectXMLController.h"
 #import "ApproveXMLController.h"
+#import "DetailCell.h"
 
 typedef NS_ENUM (NSInteger, PFDocumentAction)
 {
@@ -25,9 +26,30 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     PFDocumentActionCancel
 };
 
+typedef enum cellTypes
+{
+    From,
+    Subject,
+    Reference,
+    RejectExplanation,
+    AttachedDocument,
+    Receivers,
+    RequestType,
+    SignType,
+    Date,
+    ExpirationDate,
+    Application
+} CellTypes;
+
+NSInteger *const numberOfRows = 11;
+CGFloat const defaultCellHeight = 44;
+CGFloat const noCellHeight = 0;
+CGFloat const rejectCellTitleCellWidth = 150;
+CGFloat const largeTitleCellWidth = 200;
+
 @interface DetailTableViewController ()
 {
-    UIActionSheet *_documentActionSheet;
+    UIAlertController *_documentActionSheet;
     RequestSignerController *_requestSignerController;
     PFWaitingResponseType _waitingResponseType;
     NSString *motivoRechazo;
@@ -54,6 +76,200 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    DDLogDebug(@"DetailTableViewController::viewWillAppear");
+    self.navigationController.toolbarHidden = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [wsController cancelConnection];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    DDLogDebug(@"DetailTableViewController::viewDidLoad");
+    [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+    // Enable or disable  action button
+    [_btnDocumentAction setEnabled:_signEnabled];
+    [self loadWebService];
+    self.tableView.estimatedRowHeight = defaultCellHeight;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+}
+
+- (void)viewDidUnload
+{
+    [self setBtnDocumentAction:nil];
+    [super viewDidUnload];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return numberOfRows;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    DetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"detailCell"];
+    if (cell == nil) {
+        [tableView registerNib:[UINib nibWithNibName:@"DetailCell" bundle:nil] forCellReuseIdentifier:@"detailCell"];
+        cell = [tableView dequeueReusableCellWithIdentifier:@"detailCell"];
+    }
+    NSString *title = @"";
+    NSString *value = @"";
+    switch (indexPath.row) {
+        case From:
+            title = @"De: ";
+            value = [self getSenders];
+            [cell setDarkStyle];
+            break;
+        case Subject:
+            title = @"Asunto: ";
+            value = [self getSubject];
+            [cell setDarkStyle];
+            [cell setValueBoldStyle];
+            break;
+        case Reference:
+            self.referenceLbl.text = _dataSource.ref;
+            title = @"Referencia: ";
+            value = [self getReference];
+            [cell setDarkStyle];
+            break;
+        case RejectExplanation:
+            title = @"Motivo del rechazo: ";
+            value = [self getRejectExplanation];
+            [cell setDarkStyle];
+            [cell increaseTitleLabelWidth: rejectCellTitleCellWidth];
+            [cell hideLabelsIfNeeded: ![self rejectExplanationExists]];
+            break;
+        case AttachedDocument:
+            title = @"Documentos adjuntos";
+            [cell setValueInNewViewStyle];
+            [cell increaseTitleLabelWidth:largeTitleCellWidth];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            break;
+        case Receivers:
+            title = @"Destinatarios";
+            [cell setValueInNewViewStyle];
+            [cell increaseTitleLabelWidth: largeTitleCellWidth];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            break;
+        case RequestType:
+            title = @"Operación: ";
+            value = [self getRequestType];
+            [cell setClearStyle];
+            [cell setValueBoldStyle];
+            break;
+        case SignType:
+            title = @"Tipo de firma: ";
+            value = [self getSignType];
+            [cell setClearStyle];
+            break;
+        case Date:
+            title = @"Fecha: ";
+            value = [self getDate];
+            [cell setClearStyle];
+            break;
+        case ExpirationDate:
+            title = @"Expira: ";
+            value = [self getExpirationDate];
+            [cell setClearStyle];
+            [cell hideLabelsIfNeeded: !_dataSource.expdate];
+            break;
+        case Application:
+            title = @"Aplicación: ";
+            value = [self getApplication];
+            [cell setClearStyle];
+            break;
+    }
+    [cell setCellTitle: title];
+    [cell setCellValue: value];
+    return cell;
+}
+
+-(NSString *)getSenders
+{
+    NSMutableArray* senders = _dataSource.senders;
+    return [senders componentsJoinedByString:@"\r"];
+}
+
+-(NSString *)getSubject
+{
+    NSString *subject = _dataSource.subj;
+    return subject;
+}
+
+-(NSString *)getReference
+{
+    NSString *reference = _dataSource.ref;
+    return reference;
+}
+
+-(NSString *)getRejectExplanation
+{
+    NSString *reference = _dataSource.rejt;
+    return reference;
+}
+
+-(NSString *)getRequestType
+{
+    NSString *requestType = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? NSLocalizedString(@"Request_Type_Firma", nil) : NSLocalizedString(@"Request_Type_Visto_Bueno", nil);
+    return requestType;
+}
+
+-(NSString *)getSignType
+{
+    NSString *signType = _dataSource.signlinestype;
+    return signType;
+}
+
+-(NSString *)getDate
+{
+    NSString *date = _dataSource.date;
+    return date;
+}
+
+-(NSString *)getExpirationDate
+{
+    NSString *expirationDate = _dataSource.expdate;
+    return expirationDate;
+}
+
+-(NSString *)getApplication
+{
+    NSString *application = _dataSource.app;
+    return application;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
+
+    switch (indexPath.row) {
+        case AttachedDocument: {
+            AttachmentViewController *attachmentController =  (AttachmentViewController *)[storyboard instantiateViewControllerWithIdentifier:@"AttachmentsListView"];
+            attachmentController.documentsDataSource = _dataSource.documents;
+            attachmentController.attachedDocsDataSource = _dataSource.attachedDocs;
+            [attachmentController setDetail:_dataSource];
+            [attachmentController setRequestStatus:[PFHelper getPFRequestStatusFromString:_dataSourceRequest.view]];
+            [self.navigationController pushViewController:attachmentController animated:YES];
+            break;
+        }
+        case Receivers: {
+            ReceiversViewController *receiversController =  (ReceiversViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ReceiversListView"];
+            receiversController.dataSource = _dataSource.signlines;
+            [self.navigationController pushViewController:receiversController animated:YES];
+            break;
+        }
+    }
+}
+
 - (void)loadWebService
 {
     NSString *url = [appConfig objectForKey:@"requestDetailURL"];
@@ -69,77 +285,47 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     [wsController startConnection];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    DDLogDebug(@"DetailTableViewController::viewWillAppear");
-
-    self.navigationController.toolbarHidden = YES;
-}
-
-//  [dataController loadRequestsWithURL:[DetailXMLController buildRequestWithId:_requestId]];
-- (void)viewWillDisappear:(BOOL)animated
-{
-    // self.navigationController.toolbarHidden=YES;
-    [wsController cancelConnection];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    DDLogDebug(@"DetailTableViewController::viewDidLoad");
-
-    [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
-
-    // Enable or disable  action button
-    [_btnDocumentAction setEnabled:_signEnabled];
-    [self loadWebService];
-}
-
-- (void)viewDidUnload
-{
-    [self setBtnDocumentAction:nil];
-    [super viewDidUnload];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - UIActionSheet methods
 
 - (IBAction)didTapDocumentActionButton:(id)sender
 {
-    NSString *signButtonTitle = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? @"Firmar" : @"Visto Bueno";
-
-    _documentActionSheet = [[UIActionSheet alloc] initWithTitle:nil
-                                                       delegate:self
-                                              cancelButtonTitle:@"Cancelar"
-                                         destructiveButtonTitle:nil
-                                              otherButtonTitles:@"Rechazar", signButtonTitle, nil];
-
-    [_documentActionSheet showInView:self.view];
+    NSString *signButtonTitle = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? NSLocalizedString(@"Sign", nil) : NSLocalizedString(@"Approval", nil);
+    UIAlertController *alertController = [self obtainAlertController];
+    UIAlertAction* reject = [UIAlertAction actionWithTitle:NSLocalizedString(@"Reject", nil)
+                                                     style:UIAlertActionStyleDefault
+                                                   handler:^(UIAlertAction * action)
+                             {
+                                 [self rejectAction];
+                             }];
+    UIAlertAction* sign = [UIAlertAction actionWithTitle:signButtonTitle
+                                                   style:UIAlertActionStyleDefault
+                                                 handler:^(UIAlertAction * action)
+                           {
+                               [self signAction];
+                           }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
+    [alertController addAction:reject];
+    [alertController addAction:sign];
+    [alertController addAction:cancel];
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        [alertController setModalPresentationStyle:UIModalPresentationPopover];
+        UIPopoverPresentationController *popPresenter = [alertController popoverPresentationController];
+        popPresenter.sourceView = self.view;
+    }
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    switch (buttonIndex) {
-            
-        case PFDocumentActionReject:
-            [self rejectAction];
-            break;
-
-        case PFDocumentActionSign:
-            [self signAction];
-            break;
-
-        case PFDocumentActionCancel:
-            DDLogDebug(@"Cancel Action....");
-            break;
-
-        default:
-            break;
+- (UIAlertController *)obtainAlertController {
+    
+    
+    if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
+    {
+        //iPad
+        return [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleAlert];
+    } else {
+        //    iPhone
+        return [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     }
 }
 
@@ -147,47 +333,46 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 {
     DDLogDebug(@"Reject Action....");
     // Preguntamos el por qué del rechazo
-    UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Rechazo de peticiones" message:@"Indique el motivo del rechazo" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Continuar", nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    UITextField * alertTextField = [alert textFieldAtIndex:0];
-    alertTextField.keyboardType = UIKeyboardTypeDefault;
-    alertTextField.placeholder = @"Motivo del rechazo";
-    [alert show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-
-    motivoRechazo = [[alertView textFieldAtIndex:0] text];
-    NSLog(@"Entered: %@",[[alertView textFieldAtIndex:0] text]);
-    if (buttonIndex == [alertView cancelButtonIndex]) {
-        // DO anything
-        NSLog(@"El usuario ha clicado en la opción cancelar");
-    }
-    else {
-        
-        DDLogDebug(@"UnassignedRequestTableViewController::Reject request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
-        
-        NSString *data = [RejectXMLController buildRequestWithIds:_selectedRows motivoR: motivoRechazo];
-        DDLogDebug(@"UnassignedRequestTableViewController::rejectRequest input Data=%@", data);
-        
-        _waitingResponseType = PFWaitingResponseTypeRejection;
-        [wsController loadPostRequestWithData:data code:PFRequestCodeReject];
-        [wsController startConnection];
-    }
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Rejection_of_requests", nil) message:NSLocalizedString(@"Indicate_Reason_For_Rejection", nil) preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *conti = [UIAlertAction actionWithTitle:NSLocalizedString(@"Continue", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        [self rejectActionClickContinueButton:alert];
+    }];
+    [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        textField.placeholder = NSLocalizedString(@"Reason_For_Rejection", nil);
+        textField.keyboardType = UIKeyboardTypeDefault;
+    }];
+    [alert addAction:cancel];
+    [alert addAction:conti];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)signAction
 {
     DDLogDebug(@"Sign Action....\nAccept request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
 
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
 
     if ([(Detail *)_dataSource type] == PFRequestTypeSign) {
         [self startSignRequest];
     } else {
         [self startApprovalRequest];
     }
+}
+
+- (void) rejectActionClickContinueButton: (UIAlertController *)alertController {
+    DDLogDebug(@"UnassignedRequestTableViewController::Reject request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    if ([alertController.textFields count] != 0) {
+        NSArray *textfields = alertController.textFields;
+        UITextField *nameTextfield = textfields[0];
+        motivoRechazo = nameTextfield.text;
+    }
+    NSString *data = [RejectXMLController buildRequestWithIds:_selectedRows motivoR: motivoRechazo];
+    DDLogDebug(@"UnassignedRequestTableViewController::rejectRequest input Data=%@", data);
+    _waitingResponseType = PFWaitingResponseTypeRejection;
+    [wsController loadPostRequestWithData:data code:PFRequestCodeReject];
+    [wsController startConnection];
 }
 
 #pragma mark - Network Methods
@@ -210,37 +395,11 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     [wsController startConnection];
 }
 
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    DDLogDebug(@"DetailTableViewController::prepareForSegue sender=%@", [segue identifier]);
-
-    if ([[segue identifier] isEqual:@"segueAttachments"]) {
-        DDLogDebug(@"DetailTableViewController::prepareForSegue number of attachments=%lu", (unsigned long)[_dataSource.documents count]);
-
-        AttachmentViewController *attachmentController = [segue destinationViewController];
-        attachmentController.documentsDataSource = _dataSource.documents;
-        attachmentController.attachedDocsDataSource = _dataSource.attachedDocs;
-        [attachmentController setDetail:_dataSource];
-        [attachmentController setRequestStatus:[PFHelper getPFRequestStatusFromString:_dataSourceRequest.view]];
-    }
-
-    if ([[segue identifier] isEqual:@"segueShowReceivers"]) {
-        DDLogDebug(@"DetailTableViewController::prepareForSegue number of receivers=%lu", (unsigned long)[_dataSource.senders count]);
-        ReceiversViewController *receiversController = [segue destinationViewController];
-        receiversController.dataSource = _dataSource.signlines;
-    }
-}
-
 - (void)loadDetailInfo
 {
     self.referenceLbl.text = _dataSource.ref;
     self.inputDateLbl.text = _dataSource.date;
-    [self showExpirationDateIfExists];
-    [self showSubject];
-    [self showApplication];
-    [self showRejectExplanationIfExists];
+    self.sendersMoreButton.hidden = YES;
     self.signLinesTypeLbl.text = _dataSource.signlinestype;
     NSString *requestTypeText = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? NSLocalizedString(@"Request_Type_Firma", nil) : NSLocalizedString(@"Request_Type_Visto_Bueno", nil);
     self.requestTypeLbl.text = requestTypeText;
@@ -252,58 +411,31 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     
 }
 
-// Hide or show the expiration date
-- (void)showExpirationDateIfExists
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //Next line is created to test an expiration date until the server works.
-    self.inputExpirationDateLbl.text = _dataSource.expdate;
-    if (!_dataSource.expdate){
-        [self.expirationTableViewCell setHidden: true];
-        CGFloat expirationTableViewCellHeight =  _expirationTableViewCell.frame.size.height;
-        for(UITableViewCell *cell in self.cellBehindExpirationDate) {
-            [cell setFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y - expirationTableViewCellHeight, cell.frame.size.width, cell.frame.size.height)];
-        }
+    switch (indexPath.row) {
+        case RejectExplanation:
+            return (![self rejectExplanationExists]) ? noCellHeight : defaultCellHeight;
+            break;
+        case ExpirationDate:
+            return (!_dataSource.expdate)? noCellHeight : defaultCellHeight;
+            break;
+            return defaultCellHeight;
+        case AttachedDocument:
+            return defaultCellHeight;
+            break;
+        case Receivers:
+            return defaultCellHeight;
+            break;
     }
-}
-- (void)showSubject
-{
-    //Aling to the top the textviews for this Table View Cell
-    [self.subjectTitleTextView setTextContainerInset:UIEdgeInsetsZero];
-    self.subjectTitleTextView.textContainer.lineFragmentPadding = 0;
-    [self.subjectTextView setTextContainerInset:UIEdgeInsetsZero];
-    self.subjectTextView.textContainer.lineFragmentPadding = 0;
-    
-    self.subjectTextView.text = _dataSource.subj;
-    // Scroll to the top
-    [self.subjectTextView scrollRangeToVisible:NSMakeRange(0,0)];
+    return tableView.rowHeight;
 }
 
-- (void)showApplication
+- (BOOL)rejectExplanationExists
 {
-    //Aling to the top the textviews for this Table View Cell
-    [self.applicationTitleTextView setTextContainerInset:UIEdgeInsetsZero];
-    self.applicationTitleTextView.textContainer.lineFragmentPadding = 0;
-    [self.applicationTextView setTextContainerInset:UIEdgeInsetsZero];
-    self.applicationTextView.textContainer.lineFragmentPadding = 0;
-    
-    self.applicationTextView.text = _dataSource.app;
-    // Scroll to the top
-    [self.applicationTextView scrollRangeToVisible:NSMakeRange(0,0)];
-}
-
-// Hide or show the reject explanation
-- (void)showRejectExplanationIfExists
-{
-    self.rejectLbl.text = _dataSource.rejt;
     // Avoid the strings only with whitespaces. By default from the server the reject object is @" " (length == 1)
     NSString* trimmedTextString = [_dataSource.rejt stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-    if (!_dataSource.rejt || [trimmedTextString length]==0 ){
-        [self.rejectExplanationTableViewCell setHidden: true];
-        CGFloat expirationTableViewCellHeight =  _expirationTableViewCell.frame.size.height;
-        for(UITableViewCell *cell in self.cellBehindRejectExplanation) {
-            [cell setFrame:CGRectMake(cell.frame.origin.x, cell.frame.origin.y - expirationTableViewCellHeight, cell.frame.size.width, cell.frame.size.height)];
-        }
-    }
+    return (_dataSource.rejt && [trimmedTextString length] != 0);
 }
 
 - (void)showSenders
@@ -319,6 +451,16 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     self.sendersTextView.text = joinedSenders;
     // Scroll to the top
     [self.sendersTextView scrollRangeToVisible:NSMakeRange(0,0)];
+    if ([senders count] > 2 ){
+        self.sendersMoreButton.hidden = NO;
+        NSString *textButton1 = @"y ";
+        NSString *textButton2 = @" más";
+        NSInteger *restOfSenders = [senders count] - 2;
+        NSString *textButton = [NSString stringWithFormat:@"%@%ld%@",textButton1, (long)restOfSenders, textButton2];
+        [self.sendersMoreButton setTitle:textButton forState:UIControlStateNormal];
+    } else{
+        self.sendersMoreButton.hidden = YES;
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -392,15 +534,19 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
     }
 
     if (processedOK) {
-        // @" Peticiones rechazadas corrrectamente"
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"INFO", @"")
-                                    message:@"Peticiones rechazadas correctamente"
-                                   delegate:self
-                          cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                          otherButtonTitles:nil] show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil)
+                                                                                 message:NSLocalizedString(@"Correctly_rejected_requests", nil)
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction * _Nonnull action) {
+                                                             [self dismissSelfView];
+                                                         }];
+        [alertController addAction:actionOk];
+        [self presentViewController:alertController animated:YES completion:nil];
     }
+    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
 
-    [_documentActionSheet dismissWithClickedButtonIndex:-1 animated:YES];
 }
 
 - (void)didReceivedRejectionResponse:(NSData *)responseData
@@ -434,14 +580,13 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
 
     if (idsForRequestsWithError.count == 0) {
         // @" Peticiones firmadas corrrectamente"
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"INFO", @"")
-                                    message:@"Peticiones procesadas correctamente"
-                                   delegate:self
-                          cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                          otherButtonTitles:nil] show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil) message:NSLocalizedString(@"Alert_View_Request_Processed_Correctly", nil) preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:cancel];
+        [self presentViewController:alertController animated:YES completion:nil];
+        [self dismissSelfView];
     } else {
         NSString *errorMessage;
-
         if (idsForRequestsWithError.count == 1) {
             errorMessage = [NSString stringWithFormat:@"Error al procesar la petición con código:%@", idsForRequestsWithError[0]];
         } else {
@@ -449,14 +594,14 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
             [idsForRequestsWithError enumerateObjectsUsingBlock:^(NSString *requestID, NSUInteger idx, BOOL *stop) {
                  [errorIDSString appendFormat:@" %@", requestID];
              }];
-
             errorMessage = [NSString stringWithFormat:@"Error al procesar las peticiones con códigos:%@", errorIDSString];
         }
-
         [self didReceiveError:errorMessage];
+        [self dismissSelfView];
     }
 
-    [_documentActionSheet dismissWithClickedButtonIndex:-1 animated:YES];
+    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 - (void)didFinisParsingWithParser:(DetailXMLController *)parser
@@ -471,19 +616,18 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
         DDLogDebug(@"DetailTableViewController:: Parsing Detail XML message with no errors ");
         _dataSource = [parser dataSource];
         [self loadDetailInfo];
+        [self.tableView reloadData];
     }
 }
 
 - (void)didReceiveError:(NSString *)errorString
 {
     [SVProgressHUD dismiss];
-
     DDLogDebug(@"UnassignedRequestTableViewController::didReceiveParserWithError: %@", errorString);
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"")
-                                message:errorString
-                               delegate:nil
-                      cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                      otherButtonTitles:nil] show];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Error", nil) message:errorString preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+    [alertController addAction:cancel];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - RequestSignerEvent
@@ -507,39 +651,26 @@ typedef NS_ENUM (NSInteger, PFDocumentAction)
             processedOK = FALSE;
         }
     }
-
     if (processedOK) {
         // @" Peticiones firmadas corrrectamente"
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"INFO", @"")
-                                    message:@"Peticiones firmadas correctamente"
-                                   delegate:self
-                          cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                          otherButtonTitles:nil] show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil)
+                                                                                 message:NSLocalizedString(@"Alert_View_Everything_Signed_Correctly", nil)
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [self dismissSelfView];
+        }];
+        [alertController addAction:cancel];
+        [self presentViewController:alertController animated:YES completion:nil];
     } else {
         [self didReceiveError:msg];
+        [self dismissSelfView];
     }
+}
 
-    [_documentActionSheet dismissWithClickedButtonIndex:-1 animated:YES];
+- (void)dismissSelfView {
+    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
     [(BaseListTVC *)self.navigationController.previousViewController refreshInfo];
     [self.navigationController popViewControllerAnimated:YES];
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if (isSuccessReject) {
-        isSuccessReject = NO;
-        [(BaseListTVC *)self.navigationController.previousViewController refreshInfo];
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-}
-
-#pragma mark - Handle rotation for this view
-
-// When the device rotates we need to re-adapt the cells below the expiration date cell if it doesn't exist.
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-        [self showExpirationDateIfExists];
 }
 
 @end

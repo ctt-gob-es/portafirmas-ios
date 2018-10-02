@@ -20,6 +20,14 @@
     #import "PFBaseTVC.h"
     #import "PFBaseVC.h"
     #import "KeyboardObserver.h"
-    #import <CocoaLumberjack/CocoaLumberjack.h>
-    static const DDLogLevel ddLogLevel = DDLogLevelDebug;
+    #import "DDLog.h"
+#ifdef DEBUG
+static const int ddLogLevel = LOG_LEVEL_VERBOSE;
+#else
+static const int ddLogLevel = LOG_LEVEL_ERROR;
 #endif
+
+#endif
+
+
+

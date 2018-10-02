@@ -20,7 +20,7 @@
 // Builds Web Service Request message
 + (NSString *)buildRequestWithCert:(NSString *)cert witRequestList:(NSArray *)requests;
 {
-    NSLog(@"certificado => %@", cert);
+    DDLogDebug(@"certificado => %@", cert);
     NSMutableString *mesg = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rqttri>\n"];
    
     if (![[LoginService instance] serverSupportLogin]) {
@@ -80,9 +80,9 @@
     
     [mesg appendString:requestsMsg];
 
-    NSLog(@"\n\n");
+    DDLogDebug(@"\n\n");
    DDLogDebug(@"mesg -> \n\n%@", mesg);
-    NSLog(@"\n\n");
+    DDLogDebug(@"\n\n");
     
     return mesg;
 }
@@ -121,9 +121,9 @@
         request.reqid = [attributeDict objectForKey:@"id"];
        DDLogDebug(@"id attribute found: %@", request.reqid);
 
-        NSLog(@"\n \n");
-        NSLog(@"------------------");
-        NSLog(@"element name: %@", elementName);
+        DDLogDebug(@"\n \n");
+        DDLogDebug(@"------------------");
+        DDLogDebug(@"element name: %@", elementName);
         request.status = [attributeDict objectForKey:@"status"];
         DDLogDebug(@"status attribute found: %@", request.status);
 

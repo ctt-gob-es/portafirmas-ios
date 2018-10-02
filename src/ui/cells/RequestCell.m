@@ -73,6 +73,7 @@
 
 - (void)prepareForReuse
 {
+    [super prepareForReuse];
     [_priorityIconLayer removeFromSuperlayer];
     _priorityIconLayer = nil;
     [_priorityLabel removeFromSuperview];

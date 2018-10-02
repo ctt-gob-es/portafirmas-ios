@@ -71,9 +71,9 @@ struct {
         NSString *post = [NSString stringWithFormat: @"op=%lu&dat=%@",(unsigned long)code, [msgData base64EncodedString]];
         NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
         NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
-        NSLog(@"\n");
-        NSLog(@"WSDataController -> Valor postLength ->    %@", postLength);
-        NSLog(@"\n\n");
+        DDLogDebug(@"\n");
+        DDLogDebug(@"WSDataController -> Valor postLength ->    %@", postLength);
+        DDLogDebug(@"\n\n");
 
         request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:wsURLString]
                                           cachePolicy:NSURLRequestReloadIgnoringCacheData
@@ -167,14 +167,6 @@ struct {
 - (void)doParse:(NSData *)data
 {
     DDLogDebug(@"doParse data: \n\n%@", [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding]);
-    
-    NSString *dataString = [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding];
-    
-    // Prepare the data to be valid even when there are XML escaped characters in the subject.
-    dataString = [dataString stringByReplacingOccurrencesOfString:@"&_lt;" withString:@"<![CDATA[<]]>"];
-    dataString = [dataString stringByReplacingOccurrencesOfString:@"&_gt;" withString:@"<![CDATA[>]]>"];
-    data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
-
     [_delegate doParse: data];
 }
 

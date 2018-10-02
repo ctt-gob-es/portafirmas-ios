@@ -79,7 +79,7 @@
 {
     OSStatus status = noErr;
 
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     // Load certificate from Documents directory
     status = [OpenSSLCertificateHelper deleteCertificate:certificateInfo];
     [SVProgressHUD dismiss];
@@ -149,19 +149,23 @@
             switch (status) {
                 case noErr :
                 case errSecItemNotFound:
-                    _infoLabel = @"Se ha eliminado el certificado correctamente";
+                    _infoLabel = NSLocalizedString(@"Certificate_Removed_Correctly", nil);
                     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyCurrentCertificate];
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     [[CertificateUtils sharedWrapper] setSelectedCertificateName:nil];
         
                     break;
                 default:
-                    _infoLabel = @"Se ha producido un error";
+                    _infoLabel = NSLocalizedString(@"Alert_View_An_Error_Has_Ocurred", nil);
                     break;
             }
         
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:_infoLabel message:@"" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:_infoLabel message:nil preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:nil];
+        [alert addAction:actionOk];
+        [self presentViewController:alert animated:YES completion:nil];
         
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
             
@@ -179,7 +183,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     PFCertificateInfo *selectedCertificate = arrayCerts[selectedIndexPath.row];
     
@@ -187,11 +191,9 @@
     DDLogDebug(@"LoginViewController:: certificado seleccionado -> %@", selectedCertificate.subject);
     
     if ([[CertificateUtils sharedWrapper] searchIdentityByName:selectedCertificate.subject] == YES) {
-        
         DDLogDebug(@"LoginViewController::prepareForSegue::selected certificate....");
         [[NSUserDefaults standardUserDefaults] setObject:@{kPFUserDefaultsKeyAlias:selectedCertificate.subject} forKey:kPFUserDefaultsKeyCurrentCertificate];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        
         [[CertificateUtils sharedWrapper] setSelectedCertificateName:selectedCertificate.subject];
         [SVProgressHUD dismiss];
         [self.navigationController popViewControllerAnimated:YES];
@@ -199,11 +201,12 @@
     else {
         
         [SVProgressHUD dismiss];
-        [[[UIAlertView alloc] initWithTitle:@"Se ha producido un error al cargar el certificado"
-                                    message:@""
-                                   delegate:nil
-                          cancelButtonTitle:@"OK"
-                          otherButtonTitles:nil] show];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Error_When_Loading_certificate", nil)
+                                                                                 message:nil
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:cancel];
+        [self presentViewController:alertController animated:YES completion:nil];
     }
 }
 
