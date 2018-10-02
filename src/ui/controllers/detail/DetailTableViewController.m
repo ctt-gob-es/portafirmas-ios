@@ -336,13 +336,7 @@ CGFloat const largeTitleCellWidth = 200;
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Rejection_of_requests", nil) message:NSLocalizedString(@"Indicate_Reason_For_Rejection", nil) preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *conti = [UIAlertAction actionWithTitle:NSLocalizedString(@"Continue", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        DDLogDebug(@"UnassignedRequestTableViewController::Reject request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-        NSString *data = [RejectXMLController buildRequestWithIds:_selectedRows motivoR: motivoRechazo];
-        DDLogDebug(@"UnassignedRequestTableViewController::rejectRequest input Data=%@", data);
-        _waitingResponseType = PFWaitingResponseTypeRejection;
-        [wsController loadPostRequestWithData:data code:PFRequestCodeReject];
-        [wsController startConnection];
+        [self rejectActionClickContinueButton:alert];
     }];
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = NSLocalizedString(@"Reason_For_Rejection", nil);
@@ -364,6 +358,21 @@ CGFloat const largeTitleCellWidth = 200;
     } else {
         [self startApprovalRequest];
     }
+}
+
+- (void) rejectActionClickContinueButton: (UIAlertController *)alertController {
+    DDLogDebug(@"UnassignedRequestTableViewController::Reject request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    if ([alertController.textFields count] != 0) {
+        NSArray *textfields = alertController.textFields;
+        UITextField *nameTextfield = textfields[0];
+        motivoRechazo = nameTextfield.text;
+    }
+    NSString *data = [RejectXMLController buildRequestWithIds:_selectedRows motivoR: motivoRechazo];
+    DDLogDebug(@"UnassignedRequestTableViewController::rejectRequest input Data=%@", data);
+    _waitingResponseType = PFWaitingResponseTypeRejection;
+    [wsController loadPostRequestWithData:data code:PFRequestCodeReject];
+    [wsController startConnection];
 }
 
 #pragma mark - Network Methods
