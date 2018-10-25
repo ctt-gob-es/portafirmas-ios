@@ -65,3 +65,6 @@
 
 // Certificates
 "Certificate_Removed_Correctly" = "Se ha eliminado el certificado correctamente";
+
+// Configuration page view
+"Configuration_Page_Title" = "Port@firmas v%@";
