@@ -10,7 +10,7 @@
 #import "CertificateUtils.h"
 #include "ModalCertificatesController.h"
 
-@interface DocumentCertificatesViewController : PFBaseTVC <ModalCertificatesControllerDelegate> {
+@interface DocumentCertificatesViewController : PFBaseTVC <ModalCertificatesControllerDelegate, UIDocumentMenuDelegate, UIDocumentPickerDelegate, UINavigationControllerDelegate> {
 
     NSString *_infoLabel;
     NSArray *files;

@@ -255,11 +255,67 @@ int const kFilesAppButtonNormalHeight = 40;
     return YES;
 }
 
+- (IBAction)filesAppButtonTapped:(id)sender {
+	UIDocumentMenuViewController *documentProviderMenu = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.data"] inMode:UIDocumentPickerModeImport];
+	documentProviderMenu.delegate = self;
+	documentProviderMenu.modalPresentationStyle = UIModalPresentationPopover;
+	UIPopoverPresentationController *popPC = documentProviderMenu.popoverPresentationController;
+//	documentProviderMenu.popoverPresentationController.sourceRect = self.filesAppButton.frame;
+	documentProviderMenu.popoverPresentationController.sourceView = self.view;
+	popPC.permittedArrowDirections = UIPopoverArrowDirectionAny;
+	[self presentViewController:documentProviderMenu animated:YES completion:nil];
+}
+
 #pragma mark - ModalCertificatesControllerDelegate
 
 - (void)certificateAdded
 {
     [self didTapOnBackButton:nil];
+}
+
+- (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentAtURL:(NSURL *)url {
+	if (controller.documentPickerMode == UIDocumentPickerModeImport) {
+		
+		NSString* fileType = [url.lastPathComponent pathExtension];
+		Boolean correctFileType = false ;
+		NSString *alertMessage = [NSString stringWithFormat:NSLocalizedString(@"files_app_alert_message_incorrect_file", nil), [url lastPathComponent]];
+		if ([fileType  isEqualToString: @"p12"] || [fileType  isEqualToString: @"pfx"]) {
+			correctFileType = true;
+		}
+		
+		if (correctFileType) {
+			NSFileManager *fileManager = [NSFileManager defaultManager];
+			NSError *copyError = nil;
+			NSURL* documentDirectory = [[fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] objectAtIndex:0];
+			NSURL* fileDirectory = [documentDirectory URLByAppendingPathComponent: url.lastPathComponent isDirectory:YES];
+			[fileManager copyItemAtURL:url toURL: fileDirectory error:&copyError];
+			if (!copyError)
+			{
+				alertMessage = [NSString stringWithFormat:NSLocalizedString(@"files_app_alert_message_success", nil), [url lastPathComponent]];
+			}
+			else
+			{
+				alertMessage = [NSString stringWithFormat:NSLocalizedString(@"files_app_alert_message_cannot_add_certificate", nil), [url lastPathComponent]];
+			}
+//			_filesArray = [self findFiles:@[@"p12", @"pfx"]];
+			[self.tableView reloadData];
+		}
+		
+		dispatch_async(dispatch_get_main_queue(), ^{
+			UIAlertController *alertController = [UIAlertController
+												  alertControllerWithTitle: nil
+												  message:alertMessage
+												  preferredStyle:UIAlertControllerStyleAlert];
+			[alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"files_app_alert_affirmative_button", nil) style:UIAlertActionStyleDefault handler:nil]];
+			[self presentViewController:alertController animated:YES completion:nil];
+			
+		});
+	}
+}
+
+- (void)documentMenu:(nonnull UIDocumentMenuViewController *)documentMenu didPickDocumentPicker:(nonnull UIDocumentPickerViewController *)documentPicker {
+	documentPicker.delegate = self;
+	[self presentViewController:documentPicker animated:YES completion:nil];
 }
 
 @end
