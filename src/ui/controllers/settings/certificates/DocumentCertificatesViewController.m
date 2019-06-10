@@ -52,6 +52,24 @@
     // Tabulacion de la tabla
     self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 10, -30);
     [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+
+	[self setButtonStyle];
+
+}
+
+// Style methods
+- (void)setButtonStyle {
+	// Change height for messageView to include the button
+	self.messageView.frame = CGRectMake(self.messageView.frame.origin.x, self.messageView.frame.origin.y, self.messageView.frame.size.width, self.messageView.frame.size.height + 40.0);
+	UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+	//	[button addTarget:self
+	//			   action:@selector(aMethod:)
+	//	 forControlEvents:UIControlEventTouchUpInside];
+	[button setTitle:@"Añadir más desde Files App" forState:UIControlStateNormal];
+	button.frame = CGRectMake(0, (self.messageView.frame.origin.y + self.messageView.frame.size.height - 40), self.view.frame.size.width, 40.0);
+	//	button.backgroundColor = [UIColor redColor];
+	[button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+	[self.view addSubview:button];
 }
 
 // Dispose of any resources that can be recreated.
