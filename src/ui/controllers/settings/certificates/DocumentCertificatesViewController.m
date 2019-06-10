@@ -17,6 +17,8 @@
 
 @implementation DocumentCertificatesViewController
 
+int const kFilesAppButtonNormalHeight = 40;
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -60,14 +62,13 @@
 // Style methods
 - (void)setButtonStyle {
 	// Change height for messageView to include the button
-	self.messageView.frame = CGRectMake(self.messageView.frame.origin.x, self.messageView.frame.origin.y, self.messageView.frame.size.width, self.messageView.frame.size.height + 40.0);
+	self.messageView.frame = CGRectMake(self.messageView.frame.origin.x, self.messageView.frame.origin.y, self.messageView.frame.size.width, self.messageView.frame.size.height + kFilesAppButtonNormalHeight);
 	UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 	//	[button addTarget:self
 	//			   action:@selector(aMethod:)
 	//	 forControlEvents:UIControlEventTouchUpInside];
 	[button setTitle:@"Añadir más desde Files App" forState:UIControlStateNormal];
-	button.frame = CGRectMake(0, (self.messageView.frame.origin.y + self.messageView.frame.size.height - 40), self.view.frame.size.width, 40.0);
-	//	button.backgroundColor = [UIColor redColor];
+	button.frame = CGRectMake(0, (self.messageView.frame.origin.y + self.messageView.frame.size.height - kFilesAppButtonNormalHeight), self.view.frame.size.width, kFilesAppButtonNormalHeight);
 	[button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
 	[self.view addSubview:button];
 }
