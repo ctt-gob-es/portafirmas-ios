@@ -69,7 +69,8 @@ int const kFilesAppButtonNormalHeight = 40;
 //				   action:@selector(filesAppButtonTapped:)
 //		 forControlEvents:UIControlEventTouchUpInside];
 		[filesAppButton addTarget:self action:@selector(filesAppButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-		[filesAppButton setTitle:@"Añadir más desde Files App" forState:UIControlStateNormal];
+		[filesAppButton setTitle:NSLocalizedString(@"files_app_button", nil) forState:UIControlStateNormal];
+		
 		filesAppButton.frame = CGRectMake(0, (self.messageView.frame.origin.y + self.messageView.frame.size.height - kFilesAppButtonNormalHeight), self.view.frame.size.width, kFilesAppButtonNormalHeight);
 		[filesAppButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
 		[self.view addSubview:filesAppButton];
