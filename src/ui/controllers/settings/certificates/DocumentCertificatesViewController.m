@@ -61,16 +61,21 @@ int const kFilesAppButtonNormalHeight = 40;
 
 // Style methods
 - (void)setButtonStyle {
-	// Change height for messageView to include the button
-	self.messageView.frame = CGRectMake(self.messageView.frame.origin.x, self.messageView.frame.origin.y, self.messageView.frame.size.width, self.messageView.frame.size.height + kFilesAppButtonNormalHeight);
-	UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-	//	[button addTarget:self
-	//			   action:@selector(aMethod:)
-	//	 forControlEvents:UIControlEventTouchUpInside];
-	[button setTitle:@"Añadir más desde Files App" forState:UIControlStateNormal];
-	button.frame = CGRectMake(0, (self.messageView.frame.origin.y + self.messageView.frame.size.height - kFilesAppButtonNormalHeight), self.view.frame.size.width, kFilesAppButtonNormalHeight);
-	[button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-	[self.view addSubview:button];
+	if (@available(iOS 11, *)) {
+		// Change height for messageView to include the button
+		self.messageView.frame = CGRectMake(self.messageView.frame.origin.x, self.messageView.frame.origin.y, self.messageView.frame.size.width, self.messageView.frame.size.height + kFilesAppButtonNormalHeight);
+		UIButton *filesAppButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//		[filesAppButton addTarget:self
+//				   action:@selector(filesAppButtonTapped:)
+//		 forControlEvents:UIControlEventTouchUpInside];
+		[filesAppButton addTarget:self action:@selector(filesAppButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+		[filesAppButton setTitle:@"Añadir más desde Files App" forState:UIControlStateNormal];
+		filesAppButton.frame = CGRectMake(0, (self.messageView.frame.origin.y + self.messageView.frame.size.height - kFilesAppButtonNormalHeight), self.view.frame.size.width, kFilesAppButtonNormalHeight);
+		[filesAppButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+		[self.view addSubview:filesAppButton];
+	} else {
+//	self.filesAppButton.frame =
+	}
 }
 
 // Dispose of any resources that can be recreated.
