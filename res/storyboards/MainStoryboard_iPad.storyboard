@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" colorMatched="YES" initialViewController="pP7-Rp-efU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" colorMatched="YES" initialViewController="pP7-Rp-efU">
     <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -53,7 +53,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="iTunes" id="FYd-o2-KO5">
+                    <navigationItem key="navigationItem" title="Available Certificates" id="FYd-o2-KO5">
                         <barButtonItem key="leftBarButtonItem" title="Cancelar" id="2ez-FQ-DUx">
                             <connections>
                                 <action selector="didTapOnBackButton:" destination="m4J-qx-eig" id="mXi-Nd-kKR"/>
@@ -1735,11 +1735,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ic_calendar" width="15" height="15"/>
+        <image name="ic_calendar" width="15.5" height="15.5"/>
         <image name="ic_firmadas" width="25" height="25"/>
         <image name="ic_pendientes" width="25" height="25"/>
         <image name="ic_rechazada" width="25" height="25"/>
-        <image name="icn_check" width="15" height="10"/>
+        <image name="icn_check" width="15.5" height="10.5"/>
         <image name="icn_firma" width="13" height="13"/>
         <image name="question" width="25" height="25"/>
         <image name="settings" width="25" height="25"/>

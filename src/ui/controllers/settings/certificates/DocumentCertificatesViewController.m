@@ -57,7 +57,7 @@ int const kFilesAppButtonNormalHeight = 40;
     [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
 
 	// Styles
-	
+	self.navigationItem.title = NSLocalizedString(@"available_certificates", nil);
 	[self setButtonStyle];
 
 }
