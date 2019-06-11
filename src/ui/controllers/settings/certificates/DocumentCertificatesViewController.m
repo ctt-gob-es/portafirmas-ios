@@ -65,9 +65,6 @@ int const kFilesAppButtonNormalHeight = 40;
 		// Change height for messageView to include the button
 		self.messageView.frame = CGRectMake(self.messageView.frame.origin.x, self.messageView.frame.origin.y, self.messageView.frame.size.width, self.messageView.frame.size.height + kFilesAppButtonNormalHeight);
 		UIButton *filesAppButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//		[filesAppButton addTarget:self
-//				   action:@selector(filesAppButtonTapped:)
-//		 forControlEvents:UIControlEventTouchUpInside];
 		[filesAppButton addTarget:self action:@selector(filesAppButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
 		[filesAppButton setTitle:NSLocalizedString(@"files_app_button", nil) forState:UIControlStateNormal];
 		
@@ -261,7 +258,7 @@ int const kFilesAppButtonNormalHeight = 40;
 	documentProviderMenu.delegate = self;
 	documentProviderMenu.modalPresentationStyle = UIModalPresentationPopover;
 	UIPopoverPresentationController *popPC = documentProviderMenu.popoverPresentationController;
-//	documentProviderMenu.popoverPresentationController.sourceRect = self.filesAppButton.frame;
+	documentProviderMenu.popoverPresentationController.sourceRect = self.messageView.frame;
 	documentProviderMenu.popoverPresentationController.sourceView = self.view;
 	popPC.permittedArrowDirections = UIPopoverArrowDirectionAny;
 	[self presentViewController:documentProviderMenu animated:YES completion:nil];
