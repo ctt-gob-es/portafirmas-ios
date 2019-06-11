@@ -8,6 +8,7 @@
 
 #import "DocumentCertificatesViewController.h"
 #import "CertificateUtils.h"
+#import "GlobalConstants.h"
 
 @interface DocumentCertificatesViewController ()
 
@@ -42,9 +43,9 @@ int const kFilesAppButtonNormalHeight = 40;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+	
     _selectedCertificate = nil;
-    files = [self findFiles:[NSArray arrayWithObjects:@"p12", @"pfx", nil]];
+    files = [self findFiles:[NSArray arrayWithObjects:P12EXTENSION, PFXEXTENSION, nil]];
 
     if ([files count ] == 0) {
         _messageView.text = @"La aplicación esta solicitando acceso a su almacen de certificados y no dispone de ninguno registrado.\n\n  Para instalar su certificado :\n 1. Conecte su dispositivo a su PC o Mac.\n 2. Localice el certificado que desea instalar ....(debe conocer el pin del certificado)\n3. En iTunes seleccione su certificado y arrástrelo a la ventana de documentos...\n4. Vuelva a esta pantalla y registrelo en el almacen del dispositivo.\n";
@@ -55,6 +56,8 @@ int const kFilesAppButtonNormalHeight = 40;
     self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 10, -30);
     [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
 
+	// Styles
+	
 	[self setButtonStyle];
 
 }
@@ -156,7 +159,7 @@ int const kFilesAppButtonNormalHeight = 40;
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
         [alertController addAction:cancel];
         [self presentViewController:alertController animated:YES completion:nil];
-        files = [self findFiles:[NSArray arrayWithObjects:@"p12", @"pfx", nil]];
+        files = [self findFiles:[NSArray arrayWithObjects:P12EXTENSION, PFXEXTENSION, nil]];
         [self.tableView reloadData];
     }
     
@@ -277,7 +280,7 @@ int const kFilesAppButtonNormalHeight = 40;
 		NSString* fileType = [url.lastPathComponent pathExtension];
 		Boolean correctFileType = false ;
 		NSString *alertMessage = [NSString stringWithFormat:NSLocalizedString(@"files_app_alert_message_incorrect_file", nil), [url lastPathComponent]];
-		if ([fileType  isEqualToString: @"p12"] || [fileType  isEqualToString: @"pfx"]) {
+		if ([fileType  isEqualToString: P12EXTENSION] || [fileType  isEqualToString: PFXEXTENSION]) {
 			correctFileType = true;
 		}
 		
@@ -295,7 +298,7 @@ int const kFilesAppButtonNormalHeight = 40;
 			{
 				alertMessage = [NSString stringWithFormat:NSLocalizedString(@"files_app_alert_message_cannot_add_certificate", nil), [url lastPathComponent]];
 			}
-			files = [self findFiles:@[@"p12", @"pfx"]];
+			files = [self findFiles:@[P12EXTENSION, PFXEXTENSION]];
 			[self.tableView reloadData];
 		}
 		
