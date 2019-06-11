@@ -295,7 +295,7 @@ int const kFilesAppButtonNormalHeight = 40;
 			{
 				alertMessage = [NSString stringWithFormat:NSLocalizedString(@"files_app_alert_message_cannot_add_certificate", nil), [url lastPathComponent]];
 			}
-//			_filesArray = [self findFiles:@[@"p12", @"pfx"]];
+			files = [self findFiles:@[@"p12", @"pfx"]];
 			[self.tableView reloadData];
 		}
 		
