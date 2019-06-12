@@ -38,10 +38,11 @@ typedef enum cellTypes
     SignType,
     Date,
     ExpirationDate,
-    Application
+    Application,
+	Message
 } CellTypes;
 
-NSInteger *const numberOfRows = 11;
+NSInteger *const numberOfRows = 12;
 CGFloat const defaultCellHeight = 44;
 CGFloat const noCellHeight = 0;
 CGFloat const rejectCellTitleCellWidth = 150;
@@ -187,6 +188,11 @@ CGFloat const largeTitleCellWidth = 200;
             value = [self getApplication];
             [cell setClearStyle];
             break;
+		case Message:
+			title = @"Mensage: ";
+			value = [self getMessage];
+			[cell setClearStyle];
+			break;
     }
     [cell setCellTitle: title];
     [cell setCellValue: value];
@@ -245,6 +251,12 @@ CGFloat const largeTitleCellWidth = 200;
 {
     NSString *application = _dataSource.app;
     return application;
+}
+
+-(NSString *)getMessage
+{
+	NSString *message = _dataSource.msg;
+	return message;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -427,6 +439,9 @@ CGFloat const largeTitleCellWidth = 200;
         case Receivers:
             return defaultCellHeight;
             break;
+		case Message:
+			return (!_dataSource.msg)? noCellHeight : defaultCellHeight;
+			break;
     }
     return tableView.rowHeight;
 }
