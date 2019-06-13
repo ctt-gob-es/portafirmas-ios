@@ -59,6 +59,27 @@
 "Indicate_Reason_For_Rejection" = "Indique el motivo del rechazo";
 "Continue" = "Continuar";
 "Reason_For_Rejection" = "Motivo del rechazo";
+"Cell_Title_From" = "De: ";
+"Cell_Title_Subject" = "Asunto: ";
+"Cell_Title_Reference" = "Referencia: ";
+"Cell_Title_RejectExplanation" = "Motivo del rechazo: ";
+"Cell_Title_AttachedDocument" = "Documentos adjuntos";
+"Cell_Title_Receivers" = "Destinatarios";
+"Cell_Title_RequestType" = "Operación: ";
+"Cell_Title_SignType" = "Tipo de firma: ";
+"Cell_Title_Date" = "Fecha: ";
+"Cell_Title_ExpirationDate" = "Expira: ";
+"Cell_Title_Application" = "Aplicación: ";
+"Cell_Title_Message" = "Mensage: ";
+"Detail_senders_first_button" = "y ";
+"Detail_senders_second_button" = " más";
+"Detail_view_error_server_connection" = "Se ha producido un error de conexión con el servidor";
+"Detail_view_error_processing_request" = "Error al procesar la petición con codigo:%@";
+"Detail_view_error_processing_multiple_request" = "Error al procesar las peticiones con códigos:%@";
+"Detail_view_error_server_connection_501" = "Se ha producido un error de conexión con el servidor (501)";
+"Detail_view_error_messages_from_server" = "Mensaje del servidor:%@(%@)";
+"Detail_view_error_signing_selected_request" = "Ocurrio un error al firmar la peticion seleccionada";
+"Detail_view_error_signing_selected_requests" = "Ocurrio un error al firmar algunas de las peticiones seleccionadas.";
 
 //Cell text
 "Expiration_text_message" = "Expira: ";
