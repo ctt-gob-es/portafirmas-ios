@@ -1039,6 +1039,8 @@
                         <outlet property="expirationTableViewCell" destination="yzb-YB-7VW" id="ey1-5U-YNs"/>
                         <outlet property="inputDateLbl" destination="hZn-Xx-cfN" id="2P4-Bn-NrN"/>
                         <outlet property="inputExpirationDateLbl" destination="RoX-dq-bHI" id="zCG-RW-SUX"/>
+                        <outlet property="messageTextView" destination="63j-lH-b27" id="2gi-ba-tw3"/>
+                        <outlet property="messageTitleTextView" destination="MaE-St-seW" id="zGM-r9-pLX"/>
                         <outlet property="referenceLbl" destination="nH5-mb-g1z" id="pIV-6K-gwz"/>
                         <outlet property="rejectExplanationTableViewCell" destination="Rkx-r3-rdX" id="jHh-Hb-JMD"/>
                         <outlet property="rejectLbl" destination="RPC-gz-Hfq" id="6dg-dd-BeA"/>
@@ -1055,6 +1057,8 @@
                         <outletCollection property="cellBehindRejectExplanation" destination="YMK-mQ-Ahn" id="zjz-T9-cZz"/>
                         <outletCollection property="cellBehindRejectExplanation" destination="yzb-YB-7VW" id="EXQ-UJ-Rxr"/>
                         <outletCollection property="cellBehindRejectExplanation" destination="8d4-vW-VaC" id="2xY-T6-WWi"/>
+                        <outletCollection property="cellBehindRejectExplanation" destination="hz1-7M-7n4" id="p6b-GR-qgF"/>
+                        <outletCollection property="cellBehindExpirationDate" destination="hz1-7M-7n4" id="x1Y-FP-aRw"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BdI-uR-O51" userLabel="First Responder" sceneMemberID="firstResponder"/>

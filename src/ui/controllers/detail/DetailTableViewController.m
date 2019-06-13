@@ -267,8 +267,6 @@ CGFloat const largeTitleCellWidth = 200;
 -(NSString *)getMessage
 {
 	NSString *message = _dataSource.msg;
-//	NSString *message = @"fsd   kjfs jasljflsj   fjls jlfjsljd fkl skld fjksjdfljsljfk lsjldf  jsljflsj dlfjsjfdlsjdfjks k fjskdljfklds jkfjklsjdfj skdhgkh dskghkdf hg hjfjvjnnnckxnv,nzx,njkvshdjhfjdsh dmsnenwfne jvhxuhvuxcjnvjsdfjd   fkljsdkljfkcm,zvm ,mxnv  mnxcm,nvjksda  njf ewijfis jdkfhash  fdkscnxmzn,vmnx,ncjnfskadnfjksd jkfcnmvn  mneje  neuwhifhwih hlj shjdklfhsjkdf  hjndsmfnjcxmk nxm ncmnvkdjsnjfjnsdjfksu fhxcukhjxj fhjskhdjkxzjfnzxcmfnsak";
-
 	return message;
 }
 
@@ -453,8 +451,7 @@ CGFloat const largeTitleCellWidth = 200;
             return defaultCellHeight;
             break;
 		case Message:
-//			return (!_dataSource.msg)? noCellHeight : defaultCellHeight;
-			return defaultCellHeight;
+			return (!_dataSource.msg)? noCellHeight : tableView.rowHeight;
 			break;
     }
     return tableView.rowHeight;
