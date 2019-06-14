@@ -70,7 +70,7 @@
 "Cell_Title_Date" = "Fecha: ";
 "Cell_Title_ExpirationDate" = "Expira: ";
 "Cell_Title_Application" = "Aplicación: ";
-"Cell_Title_Message" = "Mensage: ";
+"Cell_Title_Message" = "Mensaje: ";
 "Detail_senders_first_button" = "y ";
 "Detail_senders_second_button" = " más";
 "Detail_view_error_server_connection" = "Se ha producido un error de conexión con el servidor";
