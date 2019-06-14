@@ -37,6 +37,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 }
 
 @property (nonatomic, strong) IBOutlet UIButton *accessButton;
+@property (strong, nonatomic) IBOutlet UINavigationItem *titleBar;
 
 @end
 
@@ -46,7 +47,8 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+    [super viewDidLoad];    
+    self.titleBar.title =[NSString stringWithFormat: NSLocalizedString(@"Configuration_Page_Title", nil),[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
