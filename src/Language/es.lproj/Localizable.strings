@@ -78,3 +78,4 @@
 
 // Available certificates view
 "available_certificates" = "Certificados Disponibles";
+"available_certificates_instructions" = "La aplicación esta solicitando acceso a su almacen de certificados y no dispone de ninguno registrado.\n\n  Para instalar su certificado puede hacerlo a través de iTunes:\n 1. Conecte su dispositivo a su PC o Mac.\n 2. Localice el certificado que desea instalar ....(debe conocer el pin del certificado)\n3. En iTunes seleccione su certificado y arrástrelo a la ventana de documentos...\n4. Vuelva a esta pantalla y registrelo en el almacen del dispositivo.\n\n O a través del siguiente enlace usando Files App:";
