@@ -84,6 +84,7 @@
 		3CC403831AB9BB12006F8803 /* PFCertificateInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC403821AB9BB12006F8803 /* PFCertificateInfo.m */; };
 		3CC403861AB9EDBA006F8803 /* CertificateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC403851AB9EDBA006F8803 /* CertificateCell.m */; };
 		3CD199A51AC2C952007E9E35 /* UINavigationController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */; };
+		921EAE2F22AFB631005D6D5B /* GlobalConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EAE2E22AFB631005D6D5B /* GlobalConstants.m */; };
 		992987C2AA230FF0604BD234 /* libPods-PortaFirmasUniv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0A9AB702FDB8ACDEBFCF67 /* libPods-PortaFirmasUniv.a */; };
 		B240774920AAEE0900A8EE1C /* DetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B240774820AAEE0900A8EE1C /* DetailCell.m */; };
 		B289830B20AC8BA600B7544A /* SendersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B289830920AC8BA600B7544A /* SendersViewController.m */; };
@@ -257,6 +258,8 @@
 		3CD199A31AC2C952007E9E35 /* UINavigationController+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationController+Utils.h"; path = "UINavigationController/UINavigationController+Utils.h"; sourceTree = "<group>"; };
 		3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+Utils.m"; path = "UINavigationController/UINavigationController+Utils.m"; sourceTree = "<group>"; };
 		862DBE2D1FC5F494A173087E /* Pods-PortaFirmasUniv.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortaFirmasUniv.release.xcconfig"; path = "Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv.release.xcconfig"; sourceTree = "<group>"; };
+		921EAE2E22AFB631005D6D5B /* GlobalConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalConstants.m; sourceTree = "<group>"; };
+		921EAE3022AFB672005D6D5B /* GlobalConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalConstants.h; sourceTree = "<group>"; };
 		B240774720AAEE0900A8EE1C /* DetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailCell.h; sourceTree = "<group>"; };
 		B240774820AAEE0900A8EE1C /* DetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailCell.m; sourceTree = "<group>"; };
 		B289830920AC8BA600B7544A /* SendersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendersViewController.m; sourceTree = "<group>"; };
@@ -342,6 +345,7 @@
 				3C0A7EBB1AB19DB200F793AA /* lib */,
 				3CA898EE1AA5BC8D0035012D /* res */,
 				3CA898EC1AA5BC740035012D /* src */,
+				921EAE2D22AFB5E9005D6D5B /* Utils */,
 				1C9F2012163E93C3007A170B /* Frameworks */,
 				1C9F2010163E93C3007A170B /* Products */,
 				80952EC13E6D309528B46AE2 /* Pods */,
@@ -764,6 +768,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		921EAE2D22AFB5E9005D6D5B /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				921EAE3022AFB672005D6D5B /* GlobalConstants.h */,
+				921EAE2E22AFB631005D6D5B /* GlobalConstants.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		B29014E8215829BE008A9B83 /* UIFont */ = {
 			isa = PBXGroup;
 			children = (
@@ -915,6 +928,9 @@
 							com.apple.Push = {
 								enabled = 1;
 							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
 						};
 					};
 				};
@@ -1026,6 +1042,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BCEF37A51FB2196E00374541 /* StoredData.m in Sources */,
+				921EAE2F22AFB631005D6D5B /* GlobalConstants.m in Sources */,
 				3C00ADD91AB71B1700EF6886 /* RejectXMLController.m in Sources */,
 				3CC4037D1AB96D29006F8803 /* SettingsVC.m in Sources */,
 				3C00ADE31AB71B4400EF6886 /* NSDateFormatter+Utils.m in Sources */,
