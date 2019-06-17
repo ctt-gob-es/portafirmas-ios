@@ -20,7 +20,7 @@
     BOOL watingForRegister;
 	BOOL availableCertificates;
 }
-@property (weak, nonatomic) IBOutlet UITextView *messageView;
+
 @property (weak, nonatomic) IBOutlet UIView *messageContainerView;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UILabel *firstOptionTitleLabel;

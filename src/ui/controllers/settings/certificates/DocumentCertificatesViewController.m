@@ -294,7 +294,7 @@ int const kFilesAppButtonNormalHeight = 40;
 	documentProviderMenu.delegate = self;
 	documentProviderMenu.modalPresentationStyle = UIModalPresentationPopover;
 	UIPopoverPresentationController *popPC = documentProviderMenu.popoverPresentationController;
-	documentProviderMenu.popoverPresentationController.sourceRect = self.messageView.frame;
+	documentProviderMenu.popoverPresentationController.sourceRect = self.messageContainerView.frame;
 	documentProviderMenu.popoverPresentationController.sourceView = self.view;
 	popPC.permittedArrowDirections = UIPopoverArrowDirectionAny;
 	[self presentViewController:documentProviderMenu animated:YES completion:nil];
