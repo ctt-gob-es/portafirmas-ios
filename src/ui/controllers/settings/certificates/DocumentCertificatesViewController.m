@@ -35,6 +35,7 @@ int const kFilesAppButtonNormalHeight = 40;
     if (self) {
         waitingForDelete = NO;
         watingForRegister = NO;
+		availableCertificates = NO;
     }
 
     return self;
@@ -47,9 +48,8 @@ int const kFilesAppButtonNormalHeight = 40;
     _selectedCertificate = nil;
     files = [self findFiles:[NSArray arrayWithObjects:P12EXTENSION, PFXEXTENSION, nil]];
 
-    if ([files count ] == 0) {
-        _messageView.text = @"La aplicación esta solicitando acceso a su almacen de certificados y no dispone de ninguno registrado.\n\n  Para instalar su certificado :\n 1. Conecte su dispositivo a su PC o Mac.\n 2. Localice el certificado que desea instalar ....(debe conocer el pin del certificado)\n3. En iTunes seleccione su certificado y arrástrelo a la ventana de documentos...\n4. Vuelva a esta pantalla y registrelo en el almacen del dispositivo.\n";
-        [_messageView sizeToFit];
+    if ([files count ] != 0) {
+		availableCertificates = YES;
     }
 
     // Tabulacion de la tabla
@@ -58,25 +58,58 @@ int const kFilesAppButtonNormalHeight = 40;
 
 	// Styles
 	self.navigationItem.title = NSLocalizedString(@"available_certificates", nil);
+	[self setMessageStyle];
 	[self setButtonStyle];
+
 
 }
 
 // Style methods
 - (void)setButtonStyle {
 	if (@available(iOS 11, *)) {
-		// Change height for messageView to include the button
-		self.messageView.frame = CGRectMake(self.messageView.frame.origin.x, self.messageView.frame.origin.y, self.messageView.frame.size.width, self.messageView.frame.size.height + kFilesAppButtonNormalHeight);
+
+		if (!availableCertificates) {
+			self.messageContainerView.frame = CGRectMake(self.messageContainerView.frame.origin.x, self.messageContainerView.frame.origin.y, self.messageContainerView.frame.size.width, 16 + [self getLabelHeight:self.descriptionLabel] + 16 + [self getLabelHeight:self.firstOptionTitleLabel] + 8 + [self getLabelHeight:self.firstOptionDescriptionLabel] + 16 + [self getLabelHeight:self.secondOptionTitleLabel] + kFilesAppButtonNormalHeight);
+		} else {
+			self.messageContainerView.frame = CGRectMake(self.messageContainerView.frame.origin.x, self.messageContainerView.frame.origin.y, self.messageContainerView.frame.size.width, 16 + [self getLabelHeight:self.descriptionLabel] + kFilesAppButtonNormalHeight);
+		}
 		UIButton *filesAppButton = [UIButton buttonWithType:UIButtonTypeCustom];
 		[filesAppButton addTarget:self action:@selector(filesAppButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
 		[filesAppButton setTitle:NSLocalizedString(@"files_app_button", nil) forState:UIControlStateNormal];
-		
-		filesAppButton.frame = CGRectMake(0, (self.messageView.frame.origin.y + self.messageView.frame.size.height - kFilesAppButtonNormalHeight), self.view.frame.size.width, kFilesAppButtonNormalHeight);
+		filesAppButton.frame = CGRectMake(0, (self.messageContainerView.frame.origin.y + self.messageContainerView.frame.size.height - kFilesAppButtonNormalHeight), self.view.frame.size.width, kFilesAppButtonNormalHeight);
 		[filesAppButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
 		[self.view addSubview:filesAppButton];
-	} else {
-//	self.filesAppButton.frame =
 	}
+}
+- (void)setMessageStyle {
+	if (!availableCertificates) {
+		[self.descriptionLabel setFont:[UIFont boldSystemFontOfSize:17]];
+		self.descriptionLabel.text = NSLocalizedString(@"available_certificates_description_label", nil);
+		self.firstOptionTitleLabel.text = NSLocalizedString(@"available_certificates_first_option_title_label", nil);
+		self.firstOptionTitleLabel.hidden = false;
+		self.firstOptionDescriptionLabel.text = NSLocalizedString(@"available_certificates_first_option_description_label", nil);
+		self.firstOptionDescriptionLabel.hidden = false;
+		self.secondOptionTitleLabel.text = NSLocalizedString(@"available_certificates_second_option_title_label", nil);
+		self.secondOptionTitleLabel.hidden = false;
+	} else {
+		self.descriptionLabel.text = NSLocalizedString(@"available_certificates_description_when_available_certificates", nil);
+		self.firstOptionTitleLabel.hidden = true;
+		self.firstOptionDescriptionLabel.hidden = true;
+		self.secondOptionTitleLabel.hidden = true;
+	}
+}
+
+- (CGFloat)getLabelHeight:(UILabel*)label
+{
+	CGSize constraint = CGSizeMake(label.frame.size.width, CGFLOAT_MAX);
+	CGSize size;
+	NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
+	CGSize boundingBox = [label.text boundingRectWithSize:constraint
+												  options:NSStringDrawingUsesLineFragmentOrigin
+											   attributes:@{NSFontAttributeName:label.font}
+												  context:context].size;
+	size = CGSizeMake(ceil(boundingBox.width), ceil(boundingBox.height));
+	return size.height;
 }
 
 // Dispose of any resources that can be recreated.
