@@ -21,7 +21,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="768" height="350"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="La aplicación está colicitando acceso a su almacén de certificados y no dispone de ninguno registrado" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aeU-Bi-KXb">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="La aplicación está colicitando acceso a su almacén de certificados y no dispone de ninguno registrado" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aeU-Bi-KXb">
                                     <rect key="frame" x="29" y="16" width="710" height="41"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
@@ -293,7 +293,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="854"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="rnd-6h-EHw">
+                        <view key="tableFooterView" contentMode="scaleToFill" misplaced="YES" id="rnd-6h-EHw">
                             <rect key="frame" x="0.0" y="110" width="768" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
@@ -481,7 +481,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="904"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="sQU-hE-K3z">
+                        <view key="tableFooterView" contentMode="scaleToFill" misplaced="YES" id="sQU-hE-K3z">
                             <rect key="frame" x="0.0" y="66" width="768" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
@@ -581,7 +581,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="904"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="5qu-iW-ffY">
+                        <view key="tableFooterView" contentMode="scaleToFill" misplaced="YES" id="5qu-iW-ffY">
                             <rect key="frame" x="0.0" y="66" width="768" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
@@ -1382,7 +1382,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="954"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="K5O-ff-EqC">
+                        <view key="tableHeaderView" contentMode="scaleToFill" misplaced="YES" id="K5O-ff-EqC">
                             <rect key="frame" x="0.0" y="0.0" width="768" height="46"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
@@ -1560,7 +1560,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="954"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <view key="tableFooterView" contentMode="scaleToFill" id="RxH-f1-X8R">
+                        <view key="tableFooterView" contentMode="scaleToFill" misplaced="YES" id="RxH-f1-X8R">
                             <rect key="frame" x="0.0" y="109.5" width="768" height="857"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
@@ -1661,7 +1661,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="954"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <textView key="tableHeaderView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" indicatorStyle="black" editable="NO" text="Certificados del almacén" textAlignment="center" id="fsv-P1-mh7">
+                        <textView key="tableHeaderView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" indicatorStyle="black" editable="NO" text="Certificados del almacén" textAlignment="center" id="fsv-P1-mh7">
                             <rect key="frame" x="0.0" y="0.0" width="768" height="37"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" red="0.68627450980000004" green="0.13725490200000001" blue="0.10980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
