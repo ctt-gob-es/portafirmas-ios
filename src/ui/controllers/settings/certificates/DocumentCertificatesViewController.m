@@ -19,6 +19,8 @@
 @implementation DocumentCertificatesViewController
 
 int const kFilesAppButtonNormalHeight = 40;
+int const kDescriptionToFirstLabelDistance = 30;
+int const kNormalLabelDistance = 20;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -69,7 +71,7 @@ int const kFilesAppButtonNormalHeight = 40;
 	if (@available(iOS 11, *)) {
 
 		if (!availableCertificates) {
-			self.messageContainerView.frame = CGRectMake(self.messageContainerView.frame.origin.x, self.messageContainerView.frame.origin.y, self.messageContainerView.frame.size.width, 16 + [self getLabelHeight:self.descriptionLabel] + 16 + [self getLabelHeight:self.firstOptionTitleLabel] + 8 + [self getLabelHeight:self.firstOptionDescriptionLabel] + 16 + [self getLabelHeight:self.secondOptionTitleLabel] + kFilesAppButtonNormalHeight);
+			self.messageContainerView.frame = CGRectMake(self.messageContainerView.frame.origin.x, self.messageContainerView.frame.origin.y, self.messageContainerView.frame.size.width, kDescriptionToFirstLabelDistance + [self getLabelHeight:self.descriptionLabel] + kNormalLabelDistance + [self getLabelHeight:self.firstOptionTitleLabel] + kNormalLabelDistance + [self getLabelHeight:self.firstOptionDescriptionLabel] + kNormalLabelDistance + [self getLabelHeight:self.secondOptionTitleLabel] + kFilesAppButtonNormalHeight);
 		} else {
 			self.messageContainerView.frame = CGRectMake(self.messageContainerView.frame.origin.x, self.messageContainerView.frame.origin.y, self.messageContainerView.frame.size.width, 16 + [self getLabelHeight:self.descriptionLabel] + kFilesAppButtonNormalHeight);
 		}

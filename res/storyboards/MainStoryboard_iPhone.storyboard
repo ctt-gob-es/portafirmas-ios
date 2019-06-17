@@ -237,19 +237,19 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Opción 1:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Scs-f9-W3u">
-                                    <rect key="frame" x="29" y="93" width="76" height="20.5"/>
+                                    <rect key="frame" x="29" y="107" width="76" height="20.5"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Opción 2:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="20Y-sb-TmV">
-                                    <rect key="frame" x="29" y="158" width="78.5" height="20.5"/>
+                                    <rect key="frame" x="29" y="188" width="78.5" height="20.5"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.-Conecte su dispositivo a su PC o Mac" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nZo-gX-kwi">
-                                    <rect key="frame" x="29" y="121.5" width="317" height="20.5"/>
+                                    <rect key="frame" x="29" y="147.5" width="317" height="20.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -258,12 +258,12 @@
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="FsJ-ca-Aqj" secondAttribute="trailing" constant="29" id="1tX-Rz-jmX"/>
                                 <constraint firstItem="FsJ-ca-Aqj" firstAttribute="top" secondItem="9wT-U9-tPb" secondAttribute="top" constant="16" id="5aX-mg-uQ8"/>
-                                <constraint firstItem="Scs-f9-W3u" firstAttribute="top" secondItem="FsJ-ca-Aqj" secondAttribute="bottom" constant="16" id="Wqo-o3-Kog"/>
-                                <constraint firstItem="20Y-sb-TmV" firstAttribute="top" secondItem="nZo-gX-kwi" secondAttribute="bottom" constant="16" id="kIu-Fz-iAb"/>
+                                <constraint firstItem="Scs-f9-W3u" firstAttribute="top" secondItem="FsJ-ca-Aqj" secondAttribute="bottom" constant="30" id="Wqo-o3-Kog"/>
+                                <constraint firstItem="20Y-sb-TmV" firstAttribute="top" secondItem="nZo-gX-kwi" secondAttribute="bottom" constant="20" id="kIu-Fz-iAb"/>
                                 <constraint firstItem="20Y-sb-TmV" firstAttribute="leading" secondItem="9wT-U9-tPb" secondAttribute="leading" constant="29" id="qSE-hr-aiL"/>
                                 <constraint firstItem="FsJ-ca-Aqj" firstAttribute="leading" secondItem="9wT-U9-tPb" secondAttribute="leading" constant="29" id="sWa-cO-6vW"/>
                                 <constraint firstItem="Scs-f9-W3u" firstAttribute="leading" secondItem="9wT-U9-tPb" secondAttribute="leading" constant="29" id="scL-fa-l9H"/>
-                                <constraint firstItem="nZo-gX-kwi" firstAttribute="top" secondItem="Scs-f9-W3u" secondAttribute="bottom" constant="8" id="siU-bm-Kvz"/>
+                                <constraint firstItem="nZo-gX-kwi" firstAttribute="top" secondItem="Scs-f9-W3u" secondAttribute="bottom" constant="20" id="siU-bm-Kvz"/>
                                 <constraint firstItem="nZo-gX-kwi" firstAttribute="leading" secondItem="9wT-U9-tPb" secondAttribute="leading" constant="29" id="swh-3t-qnj"/>
                                 <constraint firstAttribute="trailing" secondItem="nZo-gX-kwi" secondAttribute="trailing" constant="29" id="xSg-4z-LOh"/>
                             </constraints>
