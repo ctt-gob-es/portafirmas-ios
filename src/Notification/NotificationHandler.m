@@ -19,8 +19,10 @@
     Notification *notification = [[Notification alloc] initWithUserInfo:userInfo];
     
     if (notification != nil) {
-        if ([[NotificationHandler extractServerUrlOfBody:notification.alertBody] isEqualToString:SERVER_URL]
-            && [[NotificationHandler extractServerDNIOfBody:notification.alertBody] isEqualToString:SERVER_DNI]) {
+        if ([[NotificationHandler extractServerUrlOfBody:notification.alertBody] isEqualToString:SERVER_URL])
+			// TODO: INCLUDE HERE THE EXTRA COMPROBATION FOR DNI WHEN PUSH NOTIFICATIONS ARE ENABLED.
+//            && [[NotificationHandler extractServerDNIOfBody:notification.alertBody] isEqualToString:SERVER_DNI])
+		{
             return true;
         }
     }
