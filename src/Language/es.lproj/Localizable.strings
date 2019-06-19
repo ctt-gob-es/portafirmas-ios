@@ -70,11 +70,16 @@
 "Configuration_Page_Title" = "Port@firmas v%@";
 
 // Files App
-"files_app_button" = "Añadir más certificados desde Files App";
+"files_app_button" = "Añadir más almacenes desde Files App";
 "files_app_alert_affirmative_button" = "Aceptar";
-"files_app_alert_message_incorrect_file" = "El fichero %@ no es un certificado válido.";
+"files_app_alert_message_incorrect_file" = "El fichero %@ no es un almacén válido.";
 "files_app_alert_message_success" = "El fichero %@ se ha añadido correctamente.";
 "files_app_alert_message_cannot_add_certificate" = "El fichero %@ no se ha añadido correctamente.";
 
 // Available certificates view
-"available_certificates" = "Certificados Disponibles";
+"available_certificates" = "Almacenes Disponibles";
+"available_certificates_description_when_available_certificates" = "Lista de certificados almacenados en su dispositivo. Selecciones el certificado que desee registrar.";
+"available_certificates_description_label" = "La aplicación está solicitando acceso a su almacén de certificados y no dispone de ninguno registrado.";
+"available_certificates_first_option_title_label" = "Opción 1:";
+"available_certificates_first_option_description_label" = "1. Conecte su dispositivo a su PC o Mac.\n2. Localice el certificado que desea instalar ....(debe conocer el pin del certificado)\n3. En iTunes seleccione su certificado y arrástrelo a la ventana de documentos...\n4. Vuelva a esta pantalla y regístrelo en el almacen del dispositivo.";
+"available_certificates_second_option_title_label" = "Opción 2:";
