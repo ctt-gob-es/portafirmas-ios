@@ -10,8 +10,14 @@
 #import "SettingsCell.h"
 #import "CertificateUtils.h"
 #import "AppListXMLController.h"
+#import "LoginService.h"
+#import "PFError.h"
+#import "ErrorService.h"
 
+static const NSInteger kSettingsVCNumberOfSections = 2;
+static const NSInteger kSettingsVCNumberOfRowsPerSection = 1;
 static NSString *const kSettingsVCSectionTitleServerURL = @"Servidor";
+static NSString *const kSettingsVCSectionTitleCertificate = @"Certificado";
 static NSString *const kSettingsVCCellIdentifier = @"SettingsCell";
 static NSString *const kSettingsVCSegueIdentifierServerURLs = @"showServerListVC";
 static NSString *const kSettingsVCSegueIdentifierCertificates = @"showRegisteredCertificates";
@@ -31,6 +37,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 }
 
 @property (nonatomic, strong) IBOutlet UIButton *accessButton;
+@property (strong, nonatomic) IBOutlet UINavigationItem *titleBar;
 
 @end
 
@@ -40,7 +47,8 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
+    [super viewDidLoad];    
+    self.titleBar.title =[NSString stringWithFormat: NSLocalizedString(@"Configuration_Page_Title", nil),[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -64,18 +72,24 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return kSettingsVCNumberOfSections;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return kSettingsVCNumberOfRowsPerSection;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    
-    return kSettingsVCSectionTitleServerURL;
+    switch (section) {
+        case SettingsVCSectionServerURL:
+            return kSettingsVCSectionTitleServerURL;
+        case SettingsVCSectionCertificate:
+            return kSettingsVCSectionTitleCertificate;
+        default:
+            return nil;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -117,10 +131,39 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 }
 
 #pragma mark - Navigation Methods
+    
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
+    __block BOOL segue = NO;
+    if ([identifier isEqualToString:kSettingsVCSegueIdentifierAccess]) {
+        
+        [[LoginService instance] loginWithCertificate:^{
+            segue = YES;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self performSegueWithIdentifier:identifier sender:self];
+            });
+         } failure:^(NSError *error) {
+             if (error != nil && error.code == PFLoginNotSupported) {
+                 segue = YES;
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self performSegueWithIdentifier:identifier sender:self];
+                 });
+             } else {
+                 segue = NO;
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [[ErrorService instance] showLoginErrorAlertView];
+                 });  
+             }
+         }];
+    } else {
+        segue = YES;
+    }
+
+    return segue;
+}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    NSLog(@"Segue -> %@", sender);
+    DDLogDebug(@"Segue -> %@", sender);
     
     if ([segue.identifier isEqualToString:kSettingsVCSegueIdentifierAccess]) {
         
@@ -145,7 +188,6 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 - (void)prepareForAccessSegue:(UIStoryboardSegue *)segue
 {
-    
     [[AppListXMLController sharedInstance] requestAppsList];
 }
 
@@ -153,7 +195,6 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 - (void)serverListDidSelectServer:(NSDictionary *)serverInfo
 {
-    
     [self.tableView reloadData];
 }
 

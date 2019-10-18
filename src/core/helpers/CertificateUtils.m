@@ -12,6 +12,7 @@
 #import <UIKit/UIKit.h>
 #import "NSData+Base64.h"
 #import "OpenSSLCertificateHelper.h"
+#import "GlobalConstants.h"
 // #import "Base64.h"
 
 #define SHA1_DIGESTINFO_HEADER_LENGTH   15
@@ -101,11 +102,11 @@ static CertificateUtils *__sharedKeyWrapper = nil;
     } else {
 
         // Load PCKCS12 from bundle file
-        NSString *thePath = [[NSBundle mainBundle]pathForResource:certName ofType:@"p12"];
+        NSString *thePath = [[NSBundle mainBundle]pathForResource:certName ofType:P12EXTENSION];
 
         if (thePath == nil) {
 
-            thePath = [[NSBundle mainBundle]pathForResource:certName ofType:@"pfx"];
+            thePath = [[NSBundle mainBundle]pathForResource:certName ofType:PFXEXTENSION];
 
             if (thePath == nil) {
                 return errSecItemNotFound;
@@ -190,7 +191,7 @@ static CertificateUtils *__sharedKeyWrapper = nil;
     // If a SecItem contains an access group attribute, SecItemAdd and SecItemUpdate on the
     // simulator will return -25243 (errSecNoAccessForItem).
 #else
-    [dict setObject:[CertificateUtils accessgroup] forKey:kSecAttrAccessGroup];
+    [dict setObject:[CertificateUtils accessgroup] forKey:(__bridge NSString *)kSecAttrAccessGroup];
 #endif
 
     status = SecItemCopyMatching((CFDictionaryRef)dict, &result);
@@ -412,7 +413,7 @@ static CertificateUtils *__sharedKeyWrapper = nil;
     // If a SecItem contains an access group attribute, SecItemAdd and SecItemUpdate on the
     // simulator will return -25243 (errSecNoAccessForItem).
 #else
-    [dict setObject:[CertificateUtils accessgroup] forKey:kSecAttrAccessGroup];
+    [dict setObject:[CertificateUtils accessgroup] forKey:(__bridge NSString*)kSecAttrAccessGroup];
 #endif
     // Remove any existing instance of the key
 

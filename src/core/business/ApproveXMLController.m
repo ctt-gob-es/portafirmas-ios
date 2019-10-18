@@ -12,6 +12,7 @@
 #import "NSData+Base64.h"
 #import "PFRequest.h"
 #import "PFRequestResult.h"
+#import "LoginService.h"
 
 @interface ApproveXMLController ()
 {
@@ -41,7 +42,10 @@
 {
     NSMutableString *requestString = [@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<apprv>\n" mutableCopy];
 
-    [requestString appendString:[self certificateTag]];
+    if (![[LoginService instance] serverSupportLogin]) {
+        [requestString appendString:[self certificateTag]];
+    }
+    
     [requestString appendString:[self requestsIDTagWithRequests:requestsArray]];
     [requestString appendString:@"</apprv>"];
 

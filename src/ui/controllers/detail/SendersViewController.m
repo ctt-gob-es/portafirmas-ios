@@ -2,8 +2,8 @@
 //  SendersViewController.m
 //  PortaFirmasUniv
 //
-//  Created by Antonio Fiñana Sánchez on 16/11/12.
-//  Copyright (c) 2012 Atos. All rights reserved.
+//  Created by Sergio Peñín on 16/05/18.
+//  Copyright © 2018 Solid Gear Projects S.L. All rights reserved.
 //
 
 #import "SendersViewController.h"
@@ -19,14 +19,14 @@
 {
     [super viewDidAppear:animated];
     self.navigationController.toolbarHidden = YES;
-
+    
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
-
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -37,7 +37,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-
+    
     // Return the number of sections.
     return 1;
 }
@@ -46,26 +46,26 @@
 {
     // Return the number of rows in the section.
     DDLogDebug(@"SendersViewController::numberOfRowsInSection=%ld. rows=%lu", (long)section, (unsigned long)[_dataSource count]);
-
+    
     return [_dataSource count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DDLogDebug(@"SenderViewController::cellForRowAtIndexPath row=%ld", (long)[indexPath row]);
-
+    
     static NSString *CellIdentifier = @"SendersCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-
+    
     if (cell == nil) {
         DDLogDebug(@"SendersViewController::cell is nill");
     }
-
+    
     // Configure the cell...
     NSString *sender = [_dataSource objectAtIndex:[indexPath row]];
     cell.textLabel.text = sender;
     sender = nil;
-
+    
     return cell;
 }
 

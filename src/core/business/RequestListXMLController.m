@@ -11,6 +11,7 @@
 #import "Document.h"
 #import "CertificateUtils.h"
 #import "NSData+Base64.h"
+#import "LoginService.h"
 
 @implementation RequestListXMLController
 @synthesize dataSource = _dataSource;
@@ -28,16 +29,17 @@
 + (NSString *)buildRequestWithState:(NSString *)state format:(NSArray *)formatArr filters:(NSDictionary *)filters pageNumber:(int)pageNumber
 {
     NSMutableString *mesg = [[NSMutableString alloc] initWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?><rqtlst state=\"%@\" pg=\"%d\" sz=\"%d\">\n", state, pageNumber, kRequestListXMLControllerPageSize];
-
-    // CERTIFICADO
-    CertificateUtils *cert = [CertificateUtils sharedWrapper];
-    NSString *certificado = [NSData base64EncodeData:[cert publicKeyBits]];
-    // Formats lists message
-    NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
-
-    [certlabel appendFormat:@"%@\n", certificado];
-    [certlabel appendString:@"</cert>\n"];
-    [mesg appendString:certlabel];
+    
+    if (![[LoginService instance] serverSupportLogin]) {
+        CertificateUtils *cert = [CertificateUtils sharedWrapper];
+        NSString *certificado = [NSData base64EncodeData:[cert publicKeyBits]];
+        // Formats lists message
+        NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
+        
+        [certlabel appendFormat:@"%@\n", certificado];
+        [certlabel appendString:@"</cert>\n"];
+        [mesg appendString:certlabel];
+    }
 
     NSMutableString *fmts = [[NSMutableString alloc] initWithString:@"<fmts>\n"];
     for (int i = 0; i < [formatArr count]; i++) {
@@ -124,7 +126,7 @@
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
     NSString *strNew = [string stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    NSLog(@"string -> %@", string);
+    DDLogDebug(@"string -> %@", string);
     strNew = [strNew stringByReplacingOccurrencesOfString:@"\t" withString:@""];
     strNew = [strNew stringByReplacingOccurrencesOfString:@"&_lt;" withString:@"<"];
     strNew = [strNew stringByReplacingOccurrencesOfString:@"&_gt;" withString:@">"];

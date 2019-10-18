@@ -11,6 +11,9 @@
 #define isiPhone                         !isiPad
 
 #pragma mark - iOS info
+#define IOS_NEWER_OR_EQUAL_TO_11          ([[UIDevice currentDevice] systemVersion].floatValue >= 11.0)
+#define IOS_NEWER_OR_EQUAL_TO_10          ([[UIDevice currentDevice] systemVersion].floatValue >= 10.0)
+#define IOS_NEWER_OR_EQUAL_TO_9          ([[UIDevice currentDevice] systemVersion].floatValue >= 9.0)
 #define IOS_NEWER_OR_EQUAL_TO_8          ([[UIDevice currentDevice] systemVersion].floatValue >= 8.0)
 #define IOS_NEWER_OR_EQUAL_TO_7          ([[UIDevice currentDevice] systemVersion].floatValue >= 7.0)
 
@@ -24,3 +27,9 @@
 #define STATUSBAR_ORIENTATION            [UIApplication sharedApplication].statusBarOrientation
 #define NAV_BAR_HEIGHT                                  44
 #define STATUS_BAR_HEIGHT                               20
+
+#pragma mark - Cells
+#define DAYS_TO_EXPIRE_FOR_HIGHLIGHT                    3
+
+#pragma mark - Server
+#define TIMEOUT_FOR_SERVER                              60

@@ -7,11 +7,19 @@
 //
 
 #import "AppDelegate.h"
+#import "DDASLLogger.h"
+#import "DDTTYLogger.h"
+#import "DDFileLogger.h"
+#import "NSData+Conversion.h"
+#import "UnassignedRequestTableViewController.h"
+#import "LoginService.h"
+#import "DefaultServersData.h"
+#import "NotificationHandler.h"
 
 @implementation AppDelegate
-
 // @synthesize certificate, appConfig=_appConfig;
 @synthesize  appConfig = _appConfig;
+@synthesize mainTab = _mainTab;
 
 - (id)init
 {
@@ -22,7 +30,7 @@
 
     // Load the file content and read the data into arrays
     _appConfig = [[NSDictionary alloc] initWithContentsOfFile:path];
-
+    
     return self;
 }
 
@@ -40,6 +48,8 @@ void uncaughtExceptionHandler(NSException *exception)
     [self customizeAppearance];
     [self loadSelectedCertificate];
     
+    [DefaultServersData createDefaultServersIsNotExist];
+
     return YES;
 }
 
@@ -63,6 +73,7 @@ void uncaughtExceptionHandler(NSException *exception)
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    UIApplication.sharedApplication.applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -80,13 +91,10 @@ void uncaughtExceptionHandler(NSException *exception)
 
 - (void)setupLogger
 {
-    [DDLog addLogger:[DDTTYLogger sharedInstance]]; // TTY = Xcode console
-    [DDLog addLogger:[DDASLLogger sharedInstance]]; // ASL = Apple System Logs
-    
-    DDFileLogger *fileLogger = [[DDFileLogger alloc] init]; // File Logger
-    fileLogger.rollingFrequency = 60 * 60 * 24; // 24 hour rolling
-    fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
-    [DDLog addLogger:fileLogger];
+    // Configure CocoaLumberjack
+    [DDLog addLogger:[DDASLLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+
 }
 
 - (void)loadSelectedCertificate
@@ -100,6 +108,77 @@ void uncaughtExceptionHandler(NSException *exception)
             [[CertificateUtils sharedWrapper] setSelectedCertificateName:currentCertificateName];
         }
     }
+}
+    
+- (void)showAlertView: (NSString *) message {
+    
+    UIWindow* topWindow = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    topWindow.rootViewController = [UIViewController new];
+    topWindow.windowLevel = UIWindowLevelAlert + 1;
+    
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Token Registered" message:message preferredStyle:UIAlertControllerStyleAlert];
+    
+    [alert addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK",@"confirm") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        // continue your work
+        
+        // important to hide the window after work completed.
+        // this also keeps a reference to the window until the action is invoked.
+        topWindow.hidden = YES;
+    }]];
+    
+    [topWindow makeKeyAndVisible];
+    [topWindow.rootViewController presentViewController:alert animated:YES completion:nil];
+}
+
+#pragma mark - Notifications Support
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(nonnull NSData *)deviceToken {
+    NSString *tokenHex = [deviceToken hexadecimalString];
+   // [DDLogDebug(@"Device Token for notifications, token: %@", [tokenHex uppercaseString]);
+     
+   // [self showAlertView:[tokenHex uppercaseString]];
+    
+    /*if (!IOS_NEWER_OR_EQUAL_TO_10 && [[PushNotificationService instance] hasUserAllowNotifications] == false) {
+        [[PushNotificationService instance] resetNotificationRequired];
+    }*/
+    
+    if ([LoginService instance].serverSupportLogin) {
+       [[PushNotificationService instance] updateTokenOfPushNotificationsService: [tokenHex uppercaseString]];
+    }
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(nonnull NSError *)error {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
+    DDLogError(@"Error Register for remote notifications: %@", error);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    DDLogDebug(@"Receive remote notification: %@", userInfo);
+    
+    if (userInfo != nil) {
+        if ([NotificationHandler isNotificationForUserLogged:userInfo]){
+            [self openPendingTabAndLoadData];
+        }
+    }
+}
+
+- (void) openPendingTabAndLoadData {
+    if (self.mainTab && [[LoginService instance] serverSupportLogin]) {
+        [self.mainTab setSelectedIndex:0];
+        UINavigationController *nav = [self.mainTab.viewControllers objectAtIndex:0];
+        UnassignedRequestTableViewController *pendingViewController = (UnassignedRequestTableViewController *)nav.rootViewController;
+        [pendingViewController loadData];
+    }
+}
+
++ (UIViewController*) presentingViewController {
+    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    
+    while (topController.presentedViewController) {
+        topController = topController.presentedViewController;
+    }
+    
+    return topController;
 }
 
 @end

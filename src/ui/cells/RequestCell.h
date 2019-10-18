@@ -16,6 +16,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *inputDate;
 @property (nonatomic, strong) IBOutlet UIImageView *image;
 @property (nonatomic, strong) IBOutlet UIImageView *iconRequestType;
+@property (nonatomic, strong) IBOutlet UILabel *expirationDate;
 
 - (void)setPFRequest:(PFRequest *)request;
 

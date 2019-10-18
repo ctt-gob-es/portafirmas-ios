@@ -11,6 +11,10 @@
 #import "NSDate+Utils.h"
 #import "AppListXMLController.h"
 #import "BaseListTVC.h"
+#import "LoginService.h"
+#import "ServerManager.h"
+#import "Server.h"
+#import "PushNotificationService.h"
 
 #define SORT_CRITERIA_ARRAY @[@"Fecha", @"Asunto", @"Aplicación"]
 
@@ -36,6 +40,11 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet UISwitch *enableFiltersSwitch;
 
+@property (nonatomic, strong) IBOutlet UILabel *notificationTitleLabel;
+@property (nonatomic, strong) IBOutlet UILabel *notificationStateLabel;
+@property (nonatomic, strong) IBOutlet UIView *notificationView;
+@property (nonatomic, strong) IBOutlet UISwitch *notificationSwitch;
+
 @end
 
 @implementation FilterVC
@@ -58,8 +67,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     [self addToolbar];
+    [self shouldShowNotificationsSection];
     [self hidePickers];
     [self setupPickers];
 
@@ -67,8 +76,19 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [_enableFiltersSwitch setFrame:CGRectMake(self.view.frame.size.width - _enableFiltersSwitch.frame.size.width - kFilterVCDefaultMargin, _enableFiltersSwitch.frame.origin.y, _enableFiltersSwitch.frame.size.width, _enableFiltersSwitch.frame.size.height)];
 
     if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
-        [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation: UIStatusBarAnimationSlide];
+        UIApplication.sharedApplication.statusBarHidden = NO;
+
     }
+}
+
+- (void) viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self listenNotificationAboutPushNotifications];
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self removeNotificationAboutPushNotifications];
 }
 
 - (void)didReceiveMemoryWarning
@@ -85,6 +105,69 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 - (void)dealloc
 {
     [[KeyboardObserver getInstance] removeObserver:self];
+    [self removeNotificationAboutPushNotifications];
+}
+
+#pragma mark - Notifications Section
+
+- (void) listenNotificationAboutPushNotifications {
+    [self removeNotificationAboutPushNotifications];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(finishSubscriptionProcess)
+                                                 name:@"FinishSubscriptionProcessNotification"
+                                               object:nil];
+}
+
+- (void) removeNotificationAboutPushNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"FinishSubscriptionProcessNotification" object:nil];
+}
+
+- (void) shouldShowNotificationsSection {
+    if (![[LoginService instance] serverSupportLogin]) {
+        self.notificationTitleLabel.hidden = true;
+        self.notificationView.hidden = true;
+        self.notificationStateLabel.hidden = true;
+        self.notificationSwitch.hidden = true;
+    } else {
+        [self showNotificationSectionState];
+    }
+}
+
+- (void) showNotificationSectionState {
+    
+    NSString *notificationStatePending = NSLocalizedString(@"Filter_View_Push_Notification_Pending_Title", nil);
+    NSString *notificationStateSet = NSLocalizedString(@"Filter_View_Push_Notification_Enabled_Title", nil);
+    
+    if ([PushNotificationService instance].currentServer.userNotificationPermisionState) {
+        self.notificationStateLabel.text = notificationStateSet;
+        [self.notificationSwitch setOn:true];
+    } else  {
+        self.notificationStateLabel.text = notificationStatePending;
+        [self.notificationSwitch setOn:false];
+    }
+}
+
+-(IBAction)switchChanged:(UISwitch *)sender {
+    
+    if([self.notificationSwitch isOn]){
+        [self initSubscriptionProcess];
+    } else {
+        [self showNotificationSectionState];
+    }
+}
+
+- (void) initSubscriptionProcess {
+    
+    if ([self.notificationSwitch isOn]) {
+         [[PushNotificationService instance] initializePushNotificationsService:true];
+    } else {
+         [self showNotificationSectionState];
+    }
+    
+}
+
+- (void) finishSubscriptionProcess {
+    [self showNotificationSectionState];
 }
 
 #pragma mark - Delegate Popover

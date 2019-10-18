@@ -12,6 +12,7 @@
 #define COLOR_PRIORITY_RED    [ColorChart colorFromHexString:@"#ff4466"]
 #define COLOR_PRIORITY_ORANGE [ColorChart colorFromHexString:@"#ff9966"]
 #define COLOR_PRIORITY_YELLOW [ColorChart colorFromHexString:@"#f6d965"]
+#define HIGHLIGHT_COLOR_FOR_NEAR_TO_EXPIRE_CELLS [ColorChart colorFromHexString:@"#ffffe7"]
 #define ThemeColorWithAlpha(alpha) [THEME_COLOR colorWithAlphaComponent : alpha]
 
 @interface ColorChart : NSObject

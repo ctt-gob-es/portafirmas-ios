@@ -32,6 +32,7 @@
         _wsController.delegate = self;
         waitingPreSign = NO;
         waitingPostSign = NO;
+        _pendingRequestIndex = 0;
     }
 
     return self;
@@ -40,18 +41,31 @@
 - (void)loadPreSignRequestsWithCurrentCertificate:(NSArray *)requests
 {
     DDLogDebug(@"RequestSignerController::loadPreSignRequestsWithCurrentCertificate...");
-    waitingPreSign = TRUE;
+    _pendingRequestIndex = 0;
+    _pendingRequests = [[NSMutableArray alloc] initWithArray: requests];
+    _dataSource = [[NSMutableArray alloc] init];
+    [self sendNextRequest];
+}
 
-    NSData *certificateData = [[CertificateUtils sharedWrapper] publicKeyBits];
-    NSString *certificateB64 = [Base64Utils base64EncodeData:certificateData];
-    NSLog(@"Presing - RequestSignerController");
-    NSString *data = [PreSignXMLController buildRequestWithCert:certificateB64 witRequestList:requests];
-
-    DDLogDebug(@"RequestSignerController::loadPreSignRequestsWithCurrentCertificate data=%@", data);
-
-    _wsController.delegate = self;
-    [_wsController loadPostRequestWithData:data code:0];
-    [_wsController startConnection];
+- (void)sendNextRequest {
+    if (_pendingRequestIndex < [_pendingRequests count]) {
+        NSArray *nextRequest = [[NSArray alloc] initWithObjects:_pendingRequests[_pendingRequestIndex], nil];
+        waitingPreSign = TRUE;
+        
+        NSData *certificateData = [[CertificateUtils sharedWrapper] publicKeyBits];
+        NSString *certificateB64 = [Base64Utils base64EncodeData:certificateData];
+        DDLogDebug(@"Presing - RequestSignerController");
+        NSString *data = [PreSignXMLController buildRequestWithCert:certificateB64 witRequestList: nextRequest];
+        
+        DDLogDebug(@"RequestSignerController::loadPreSignRequestsWithCurrentCertificate data=%@", data);
+        
+        _wsController.delegate = self;
+        [_wsController loadPostRequestWithData:data code:0];
+        [_wsController startConnection];
+        _pendingRequestIndex++;
+    } else {
+        [[self delegate] didReceiveSignerRequestResult:_dataSource];
+    }
 }
 
 - (void)loadPreSignDetailWithCurrentCertificate:(Detail *)detail
@@ -75,13 +89,13 @@
     // dataFromBase64String
     // NSString *certificateB64 = [certificateData base64EncodedString];
     NSString *certificateB64 = [Base64Utils base64EncodeData:certificateData];
-    NSLog(@"**************** PostSign - RequestSignerController ****************");
-    NSLog(@"certificateB64 => \n%@", certificateB64);
+    DDLogDebug(@"**************** PostSign - RequestSignerController ****************");
+    DDLogDebug(@"certificateB64 => \n%@", certificateB64);
     NSString *data = [PostSignXMLController buildRequestWithCert:certificateB64 witRequestList:requests];
 
-    NSLog(@"\n \n");
+    DDLogDebug(@"\n \n");
     DDLogDebug(@"loadPreSignRequest::loadPostSignRequest data => \n\n%@", data);
-    NSLog(@"\n \n \n");
+    DDLogDebug(@"\n \n \n");
     
     waitingPostSign = YES;
 
@@ -169,11 +183,10 @@
 
         // test the result
         if (success) {
-            NSLog(@"doParse:: Parsing XML with no errors ");
+            DDLogDebug(@"doParse:: Parsing XML with no errors ");
             // get array of users here
-            _dataSource = [parser dataSource];
-
-            [[self delegate] didReceiveSignerRequestResult:_dataSource];
+            [_dataSource addObjectsFromArray: [parser dataSource]];
+            [self sendNextRequest];
         } else {
            DDLogError(@"doParse::Error  parsing PreSign document!");
             [[self delegate] didReceiveError:@"Se ha producido un error de conexión con el servidor"];

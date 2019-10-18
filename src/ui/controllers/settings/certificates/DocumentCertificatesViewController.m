@@ -8,6 +8,7 @@
 
 #import "DocumentCertificatesViewController.h"
 #import "CertificateUtils.h"
+#import "GlobalConstants.h"
 
 @interface DocumentCertificatesViewController ()
 
@@ -16,6 +17,10 @@
 @end
 
 @implementation DocumentCertificatesViewController
+
+int const kFilesAppButtonNormalHeight = 40;
+int const kDescriptionToFirstLabelDistance = 30;
+int const kNormalLabelDistance = 20;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -32,6 +37,7 @@
     if (self) {
         waitingForDelete = NO;
         watingForRegister = NO;
+		availableCertificates = NO;
     }
 
     return self;
@@ -40,18 +46,72 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+	
     _selectedCertificate = nil;
-    files = [self findFiles:[NSArray arrayWithObjects:@"p12", @"pfx", nil]];
+    files = [self findFiles:[NSArray arrayWithObjects:P12EXTENSION, PFXEXTENSION, nil]];
 
-    if ([files count ] == 0) {
-        _messageView.text = @"La aplicación esta solicitando acceso a su almacen de certificados y no dispone de ninguno registrado.\n\n  Para instalar su certificado :\n 1. Conecte su dispositivo a su PC o Mac.\n 2. Localice el certificado que desea instalar ....(debe conocer el pin del certificado)\n3. En iTunes seleccione su certificado y arrástrelo a la ventana de documentos...\n4. Vuelva a esta pantalla y registrelo en el almacen del dispositivo.\n";
-        [_messageView sizeToFit];
+    if ([files count ] != 0) {
+		availableCertificates = YES;
     }
 
     // Tabulacion de la tabla
     self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 10, -30);
     [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+
+	// Styles
+	self.navigationItem.title = NSLocalizedString(@"available_certificates", nil);
+	[self setMessageStyle];
+	[self setButtonStyle];
+
+
+}
+
+// Style methods
+- (void)setButtonStyle {
+	if (@available(iOS 11, *)) {
+
+		if (!availableCertificates) {
+			self.messageContainerView.frame = CGRectMake(self.messageContainerView.frame.origin.x, self.messageContainerView.frame.origin.y, self.messageContainerView.frame.size.width, kDescriptionToFirstLabelDistance + [self getLabelHeight:self.descriptionLabel] + kNormalLabelDistance + [self getLabelHeight:self.firstOptionTitleLabel] + kNormalLabelDistance + [self getLabelHeight:self.firstOptionDescriptionLabel] + kNormalLabelDistance + [self getLabelHeight:self.secondOptionTitleLabel] + kFilesAppButtonNormalHeight);
+		} else {
+			self.messageContainerView.frame = CGRectMake(self.messageContainerView.frame.origin.x, self.messageContainerView.frame.origin.y, self.messageContainerView.frame.size.width, 16 + [self getLabelHeight:self.descriptionLabel] + kFilesAppButtonNormalHeight);
+		}
+		UIButton *filesAppButton = [UIButton buttonWithType:UIButtonTypeCustom];
+		[filesAppButton addTarget:self action:@selector(filesAppButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+		[filesAppButton setTitle:NSLocalizedString(@"files_app_button", nil) forState:UIControlStateNormal];
+		filesAppButton.frame = CGRectMake(0, (self.messageContainerView.frame.origin.y + self.messageContainerView.frame.size.height - kFilesAppButtonNormalHeight), self.view.frame.size.width, kFilesAppButtonNormalHeight);
+		[filesAppButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+		[self.view addSubview:filesAppButton];
+	}
+}
+- (void)setMessageStyle {
+	if (!availableCertificates) {
+		[self.descriptionLabel setFont:[UIFont boldSystemFontOfSize:17]];
+		self.descriptionLabel.text = NSLocalizedString(@"available_certificates_description_label", nil);
+		self.firstOptionTitleLabel.text = NSLocalizedString(@"available_certificates_first_option_title_label", nil);
+		self.firstOptionTitleLabel.hidden = false;
+		self.firstOptionDescriptionLabel.text = NSLocalizedString(@"available_certificates_first_option_description_label", nil);
+		self.firstOptionDescriptionLabel.hidden = false;
+		self.secondOptionTitleLabel.text = NSLocalizedString(@"available_certificates_second_option_title_label", nil);
+		self.secondOptionTitleLabel.hidden = false;
+	} else {
+		self.descriptionLabel.text = NSLocalizedString(@"available_certificates_description_when_available_certificates", nil);
+		self.firstOptionTitleLabel.hidden = true;
+		self.firstOptionDescriptionLabel.hidden = true;
+		self.secondOptionTitleLabel.hidden = true;
+	}
+}
+
+- (CGFloat)getLabelHeight:(UILabel*)label
+{
+	CGSize constraint = CGSizeMake(label.frame.size.width, CGFLOAT_MAX);
+	CGSize size;
+	NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
+	CGSize boundingBox = [label.text boundingRectWithSize:constraint
+												  options:NSStringDrawingUsesLineFragmentOrigin
+											   attributes:@{NSFontAttributeName:label.font}
+												  context:context].size;
+	size = CGSizeMake(ceil(boundingBox.width), ceil(boundingBox.height));
+	return size.height;
 }
 
 // Dispose of any resources that can be recreated.
@@ -121,17 +181,20 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSString *fileToDelete = files[indexPath.row];
-        
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSString *documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-        
         NSString *filePath = [documentsPath stringByAppendingPathComponent:fileToDelete];
         NSError *error;
         NSString *message;
         BOOL success = [fileManager removeItemAtPath:filePath error:&error];
-        message = success ? @"Se ha eliminado el certificado correctamente" : @"Se ha producido un error";
-        [[[UIAlertView alloc] initWithTitle:nil message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-        files = [self findFiles:[NSArray arrayWithObjects:@"p12", @"pfx", nil]];
+        message = success ? NSLocalizedString(@"Alert_View_certificated_removed_correctly", nil) : NSLocalizedString(@"Alert_View_An_Error_Has_Ocurred", nil);
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
+                                                                                 message:message
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:cancel];
+        [self presentViewController:alertController animated:YES completion:nil];
+        files = [self findFiles:[NSArray arrayWithObjects:P12EXTENSION, PFXEXTENSION, nil]];
         [self.tableView reloadData];
     }
     
@@ -228,11 +291,67 @@
     return YES;
 }
 
+- (IBAction)filesAppButtonTapped:(id)sender {
+	UIDocumentMenuViewController *documentProviderMenu = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.data"] inMode:UIDocumentPickerModeImport];
+	documentProviderMenu.delegate = self;
+	documentProviderMenu.modalPresentationStyle = UIModalPresentationPopover;
+	UIPopoverPresentationController *popPC = documentProviderMenu.popoverPresentationController;
+	documentProviderMenu.popoverPresentationController.sourceRect = self.messageContainerView.frame;
+	documentProviderMenu.popoverPresentationController.sourceView = self.view;
+	popPC.permittedArrowDirections = UIPopoverArrowDirectionAny;
+	[self presentViewController:documentProviderMenu animated:YES completion:nil];
+}
+
 #pragma mark - ModalCertificatesControllerDelegate
 
 - (void)certificateAdded
 {
     [self didTapOnBackButton:nil];
+}
+
+- (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentAtURL:(NSURL *)url {
+	if (controller.documentPickerMode == UIDocumentPickerModeImport) {
+		
+		NSString* fileType = [url.lastPathComponent pathExtension];
+		Boolean correctFileType = false ;
+		NSString *alertMessage = [NSString stringWithFormat:NSLocalizedString(@"files_app_alert_message_incorrect_file", nil), [url lastPathComponent]];
+		if ([fileType  isEqualToString: P12EXTENSION] || [fileType  isEqualToString: PFXEXTENSION]) {
+			correctFileType = true;
+		}
+		
+		if (correctFileType) {
+			NSFileManager *fileManager = [NSFileManager defaultManager];
+			NSError *copyError = nil;
+			NSURL* documentDirectory = [[fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] objectAtIndex:0];
+			NSURL* fileDirectory = [documentDirectory URLByAppendingPathComponent: url.lastPathComponent isDirectory:YES];
+			[fileManager copyItemAtURL:url toURL: fileDirectory error:&copyError];
+			if (!copyError)
+			{
+				alertMessage = [NSString stringWithFormat:NSLocalizedString(@"files_app_alert_message_success", nil), [url lastPathComponent]];
+			}
+			else
+			{
+				alertMessage = [NSString stringWithFormat:NSLocalizedString(@"files_app_alert_message_cannot_add_certificate", nil), [url lastPathComponent]];
+			}
+			files = [self findFiles:@[P12EXTENSION, PFXEXTENSION]];
+			[self.tableView reloadData];
+		}
+		
+		dispatch_async(dispatch_get_main_queue(), ^{
+			UIAlertController *alertController = [UIAlertController
+												  alertControllerWithTitle: nil
+												  message:alertMessage
+												  preferredStyle:UIAlertControllerStyleAlert];
+			[alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"files_app_alert_affirmative_button", nil) style:UIAlertActionStyleDefault handler:nil]];
+			[self presentViewController:alertController animated:YES completion:nil];
+			
+		});
+	}
+}
+
+- (void)documentMenu:(nonnull UIDocumentMenuViewController *)documentMenu didPickDocumentPicker:(nonnull UIDocumentPickerViewController *)documentPicker {
+	documentPicker.delegate = self;
+	[self presentViewController:documentPicker animated:YES completion:nil];
 }
 
 @end

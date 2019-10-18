@@ -8,11 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "CertificateUtils.h"
+#import "PushNotificationService.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) NSString *certificateName;
 @property (strong, nonatomic) NSDictionary *appConfig;
-//@property (strong, nonatomic) CertificateUtils *certificate;
+@property (strong, nonatomic) UITabBarController *mainTab;
+
++ (UIViewController*) presentingViewController;
+
 @end

@@ -8,6 +8,9 @@
 
 #import "WSDataController.h"
 #import "NSData+Base64.h"
+#import "NSString+XMLSafe.h"
+#import "CookieTools.h"
+#import "LoginService.h"
 
 #define SERVER_URL ((NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyCurrentServer])[kPFUserDefaultsKeyURL]
 
@@ -27,14 +30,12 @@ struct {
         delegateRespondsTo.didDoParse = [_delegate respondsToSelector:@selector(doParse:)];
         delegateRespondsTo.didReceiveParserWithError = [_delegate respondsToSelector:@selector(didReceiveParserWithError:)];
     }
-
 }
 
 - (id)init
 {
     self = [super init];
-    REQUEST_POST = NO;
-
+    REQUEST_POST = YES;
     return self;
 }
 
@@ -42,7 +43,6 @@ struct {
 {
     self = [super init];
     REQUEST_POST = isPOSTRequest;
-
     return self;
 }
 
@@ -53,7 +53,6 @@ struct {
 
 - (void)loadPostRequestWithURL:(NSString *)wsURLString code:(NSInteger)code data:(NSString *)data
 {
-
     NSData *msgData = [data dataUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *request;
 
@@ -66,26 +65,33 @@ struct {
 
         request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:newURL]
                                           cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                      timeoutInterval:60];
-
+                                      timeoutInterval:TIMEOUT_FOR_SERVER];
     } else {
-
-        NSString *post = [NSString stringWithFormat: @"op=%lu&dat=%@",
-                          (unsigned long)code, [msgData base64EncodedString]];
+        
+        NSString *post = [NSString stringWithFormat: @"op=%lu&dat=%@",(unsigned long)code, [msgData base64EncodedString]];
         NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
         NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
-        NSLog(@"\n");
-        NSLog(@"WSDataController -> Valor postLength ->    %@", postLength);
-        NSLog(@"\n\n");
+        DDLogDebug(@"\n");
+        DDLogDebug(@"WSDataController -> Valor postLength ->    %@", postLength);
+        DDLogDebug(@"\n\n");
 
         request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:wsURLString]
                                           cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                      timeoutInterval:60];
+                                      timeoutInterval:TIMEOUT_FOR_SERVER];
 
         [request setHTTPMethod:@"POST"];
         [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
         [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
         [request setHTTPBody:postData];
+        
+        if ([[LoginService instance] serverSupportLogin]) {
+            NSDictionary *cookieDict = [CookieTools JSessionID];
+            
+            if (cookieDict != nil) {
+                [request setAllHTTPHeaderFields:cookieDict];
+                [request setHTTPShouldHandleCookies:YES];
+            }
+        }
     }
 
     // Clear out the existing connection if there is one
@@ -108,7 +114,7 @@ struct {
     // Create a request object with that URL
     NSURLRequest *request = [NSURLRequest requestWithURL:url
                                              cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                         timeoutInterval:60];
+                                         timeoutInterval:TIMEOUT_FOR_SERVER];
 
     // Clear out the existing connection if there is one
     if (connectionInProgress) {
@@ -176,6 +182,7 @@ struct {
 - (void)startConnection
 {
     if (connectionInProgress) {
+        [connectionInProgress scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
         [connectionInProgress start];
     }
 }

@@ -10,6 +10,7 @@
 #import "PFRequest.h"
 #import "Document.h"
 #import "Param.h"
+#import "LoginService.h"
 
 @implementation PreSignXMLController
 
@@ -18,9 +19,12 @@
 // Builds Web Service Request message
 + (NSString *)buildRequestWithCert:(NSString *)cert witRequestList:(NSArray *)requests;
 {
-    NSLog(@"+++++++ Presign +++++++");
+    DDLogDebug(@"+++++++ Presign +++++++");
     NSMutableString *mesg = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rqttri>\n"];
-    [mesg appendFormat:@"<cert>%@</cert>\n", cert];
+    
+    if (![[LoginService instance] serverSupportLogin]) {
+        [mesg appendFormat:@"<cert>%@</cert>\n", cert];
+    }
 
     // Filters list message
     NSMutableString *requestsMsg = [[NSMutableString alloc] initWithString:@"<reqs>"];

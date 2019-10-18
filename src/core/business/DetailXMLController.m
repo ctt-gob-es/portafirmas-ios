@@ -11,8 +11,10 @@
 #import "Detail.h"
 #import "SignLine.h"
 #import "Document.h"
+#import "AttachedDoc.h"
 #import "CertificateUtils.h"
 #import "NSData+Base64.h"
+#import "LoginService.h"
 
 @implementation DetailXMLController
 
@@ -24,14 +26,18 @@
     NSMutableString *mesg = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"];
 
     [mesg appendFormat:@"<rqtdtl id=\"%@\">\n", rqdtlid];
-    // CERTIFICADO
-    CertificateUtils *cert = [CertificateUtils sharedWrapper];
-    NSString *certificado = [NSData base64EncodeData:[cert publicKeyBits]];
-    // Formats lists message
-    NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
-    [certlabel appendFormat:@"%@\n", certificado];
-    [certlabel appendString:@"</cert>\n"];
-    [mesg appendString:certlabel];
+    
+    if (![[LoginService instance] serverSupportLogin]) {
+        // CERTIFICADO
+        CertificateUtils *cert = [CertificateUtils sharedWrapper];
+         NSString *certificado = [NSData base64EncodeData:[cert publicKeyBits]];
+         // Formats lists message
+         NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
+         [certlabel appendFormat:@"%@\n", certificado];
+         [certlabel appendString:@"</cert>\n"];
+         [mesg appendString:certlabel];
+    }
+    
     [mesg appendFormat:@"</rqtdtl>\n"];
 
     return mesg;
@@ -59,13 +65,13 @@
 
         _detail = [[Detail alloc] initWithDict:attributeDict];
         waitingForDocument = FALSE;
+        waitingForAttachedDoc = FALSE;
     }
 
     if ([elementName isEqualToString:@"snders"]) {
         DDLogDebug(@"user element found – create a new instance of snders list class...");
         waitingForSenders = YES;
         senders = [[NSMutableArray alloc ]init];
-
     }
 
     if ([elementName isEqualToString:@"sgnlines"]) {
@@ -97,6 +103,21 @@
 
         document.docid = [attributeDict objectForKey:@"docid"];
         DDLogDebug(@"user element found – document docid=%@", [attributeDict objectForKey:@"docid"]);
+    }
+    
+    if ([elementName isEqualToString:@"attachedList"]){
+        DDLogDebug(@"user element found – create a new instance of attached list class");
+        
+        attachedDocs = [NSMutableArray new];
+    }
+    
+    if ([elementName isEqualToString:@"attached"]) {
+        waitingForAttachedDoc = YES;
+        attachedDoc = [AttachedDoc new];
+        
+        attachedDoc.docid = [attributeDict objectForKey:@"docid"];
+        
+        DDLogDebug(@"user element found – attached docid=%@", [attributeDict objectForKey:@"docid"]);
     }
 }
 
@@ -146,9 +167,15 @@
     if ([elementName isEqualToString:@"docs"]) {
         // We reached the end of the XML document
         _detail.documents = documents;
-        // [documents release];
         documents = nil;
 
+        return;
+    }
+    
+    if ([elementName isEqualToString:@"attachedList"]) {
+        _detail.attachedDocs = attachedDocs;
+        attachedDocs = nil;
+        
         return;
     }
 
@@ -174,9 +201,16 @@
         // object to our user array
         waitingForDocument = NO;
         [documents addObject:document];
-        // [document release];
         document = nil;
 
+        return;
+    }
+    
+    if ([elementName isEqualToString:@"attached"]) {
+        waitingForAttachedDoc = NO;
+        [attachedDocs addObject:attachedDoc];
+        attachedDoc = nil;
+        
         return;
     }
 
@@ -186,6 +220,9 @@
     if (waitingForDocument) {
         [document setValue:currentElementValue forKey: elementName];
 
+    } else if (waitingForAttachedDoc) {
+        [attachedDoc setValue:currentElementValue forKey:elementName];
+        
     } else if (waitingForSignline) {
         [signline.receivers addObject:currentElementValue];
 

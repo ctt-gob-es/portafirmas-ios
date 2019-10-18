@@ -11,7 +11,9 @@
 
 @implementation XMLController
 
-@synthesize errorCode, err, finishWithError = _finishwithError;
+@synthesize errorCode = _errorCode;
+@synthesize err = _err;
+@synthesize finishWithError = _finishwithError;
 
 - (id)init
 {
@@ -19,7 +21,7 @@
 
     if (self) {
         _finishwithError = NO;
-        errorCode = nil;
+        _errorCode = nil;
     }
 
     return self;
@@ -32,12 +34,10 @@
 {
     if ([elementName isEqualToString:@"err"]) {
        DDLogDebug(@"err element found.");
-
         _finishwithError = YES;
         // We do not have any attributes in the user elements, but if
         // you do, you can extract them here:
-        errorCode = [attributeDict objectForKey:@"cd"];
-
+        _errorCode = [attributeDict objectForKey:@"cd"];
     }
 }
 
@@ -52,7 +52,6 @@
     if ([strNew isEqualToString:@"\n"]) {
         return;
     }
-
     if (currentElementValue) {
         [currentElementValue appendString:strNew];
     } else {
@@ -64,8 +63,7 @@
 {
     if ([elementName isEqualToString:@"err"]) {
         // We reached the end of the XML document
-        err = currentElementValue;
-
+        _err = currentElementValue;
         return;
     }
 }

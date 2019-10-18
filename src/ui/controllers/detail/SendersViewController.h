@@ -2,8 +2,8 @@
 //  SendersViewController.h
 //  PortaFirmasUniv
 //
-//  Created by Antonio Fiñana Sánchez on 16/11/12.
-//  Copyright (c) 2012 Atos. All rights reserved.
+//  Created by Sergio Peñín on 16/05/18.
+//  Copyright © 2018 Solid Gear Projects S.L. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

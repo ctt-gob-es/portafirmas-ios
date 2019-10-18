@@ -10,7 +10,7 @@
 #import "CertificateUtils.h"
 #include "ModalCertificatesController.h"
 
-@interface DocumentCertificatesViewController : PFBaseTVC <ModalCertificatesControllerDelegate> {
+@interface DocumentCertificatesViewController : PFBaseTVC <ModalCertificatesControllerDelegate, UIDocumentMenuDelegate, UIDocumentPickerDelegate, UINavigationControllerDelegate> {
 
     NSString *_infoLabel;
     NSArray *files;
@@ -18,10 +18,16 @@
     NSString *_password;
     BOOL waitingForDelete;
     BOOL watingForRegister;
+	BOOL availableCertificates;
 }
-@property (weak, nonatomic) IBOutlet UITextView *messageView;
+
+@property (weak, nonatomic) IBOutlet UIView *messageContainerView;
+@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *firstOptionTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *firstOptionDescriptionLabel;
+@property (weak, nonatomic) IBOutlet UILabel *secondOptionTitleLabel;
 
 // Find files in Document directory
 - (NSArray *)findFiles:(NSArray *)extensions;
-
+- (CGFloat)getLabelHeight:(UILabel*)label;
 @end

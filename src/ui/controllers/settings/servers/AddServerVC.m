@@ -13,9 +13,7 @@
 
 @implementation AddServerVC
 
-NSDictionary *typeDict;
-
-@synthesize aliasTextField, urlTextField, aliasReceived, urlRecived, isEdit, selectedCertificate;
+@synthesize aliasTextField, urlTextField, aliasReceived, urlRecived, isEdit;
 
 #pragma mark - Life Cycle
 
@@ -26,8 +24,8 @@ NSDictionary *typeDict;
     
     isEdit = NO;
     
-    NSLog(@"Texto recibido Alias-> %@", aliasReceived);
-    NSLog(@"URL   -> %@", urlRecived);
+    DDLogDebug(@"Texto recibido Alias-> %@", aliasReceived);
+    DDLogDebug(@"URL   -> %@", urlRecived);
     
     if (aliasReceived != NULL && urlRecived != NULL) {
         
@@ -50,23 +48,6 @@ NSDictionary *typeDict;
 - (void) viewWillAppear:(BOOL)animated {
     
     [super viewWillAppear:animated];
-    
-    typeDict = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyCurrentCertificate];
-    
-    NSLog(@"Diccionario -> %@", [typeDict allValues]);
-    if (typeDict && [typeDict.allKeys containsObject: kPFUserDefaultsKeyAlias] && (![aliasTextField.text isEqualToString:@""] ||  ![urlTextField.text isEqualToString:@""])) {
-        
-        [selectedCertificate setTitle: typeDict[kPFUserDefaultsKeyAlias] forState: UIControlStateNormal];
-        [selectedCertificate setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [selectedCertificate reloadInputViews];
-        [self updateSaveButton];
-    }
-    else {
-        [selectedCertificate setTitle: @"Sin especificar" forState: UIControlStateNormal];
-        [selectedCertificate setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-        [selectedCertificate reloadInputViews];
-        [self updateSaveButton];
-    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -87,13 +68,6 @@ NSDictionary *typeDict;
     urlTextField.layer.borderColor = [[UIColor lightGrayColor]CGColor];
     urlTextField.layer.borderWidth = 1.0;
     urlTextField.layer.cornerRadius = 5;
-    
-    // Button
-    [[selectedCertificate layer] setBorderColor: [UIColor lightGrayColor].CGColor];
-    [[selectedCertificate layer] setCornerRadius: 5];
-    [[selectedCertificate layer] setMasksToBounds: YES];
-    [[selectedCertificate layer] setBorderWidth: 1];
-    [selectedCertificate reloadInputViews];
 }
 
 - (void)updateSaveButton
@@ -107,7 +81,7 @@ NSDictionary *typeDict;
         url = [urlTextField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     }
     
-    [_saveBarButtonItem setEnabled:alias && alias.length > 0 && url && url.length > 0 && typeDict && [typeDict.allKeys containsObject: kPFUserDefaultsKeyAlias]];
+    [_saveBarButtonItem setEnabled:alias && alias.length > 0 && url && url.length > 0];
 }
 
 #pragma mark - User Interaction

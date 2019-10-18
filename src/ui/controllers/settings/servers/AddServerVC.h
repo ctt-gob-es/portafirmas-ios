@@ -11,7 +11,6 @@
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *saveBarButtonItem;
 @property (nonatomic, retain) IBOutlet UITextField *aliasTextField;
 @property (nonatomic, retain) IBOutlet UITextField *urlTextField;
-@property (strong, nonatomic) IBOutlet UIButton *selectedCertificate;
 
 @property (nonatomic, retain) NSString *aliasReceived, *urlRecived;
 @property (nonatomic, assign, getter = isEdit) BOOL isEdit;

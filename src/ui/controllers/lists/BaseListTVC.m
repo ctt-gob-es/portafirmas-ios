@@ -11,6 +11,7 @@
 #import "RequestCell.h"
 #import "RequestCellNoUI.h"
 #import "DetailTableViewController.h"
+#import "ArrayHelper.h"
 
 @interface BaseListTVC ()
 
@@ -87,7 +88,7 @@
 - (void)loadDataWithProgressIndicator:(BOOL)showProgressIndicator
 {
     if (showProgressIndicator) {
-        [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
     }
 
     NSString *data = [RequestListXMLController buildDefaultRequestWithState:_dataStatus pageNumber:_currentPage filters:_filtersDict];
@@ -131,7 +132,6 @@
         if (!finishOK) {
             DDLogError(@"Error  parsing  document!");
             [self didReceiveParserWithError:[NSString stringWithFormat:@"Mensaje del servidor:%@(%@)", [parser err], [parser errorCode]]];
-
             return;
         }
 
@@ -141,9 +141,9 @@
             [self.dataArray addObjectsFromArray:[parser dataSource]];
         }
 
+        self.dataArray = [ArrayHelper getSortedArrayByExpirationDate: self.dataArray];
         [self setMoreDataAvailable:[parser dataSource].count > 0 && [parser dataSource].count % kRequestListXMLControllerPageSize == 0];
         [self.tableViewFooter setHidden:!self.moreDataAvailable];
-
         [self.tableView reloadData];
     } else {
         DDLogError(@"Error parsing document!");
@@ -161,11 +161,12 @@
 
 - (void)didReceiveError:(NSString *)errorString
 {
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"")
-                                message:errorString
-                               delegate:nil
-                      cancelButtonTitle:NSLocalizedString(@"OK", @"")
-                      otherButtonTitles:nil] show];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
+                                                                             message:errorString
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+    [alertController addAction:cancel];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 #pragma mark - UITableViewDataSource
@@ -227,7 +228,7 @@
 
 - (void)prepareForDetailSegue:(UIStoryboardSegue *)segue enablingSigning:(BOOL)enableSign
 {
-    [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
 
     NSInteger selectedRow = [self.tableView indexPathForSelectedRow].row;
     DetailTableViewController *detailVC = [segue destinationViewController];

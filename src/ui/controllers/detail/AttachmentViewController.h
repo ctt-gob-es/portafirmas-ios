@@ -11,10 +11,12 @@
 
 @interface AttachmentViewController : UITableViewController
 {
-    NSMutableArray *_dataSource;
+    NSMutableArray *_documentsDataSource;
+    NSMutableArray *_attachedDocsDataSource;
 }
 
-@property (strong, nonatomic) NSMutableArray *dataSource;
+@property (strong, nonatomic) NSMutableArray *documentsDataSource;
+@property (strong, nonatomic) NSMutableArray *attachedDocsDataSource;
 @property (strong, nonatomic) Detail *detail;
 @property (assign, nonatomic) PFRequestStatus requestStatus;
 

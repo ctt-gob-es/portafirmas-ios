@@ -12,6 +12,7 @@
 #import "CertificateUtils.h"
 #import "Base64Utils.h"
 #import "NSData+Base64.h"
+#import "LoginService.h"
 
 @implementation RejectXMLController
 
@@ -21,17 +22,18 @@
 + (NSString *)buildRequestWithIds:(NSArray *)rjctIds motivoR:(NSString *) mot
 {
     NSMutableString *mesg = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?><reqrjcts> \n"];
-
-    // CERTIFICADO
-    CertificateUtils *cert = [CertificateUtils sharedWrapper];
-    NSString *certificado = [NSData base64EncodeData:[cert publicKeyBits]];
     
-    // Formats lists message
-    NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
-
-    [certlabel appendFormat:@"%@\n", certificado];
-    [certlabel appendString:@"</cert>\n"];
-    [mesg appendString:certlabel];
+    if (![[LoginService instance] serverSupportLogin]) {
+        CertificateUtils *cert = [CertificateUtils sharedWrapper];
+        NSString *certificado = [NSData base64EncodeData:[cert publicKeyBits]];
+        
+        // Formats lists message
+        NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
+        
+        [certlabel appendFormat:@"%@\n", certificado];
+        [certlabel appendString:@"</cert>\n"];
+        [mesg appendString:certlabel];
+    }
 
     // Nuevo elemento añadido en B64 donde se almacenará el motivo del rechazo
     if (mot != NULL && ![mot isEqualToString:@""]) {
@@ -55,7 +57,7 @@
     [mesg appendString:reqrjcts];
     [mesg appendString:@"</reqrjcts>"];
     
-    NSLog(@"Lo que hay en el XML -> %@", mesg);
+    DDLogDebug(@"Lo que hay en el XML -> %@", mesg);
 
     return mesg;
 }
