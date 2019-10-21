@@ -203,6 +203,7 @@ CGFloat const largeTitleCellWidth = 200;
 			title = NSLocalizedString(@"Cell_Title_Message", nil);
 			value = [self getMessage];
 			[cell setClearStyle];
+            [cell hideLabelsIfNeeded: ![self messageExists]];
 			break;
     }
     [cell setCellTitle: title];
@@ -462,6 +463,13 @@ CGFloat const largeTitleCellWidth = 200;
     // Avoid the strings only with whitespaces. By default from the server the reject object is @" " (length == 1)
     NSString* trimmedTextString = [_dataSource.rejt stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     return (_dataSource.rejt && [trimmedTextString length] != 0);
+}
+
+- (BOOL)messageExists
+{
+    // Avoid the strings only with whitespaces. By default from the server the reject object is @" " (length == 1)
+	NSString* trimmedTextString = [_dataSource.msg stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    return (_dataSource.msg && [trimmedTextString length] != 0);
 }
 
 - (void)showSenders
