@@ -229,11 +229,19 @@
     } else if (waitingForSenders) {
         [senders addObject:currentElementValue];
 
-    } else {
-        [_detail setValue:currentElementValue forKey:elementName];
-    }
+	} else {
+		if ([self propertyExistsInDetailModel: elementName]){
+			[_detail setValue:currentElementValue forKey:elementName];
+		}
+	}
+	
+	currentElementValue = nil;
+}
 
-    currentElementValue = nil;
+-(BOOL)propertyExistsInDetailModel: (NSString *)elementName
+{
+	NSArray *propertiesInDetail = @[@"detailid", @"priority", @"subj",@"date",@"expdate", @"app", @"ref", @"rejt", @"signlinestype", @"msg", @"errorMsg", @"errorCode"];
+	return [propertiesInDetail containsObject: elementName];
 }
 
 @end
