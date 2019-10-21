@@ -55,8 +55,6 @@
 +(NSString *) hashWithSHA1AndBase64: (NSString *) string {
 	// With the original string
 	NSString *originalString = string;
-	//Delete this line when we can test PUSH notifications
-	originalString = @"11111111H";
 	NSData *data = [originalString dataUsingEncoding:NSUTF8StringEncoding];
 	// Apply the hash
 	NSData *hashMessage = [CertificateUtils getHashBytesSHA1:data] ;
