@@ -42,5 +42,6 @@
 - (NSData *)getSignatureBytesSHA512:(NSData *)plainText;
 - (NSData *)getSignatureBytesSHA256:(NSData *)plainText;
 - (NSData *)getSignatureBytesSHA384:(NSData *)plainText;
++ (NSData *)getHashBytesSHA1:(NSData *)plainText;
 
 @end

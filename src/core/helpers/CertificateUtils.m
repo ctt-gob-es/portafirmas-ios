@@ -273,7 +273,7 @@ static CertificateUtils *__sharedKeyWrapper = nil;
     return securityError;
 }
 
-- (NSData *)getHashBytesSHA1:(NSData *)plainText
++ (NSData *)getHashBytesSHA1:(NSData *)plainText
 {
     CC_SHA1_CTX ctx;
     uint8_t *hashBytes = NULL;
