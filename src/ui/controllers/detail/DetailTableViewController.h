@@ -45,4 +45,7 @@
 @property (strong, nonatomic) IBOutletCollection(UITableViewCell) NSArray *cellBehindRejectExplanation;
 @property (strong, nonatomic) IBOutlet UITableViewCell *rejectExplanationTableViewCell;
 @property (readwrite, nonatomic) BOOL signEnabled;
+@property (weak, nonatomic) IBOutlet UITextView *messageTitleTextView;
+@property (weak, nonatomic) IBOutlet UITextView *messageTextView;
+
 @end

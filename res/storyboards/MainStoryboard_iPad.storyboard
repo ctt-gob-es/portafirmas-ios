@@ -1035,6 +1035,33 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="hz1-7M-7n4">
+                                        <rect key="frame" x="0.0" y="519" width="768" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hz1-7M-7n4" id="iPq-Z8-wGx">
+                                            <rect key="frame" x="0.0" y="0.0" width="768" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Mensaje:" textAlignment="natural" id="MaE-St-seW">
+                                                    <rect key="frame" x="9" y="0.0" width="89" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="16"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" id="63j-lH-b27">
+                                                    <rect key="frame" x="125" y="0.0" width="630" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -1060,6 +1087,8 @@
                         <outlet property="expirationTableViewCell" destination="yzb-YB-7VW" id="ey1-5U-YNs"/>
                         <outlet property="inputDateLbl" destination="hZn-Xx-cfN" id="2P4-Bn-NrN"/>
                         <outlet property="inputExpirationDateLbl" destination="RoX-dq-bHI" id="zCG-RW-SUX"/>
+                        <outlet property="messageTextView" destination="63j-lH-b27" id="2gi-ba-tw3"/>
+                        <outlet property="messageTitleTextView" destination="MaE-St-seW" id="zGM-r9-pLX"/>
                         <outlet property="referenceLbl" destination="nH5-mb-g1z" id="pIV-6K-gwz"/>
                         <outlet property="rejectExplanationTableViewCell" destination="Rkx-r3-rdX" id="jHh-Hb-JMD"/>
                         <outlet property="rejectLbl" destination="RPC-gz-Hfq" id="6dg-dd-BeA"/>
@@ -1076,6 +1105,8 @@
                         <outletCollection property="cellBehindRejectExplanation" destination="YMK-mQ-Ahn" id="zjz-T9-cZz"/>
                         <outletCollection property="cellBehindRejectExplanation" destination="yzb-YB-7VW" id="EXQ-UJ-Rxr"/>
                         <outletCollection property="cellBehindRejectExplanation" destination="8d4-vW-VaC" id="2xY-T6-WWi"/>
+                        <outletCollection property="cellBehindRejectExplanation" destination="hz1-7M-7n4" id="p6b-GR-qgF"/>
+                        <outletCollection property="cellBehindExpirationDate" destination="hz1-7M-7n4" id="x1Y-FP-aRw"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BdI-uR-O51" userLabel="First Responder" sceneMemberID="firstResponder"/>
