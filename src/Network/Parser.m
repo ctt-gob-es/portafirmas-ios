@@ -9,6 +9,7 @@
 #import "Parser.h"
 #import "XMLParser.h"
 #import "PFError.h"
+#import "userDNIManager.h"
 
 @implementation Parser
 
@@ -21,6 +22,7 @@ NSString *loginNotSupportedError = @"ERR-01";
 NSString *logValidateKey = @"vllgnrq";
 NSString *logValidateErrorKey = @"er";
 NSString *logValidateOkKey = @"ok";
+NSString *logValidateDNI = @"dni";
 
 NSString *subscriptionKey = @"reg";
 NSString *subscriptionValidateOkKey = @"ok";
@@ -84,6 +86,7 @@ NSString *subscriptionValidateOkKey = @"ok";
                 
                 if ([validation isEqualToString:@"true"]) {
                     isValid = true;
+                    [userDNIManager setUserDNI:[validationDict objectForKey:logValidateDNI]];
                 }
                 
                 success(isValid);
