@@ -18,6 +18,7 @@ static const NSInteger kSettingsVCNumberOfSections = 2;
 static const NSInteger kSettingsVCNumberOfRowsPerSection = 1;
 static NSString *const kSettingsVCSectionTitleServerURL = @"Servidor";
 static NSString *const kSettingsVCSectionTitleCertificate = @"Certificado";
+static NSString *const kSettingsVCSectionTitleRemoteCertificates = @"Certificados remotos";
 static NSString *const kSettingsVCCellIdentifier = @"SettingsCell";
 static NSString *const kSettingsVCSegueIdentifierServerURLs = @"showServerListVC";
 static NSString *const kSettingsVCSegueIdentifierCertificates = @"showRegisteredCertificates";
@@ -26,7 +27,8 @@ static NSString *const kSettingsVCSegueIdentifierAccess = @"showRequests";
 typedef NS_ENUM (NSInteger, SettingsVCSection)
 {
     SettingsVCSectionServerURL,
-    SettingsVCSectionCertificate
+    SettingsVCSectionCertificate,
+	SettingsVCSectionRemoteCertificates
 };
 
 
@@ -87,6 +89,8 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
             return kSettingsVCSectionTitleServerURL;
         case SettingsVCSectionCertificate:
             return kSettingsVCSectionTitleCertificate;
+		case SettingsVCSectionRemoteCertificates:
+			return kSettingsVCSectionTitleRemoteCertificates;
         default:
             return nil;
     }
