@@ -25,12 +25,14 @@ static NSString *const kSettingsCellUndefinedTitle = @"Sin especificar";
     NSDictionary *typeDict = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:KEYS_ARRAY[type]];
     
     DDLogDebug(@"TypeDict -> %@", [typeDict allKeys]);
+	
     if (typeDict && [typeDict.allKeys containsObject:kPFUserDefaultsKeyAlias]) {
         
         [_titleLabel setText:typeDict[kPFUserDefaultsKeyAlias]];
         [_titleLabel setTextColor:[UIColor blackColor]];
-    }
-    else {
+    } else if ((SettingsCellType)type == SettingsCellTypeRemoteCertificates) {
+
+	} else {
         [self setupForUndefinedValue];
     }
 }
