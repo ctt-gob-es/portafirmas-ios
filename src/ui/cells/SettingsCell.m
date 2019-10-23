@@ -8,7 +8,7 @@
 
 #import "SettingsCell.h"
 
-#define KEYS_ARRAY @[kPFUserDefaultsKeyCurrentServer, kPFUserDefaultsKeyCurrentCertificate]
+#define KEYS_ARRAY @[kPFUserDefaultsKeyCurrentServer, kPFUserDefaultsKeyCurrentCertificate, kPFUserDefaultsKeyRemoteCertificates]
 
 static NSString *const kSettingsCellUndefinedTitle = @"Sin especificar";
 

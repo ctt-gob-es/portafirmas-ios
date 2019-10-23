@@ -14,7 +14,7 @@
 #import "PFError.h"
 #import "ErrorService.h"
 
-static const NSInteger kSettingsVCNumberOfSections = 2;
+static const NSInteger kSettingsVCNumberOfSections = 3;
 static const NSInteger kSettingsVCNumberOfRowsPerSection = 1;
 static NSString *const kSettingsVCSectionTitleServerURL = @"Servidor";
 static NSString *const kSettingsVCSectionTitleCertificate = @"Certificado";

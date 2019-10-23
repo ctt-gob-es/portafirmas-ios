@@ -11,7 +11,8 @@
 typedef NS_ENUM (NSInteger, SettingsCellType)
 {
     SettingsCellTypeServerURL,
-    SettingsCellTypeCertificate
+    SettingsCellTypeCertificate,
+	SettingsCellTypeRemoteCertificates
 };
 
 @interface SettingsCell : UITableViewCell
