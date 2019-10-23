@@ -62,4 +62,12 @@ static NSString *const kSettingsCellUndefinedTitle = @"Sin especificar";
 	[self addSubview:self.remoteCertificatesSwitch];
 }
 
+- (void) switchIsChanged:(UISwitch *)paramSender{
+	if ([paramSender isOn]){
+		NSLog(@"The switch is turned on.");
+	} else {
+		NSLog(@"The switch is turned off.");
+	}
+}
+
 @end
