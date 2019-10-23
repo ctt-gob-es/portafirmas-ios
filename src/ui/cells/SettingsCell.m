@@ -53,13 +53,16 @@ static NSString *const kSettingsCellUndefinedTitle = @"Sin especificar";
 
 -(void) createSwitchInCell
 {
-	CGRect myFrame = CGRectMake(20.0f, 10.0f, 250.0f, 25.0f);
-	self.remoteCertificatesSwitch = [[UISwitch alloc] initWithFrame:myFrame];
+	CGRect switchFrame = CGRectMake(self.frame.size.width, self.frame.size.height/2, self.remoteCertificatesSwitch.frame.size.width, self.remoteCertificatesSwitch.frame.size.height);
+	self.remoteCertificatesSwitch = [[UISwitch alloc] initWithFrame:switchFrame];
+	
 	[self.remoteCertificatesSwitch setOn:YES];
 	//attach action method to the switch when the value changes
 	[self.remoteCertificatesSwitch addTarget:self
 									  action:@selector(switchIsChanged:)
 							forControlEvents:UIControlEventValueChanged];
+	[self.remoteCertificatesSwitch setBackgroundColor: [UIColor blueColor]];
+	
 	[self addSubview:self.remoteCertificatesSwitch];
 }
 
