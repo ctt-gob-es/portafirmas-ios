@@ -41,6 +41,7 @@ static NSString *const kSettingsCellUndefinedTitle = @"Sin especificar";
 {
 	[_titleLabel setText:@"Remote certificates activated"];
 	[_titleLabel setTextColor:[UIColor grayColor]];
+	[self setAccessoryType:false];
 	[self createSwitchInCell];
 }
 
