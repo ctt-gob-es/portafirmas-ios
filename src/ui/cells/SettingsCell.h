@@ -17,6 +17,8 @@ typedef NS_ENUM (NSInteger, SettingsCellType)
 
 @interface SettingsCell : UITableViewCell
 
+@property (nonatomic, strong) UISwitch *remoteCertificatesSwitch;
+
 - (void)setupForType:(SettingsCellType)type;
 
 @end
