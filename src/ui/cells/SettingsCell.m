@@ -11,6 +11,8 @@
 #define KEYS_ARRAY @[kPFUserDefaultsKeyCurrentServer, kPFUserDefaultsKeyCurrentCertificate, kPFUserDefaultsKeyRemoteCertificates]
 
 static NSString *const kSettingsCellUndefinedTitle = @"Sin especificar";
+CGFloat const kLeftmarginForSwitch = 25;
+CGFloat const kHalfHeightForSwitch = 16;
 
 @interface SettingsCell ()
 
@@ -53,16 +55,13 @@ static NSString *const kSettingsCellUndefinedTitle = @"Sin especificar";
 
 -(void) createSwitchInCell
 {
-	CGRect switchFrame = CGRectMake(self.frame.size.width, self.frame.size.height/2, self.remoteCertificatesSwitch.frame.size.width, self.remoteCertificatesSwitch.frame.size.height);
+	CGRect switchFrame = CGRectMake(_titleLabel.frame.size.width - kLeftmarginForSwitch, self.frame.size.height/2 - kHalfHeightForSwitch, self.remoteCertificatesSwitch.frame.size.width, self.remoteCertificatesSwitch.frame.size.height);
 	self.remoteCertificatesSwitch = [[UISwitch alloc] initWithFrame:switchFrame];
-	
 	[self.remoteCertificatesSwitch setOn:YES];
 	//attach action method to the switch when the value changes
 	[self.remoteCertificatesSwitch addTarget:self
 									  action:@selector(switchIsChanged:)
 							forControlEvents:UIControlEventValueChanged];
-	[self.remoteCertificatesSwitch setBackgroundColor: [UIColor blueColor]];
-	
 	[self addSubview:self.remoteCertificatesSwitch];
 }
 
