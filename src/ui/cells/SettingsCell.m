@@ -57,7 +57,7 @@ CGFloat const kHalfHeightForSwitch = 16;
 {
 	CGRect switchFrame = CGRectMake(_titleLabel.frame.size.width - kLeftmarginForSwitch, self.frame.size.height/2 - kHalfHeightForSwitch, self.remoteCertificatesSwitch.frame.size.width, self.remoteCertificatesSwitch.frame.size.height);
 	self.remoteCertificatesSwitch = [[UISwitch alloc] initWithFrame:switchFrame];
-	[self.remoteCertificatesSwitch setOn:YES];
+	[self setRemotesCertificatesSwitchState];
 	//attach action method to the switch when the value changes
 	[self.remoteCertificatesSwitch addTarget:self
 									  action:@selector(switchIsChanged:)
@@ -66,11 +66,13 @@ CGFloat const kHalfHeightForSwitch = 16;
 }
 
 - (void) switchIsChanged:(UISwitch *)paramSender{
-	if ([paramSender isOn]){
-		NSLog(@"The switch is turned on.");
-	} else {
-		NSLog(@"The switch is turned off.");
-	}
+	[[NSUserDefaults standardUserDefaults] setBool:[paramSender isOn] forKey:kPFUserDefaultsKeyRemoteCertificatesSelection];
+	[[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+-(void) setRemotesCertificatesSwitchState
+{
+	[self.remoteCertificatesSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyRemoteCertificatesSelection]];
 }
 
 @end
