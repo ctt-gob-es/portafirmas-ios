@@ -104,3 +104,6 @@
 "available_certificates_first_option_title_label" = "Opción 1:";
 "available_certificates_first_option_description_label" = "1. Conecte su dispositivo a su PC o Mac.\n2. Localice el certificado que desea instalar ....(debe conocer el pin del certificado)\n3. En iTunes seleccione su certificado y arrástrelo a la ventana de documentos...\n4. Vuelva a esta pantalla y regístrelo en el almacen del dispositivo.";
 "available_certificates_second_option_title_label" = "Opción 2:";
+
+// Settings cell
+"settings_cell_remote_certificates_message" = "Usar certificados remotos";

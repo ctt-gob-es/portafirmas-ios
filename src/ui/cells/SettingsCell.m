@@ -41,7 +41,7 @@ CGFloat const kHalfHeightForSwitch = 16;
 
 - (void) setupForRemoteCertificatesCell
 {
-	[_titleLabel setText:@"Remote certificates activated"];
+	[_titleLabel setText:NSLocalizedString(@"settings_cell_remote_certificates_message", nil)];
 	[_titleLabel setTextColor:[UIColor grayColor]];
 	[self setAccessoryType:false];
 	[self createSwitchInCell];
