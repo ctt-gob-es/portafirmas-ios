@@ -46,6 +46,8 @@ CGFloat const kHalfHeightForSwitch = 16;
 	[self setAccessoryType:false];
 	if (![self.subviews containsObject:self.remoteCertificatesSwitch]) {
 		[self createSwitchInCell];
+	} else {
+		[self updateSwitch];
 	}
 }
 
@@ -70,6 +72,8 @@ CGFloat const kHalfHeightForSwitch = 16;
 - (void) switchIsChanged:(UISwitch *)paramSender{
 	[[NSUserDefaults standardUserDefaults] setBool:[paramSender isOn] forKey:kPFUserDefaultsKeyRemoteCertificatesSelection];
 	[[NSUserDefaults standardUserDefaults] synchronize];
+- (void)updateSwitch {
+	[self setRemotesCertificatesSwitchState];
 }
 
 -(void) setRemotesCertificatesSwitchState
