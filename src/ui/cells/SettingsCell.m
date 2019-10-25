@@ -25,11 +25,8 @@ CGFloat const kHalfHeightForSwitch = 16;
 - (void)setupForType:(SettingsCellType)type
 {
     NSDictionary *typeDict = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:KEYS_ARRAY[type]];
-    
     DDLogDebug(@"TypeDict -> %@", [typeDict allKeys]);
-	
     if (typeDict && [typeDict.allKeys containsObject:kPFUserDefaultsKeyAlias]) {
-        
         [_titleLabel setText:typeDict[kPFUserDefaultsKeyAlias]];
         [_titleLabel setTextColor:[UIColor blackColor]];
     } else if ((SettingsCellType)type == SettingsCellTypeRemoteCertificates) {
@@ -62,17 +59,20 @@ CGFloat const kHalfHeightForSwitch = 16;
 	CGRect switchFrame = CGRectMake(_titleLabel.frame.size.width - kLeftmarginForSwitch, self.frame.size.height/2 - kHalfHeightForSwitch, self.remoteCertificatesSwitch.frame.size.width, self.remoteCertificatesSwitch.frame.size.height);
 	self.remoteCertificatesSwitch = [[UISwitch alloc] initWithFrame:switchFrame];
 	[self setRemotesCertificatesSwitchState];
-	//attach action method to the switch when the value changes
 	[self.remoteCertificatesSwitch addTarget:self
 									  action:@selector(switchIsChanged:)
 							forControlEvents:UIControlEventValueChanged];
 	[self addSubview:self.remoteCertificatesSwitch];
 }
 
-- (void) switchIsChanged:(UISwitch *)paramSender{
+- (void) switchIsChanged:(UISwitch *)paramSender
+{
 	[[NSUserDefaults standardUserDefaults] setBool:[paramSender isOn] forKey:kPFUserDefaultsKeyRemoteCertificatesSelection];
 	[[NSUserDefaults standardUserDefaults] synchronize];
-- (void)updateSwitch {
+}
+
+- (void)updateSwitch
+{
 	[self setRemotesCertificatesSwitchState];
 }
 
