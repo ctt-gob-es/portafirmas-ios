@@ -58,16 +58,24 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
     [super viewWillAppear:animated];
     [self.tableView reloadData];
     [self updateAccessButton];
+	[self disableRemoteCertificatesIfCertificateSelected];
 }
 
 #pragma mark - User Interface
 
 - (void)updateAccessButton
 {
-
     userDefaultsKeys = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation].allKeys;
-    
     [_accessButton setEnabled: [userDefaultsKeys containsObject:kPFUserDefaultsKeyCurrentServer]];
+}
+
+- (void)disableRemoteCertificatesIfCertificateSelected
+{
+	userDefaultsKeys = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation].allKeys;
+	if ([userDefaultsKeys containsObject:kPFUserDefaultsKeyCurrentCertificate]) {
+		[[NSUserDefaults standardUserDefaults] setBool:NO forKey:kPFUserDefaultsKeyRemoteCertificatesSelection];
+		[[NSUserDefaults standardUserDefaults] synchronize];
+	}
 }
 
 #pragma mark - UITableDataSource
