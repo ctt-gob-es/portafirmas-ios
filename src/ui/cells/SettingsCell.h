@@ -15,9 +15,18 @@ typedef NS_ENUM (NSInteger, SettingsCellType)
 	SettingsCellTypeRemoteCertificates
 };
 
+@class SettingsCell;
+@protocol  SettingsCellDelegate <NSObject>
+
+-(void) didSelectRemoveCertificates: (SettingsCell *)sender;
+
+@end
+
 @interface SettingsCell : UITableViewCell
 
 @property (nonatomic, strong) UISwitch *remoteCertificatesSwitch;
+
+@property (nonatomic, weak) id <SettingsCellDelegate> delegate;
 
 - (void)setupForType:(SettingsCellType)type;
 

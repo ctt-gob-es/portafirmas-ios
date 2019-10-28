@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "ServerListTVC.h"
+#import "SettingsCell.h"
 
-@interface SettingsVC : PFBaseTVC <ServerListTVCDelegate>
+@interface SettingsVC : PFBaseTVC <ServerListTVCDelegate, SettingsCellDelegate>
 
 @end

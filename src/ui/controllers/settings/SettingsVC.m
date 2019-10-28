@@ -45,11 +45,12 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 @implementation SettingsVC
 
+
 #pragma mark - Life Cycle
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];    
+    [super viewDidLoad];
     self.titleBar.title =[NSString stringWithFormat: NSLocalizedString(@"Configuration_Page_Title", nil),[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
 }
 
@@ -107,6 +108,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SettingsCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kSettingsVCCellIdentifier];
+	cell.delegate = self;
     
     if (!cell) {
         
@@ -208,6 +210,10 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 - (void)serverListDidSelectServer:(NSDictionary *)serverInfo
 {
     [self.tableView reloadData];
+}
+
+- (void)didSelectRemoveCertificates:(SettingsCell *)sender {
+	[self.tableView reloadData];
 }
 
 @end

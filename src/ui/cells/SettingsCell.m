@@ -21,6 +21,7 @@ CGFloat const kHalfHeightForSwitch = 16;
 @end
 
 @implementation SettingsCell
+@synthesize delegate;
 
 - (void)setupForType:(SettingsCellType)type
 {
@@ -69,6 +70,13 @@ CGFloat const kHalfHeightForSwitch = 16;
 {
 	[[NSUserDefaults standardUserDefaults] setBool:[paramSender isOn] forKey:kPFUserDefaultsKeyRemoteCertificatesSelection];
 	[[NSUserDefaults standardUserDefaults] synchronize];
+	// Delete certificated selected if exists
+	NSArray *userDefaultsKeys = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation].allKeys;
+	if ([userDefaultsKeys containsObject:kPFUserDefaultsKeyCurrentCertificate]) {
+		[[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyCurrentCertificate];
+		[[NSUserDefaults standardUserDefaults] synchronize];
+		[self.delegate didSelectRemoveCertificates: self];
+	}
 }
 
 - (void)updateSwitch
