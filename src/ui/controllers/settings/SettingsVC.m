@@ -67,7 +67,9 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 - (void)updateAccessButton
 {
     userDefaultsKeys = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation].allKeys;
-    [_accessButton setEnabled: [userDefaultsKeys containsObject:kPFUserDefaultsKeyCurrentServer]];
+	[_accessButton setEnabled: [userDefaultsKeys containsObject:kPFUserDefaultsKeyCurrentServer] &&
+	 ([userDefaultsKeys containsObject:kPFUserDefaultsKeyCurrentCertificate] ||
+	  [[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyRemoteCertificatesSelection])];
 }
 
 - (void)disableRemoteCertificatesIfCertificateSelected
@@ -214,6 +216,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 - (void)didSelectRemoveCertificates:(SettingsCell *)sender {
 	[self.tableView reloadData];
+	[self updateAccessButton];
 }
 
 @end

@@ -75,8 +75,8 @@ CGFloat const kHalfHeightForSwitch = 16;
 	if ([userDefaultsKeys containsObject:kPFUserDefaultsKeyCurrentCertificate]) {
 		[[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyCurrentCertificate];
 		[[NSUserDefaults standardUserDefaults] synchronize];
-		[self.delegate didSelectRemoveCertificates: self];
 	}
+	[self.delegate didSelectRemoveCertificates: self];
 }
 
 - (void)updateSwitch
