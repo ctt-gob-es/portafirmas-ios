@@ -69,6 +69,11 @@ NSString *subscriptionValidateOkKey = @"ok";
     }];
 }
 
+- (void) parseAuthWithRemoteCertificates: (NSData *)data success: (void(^)(NSString *token))success failure:(void(^)(NSError *))failure {
+	NSString * url = @"https://pre-portafirmas.redsara.es/pfmovil/clave-loading.jsp";
+	success(url);
+}
+
 - (void) parseValidateData: (NSData *)data success: (void(^)(BOOL isValid))success failure:(void(^)(NSError *))failure {
     
     XMLParser *parser = [[XMLParser alloc] init];
