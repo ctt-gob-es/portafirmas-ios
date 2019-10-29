@@ -148,6 +148,17 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 #pragma mark - Navigation Methods
     
+- (void) showLoginWebView:(void(^)())success failure:(void(^)(NSError *error))failure {
+	//TODO: show webview and manage success or error
+	dispatch_async(dispatch_get_main_queue(), ^{
+		UIWebView *view = [[UIWebView alloc] initWithFrame: self.view.bounds];
+		NSString *url=@"http://www.google.com";
+		NSURL *nsurl=[NSURL URLWithString:url];
+		NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
+		[view loadRequest: nsrequest];
+		[self.view addSubview: view];
+	});
+}
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
     __block BOOL segue = NO;
     if ([identifier isEqualToString:kSettingsVCSegueIdentifierAccess]) {
