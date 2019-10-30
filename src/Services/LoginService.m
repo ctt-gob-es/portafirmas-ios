@@ -92,6 +92,25 @@
     
 }
 
+- (void) loginWithRemoteCertificates:(void(^)())success failure:(void(^)(NSError *error))failure {
+	[LoginNetwork loginProcess:^(NSString *token) {
+		NSLog(@"Token = %@", token);
+		self.urlForRemoteCertificates = token;
+		//TODO: Almacenar la URL y los parametros como se almacena el token en el método anterior
+		success();
+	} failure:^(NSError *error) {
+		[SVProgressHUD dismiss];
+		DDLogError(@"Error starting login process");
+		
+		//Check if is old server
+		if (error != nil && error.code == PFLoginNotSupported) {
+			self.serverSupportLogin = NO;
+			DDLogError(@"Error: %@", error);
+		}
+		failure(error);
+	}];
+}
+
 - (void) logout:(void(^)())success failure:(void(^)(NSError *error))failure {
     
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
