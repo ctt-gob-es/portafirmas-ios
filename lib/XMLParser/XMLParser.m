@@ -62,6 +62,10 @@ BOOL NSStringEqualsXMLNullString(NSString *string);
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
 		self.parser = [[[NSXMLParser alloc] initWithData:data] autorelease];
 		
+		NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+
+		NSLog(@"%@",dataString);
+		
 		[self setSuccess:success];
 		[self setFailure:failure];
 		
