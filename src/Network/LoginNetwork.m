@@ -21,8 +21,8 @@
     NSString *opParameter = @"op";
     NSString *datParameter = @"dat";
     NSString *baseURL = SERVER_URL;
-    NSInteger operation = 10;
-    NSString *dataString = @"<lgnrq />";
+	NSInteger operation = 10;
+	NSString *dataString = @"<lgnrq />";
     NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
     
     NSString *params = [NSString stringWithFormat: @"%@=%lu&%@=%@", opParameter,
@@ -39,23 +39,62 @@
     [request setHTTPShouldHandleCookies:YES];
     [request setTimeoutInterval:30.0];
     
-    
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error) {
             failure(error);
         } else  {
-            NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-            DDLogDebug(@"Request reply: %@", requestReply);
-            Parser *parser = [Parser new];
-            
-            [parser parseAuthData:data success:^(NSString *token) {
-                success(token);
-            } failure:^(NSError *error) {
-                failure(error);
-            }];
+			NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+			DDLogDebug(@"Request reply: %@", requestReply);
+			Parser *parser = [Parser new];
+				[parser parseAuthData:data success:^(NSString *token) {
+					success(token);
+				} failure:^(NSError *error) {
+					failure(error);
+				}];
         }
     }] resume];
+}
+
++ (void) loginWithRemoteCertificates:(void(^)(NSString *token))success failure:(void(^)(NSError *error))failure {
+	
+	NSString *opParameter = @"op";
+	NSString *datParameter = @"dat";
+	NSString *baseURL = SERVER_URL;
+	NSInteger operation = 14;
+	NSString *dataString = @"<lgnrq />";
+	NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
+	
+	NSString *params = [NSString stringWithFormat: @"%@=%lu&%@=%@", opParameter,
+						(unsigned long)operation, datParameter, [data base64EncodedString]];
+	
+	NSData *postData = [params dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+	NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
+	
+	NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+	[request setURL:[NSURL URLWithString:baseURL]];
+	[request setHTTPMethod:@"POST"];
+	[request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+	[request setHTTPBody:postData];
+	[request setHTTPShouldHandleCookies:YES];
+	[request setTimeoutInterval:30.0];
+	
+	NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+	[[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+		if (error) {
+			failure(error);
+		} else  {
+			NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
+			DDLogDebug(@"Request reply: %@", requestReply);
+			Parser *parser = [Parser new];
+			[parser parseAuthWithRemoteCertificates:data success:^(NSString *token) {
+				success(token);
+				//Token is the url
+			} failure:^(NSError *error) {
+				failure(error);
+			}];
+		}
+	}] resume];
 }
 
 + (void) validateLogin:(NSString*)certificate withSignedToken:(NSString*)tokenSigned success: (void(^)())success failure:(void(^)(NSError *error))failure {
