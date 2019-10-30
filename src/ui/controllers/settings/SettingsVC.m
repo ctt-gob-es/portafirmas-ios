@@ -54,7 +54,6 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 {
     [super viewDidLoad];
     self.titleBar.title =[NSString stringWithFormat: NSLocalizedString(@"Configuration_Page_Title", nil),[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
-	[_webView setDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -150,11 +149,11 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 }
 
 #pragma mark - Navigation Methods
-    
+
 - (void) showLoginWebView:(void(^)())success failure:(void(^)(NSError *error))failure {
-	//TODO: show webview and manage success or error
 	dispatch_async(dispatch_get_main_queue(), ^{
 		self.webView = [[UIWebView alloc] initWithFrame: self.view.bounds];
+		[_webView setDelegate:self];
 		NSString *url=[[LoginService instance] urlForRemoteCertificates];
 		NSURL *nsurl=[NSURL URLWithString:url];
 		NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
@@ -232,6 +231,13 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 - (void)didSelectRemoveCertificates:(SettingsCell *)sender {
 	[self.tableView reloadData];
 	[self updateAccessButton];
+}
+
+#pragma mark - WebViewDelegate
+
+-(BOOL) webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+	NSLog(@"shouldStartLoadWithRequest:  %@", request);
+	return YES;
 }
 
 @end
