@@ -257,6 +257,11 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 -(BOOL) webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
 	NSLog(@"shouldStartLoadWithRequest:  %@", request);
+	NSString *requestString = [[request URL] absoluteString];
+
+	NSArray *urlFragments= [requestString componentsSeparatedByString: @"/"];
+	
+	NSLog(@"urlFragments: %@", urlFragments[0]);
 	return YES;
 }
 
