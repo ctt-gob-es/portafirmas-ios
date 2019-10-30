@@ -163,31 +163,51 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
-    __block BOOL segue = NO;
-    if ([identifier isEqualToString:kSettingsVCSegueIdentifierAccess]) {
-        
-        [[LoginService instance] loginWithCertificate:^{
-            segue = YES;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self performSegueWithIdentifier:identifier sender:self];
-            });
-         } failure:^(NSError *error) {
-             if (error != nil && error.code == PFLoginNotSupported) {
-                 segue = YES;
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     [self performSegueWithIdentifier:identifier sender:self];
-                 });
-             } else {
-                 segue = NO;
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     [[ErrorService instance] showLoginErrorAlertView];
-                 });  
-             }
-         }];
-    } else {
+	__block BOOL segue = NO;
+	if ([identifier isEqualToString:kSettingsVCSegueIdentifierAccess]) {
+		if ([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyRemoteCertificatesSelection]) {
+			[[LoginService instance] loginWithRemoteCertificates:^{
+				[self showLoginWebView:^{
+					segue = YES;
+					dispatch_async(dispatch_get_main_queue(), ^{
+						[self performSegueWithIdentifier:identifier sender:self];
+					});
+				} failure:^(NSError *error) {
+					segue = NO;
+					dispatch_async(dispatch_get_main_queue(), ^{
+						[[ErrorService instance] showLoginErrorAlertView];
+					});
+				}];
+				NSLog(@"loginWithRemoteCertificates");
+			} failure:^(NSError *error) {
+				segue = NO;
+				dispatch_async(dispatch_get_main_queue(), ^{
+					[[ErrorService instance] showLoginErrorAlertView];
+				});
+			}];
+		} else {
+			[[LoginService instance] loginWithCertificate:^{
+				segue = YES;
+				dispatch_async(dispatch_get_main_queue(), ^{
+					[self performSegueWithIdentifier:identifier sender:self];
+				});
+			} failure:^(NSError *error) {
+				if (error != nil && error.code == PFLoginNotSupported) {
+					segue = YES;
+					dispatch_async(dispatch_get_main_queue(), ^{
+						[self performSegueWithIdentifier:identifier sender:self];
+					});
+				} else {
+					segue = NO;
+					dispatch_async(dispatch_get_main_queue(), ^{
+						[[ErrorService instance] showLoginErrorAlertView];
+					});
+				}
+			}];
+		}
+	} else {
         segue = YES;
     }
-
     return segue;
 }
 
