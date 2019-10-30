@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ServerListTVC.h"
 #import "SettingsCell.h"
+#import <WebKit/WebKit.h>
 
-@interface SettingsVC : PFBaseTVC <ServerListTVCDelegate, SettingsCellDelegate>
+@interface SettingsVC : PFBaseTVC <ServerListTVCDelegate, SettingsCellDelegate, UIWebViewDelegate>
 
 @end
