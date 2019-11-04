@@ -82,7 +82,7 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="editBarButtonItem" destination="cUT-PO-At2" id="xyB-oQ-15h"/>
-                        <segue destination="YqR-LW-lNg" kind="modal" identifier="showEditServerVC" id="nx9-6d-emn"/>
+                        <segue destination="YqR-LW-lNg" kind="modal" identifier="showEditServerVC" modalPresentationStyle="fullScreen" id="nx9-6d-emn"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Km-ge-Tsk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2005,7 +2005,7 @@
         <image name="settings" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tjX-Gu-uGQ"/>
+        <segue reference="nx9-6d-emn"/>
         <segue reference="47P-jN-2H3"/>
         <segue reference="f7k-Dd-rat"/>
     </inferredMetricsTieBreakers>
