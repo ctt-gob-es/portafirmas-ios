@@ -232,17 +232,14 @@
 
 - (void)prepareForDetailSegue:(UIStoryboardSegue *)segue enablingSigning:(BOOL)enableSign
 {
-	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:true];
-	
-    [SVProgressHUD show];
-
     NSInteger selectedRow = [self.tableView indexPathForSelectedRow].row;
+	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:true];
     DetailTableViewController *detailVC = [segue destinationViewController];
     PFRequest *selectedRequest = self.dataArray[selectedRow];
-
     [detailVC setDataSourceRequest:selectedRequest];
     [detailVC setSignEnabled:enableSign];
     [detailVC setRequestId:selectedRequest.reqid];
+    [SVProgressHUD show];
 }
 
 @end
