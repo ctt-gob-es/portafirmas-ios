@@ -227,7 +227,9 @@
 }
 
 - (void) closeView {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+	dispatch_async(dispatch_get_main_queue(), ^{
+	   [self dismissViewControllerAnimated:YES completion:nil];
+	});
 }
 
 - (IBAction)signAction:(id)sender
@@ -388,7 +390,8 @@
 
 - (void)setNormalBottomBar
 {
-    if (_tabBarFrame.size.height > 0 && CGRectIsEmpty(self.tabBarController.tabBar.frame)) {
+	//  if (_tabBarFrame.size.height > 0 && CGRectIsEmpty(self.tabBarController.tabBar.frame)) {
+    if (_tabBarFrame.size.height > 0) {
         [self.navigationController setToolbarHidden:YES animated:YES];
         CGRect tabRect = self.view.frame;
         tabRect.size.height -= self.tabBarController.tabBar.frame.size.height;
