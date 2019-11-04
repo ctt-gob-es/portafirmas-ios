@@ -1227,8 +1227,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "src/main/PortaFirmasUniv-Prefix.pch";
 				INFOPLIST_FILE = "src/main/PortaFirmasUniv-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = es.gob.afirma.Portafirmas;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_NAME = "Port@firmas";
 				PROVISIONING_PROFILE = "7300a5b1-9066-42c4-a569-8ec55acfc318";
 				PROVISIONING_PROFILE_SPECIFIER = Portafirmas_DES_Emilio2;
@@ -1252,8 +1252,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "src/main/PortaFirmasUniv-Prefix.pch";
 				INFOPLIST_FILE = "src/main/PortaFirmasUniv-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = es.gob.afirma.Portafirmas;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_NAME = "Port@firmas";
 				PROVISIONING_PROFILE = "7300a5b1-9066-42c4-a569-8ec55acfc318";
 				PROVISIONING_PROFILE_SPECIFIER = Portafirmas_DES_Emilio2;
