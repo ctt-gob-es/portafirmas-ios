@@ -79,10 +79,12 @@
 {
     OSStatus status = noErr;
 
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD show];
     // Load certificate from Documents directory
     status = [OpenSSLCertificateHelper deleteCertificate:certificateInfo];
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
 
     if (status == noErr) {
         DDLogDebug(@"deleterWithCertificateName::Certificate %@ is deleted from keychain:", certificateInfo.subject);
@@ -183,7 +185,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD show];
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     PFCertificateInfo *selectedCertificate = arrayCerts[selectedIndexPath.row];
     
@@ -195,12 +197,16 @@
         [[NSUserDefaults standardUserDefaults] setObject:@{kPFUserDefaultsKeyAlias:selectedCertificate.subject} forKey:kPFUserDefaultsKeyCurrentCertificate];
         [[NSUserDefaults standardUserDefaults] synchronize];
         [[CertificateUtils sharedWrapper] setSelectedCertificateName:selectedCertificate.subject];
-        [SVProgressHUD dismiss];
+        dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismiss];
+		});
         [self.navigationController popViewControllerAnimated:YES];
     }
     else {
         
-        [SVProgressHUD dismiss];
+        dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismiss];
+		});
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Error_When_Loading_certificate", nil)
                                                                                  message:nil
                                                                           preferredStyle:UIAlertControllerStyleAlert];

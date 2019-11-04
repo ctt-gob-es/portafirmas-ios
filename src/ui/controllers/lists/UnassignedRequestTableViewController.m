@@ -46,7 +46,9 @@
     self = [super initWithCoder:aDecoder];
 
     if (self) {
-        [SVProgressHUD dismiss];
+        dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismiss];
+		});
 
         self.dataStatus = kBaseListVCDataStatusPending;
 
@@ -148,7 +150,7 @@
 - (void)startSendingSignRequests
 {
     [self enableUserInteraction:false];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD show];
 
     requestSignerController = [RequestSignerController new];
     [requestSignerController setDelegate:self];
@@ -158,7 +160,7 @@
 
 - (void)startSendingApproveRequests
 {
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD show];
 
     _waitingResponseType = PFWaitingResponseTypeApproval;
     NSString *requestData = [ApproveXMLController buildRequestWithRequestArray:_selectedRequestSetToApprove.allObjects];
@@ -284,7 +286,7 @@
 - (void)continueButtonClicked: (UIAlertController *)alertController {
     if (reject) {
         reject = NO;
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD show];
         if ([alertController.textFields count] != 0) {
             NSArray *textfields = alertController.textFields;
             UITextField *nameTextfield = textfields[0];
@@ -432,7 +434,9 @@
 
     [nsXmlParser setDelegate:parser];
     BOOL success = [nsXmlParser parse];
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
 
     if (success) {
         NSArray *rejectsReq = [parser dataSource];
@@ -451,7 +455,9 @@
 
     [nsXmlParser setDelegate:parser];
     BOOL success = [nsXmlParser parse];
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
 
     if (success) {
         NSArray *approvalRequests = [parser dataSource];
@@ -503,7 +509,9 @@
 {
     DDLogDebug(@"UnsignedRequestTableViewController::didReceiveSignerRequestResult - reqs count: %lu", (unsigned long)[requestsSigned count]);
     [self enableUserInteraction: true];
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
 
     NSIndexSet *requestsWithError = [requestsSigned indexesOfObjectsPassingTest:^BOOL (PFRequest *request, NSUInteger idx, BOOL *stop) {
                                          return [request.status isEqualToString:@"KO"];

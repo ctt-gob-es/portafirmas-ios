@@ -88,7 +88,7 @@
 - (void)loadDataWithProgressIndicator:(BOOL)showProgressIndicator
 {
     if (showProgressIndicator) {
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD show];
     }
 
     NSString *data = [RequestListXMLController buildDefaultRequestWithState:_dataStatus pageNumber:_currentPage filters:_filtersDict];
@@ -124,7 +124,9 @@
     RequestListXMLController *parser = [[RequestListXMLController alloc] initXMLParser];
     [nsXmlParser setDelegate:parser];
     BOOL success = [nsXmlParser parse];
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
 
     if (success) {
         BOOL finishOK = ![parser finishWithError];
@@ -153,7 +155,9 @@
 
 - (void)didReceiveParserWithError:(NSString *)errorString
 {
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
     [self setMoreDataAvailable:NO];
     [self.tableViewFooter setHidden:!self.moreDataAvailable];
     [self didReceiveError:errorString];
@@ -228,7 +232,7 @@
 
 - (void)prepareForDetailSegue:(UIStoryboardSegue *)segue enablingSigning:(BOOL)enableSign
 {
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD show];
 
     NSInteger selectedRow = [self.tableView indexPathForSelectedRow].row;
     DetailTableViewController *detailVC = [segue destinationViewController];

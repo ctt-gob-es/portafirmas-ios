@@ -247,7 +247,9 @@ int const kNormalLabelDistance = 20;
 
 - (void)viewDidUnload
 {
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
     [super viewDidUnload];
 }
 

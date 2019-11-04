@@ -153,7 +153,9 @@ struct {
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
     connectionInProgress = nil;
     xmlData = nil;
     NSString *errorString = [NSString stringWithFormat:@"Load failed: %@",
