@@ -199,7 +199,7 @@
                         <barButtonItem key="backBarButtonItem" title="Atrás" id="vxO-Gi-Qxd"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="jYe-hS-zxC">
                             <connections>
-                                <segue destination="Nl5-fd-Ljn" kind="modal" id="JQN-BA-f1Z"/>
+                                <segue destination="Nl5-fd-Ljn" kind="modal" modalPresentationStyle="fullScreen" id="JQN-BA-f1Z"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -221,7 +221,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="CertificatesList" title="Certicate Manager" modalTransitionStyle="flipHorizontal" id="wTP-v2-4hu" customClass="DocumentCertificatesViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Alm-Qt-99l">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="9wT-U9-tPb">
@@ -1842,11 +1842,11 @@
                         <viewControllerLayoutGuide type="bottom" id="WQe-Pa-4Yw"/>
                     </layoutGuides>
                     <view key="view" autoresizesSubviews="NO" contentMode="scaleToFill" id="wHH-ch-mwC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TVi-n4-VwM">
-                                <rect key="frame" x="52.5" y="210" width="270" height="68"/>
+                                <rect key="frame" x="52.5" y="198" width="270" height="68"/>
                                 <color key="backgroundColor" red="0.67972695709999997" green="0.043586048150000001" blue="0.088625993350000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="68" id="EOH-ib-vCd"/>
@@ -1867,7 +1867,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Introduzca la contraseña del certificados que desee registrar." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQ2-Kt-lMH">
-                                <rect key="frame" x="52.5" y="85" width="270" height="41"/>
+                                <rect key="frame" x="52.5" y="73" width="270" height="41"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="270" id="BIt-oE-ktd"/>
@@ -1877,7 +1877,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="LFJ-3t-AhZ">
-                                <rect key="frame" x="52.5" y="142" width="270" height="34"/>
+                                <rect key="frame" x="52.5" y="130" width="270" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="270" id="bgJ-5o-H4w"/>
                                 </constraints>
@@ -1942,7 +1942,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Nl5-fd-Ljn" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="EpK-zK-ewv">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
