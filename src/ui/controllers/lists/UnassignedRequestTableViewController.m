@@ -364,11 +364,10 @@
     DDLogDebug(@"setEditing editing = %d", editing);
 
     if (editing) {
-        
         [_selectButtonItem setTitle:@"Hecho"];
+		[self setEditingBottomBar];
         [self.tableView reloadData];
         selectedRows = [@[] mutableCopy];
-        [self setEditingBottomBar];
     }
     else {
         
@@ -392,21 +391,21 @@
 
     if (!CGRectIsEmpty(self.tabBarController.tabBar.frame)) {
         CGRect fullScreen = self.view.frame;
-
-        fullScreen.size.height += self.tabBarController.tabBar.frame.size.height;
+		fullScreen.size.height += self.tabBarController.tabBar.frame.size.height;
         [self.view setFrame:fullScreen];
         [self.tabBarController.tabBar setFrame:TAB_BAR_HIDDEN_FRAME];
         [self.navigationController setToolbarHidden:NO animated:YES];
+		[self.parentViewController.tabBarController.tabBar setHidden:YES];
     }
 }
 
 - (void)setNormalBottomBar
 {
+	[self.parentViewController.tabBarController.tabBar setHidden:NO];
 	//  if (_tabBarFrame.size.height > 0 && CGRectIsEmpty(self.tabBarController.tabBar.frame)) {
     if (_tabBarFrame.size.height > 0) {
         [self.navigationController setToolbarHidden:YES animated:YES];
         CGRect tabRect = self.view.frame;
-        tabRect.size.height -= self.tabBarController.tabBar.frame.size.height;
         [self.view setFrame:tabRect];
         [self.tabBarController.tabBar setFrame:_tabBarFrame];
     }
