@@ -124,7 +124,9 @@ int const kNormalLabelDistance = 20;
 
 - (IBAction)didTapOnBackButton:(id)sender
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+	   [self dismissViewControllerAnimated:YES completion:nil];
+	});
 }
 
 #pragma mark - Table view data source
@@ -205,7 +207,6 @@ int const kNormalLabelDistance = 20;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DDLogDebug(@"didSelectRowAtIndexPath row=%ld", (long)[indexPath row]);
-
     _selectedCertificate = [files objectAtIndex:[indexPath row]];
 }
 

@@ -232,6 +232,8 @@
 
 - (void)prepareForDetailSegue:(UIStoryboardSegue *)segue enablingSigning:(BOOL)enableSign
 {
+	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:true];
+	
     [SVProgressHUD show];
 
     NSInteger selectedRow = [self.tableView indexPathForSelectedRow].row;

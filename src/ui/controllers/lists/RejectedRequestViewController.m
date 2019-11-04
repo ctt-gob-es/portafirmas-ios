@@ -47,12 +47,16 @@
 
 - (void)goBack:(id)sender
 {
-    [self.parentViewController.navigationController popViewControllerAnimated:TRUE];
+	dispatch_async(dispatch_get_main_queue(), ^{
+	   [self.parentViewController.navigationController popViewControllerAnimated:TRUE];
+	});
 }
 
 - (IBAction)didTapOnBackButton:(id)sender
 {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+	dispatch_async(dispatch_get_main_queue(), ^{
+	   [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+	});
 }
 
 #pragma mark - Navigation Methods

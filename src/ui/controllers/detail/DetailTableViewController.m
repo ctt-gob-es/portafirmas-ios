@@ -583,7 +583,10 @@ CGFloat const largeTitleCellWidth = 200;
         [alertController addAction:actionOk];
         [self presentViewController:alertController animated:YES completion:nil];
     }
-    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
+	
+   dispatch_async(dispatch_get_main_queue(), ^{
+	   [self dismissViewControllerAnimated:YES completion:nil];
+	});
 
 }
 
@@ -640,7 +643,9 @@ CGFloat const largeTitleCellWidth = 200;
         [self dismissSelfView];
     }
 
-    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+	   [self dismissViewControllerAnimated:YES completion:nil];
+	});
 
 }
 
@@ -712,7 +717,10 @@ CGFloat const largeTitleCellWidth = 200;
 }
 
 - (void)dismissSelfView {
-    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
+   dispatch_async(dispatch_get_main_queue(), ^{
+	   [self dismissViewControllerAnimated:YES completion:nil];
+	});
+	
     [(BaseListTVC *)self.navigationController.previousViewController refreshInfo];
     [self.navigationController popViewControllerAnimated:YES];
 }

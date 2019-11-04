@@ -234,7 +234,9 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (IBAction)didClickCancelButton:(id)sender
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+   dispatch_async(dispatch_get_main_queue(), ^{
+	   [self dismissViewControllerAnimated:YES completion:nil];
+	});
 }
 
 - (IBAction)didClickAcceptButton:(id)sender
@@ -291,10 +293,11 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         [baseTVC refreshInfoWithFilters:filters];
     }
     
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-         [baseTVC refreshInfoWithFilters:filters];
-     }];
+	dispatch_async(dispatch_get_main_queue(), ^{
+	  [self dismissViewControllerAnimated:YES completion:^{
+		   [baseTVC refreshInfoWithFilters:filters];
+	   }];
+	});
 }
 
 - (IBAction)didClickSortCriteriaButton:(id)sender

@@ -310,6 +310,7 @@
 
 - (void)tableView:(UITableView *)theTableView didSelectRowAtIndexPath:(NSIndexPath *)newIndexPath
 {
+	[theTableView deselectRowAtIndexPath:newIndexPath animated:true];
     [self updateSelectionWithIndexPath:newIndexPath selected:YES];
 }
 
