@@ -108,7 +108,13 @@
 - (void) assignMainTabToAppDelegate {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     UINavigationController *nav = (UINavigationController *)self.presentingViewController;
-    appDelegate.mainTab = (UITabBarController *)nav.presentedViewController;
+	
+	if (nav != nil && nav.presentedViewController != nil) {
+		UITabBarController *tabBarController = (UITabBarController *)nav.presentedViewController;
+		if (tabBarController != nil) {
+			appDelegate.mainTab = tabBarController;
+		}
+	}
 }
 
 #pragma mark - Network Calls
