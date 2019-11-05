@@ -428,7 +428,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     } else {
 
         [self.view endEditing:YES];
-
+		_datePicker.backgroundColor = [UIColor whiteColor];
         if ([_currentTextField isEqual:_startDateTextField]) {
             if (_startDate) {
                 [_datePicker setDate:_startDate];
@@ -448,7 +448,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         }
 
         [UIView animateWithDuration:0.3 animations:^{
-             [_datePicker setAlpha:1.0];
+			[_datePicker setAlpha:1.0];
          } completion:^(BOOL finished) {
              [self updateContentOffsetForPicker];
          }];
