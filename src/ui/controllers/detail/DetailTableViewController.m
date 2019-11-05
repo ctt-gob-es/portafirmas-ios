@@ -79,7 +79,9 @@ CGFloat const largeTitleCellWidth = 200;
     self = [super initWithCoder:aDecoder];
 
     if (self) {
-        [SVProgressHUD dismiss];
+        dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismiss];
+		});
         wsController = [[WSDataController alloc] init];
         wsController.delegate = self;
         _signEnabled = FALSE;
@@ -375,7 +377,7 @@ CGFloat const largeTitleCellWidth = 200;
 {
     DDLogDebug(@"Sign Action....\nAccept request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
 
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD show];
 
     if ([(Detail *)_dataSource type] == PFRequestTypeSign) {
         [self startSignRequest];
@@ -386,7 +388,7 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void) rejectActionClickContinueButton: (UIAlertController *)alertController {
     DDLogDebug(@"UnassignedRequestTableViewController::Reject request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD show];
     if ([alertController.textFields count] != 0) {
         NSArray *textfields = alertController.textFields;
         UITextField *nameTextfield = textfields[0];
@@ -520,7 +522,9 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void)doParse:(NSData *)data
 {
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
     NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:data];
     id <NSXMLParserDelegate> parser = [self parserForCurrentRequest];
     [nsXmlParser setDelegate:parser];
@@ -579,7 +583,10 @@ CGFloat const largeTitleCellWidth = 200;
         [alertController addAction:actionOk];
         [self presentViewController:alertController animated:YES completion:nil];
     }
-    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
+	
+   dispatch_async(dispatch_get_main_queue(), ^{
+	   [self dismissViewControllerAnimated:YES completion:nil];
+	});
 
 }
 
@@ -591,7 +598,9 @@ CGFloat const largeTitleCellWidth = 200;
     
     [nsXmlParser setDelegate:parser];
     BOOL success = [nsXmlParser parse];
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
     
     if (success) {
         NSArray *rejectsReq = [parser dataSource];
@@ -634,7 +643,9 @@ CGFloat const largeTitleCellWidth = 200;
         [self dismissSelfView];
     }
 
-    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+	   [self dismissViewControllerAnimated:YES completion:nil];
+	});
 
 }
 
@@ -656,7 +667,9 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void)didReceiveError:(NSString *)errorString
 {
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
     DDLogDebug(@"UnassignedRequestTableViewController::didReceiveParserWithError: %@", errorString);
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Error", nil) message:errorString preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
@@ -669,7 +682,9 @@ CGFloat const largeTitleCellWidth = 200;
 - (void)didReceiveSignerRequestResult:(NSArray *)requestsSigned
 {
     DDLogDebug(@"ModalSignerController::didReceiveSignerRequestResult");
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
 
     BOOL processedOK = YES;
     NSString *msg = kEmptyString;
@@ -702,7 +717,10 @@ CGFloat const largeTitleCellWidth = 200;
 }
 
 - (void)dismissSelfView {
-    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
+   dispatch_async(dispatch_get_main_queue(), ^{
+	   [self dismissViewControllerAnimated:YES completion:nil];
+	});
+	
     [(BaseListTVC *)self.navigationController.previousViewController refreshInfo];
     [self.navigationController popViewControllerAnimated:YES];
 }

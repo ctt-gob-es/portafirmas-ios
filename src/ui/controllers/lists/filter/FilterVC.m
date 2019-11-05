@@ -234,7 +234,9 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (IBAction)didClickCancelButton:(id)sender
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+   dispatch_async(dispatch_get_main_queue(), ^{
+	   [self dismissViewControllerAnimated:YES completion:nil];
+	});
 }
 
 - (IBAction)didClickAcceptButton:(id)sender
@@ -291,10 +293,11 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         [baseTVC refreshInfoWithFilters:filters];
     }
     
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-         [baseTVC refreshInfoWithFilters:filters];
-     }];
+	dispatch_async(dispatch_get_main_queue(), ^{
+	  [self dismissViewControllerAnimated:YES completion:^{
+		   [baseTVC refreshInfoWithFilters:filters];
+	   }];
+	});
 }
 
 - (IBAction)didClickSortCriteriaButton:(id)sender
@@ -425,7 +428,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     } else {
 
         [self.view endEditing:YES];
-
+		_datePicker.backgroundColor = [UIColor whiteColor];
         if ([_currentTextField isEqual:_startDateTextField]) {
             if (_startDate) {
                 [_datePicker setDate:_startDate];
@@ -445,7 +448,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         }
 
         [UIView animateWithDuration:0.3 animations:^{
-             [_datePicker setAlpha:1.0];
+			[_datePicker setAlpha:1.0];
          } completion:^(BOOL finished) {
              [self updateContentOffsetForPicker];
          }];
