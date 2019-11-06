@@ -1175,9 +1175,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Adjuntos" id="0Rb-ti-XIY"/>
-                    <connections>
-                        <outlet property="view" destination="ZuO-hk-Ka7" id="ZaE-0l-FhZ"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rme-Ws-8Qv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1357,7 +1354,6 @@
                         <outlet property="selectButtonItem" destination="BA9-Fn-GOB" id="pia-Z8-eNx"/>
                         <outlet property="signBarButton" destination="PVg-8e-aIa" id="gzo-gX-AO9"/>
                         <outlet property="tableViewFooter" destination="sMH-sR-3u5" id="XQJ-Af-1ph"/>
-                        <outlet property="view" destination="JSh-qa-PVv" id="jjb-1w-D4l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1pW-mX-qhG" sceneMemberID="firstResponder"/>
@@ -1995,7 +1991,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="nx9-6d-emn"/>
-        <segue reference="47P-jN-2H3"/>
-        <segue reference="f7k-Dd-rat"/>
+        <segue reference="o3i-sS-1ar"/>
+        <segue reference="P10-3g-cwm"/>
     </inferredMetricsTieBreakers>
 </document>
