@@ -78,11 +78,8 @@ static long cellSelected;
 }
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
-    
-    BOOL *result = NO;
-    
+    BOOL result = NO;
     if (@selector(selectAction:) == action || @selector(editAction:) == action) {
-        
         result = YES;
     }
     return result;
