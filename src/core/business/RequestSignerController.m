@@ -40,7 +40,6 @@
 
 - (void)loadPreSignRequestsWithCurrentCertificate:(NSArray *)requests
 {
-    DDLogDebug(@"RequestSignerController::loadPreSignRequestsWithCurrentCertificate...");
     _pendingRequestIndex = 0;
     _pendingRequests = [[NSMutableArray alloc] initWithArray: requests];
     _dataSource = [[NSMutableArray alloc] init];
@@ -54,11 +53,7 @@
         
         NSData *certificateData = [[CertificateUtils sharedWrapper] publicKeyBits];
         NSString *certificateB64 = [Base64Utils base64EncodeData:certificateData];
-        DDLogDebug(@"Presing - RequestSignerController");
         NSString *data = [PreSignXMLController buildRequestWithCert:certificateB64 witRequestList: nextRequest];
-        
-        DDLogDebug(@"RequestSignerController::loadPreSignRequestsWithCurrentCertificate data=%@", data);
-        
         _wsController.delegate = self;
         [_wsController loadPostRequestWithData:data code:0];
         [_wsController startConnection];
@@ -70,8 +65,6 @@
 
 - (void)loadPreSignDetailWithCurrentCertificate:(Detail *)detail
 {
-    DDLogDebug(@"RequestSignerController::loadPreSignDetailWithCurrentCertificate...");
-
     PFRequest *request = [[PFRequest alloc] init];
     request.reqid = detail.detailid;
     request.documents = [detail.documents mutableCopy];
@@ -80,8 +73,6 @@
 
 - (void)loadPostSignRequest:(NSArray *)requests
 {
-    DDLogDebug(@"RequestSignerController::loadPostSignRequest");
-
     // load Pre Sign Request
     [self signRequestList: requests];
 
@@ -89,14 +80,7 @@
     // dataFromBase64String
     // NSString *certificateB64 = [certificateData base64EncodedString];
     NSString *certificateB64 = [Base64Utils base64EncodeData:certificateData];
-    DDLogDebug(@"**************** PostSign - RequestSignerController ****************");
-    DDLogDebug(@"certificateB64 => \n%@", certificateB64);
     NSString *data = [PostSignXMLController buildRequestWithCert:certificateB64 witRequestList:requests];
-
-    DDLogDebug(@"\n \n");
-    DDLogDebug(@"loadPreSignRequest::loadPostSignRequest data => \n\n%@", data);
-    DDLogDebug(@"\n \n \n");
-    
     waitingPostSign = YES;
 
     [_wsController loadPostRequestWithData:data code:1];
@@ -113,12 +97,10 @@
 {
     if (waitingPreSign) {
         waitingPreSign = NO;
-        DDLogDebug(@"RequestSignerController::didReceiveParserWithError PreSign message: %@", errorString);
     }
 
     if (waitingPostSign) {
         waitingPostSign = NO;
-        DDLogDebug(@"RequestSignerController::didReceiveParserWithError PostSign message: %@", errorString);
     }
 
     [[self delegate] didReceiveError:errorString];
@@ -127,9 +109,6 @@
 - (void)doParse:(NSData *)data
 {
     NSString *responseString = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
-
-    DDLogDebug(@"Respuesta del servidor: \n%@", responseString);
-
     if (waitingPreSign) {
         waitingPreSign = NO;
         // create and init NSXMLParser object
@@ -146,14 +125,11 @@
 
         // test the result
         if (success) {
-            DDLogDebug(@"doParse:: Parsing PreSign XML with no errors ");
-
             // parsing...
 
             BOOL finishWithError = [parser finishWithError];
 
             if (finishWithError) {
-               DDLogError(@"Error  parsing  document!");
                 [[self delegate] didReceiveError:[NSString stringWithFormat:@"Se ha producido un error en el servidor:%@(%@)", [parser err], [parser errorCode]]];
 
                 return;
@@ -164,7 +140,6 @@
 
             [self loadPostSignRequest:preSignRequests];
         } else {
-            DDLogError(@"doParse::Error  parsing PreSign document!");
             [[self delegate] didReceiveError:@"Se ha producido un error de conexión con el servidor"];
         }
     } else if (waitingPostSign) {
@@ -183,12 +158,10 @@
 
         // test the result
         if (success) {
-            DDLogDebug(@"doParse:: Parsing XML with no errors ");
             // get array of users here
             [_dataSource addObjectsFromArray: [parser dataSource]];
             [self sendNextRequest];
         } else {
-           DDLogError(@"doParse::Error  parsing PreSign document!");
             [[self delegate] didReceiveError:@"Se ha producido un error de conexión con el servidor"];
         }
     }
@@ -221,8 +194,6 @@
     for (int i = 0; i < [reqDoc.ssconfig count]; i++) {
         
         Param *param = [reqDoc.ssconfig objectAtIndex: i];
-       DDLogDebug(@"Session param: %@", param.key);
-
         if ([param.key hasPrefix:@"PRE"]) {
             preSignResult = param.value;
             break;
@@ -235,8 +206,6 @@
     
     NSData *data = [Base64Utils base64DecodeString:preSignResult];
     NSData *result = nil;
-    DDLogDebug(@"signDocument::mdalgo => %@", mdalgo);
-
     if ([mdalgo isEqualToString:@"sha-1"] || [mdalgo isEqualToString:@"sha1"]) {
         result = [[CertificateUtils sharedWrapper] getSignatureBytesSHA1:data];
     } else if ([mdalgo isEqualToString:@"sha-256"] || [mdalgo isEqualToString:@"sha256"]) {
@@ -245,10 +214,7 @@
         result = [[CertificateUtils sharedWrapper] getSignatureBytesSHA384:data];
     } else if ([mdalgo isEqualToString:@"sha-512"] || [mdalgo isEqualToString:@"sha512"]) {
         result = [[CertificateUtils sharedWrapper] getSignatureBytesSHA512:data];
-    } else {
-        DDLogDebug(@"RequestController::signDocument mdalgo error =%@", mdalgo);
     }
-
     // reqDoc.result=[result base64EncodedString];
     reqDoc.result = [Base64Utils base64EncodeData: result];
 }
@@ -267,8 +233,6 @@
         mdalgo = [mdalgo lowercaseString];
     }
 
-   DDLogDebug(@"show Signature RSA::>>>>>>>>>>>>>>mdalgo=%@", mdalgo);
-
     if ([mdalgo isEqualToString:@"sha-1"]) {
         result = [[CertificateUtils sharedWrapper] getSignatureBytesSHA1:data];
     } else if ([mdalgo isEqualToString:@"sha-256"]) {
@@ -277,13 +241,10 @@
         result = [[CertificateUtils sharedWrapper] getSignatureBytesSHA384:data];
     } else if ([mdalgo isEqualToString:@"sha-512"]) {
         result = [[CertificateUtils sharedWrapper] getSignatureBytesSHA512:data];
-    } else {
-        DDLogDebug(@"RequestController::signDocument mdalgo error =%@", mdalgo);
     }
 
     // NSString *resBase64=[result base64EncodedString];
     NSString *resBase64 = [Base64Utils base64EncodeData:result];
-   DDLogDebug(@"showSignature::RSA Digital sign:%@ length=%lu", resBase64, (unsigned long)[resBase64 length]);
 }
 
 @end

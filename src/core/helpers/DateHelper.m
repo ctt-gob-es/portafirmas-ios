@@ -51,10 +51,8 @@
                                      if ([obj1 isKindOfClass:[NSDate class]] && [obj2 isKindOfClass:[NSDate class]]) {
                                          return [(NSDate *)obj1 compare : (NSDate *)obj2];
                                      }
-
                                      return nil;
                                  }];
-
     return sortedDatesArray[0];
 }
 

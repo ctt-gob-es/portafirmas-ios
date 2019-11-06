@@ -97,9 +97,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
     SettingsCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kSettingsVCCellIdentifier];
     
     if (!cell) {
-        
-        DDLogError(@"SettingsVC::cellForRowAtIndexPath - Cell is nil");
-        return nil;
+		return nil;
     }
     
     [cell setupForType:indexPath.section];
@@ -162,9 +160,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    DDLogDebug(@"Segue -> %@", sender);
-    
+{    
     if ([segue.identifier isEqualToString:kSettingsVCSegueIdentifierAccess]) {
         
         if (![userDefaultsKeys containsObject:kPFUserDefaultsKeyCurrentCertificate]) {

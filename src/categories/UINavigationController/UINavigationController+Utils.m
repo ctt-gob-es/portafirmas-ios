@@ -17,9 +17,6 @@
 
 - (UIViewController *)rootViewController
 {
-    
-    DDLogDebug(@"ViewController -> %@", self.viewControllers);
-    DDLogDebug(@"ViewController count -> %lu", self.viewControllers.count);
     return self.viewControllers && self.viewControllers.count > 0 ? self.viewControllers[0] : nil;
 }
 

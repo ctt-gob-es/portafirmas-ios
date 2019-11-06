@@ -107,8 +107,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DDLogDebug(@"AttachmentViewController::cellForRowAtIndexPath row=%ld", (long)[indexPath row]);
-
     static NSString *CellIdentifier = @"AttachmentsCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
@@ -162,7 +160,6 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    DDLogDebug(@"AttachmentViewController::prepareForSegue identifier=%@", [segue identifier]);
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
 
     if ([segue.identifier isEqualToString:@"segueShowPreview"]) {
@@ -173,7 +170,6 @@
         
         if (sourceSection.type == PFAttachmentTypeDocument) {
             Document *selectedDoc = _documentsDataSource[selectedIndexPath.row];
-            DDLogDebug(@"AttachmentViewController::prepareForSegue document Id:%@", [selectedDoc docid]);
             [selectedDoc prepareForRequestWithCode:requestCode];
             [previewViewController setDocId:selectedDoc.docid];
             previewViewController.requestCode = requestCode;
@@ -181,7 +177,6 @@
             
         } else {
             AttachedDoc *selectedDoc = _attachedDocsDataSource[selectedIndexPath.row];
-            DDLogDebug(@"AttachmentViewController::prepareForSegue document Id:%@", [selectedDoc docid]);
             [previewViewController setDocId:selectedDoc.docid];
             previewViewController.requestCode = requestCode;
             previewViewController.attachedDataSource = selectedDoc;

@@ -34,22 +34,11 @@
 - (void) authID {
     
     [LoginNetwork loginProcess:^(NSString *token) {
-        DDLogDebug(@"Token = %@", token);
         NSString *decodedToken = [self decodeToken:token];
         NSString *signToken = [self signToken:decodedToken];
-        DDLogDebug(@"Sign Token = %@", signToken);
         NSString *certificate = [self certificateInBase64];
-        
-        [LoginNetwork validateLogin:certificate withSignedToken:signToken success:^{
-            DDLogDebug(@"Login validated");
-        } failure:^(NSError *error) {
-            DDLogError(@"Error starting login process");
-            DDLogError(@"Error: %@", error);
-        }];
-    } failure:^(NSError *error) {
-        DDLogError(@"Error starting login process");
-        DDLogError(@"Error: %@", error);
-    }];
+		[LoginNetwork validateLogin:certificate withSignedToken:signToken success:nil failure:nil];
+    } failure:nil];
 }
     
 - (void) loginWithCertificate:(void(^)(void))success failure:(void(^)(NSError *error))failure {
@@ -59,17 +48,14 @@
     
     [LoginNetwork loginProcess:^(NSString *token) {
         self.serverSupportLogin = YES;
-        DDLogDebug(@"Token = %@", token);
         NSString *decodedToken = [self decodeToken:token];
         self.currentSignToken = [self signToken:decodedToken];
-        DDLogDebug(@"Sign Token = %@", self.currentSignToken);
         NSString *certificate = [self certificateInBase64];
         
         [LoginNetwork validateLogin:certificate withSignedToken:self.currentSignToken success:^{
            dispatch_async(dispatch_get_main_queue(), ^{
 				[SVProgressHUD dismiss];
 			});
-            DDLogDebug(@"Login validated");
             if ([PushNotificationService instance].currentServer.userNotificationPermisionState) {
                 [[PushNotificationService instance] initializePushNotificationsService:false];
             }
@@ -78,21 +64,18 @@
             dispatch_async(dispatch_get_main_queue(), ^{
 				[SVProgressHUD dismiss];
 			});
-            DDLogError(@"Error starting login process");
-            DDLogError(@"Error: %@", error);
             self.serverSupportLogin = NO;
+			NSLog(@"Error: %@", error);
             failure(error);
         }];
     } failure:^(NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];
 		});
-        DDLogError(@"Error starting login process");
         
         //Check if is old server
         if (error != nil && error.code == PFLoginNotSupported) {
             self.serverSupportLogin = NO;
-            DDLogError(@"Error: %@", error);
         }
         failure(error);
     }];
@@ -107,7 +90,6 @@
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];
 		});
-        DDLogDebug(@"Logout finish with success");
         self.serverSupportLogin = false;
         self.currentSignToken = @"";
         [CookieTools removeJSessionIDCookies];
@@ -116,7 +98,6 @@
        dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];
 		});
-        DDLogDebug(@"Logout finish with failure");
         self.serverSupportLogin = false;
         self.currentSignToken = @"";
         [CookieTools removeJSessionIDCookies];

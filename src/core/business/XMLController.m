@@ -33,7 +33,6 @@
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict
 {
     if ([elementName isEqualToString:@"err"]) {
-       DDLogDebug(@"err element found.");
         _finishwithError = YES;
         // We do not have any attributes in the user elements, but if
         // you do, you can extract them here:

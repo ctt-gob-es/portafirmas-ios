@@ -86,14 +86,6 @@
         [SVProgressHUD dismiss];
     });
 
-    if (status == noErr) {
-        DDLogDebug(@"deleterWithCertificateName::Certificate %@ is deleted from keychain:", certificateInfo.subject);
-    }
-    else {
-        DDLogDebug(@"deleterWithCertificateName::Certificate %@ is deleted from keychain:", certificateInfo.subject);
-        DDLogDebug(@"No Se ha eliminado el certificado correctamente.Error: %i", (int)status);
-    }
-
     return status;
 }
 
@@ -106,25 +98,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    DDLogDebug(@"LoginViewController::numberOfRowsInSection=%ld. rows=%ld", (long)section, (unsigned long)[arrayCerts count]);
     [self.editButtonItem setEnabled:[arrayCerts count] > 0];
-
     return [arrayCerts count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DDLogDebug(@"LoginViewController::cellForRowAtIndexPath row=%ld", (long)[indexPath row]);
-
     static NSString *CellIdentifier = @"CertificateCell";
     CertificateCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-
-    if (cell == nil) {
-        DDLogDebug(@"LoginViewController::cell is nill");
-    }
-    
     [cell setCertificateInfo:arrayCerts[indexPath.row] forEditingCell:self.isEditing];
-
     return cell;
 }
 
@@ -189,11 +171,7 @@
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     PFCertificateInfo *selectedCertificate = arrayCerts[selectedIndexPath.row];
     
-    DDLogDebug(@"LoginViewController::prepareForSegue selected index=%ld", (long)selectedIndexPath.row);
-    DDLogDebug(@"LoginViewController:: certificado seleccionado -> %@", selectedCertificate.subject);
-    
     if ([[CertificateUtils sharedWrapper] searchIdentityByName:selectedCertificate.subject] == YES) {
-        DDLogDebug(@"LoginViewController::prepareForSegue::selected certificate....");
         [[NSUserDefaults standardUserDefaults] setObject:@{kPFUserDefaultsKeyAlias:selectedCertificate.subject} forKey:kPFUserDefaultsKeyCurrentCertificate];
         [[NSUserDefaults standardUserDefaults] synchronize];
         [[CertificateUtils sharedWrapper] setSelectedCertificateName:selectedCertificate.subject];

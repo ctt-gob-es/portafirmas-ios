@@ -76,8 +76,6 @@
     [SVProgressHUD show];
     NSString *data = [PreviewXMLController buildRequestWithId:_docId];
 
-    DDLogDebug(@"PreviewXMLController::loadWebService.message data=%@", data);
-
     // loadRequest
     [dataController loadPostRequestWithData:data code:_requestCode];
     [dataController startConnection];
@@ -88,7 +86,6 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
     });
-    DDLogDebug(@"UnassignedRequestTableViewController::didReceiveParserWithError: %@", errorString);
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
                                                                              message:errorString
                                                                       preferredStyle:UIAlertControllerStyleAlert];

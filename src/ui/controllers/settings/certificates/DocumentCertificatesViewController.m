@@ -118,8 +118,6 @@ int const kNormalLabelDistance = 20;
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    DDLogDebug(@"didReceiveMemoryWarning");
-
 }
 
 - (IBAction)didTapOnBackButton:(id)sender
@@ -206,7 +204,6 @@ int const kNormalLabelDistance = 20;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DDLogDebug(@"didSelectRowAtIndexPath row=%ld", (long)[indexPath row]);
     _selectedCertificate = [files objectAtIndex:[indexPath row]];
 }
 
@@ -256,12 +253,8 @@ int const kNormalLabelDistance = 20;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    DDLogDebug(@"DocumentCertificatesViewController::prepareForSegue identifier=%@", [segue identifier]);
-
     if ([segue.identifier isEqualToString:@"segueModalCertificates"]) {
         NSIndexPath *selectedRowIndexPath = [self.tableView indexPathForSelectedRow];
-        DDLogDebug(@"DocumentCertificatesViewController::prepareForSegue selected index=%ld", (long)[selectedRowIndexPath row]);
-
         // Sets data in Aplication delegate objet to be shared for the application's tab
         _selectedCertificate = [files objectAtIndex:[selectedRowIndexPath row]];
         ModalCertificatesController *modalController  = [segue destinationViewController];

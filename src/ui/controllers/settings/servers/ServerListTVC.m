@@ -50,8 +50,6 @@ static long cellSelected;
 
 #pragma mark - User Interaction
 - (void)handleTapGesture:(UITapGestureRecognizer *)tapGesture {
-    
-    DDLogDebug(@"handleTapGesture");
     [self becomeFirstResponder];
     CGPoint p = [tapGesture locationInView: self.tableView];
     NSIndexPath *indexPathCell = [self.tableView indexPathForRowAtPoint: p];
@@ -92,8 +90,6 @@ static long cellSelected;
 
 #pragma mark - UIMenuController Methods
 - (void)selectAction:(id)sender {
-    DDLogDebug(@"selectAction");
-    DDLogDebug(@"Se ha seleccionado la celda %ld", cellSelected);
     NSDictionary *serverInfo = _serversArray[cellSelected];
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"", nil)
                                                                              message:[NSString stringWithFormat:NSLocalizedString(@"Alert_View_Server_Going_To_Be_Selected", nil), serverInfo[kPFUserDefaultsKeyAlias],serverInfo[kPFUserDefaultsKeyURL]]
@@ -115,10 +111,6 @@ static long cellSelected;
 }
 
 -(void) editAction: (id)sender {
-    
-    DDLogDebug(@"editAction");
-    DDLogDebug(@"Se preciona la celda -> %ld", cellSelected);
-
     [self performSegueWithIdentifier:@"showEditServerVC" sender:self];
 }
 
@@ -143,9 +135,6 @@ static long cellSelected;
         
         vc.aliasReceived = alias;
         vc.urlRecived = url;
-        DDLogDebug(@"Alias %@", vc.aliasReceived);
-        DDLogDebug(@"URL %@", vc.urlRecived);
-
     }
 }
 
@@ -166,7 +155,6 @@ static long cellSelected;
                                           action:@selector(handleTapGesture:)];
     
     if (!cell) {
-        DDLogError(@"ServersListVC::cellForRowAtIndexPath - Cell is nil");
         return nil;
     }
     

@@ -53,8 +53,6 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    DDLogDebug(@"SendersViewController::numberOfRowsInSection::%@.", [_dataSource description]);
-
     // Return the number of rows in the section.
     SignLine *signLine = [_dataSource objectAtIndex:section];
 

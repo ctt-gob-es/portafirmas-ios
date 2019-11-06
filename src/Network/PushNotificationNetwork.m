@@ -57,8 +57,6 @@
             failure(error);
         } else  {
             NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-            DDLogDebug(@"Request reply: %@", requestReply);
-            
             Parser *parser = [Parser new];
             
             [parser parseValidateSubscription:data success:^(BOOL isValid) {

@@ -61,7 +61,6 @@ struct {
                             (unsigned long)code, [msgData base64EncodedString]];
 
         NSString *newURL = [wsURLString stringByAppendingString:params];
-       DDLogDebug(@"WSDataController::loadPostRequestWithURL.GET Url=%@", newURL);
 
         request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:newURL]
                                           cachePolicy:NSURLRequestReloadIgnoringCacheData
@@ -71,9 +70,6 @@ struct {
         NSString *post = [NSString stringWithFormat: @"op=%lu&dat=%@",(unsigned long)code, [msgData base64EncodedString]];
         NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
         NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
-        DDLogDebug(@"\n");
-        DDLogDebug(@"WSDataController -> Valor postLength ->    %@", postLength);
-        DDLogDebug(@"\n\n");
 
         request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:wsURLString]
                                           cachePolicy:NSURLRequestReloadIgnoringCacheData
@@ -135,19 +131,15 @@ struct {
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-
-    DDLogDebug(@"WSDataController::connection didReceive Response =%@", [httpResponse allHeaderFields]);
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    DDLogDebug(@"Succeeded! Received %lu bytes of data", (unsigned long)[data length]);
     [xmlData appendData:data];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    DDLogDebug(@"Datos totales descargados: %lu", (unsigned long)[xmlData length]);
     [self doParse: xmlData];
 }
 
@@ -168,7 +160,6 @@ struct {
 
 - (void)doParse:(NSData *)data
 {
-    DDLogDebug(@"doParse data: \n\n%@", [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding]);
     [_delegate doParse: data];
 }
 

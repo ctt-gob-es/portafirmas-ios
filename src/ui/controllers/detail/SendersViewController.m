@@ -45,27 +45,17 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    DDLogDebug(@"SendersViewController::numberOfRowsInSection=%ld. rows=%lu", (long)section, (unsigned long)[_dataSource count]);
-    
     return [_dataSource count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DDLogDebug(@"SenderViewController::cellForRowAtIndexPath row=%ld", (long)[indexPath row]);
-    
     static NSString *CellIdentifier = @"SendersCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    
-    if (cell == nil) {
-        DDLogDebug(@"SendersViewController::cell is nill");
-    }
-    
     // Configure the cell...
     NSString *sender = [_dataSource objectAtIndex:[indexPath row]];
     cell.textLabel.text = sender;
     sender = nil;
-    
     return cell;
 }
 
