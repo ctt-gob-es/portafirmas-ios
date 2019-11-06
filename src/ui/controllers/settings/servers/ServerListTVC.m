@@ -103,8 +103,8 @@ static long cellSelected;
         NSDictionary *serverInfo = _serversArray[cellSelected];
         [[NSUserDefaults standardUserDefaults] setObject:serverInfo forKey:kPFUserDefaultsKeyCurrentServer];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        if (_delegate) {
-            [_delegate serverListDidSelectServer:serverInfo];
+        if (self.delegate) {
+            [self.delegate serverListDidSelectServer:serverInfo];
         }
         [self.navigationController popViewControllerAnimated:YES];
     }];
