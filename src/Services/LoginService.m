@@ -52,7 +52,7 @@
     }];
 }
     
-- (void) loginWithCertificate:(void(^)())success failure:(void(^)(NSError *error))failure {
+- (void) loginWithCertificate:(void(^)(void))success failure:(void(^)(NSError *error))failure {
     
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
 	[SVProgressHUD show];
@@ -99,7 +99,7 @@
     
 }
 
-- (void) logout:(void(^)())success failure:(void(^)(NSError *error))failure {
+- (void) logout:(void(^)(void))success failure:(void(^)(NSError *error))failure {
     
 	[SVProgressHUD show];
     
