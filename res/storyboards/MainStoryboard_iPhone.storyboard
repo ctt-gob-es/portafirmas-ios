@@ -315,7 +315,6 @@
                         <outlet property="firstOptionTitleLabel" destination="Scs-f9-W3u" id="u00-0G-GYv"/>
                         <outlet property="messageContainerView" destination="9wT-U9-tPb" id="k30-cF-AsL"/>
                         <outlet property="secondOptionTitleLabel" destination="20Y-sb-TmV" id="gLu-qF-LUB"/>
-                        <outlet property="view" destination="Alm-Qt-99l" id="J0x-eV-RXy"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wS2-cF-3Rw" userLabel="First Responder" sceneMemberID="firstResponder"/>
