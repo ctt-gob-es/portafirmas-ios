@@ -36,13 +36,6 @@
     [_passwordText becomeFirstResponder];
 }
 
-- (void)viewDidUnload
-{
-    [self setPasswordText:nil];
-    [self set_messageView:nil];
-    [super viewDidUnload];
-}
-
 - (void)registerWithCertificate
 {
     OSStatus status = noErr;
