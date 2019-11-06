@@ -96,7 +96,7 @@ static long cellSelected;
                                                                                       preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *accept = [UIAlertAction actionWithTitle:NSLocalizedString(@"Alert_View_Accept", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSDictionary *serverInfo = _serversArray[cellSelected];
+		NSDictionary *serverInfo = self->_serversArray[cellSelected];
         [[NSUserDefaults standardUserDefaults] setObject:serverInfo forKey:kPFUserDefaultsKeyCurrentServer];
         [[NSUserDefaults standardUserDefaults] synchronize];
         if (self.delegate) {
