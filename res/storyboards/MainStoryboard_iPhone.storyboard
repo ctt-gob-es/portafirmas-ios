@@ -370,7 +370,7 @@
             <objects>
                 <tableViewController modalTransitionStyle="flipHorizontal" hidesBottomBarWhenPushed="YES" id="LYt-De-Eua" customClass="DetailTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" sectionIndexMinimumDisplayRowCount="8" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="1Ek-a1-fwh">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
@@ -747,7 +747,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="ReceiversListView" modalTransitionStyle="flipHorizontal" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Whf-Lg-Wlz" customClass="ReceiversViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="amM-w9-afS">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
@@ -1943,7 +1943,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="SendersListView" modalTransitionStyle="flipHorizontal" id="rnV-KU-W7J" customClass="SendersViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Ixu-Qt-Eyp">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
@@ -1990,7 +1990,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="nx9-6d-emn"/>
-        <segue reference="47P-jN-2H3"/>
-        <segue reference="f7k-Dd-rat"/>
+        <segue reference="8G8-nU-8OZ"/>
+        <segue reference="mrf-vS-Wze"/>
     </inferredMetricsTieBreakers>
 </document>
