@@ -726,7 +726,6 @@
                         <outlet property="signLinesTypeLbl" destination="BFX-6i-tsi" id="DWF-ep-cIj"/>
                         <outlet property="subjectTextView" destination="DUx-Vt-IyK" id="v1n-oB-vh1"/>
                         <outlet property="subjectTitleTextView" destination="bzF-Bl-D0k" id="GZC-kQ-SsY"/>
-                        <outlet property="view" destination="1Ek-a1-fwh" id="67P-ng-3Ka"/>
                         <outletCollection property="cellBehindExpirationDate" destination="mGE-2t-G1a" id="TkS-OK-nef"/>
                         <outletCollection property="cellBehindRejectExplanation" destination="iW1-Ni-vC9" id="CzB-Yp-Vnj"/>
                         <outletCollection property="cellBehindRejectExplanation" destination="8BW-RJ-qpP" id="F9b-6C-zZs"/>
@@ -778,9 +777,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Destinatarios" id="vm1-Si-AgJ"/>
-                    <connections>
-                        <outlet property="view" destination="amM-w9-afS" id="rA4-Qf-Jyh"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vdn-zE-CPu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -815,7 +811,6 @@
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="view" destination="049-Ae-aDs" id="dII-L5-tvu"/>
                         <outlet property="webView" destination="tKE-ak-LHM" id="9J6-FT-Duq"/>
                     </connections>
                 </viewController>
