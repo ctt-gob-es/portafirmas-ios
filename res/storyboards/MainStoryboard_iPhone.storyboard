@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="83s-En-Yoh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="83s-En-Yoh">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -86,11 +86,7 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Km-ge-Tsk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem title="Editar" id="cUT-PO-At2">
-                    <connections>
-                        <action selector="didClickEditButton:" destination="Rg6-FS-H8G" id="RCb-bD-Fzc"/>
-                    </connections>
-                </barButtonItem>
+                <barButtonItem title="Editar" id="cUT-PO-At2"/>
             </objects>
             <point key="canvasLocation" x="-4380" y="-982.75862068965523"/>
         </scene>
@@ -208,7 +204,6 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="editBarButtonItem" destination="WIy-kb-5CA" id="Fsp-5b-yeh"/>
-                        <outlet property="view" destination="y5z-sx-50W" id="6wG-yO-DH5"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ybc-f5-aKu" userLabel="First Responder" sceneMemberID="firstResponder"/>
