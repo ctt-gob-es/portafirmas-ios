@@ -75,10 +75,10 @@
                                                                           preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
             // Boton OK presionado - certificado cargado correctamente
-            [_passwordText resignFirstResponder];
-            [_passwordText removeFromSuperview];
-            if (_delegate) {
-                [_delegate certificateAdded];
+            [self.passwordText resignFirstResponder];
+            [self.passwordText removeFromSuperview];
+            if (self.delegate) {
+                [self.delegate certificateAdded];
             }
         }];
         [alertController addAction:cancel];
