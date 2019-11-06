@@ -48,12 +48,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewDidUnload
-{
-    arrayCerts = nil;
-    [super viewDidUnload];
-}
-
 #pragma mark - User Interface
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

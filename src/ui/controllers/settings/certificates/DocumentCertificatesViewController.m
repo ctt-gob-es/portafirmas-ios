@@ -243,14 +243,6 @@ int const kNormalLabelDistance = 20;
 #endif /* if TARGET_IPHONE_SIMULATOR */
 }
 
-- (void)viewDidUnload
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [SVProgressHUD dismiss];
-    });
-    [super viewDidUnload];
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"segueModalCertificates"]) {
