@@ -1894,7 +1894,6 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="_messageView" destination="cQ2-Kt-lMH" id="gz2-R7-mWf"/>
-                        <outlet property="password" destination="LFJ-3t-AhZ" id="C17-Ti-Hin"/>
                         <outlet property="passwordText" destination="LFJ-3t-AhZ" id="5hO-o3-P4C"/>
                         <outlet property="registrarBtn" destination="TVi-n4-VwM" id="sKH-qM-G5A"/>
                     </connections>
