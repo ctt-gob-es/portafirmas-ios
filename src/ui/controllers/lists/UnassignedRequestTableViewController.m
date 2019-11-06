@@ -91,14 +91,6 @@
     [self.parentViewController.tabBarController.tabBar setHidden:NO];
 }
 
-- (void)viewDidUnload
-{
-    [self setSignBarButton:nil];
-    [self setRejectBarButton:nil];
-
-    [super viewDidUnload];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
