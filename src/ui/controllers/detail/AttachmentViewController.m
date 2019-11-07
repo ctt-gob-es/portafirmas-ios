@@ -184,27 +184,4 @@
     }
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    UIInterfaceOrientation des = self.interfaceOrientation;
-
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) { // iPad
-        if (des == UIInterfaceOrientationPortrait || des == UIInterfaceOrientationPortraitUpsideDown) { // ipad-portairait
-
-        } else { // ipad -landscape
-
-        }
-    } else { // iphone
-        UIInterfaceOrientation des = self.interfaceOrientation;
-
-        if (des == UIInterfaceOrientationPortrait || des == UIInterfaceOrientationPortraitUpsideDown) { // iphone portrait
-
-        } else { // iphone -landscape
-
-        }
-    }
-
-    return YES;
-}
-
 @end
