@@ -1398,26 +1398,37 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="K5O-ff-EqC">
-                            <rect key="frame" x="0.0" y="0.0" width="768" height="46"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <rect key="frame" x="0.0" y="0.0" width="768" height="37"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                             <subviews>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" indicatorStyle="black" editable="NO" text="Servidor a seleccionar" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Vfj-BN-tfn">
+                                <textView autoresizesSubviews="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" scrollEnabled="NO" contentInsetAdjustmentBehavior="scrollableAxes" indicatorStyle="black" editable="NO" text="Servidor a seleccionar" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vfj-BN-tfn">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="37"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" red="0.68627450980000004" green="0.13725490200000001" blue="0.10980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <accessibility key="accessibilityConfiguration">
+                                        <accessibilityTraits key="traits" notEnabled="YES"/>
                                         <bool key="isElement" value="NO"/>
                                     </accessibility>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="37" id="Kne-Je-R8X"/>
+                                    </constraints>
+                                    <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="16"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 </textView>
                             </subviews>
-                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstItem="Vfj-BN-tfn" firstAttribute="centerY" secondItem="K5O-ff-EqC" secondAttribute="centerY" id="GSe-Lb-cCW"/>
+                                <constraint firstAttribute="trailing" secondItem="Vfj-BN-tfn" secondAttribute="trailing" id="RFb-L3-i6o"/>
+                                <constraint firstAttribute="bottom" secondItem="Vfj-BN-tfn" secondAttribute="bottom" id="UK3-UG-7ms"/>
+                                <constraint firstItem="Vfj-BN-tfn" firstAttribute="top" secondItem="K5O-ff-EqC" secondAttribute="top" id="fzP-nc-bds"/>
+                                <constraint firstItem="Vfj-BN-tfn" firstAttribute="leading" secondItem="K5O-ff-EqC" secondAttribute="leading" id="vmc-Cp-wxf"/>
+                            </constraints>
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ServersListCell" id="JYI-6a-mVb" customClass="ServersListCell">
-                                <rect key="frame" x="0.0" y="74" width="768" height="50"/>
+                                <rect key="frame" x="0.0" y="65" width="768" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JYI-6a-mVb" id="k2S-p6-Xrf">
                                     <rect key="frame" x="0.0" y="0.0" width="768" height="50"/>
