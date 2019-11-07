@@ -107,7 +107,6 @@
                         <outlet property="firstOptionTitleLabel" destination="eI0-oN-PZV" id="iR9-0d-2O4"/>
                         <outlet property="messageContainerView" destination="TsL-Sl-j6H" id="l8E-iC-X4A"/>
                         <outlet property="secondOptionTitleLabel" destination="sgt-q4-2Fi" id="NaT-rE-T11"/>
-                        <outlet property="view" destination="DRf-nS-nGZ" id="bew-wa-PGY"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fgB-bx-OJA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -195,9 +194,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Destinatarios" id="a5x-JJ-BHG"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
-                    <connections>
-                        <outlet property="view" destination="YNy-T2-eWx" id="Ens-MT-INK"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aun-tw-iOJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -230,7 +226,6 @@
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="view" destination="Y68-MP-gkH" id="QBC-LS-1YY"/>
                         <outlet property="webView" destination="Ekl-Ip-YYS" id="AgU-Et-2hP"/>
                     </connections>
                 </viewController>
@@ -275,9 +270,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Adjuntos" id="WoI-Cw-6kM"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="blackOpaque"/>
-                    <connections>
-                        <outlet property="view" destination="VAs-Fb-d5F" id="S8g-SZ-Qht"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wSO-b5-IBM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -457,7 +449,6 @@
                         <outlet property="selectButtonItem" destination="4Xb-an-D9P" id="P2k-cE-3cT"/>
                         <outlet property="signBarButton" destination="VhQ-tA-czN" id="sb8-5w-Vmc"/>
                         <outlet property="tableViewFooter" destination="rnd-6h-EHw" id="qpT-Cd-yQm"/>
-                        <outlet property="view" destination="2TT-I3-nY2" id="MFc-yU-joX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Sa-x3-c4L" sceneMemberID="firstResponder"/>
@@ -1094,7 +1085,6 @@
                         <outlet property="signLinesTypeLbl" destination="2fR-2D-DBQ" id="qiM-Pu-0lb"/>
                         <outlet property="subjectTextView" destination="3ne-XG-AJs" id="abf-I2-93R"/>
                         <outlet property="subjectTitleTextView" destination="ldy-tZ-Qy4" id="ePu-ix-7ua"/>
-                        <outlet property="view" destination="FRp-fG-woV" id="XPV-US-uHr"/>
                         <outletCollection property="cellBehindExpirationDate" destination="8d4-vW-VaC" id="Ua3-o4-0t1"/>
                         <outletCollection property="cellBehindRejectExplanation" destination="apj-DJ-W7i" id="gib-og-fOn"/>
                         <outletCollection property="cellBehindRejectExplanation" destination="A7S-So-Bsc" id="RFD-Wo-pmp"/>
@@ -1791,7 +1781,6 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="editBarButtonItem" destination="3Yx-v2-vEg" id="TtL-WH-Cqx"/>
-                        <outlet property="view" destination="O6s-Lw-buQ" id="Ykl-xi-Jze"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BHr-Pf-SGB" userLabel="First Responder" sceneMemberID="firstResponder"/>
