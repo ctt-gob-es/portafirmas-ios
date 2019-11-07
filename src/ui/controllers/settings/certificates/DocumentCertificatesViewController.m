@@ -280,7 +280,7 @@ int const kNormalLabelDistance = 20;
 }
 
 - (IBAction)filesAppButtonTapped:(id)sender {
-	UIDocumentMenuViewController *documentProviderMenu = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.data"] inMode:UIDocumentPickerModeImport];
+	UIDocumentPickerViewController *documentProviderMenu = [[UIDocumentPickerViewController alloc] initWithDocumentTypes:@[@"public.data"] inMode:UIDocumentPickerModeImport];
 	documentProviderMenu.delegate = self;
 	documentProviderMenu.modalPresentationStyle = UIModalPresentationPopover;
 	UIPopoverPresentationController *popPC = documentProviderMenu.popoverPresentationController;
@@ -337,7 +337,7 @@ int const kNormalLabelDistance = 20;
 	}
 }
 
-- (void)documentMenu:(nonnull UIDocumentMenuViewController *)documentMenu didPickDocumentPicker:(nonnull UIDocumentPickerViewController *)documentPicker {
+- (void)documentMenu:(nonnull UIDocumentPickerViewController *)documentMenu didPickDocumentPicker:(nonnull UIDocumentPickerViewController *)documentPicker {
 	documentPicker.delegate = self;
 	[self presentViewController:documentPicker animated:YES completion:nil];
 }
