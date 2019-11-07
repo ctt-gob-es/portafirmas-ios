@@ -296,7 +296,6 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void)loadWebService
 {
-    NSString *url = [appConfig objectForKey:kRequestDetailURLKeyName];
     NSString *data = [DetailXMLController buildRequestWithId:_requestId];
     // Load Detail request
     _waitingResponseType = PFWaitingResponseTypeDetail;
