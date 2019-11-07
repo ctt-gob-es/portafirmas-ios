@@ -53,7 +53,7 @@ typedef enum cellTypes
 	Message
 } CellTypes;
 
-NSInteger *const numberOfRows = 12;
+NSInteger const numberOfRows = 12;
 CGFloat const defaultCellHeight = 44;
 CGFloat const noCellHeight = 0;
 CGFloat const rejectCellTitleCellWidth = 150;
@@ -478,7 +478,7 @@ CGFloat const largeTitleCellWidth = 200;
         self.sendersMoreButton.hidden = NO;
         NSString *textButton1 = NSLocalizedString(@"Detail_senders_first_button", nil);
         NSString *textButton2 = NSLocalizedString(@"Detail_senders_second_button", nil);
-        NSInteger *restOfSenders = [senders count] - 2;
+        NSInteger restOfSenders = [senders count] - 2;
         NSString *textButton = [NSString stringWithFormat:@"%@%ld%@",textButton1, (long)restOfSenders, textButton2];
         [self.sendersMoreButton setTitle:textButton forState:UIControlStateNormal];
     } else{
