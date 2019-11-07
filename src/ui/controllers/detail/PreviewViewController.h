@@ -23,6 +23,6 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (strong, nonatomic) Document *documentDataSource;
 @property (strong, nonatomic) AttachedDoc *attachedDataSource;
-@property (assign, nonatomic) PFRequestCode *requestCode;
+@property (assign, nonatomic) PFRequestCode requestCode;
 
 @end
