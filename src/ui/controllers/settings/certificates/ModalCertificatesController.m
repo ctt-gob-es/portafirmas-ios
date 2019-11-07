@@ -54,7 +54,9 @@
 #else
     // Load certificate from Documents directory
     status = [[CertificateUtils sharedWrapper] loadCertKeyChainWithName:_selectedCertificate password:_password fromDocument:YES];
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
 #endif
 
     if (status != noErr) {

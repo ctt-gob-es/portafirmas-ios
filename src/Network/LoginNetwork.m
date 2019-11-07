@@ -10,6 +10,7 @@
 #import "NSData+Base64.h"
 #import "Parser.h"
 #import "NSString+XMLSafe.h"
+#import "userDNIManager.h"
 
 #define SERVER_URL ((NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyCurrentServer])[kPFUserDefaultsKeyURL]
 
@@ -140,6 +141,7 @@
             NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
             DDLogDebug(@"Request reply: %@", requestReply);
             success();
+            [userDNIManager deleteUserDNI];
         }
     }] resume];
 }

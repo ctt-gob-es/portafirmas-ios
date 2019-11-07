@@ -273,7 +273,7 @@ static CertificateUtils *__sharedKeyWrapper = nil;
     return securityError;
 }
 
-- (NSData *)getHashBytesSHA1:(NSData *)plainText
++ (NSData *)getHashBytesSHA1:(NSData *)plainText
 {
     CC_SHA1_CTX ctx;
     uint8_t *hashBytes = NULL;
@@ -446,7 +446,7 @@ static CertificateUtils *__sharedKeyWrapper = nil;
     signedHashBytes = malloc(signedHashBytesSize * sizeof(uint8_t) );
     memset((void *)signedHashBytes, 0x0, signedHashBytesSize);
 
-    const uint8_t *hashMessage = [[self getHashBytesSHA1:plainText] bytes];
+    const uint8_t *hashMessage = [[CertificateUtils getHashBytesSHA1:plainText] bytes];
     // Concatenamos SHA1
     // SHA1_DIGESTINFO_HEADER+hashMessage
 

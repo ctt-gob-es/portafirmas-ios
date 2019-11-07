@@ -55,6 +55,7 @@
 - (void) loginWithCertificate:(void(^)())success failure:(void(^)(NSError *error))failure {
     
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+	[SVProgressHUD show];
     
     [LoginNetwork loginProcess:^(NSString *token) {
         self.serverSupportLogin = YES;
@@ -65,21 +66,27 @@
         NSString *certificate = [self certificateInBase64];
         
         [LoginNetwork validateLogin:certificate withSignedToken:self.currentSignToken success:^{
-            [SVProgressHUD dismiss];
+           dispatch_async(dispatch_get_main_queue(), ^{
+				[SVProgressHUD dismiss];
+			});
             DDLogDebug(@"Login validated");
             if ([PushNotificationService instance].currentServer.userNotificationPermisionState) {
                 [[PushNotificationService instance] initializePushNotificationsService:false];
             }
             success();
         } failure:^(NSError *error) {
-            [SVProgressHUD dismiss];
+            dispatch_async(dispatch_get_main_queue(), ^{
+				[SVProgressHUD dismiss];
+			});
             DDLogError(@"Error starting login process");
             DDLogError(@"Error: %@", error);
             self.serverSupportLogin = NO;
             failure(error);
         }];
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+        dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismiss];
+		});
         DDLogError(@"Error starting login process");
         
         //Check if is old server
@@ -94,17 +101,21 @@
 
 - (void) logout:(void(^)())success failure:(void(^)(NSError *error))failure {
     
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+	[SVProgressHUD show];
     
     [LoginNetwork logout:^{
-        [SVProgressHUD dismiss];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismiss];
+		});
         DDLogDebug(@"Logout finish with success");
         self.serverSupportLogin = false;
         self.currentSignToken = @"";
         [CookieTools removeJSessionIDCookies];
         success();
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
+       dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismiss];
+		});
         DDLogDebug(@"Logout finish with failure");
         self.serverSupportLogin = false;
         self.currentSignToken = @"";

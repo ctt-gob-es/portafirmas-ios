@@ -20,6 +20,7 @@
 #import "RequestCellNoUI.h"
 #import "ApproveXMLController.h"
 #import "LoginService.h"
+#import "userDNIManager.h"
 
 #define TAB_BAR_HIDDEN_FRAME CGRectMake(-10, -10, 0, 0)
 
@@ -45,7 +46,9 @@
     self = [super initWithCoder:aDecoder];
 
     if (self) {
-        [SVProgressHUD dismiss];
+        dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismiss];
+		});
 
         self.dataStatus = kBaseListVCDataStatusPending;
 
@@ -105,7 +108,13 @@
 - (void) assignMainTabToAppDelegate {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     UINavigationController *nav = (UINavigationController *)self.presentingViewController;
-    appDelegate.mainTab = (UITabBarController *)nav.presentedViewController;
+	
+	if (nav != nil && nav.presentedViewController != nil) {
+		UITabBarController *tabBarController = (UITabBarController *)nav.presentedViewController;
+		if (tabBarController != nil) {
+			appDelegate.mainTab = tabBarController;
+		}
+	}
 }
 
 #pragma mark - Network Calls
@@ -147,7 +156,7 @@
 - (void)startSendingSignRequests
 {
     [self enableUserInteraction:false];
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD show];
 
     requestSignerController = [RequestSignerController new];
     [requestSignerController setDelegate:self];
@@ -157,7 +166,7 @@
 
 - (void)startSendingApproveRequests
 {
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD show];
 
     _waitingResponseType = PFWaitingResponseTypeApproval;
     NSString *requestData = [ApproveXMLController buildRequestWithRequestArray:_selectedRequestSetToApprove.allObjects];
@@ -226,7 +235,9 @@
 }
 
 - (void) closeView {
-    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+	dispatch_async(dispatch_get_main_queue(), ^{
+	   [self dismissViewControllerAnimated:YES completion:nil];
+	});
 }
 
 - (IBAction)signAction:(id)sender
@@ -281,7 +292,7 @@
 - (void)continueButtonClicked: (UIAlertController *)alertController {
     if (reject) {
         reject = NO;
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+        [SVProgressHUD show];
         if ([alertController.textFields count] != 0) {
             NSArray *textfields = alertController.textFields;
             UITextField *nameTextfield = textfields[0];
@@ -305,6 +316,10 @@
 
 - (void)tableView:(UITableView *)theTableView didSelectRowAtIndexPath:(NSIndexPath *)newIndexPath
 {
+	if (![self isEditing]) {
+		[theTableView deselectRowAtIndexPath:newIndexPath animated:true];
+	}
+	
     [self updateSelectionWithIndexPath:newIndexPath selected:YES];
 }
 
@@ -349,11 +364,10 @@
     DDLogDebug(@"setEditing editing = %d", editing);
 
     if (editing) {
-        
         [_selectButtonItem setTitle:@"Hecho"];
+		[self setEditingBottomBar];
         [self.tableView reloadData];
         selectedRows = [@[] mutableCopy];
-        [self setEditingBottomBar];
     }
     else {
         
@@ -377,20 +391,21 @@
 
     if (!CGRectIsEmpty(self.tabBarController.tabBar.frame)) {
         CGRect fullScreen = self.view.frame;
-
-        fullScreen.size.height += self.tabBarController.tabBar.frame.size.height;
+		fullScreen.size.height += self.tabBarController.tabBar.frame.size.height;
         [self.view setFrame:fullScreen];
         [self.tabBarController.tabBar setFrame:TAB_BAR_HIDDEN_FRAME];
         [self.navigationController setToolbarHidden:NO animated:YES];
+		[self.parentViewController.tabBarController.tabBar setHidden:YES];
     }
 }
 
 - (void)setNormalBottomBar
 {
-    if (_tabBarFrame.size.height > 0 && CGRectIsEmpty(self.tabBarController.tabBar.frame)) {
+	[self.parentViewController.tabBarController.tabBar setHidden:NO];
+	//  if (_tabBarFrame.size.height > 0 && CGRectIsEmpty(self.tabBarController.tabBar.frame)) {
+    if (_tabBarFrame.size.height > 0) {
         [self.navigationController setToolbarHidden:YES animated:YES];
         CGRect tabRect = self.view.frame;
-        tabRect.size.height -= self.tabBarController.tabBar.frame.size.height;
         [self.view setFrame:tabRect];
         [self.tabBarController.tabBar setFrame:_tabBarFrame];
     }
@@ -428,7 +443,9 @@
 
     [nsXmlParser setDelegate:parser];
     BOOL success = [nsXmlParser parse];
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
 
     if (success) {
         NSArray *rejectsReq = [parser dataSource];
@@ -447,7 +464,9 @@
 
     [nsXmlParser setDelegate:parser];
     BOOL success = [nsXmlParser parse];
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
 
     if (success) {
         NSArray *approvalRequests = [parser dataSource];
@@ -499,7 +518,9 @@
 {
     DDLogDebug(@"UnsignedRequestTableViewController::didReceiveSignerRequestResult - reqs count: %lu", (unsigned long)[requestsSigned count]);
     [self enableUserInteraction: true];
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
 
     NSIndexSet *requestsWithError = [requestsSigned indexesOfObjectsPassingTest:^BOOL (PFRequest *request, NSUInteger idx, BOOL *stop) {
                                          return [request.status isEqualToString:@"KO"];

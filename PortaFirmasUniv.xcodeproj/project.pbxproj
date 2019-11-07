@@ -86,6 +86,7 @@
 		3CD199A51AC2C952007E9E35 /* UINavigationController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */; };
 		921EAE2F22AFB631005D6D5B /* GlobalConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EAE2E22AFB631005D6D5B /* GlobalConstants.m */; };
 		992987C2AA230FF0604BD234 /* libPods-PortaFirmasUniv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0A9AB702FDB8ACDEBFCF67 /* libPods-PortaFirmasUniv.a */; };
+		B23D243720BDBB0200345E0B /* userDNIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B23D243620BDBB0200345E0B /* userDNIManager.m */; };
 		B240774920AAEE0900A8EE1C /* DetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B240774820AAEE0900A8EE1C /* DetailCell.m */; };
 		B289830B20AC8BA600B7544A /* SendersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B289830920AC8BA600B7544A /* SendersViewController.m */; };
 		B28B24E520AB907B00DC9C81 /* DetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B28B24E420AB907B00DC9C81 /* DetailCell.xib */; };
@@ -260,6 +261,8 @@
 		862DBE2D1FC5F494A173087E /* Pods-PortaFirmasUniv.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortaFirmasUniv.release.xcconfig"; path = "Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv.release.xcconfig"; sourceTree = "<group>"; };
 		921EAE2E22AFB631005D6D5B /* GlobalConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalConstants.m; sourceTree = "<group>"; };
 		921EAE3022AFB672005D6D5B /* GlobalConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalConstants.h; sourceTree = "<group>"; };
+		B23D243520BDBB0200345E0B /* userDNIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = userDNIManager.h; sourceTree = "<group>"; };
+		B23D243620BDBB0200345E0B /* userDNIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = userDNIManager.m; sourceTree = "<group>"; };
 		B240774720AAEE0900A8EE1C /* DetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailCell.h; sourceTree = "<group>"; };
 		B240774820AAEE0900A8EE1C /* DetailCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailCell.m; sourceTree = "<group>"; };
 		B289830920AC8BA600B7544A /* SendersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SendersViewController.m; sourceTree = "<group>"; };
@@ -848,6 +851,8 @@
 				BC71EE3B1FDEBA200040F8A2 /* DefaultDataConstants.h */,
 				BC71EE381FDEB51C0040F8A2 /* DefaultServersData.h */,
 				BC71EE391FDEB51C0040F8A2 /* DefaultServersData.m */,
+				B23D243520BDBB0200345E0B /* userDNIManager.h */,
+				B23D243620BDBB0200345E0B /* userDNIManager.m */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -900,7 +905,6 @@
 				1C9F200B163E93C3007A170B /* Sources */,
 				1C9F200C163E93C3007A170B /* Frameworks */,
 				1C9F200D163E93C3007A170B /* Resources */,
-				9FC4D3C61770EB244AC15E0C /* [CP] Embed Pods Frameworks */,
 				2E8453FF896F4595D50AC2A2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -940,6 +944,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				es,
 			);
 			mainGroup = 1C9F2004163E93C3007A170B;
@@ -986,34 +991,16 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-resources.sh",
 				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9FC4D3C61770EB244AC15E0C /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E3D4D6D6C009A3B3E13001A6 /* [CP] Check Pods Manifest.lock */ = {
@@ -1066,6 +1053,7 @@
 				3C00AD9E1AB71ACB00EF6886 /* Preview.m in Sources */,
 				BC0D3E1A2004C3A900CB73BB /* AttachedDoc.m in Sources */,
 				3C00ADB51AB71B0B00EF6886 /* CertificateUtils.m in Sources */,
+				B23D243720BDBB0200345E0B /* userDNIManager.m in Sources */,
 				BCF083331FC45A0900450FE7 /* XMLParser.m in Sources */,
 				3CC403861AB9EDBA006F8803 /* CertificateCell.m in Sources */,
 				3C00AD741AB71A6300EF6886 /* AttachmentViewController.m in Sources */,
@@ -1168,7 +1156,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -1195,7 +1183,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=*]" = "";
@@ -1216,16 +1204,17 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 2H36E8KFN2;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "src/main/PortaFirmasUniv-Prefix.pch";
 				INFOPLIST_FILE = "src/main/PortaFirmasUniv-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = es.gob.afirma.Portafirmas;
 				PRODUCT_NAME = "Port@firmas";
-				PROVISIONING_PROFILE = "7300a5b1-9066-42c4-a569-8ec55acfc318";
-				PROVISIONING_PROFILE_SPECIFIER = Portafirmas_DES_Emilio2;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1238,19 +1227,20 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = res/conf/PortaFirmasUniv.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 2H36E8KFN2;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "src/main/PortaFirmasUniv-Prefix.pch";
 				INFOPLIST_FILE = "src/main/PortaFirmasUniv-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MARKETING_VERSION = 1.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = es.gob.afirma.Portafirmas;
 				PRODUCT_NAME = "Port@firmas";
-				PROVISIONING_PROFILE = "7300a5b1-9066-42c4-a569-8ec55acfc318";
-				PROVISIONING_PROFILE_SPECIFIER = Portafirmas_DES_Emilio2;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

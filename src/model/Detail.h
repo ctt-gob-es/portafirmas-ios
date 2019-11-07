@@ -25,6 +25,7 @@
 @property (strong, nonatomic) NSString *ref;
 @property (strong, nonatomic) NSString *rejt;
 @property (strong, nonatomic) NSString *signlinestype;
+@property (strong, nonatomic) NSString *msg;
 
 #pragma mark - Senders list
 @property (strong, nonatomic) NSMutableArray *senders;

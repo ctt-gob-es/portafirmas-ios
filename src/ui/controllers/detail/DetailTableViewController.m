@@ -19,6 +19,17 @@
 #import "ApproveXMLController.h"
 #import "DetailCell.h"
 
+static NSString *const kDetailCell = @"detailCell";
+static NSString *const kDetailCellNibName = @"DetailCell";
+static NSString *const kEmptyString = @"";
+static NSString *const kEndOfLine = @"\r";
+static NSString *const kMainStoryboardIPhoneIdentifier = @"MainStoryboard_iPhone";
+static NSString *const kAttachmentsListViewIdentifier = @"AttachmentsListView";
+static NSString *const kReceiversListViewIdentifier = @"ReceiversListView";
+static NSString *const kRequestDetailURLKeyName = @"requestDetailURL";
+static NSString *const kKOStatusString = @"KO";
+static NSString *const kAppendFormatString = @" %@";
+
 typedef NS_ENUM (NSInteger, PFDocumentAction)
 {
     PFDocumentActionReject,
@@ -38,10 +49,11 @@ typedef enum cellTypes
     SignType,
     Date,
     ExpirationDate,
-    Application
+    Application,
+	Message
 } CellTypes;
 
-NSInteger *const numberOfRows = 11;
+NSInteger *const numberOfRows = 12;
 CGFloat const defaultCellHeight = 44;
 CGFloat const noCellHeight = 0;
 CGFloat const rejectCellTitleCellWidth = 150;
@@ -67,7 +79,9 @@ CGFloat const largeTitleCellWidth = 200;
     self = [super initWithCoder:aDecoder];
 
     if (self) {
-        [SVProgressHUD dismiss];
+        dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismiss];
+		});
         wsController = [[WSDataController alloc] init];
         wsController.delegate = self;
         _signEnabled = FALSE;
@@ -116,77 +130,83 @@ CGFloat const largeTitleCellWidth = 200;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    DetailCell *cell = [tableView dequeueReusableCellWithIdentifier:@"detailCell"];
+    DetailCell *cell = [tableView dequeueReusableCellWithIdentifier:kDetailCell];
     if (cell == nil) {
-        [tableView registerNib:[UINib nibWithNibName:@"DetailCell" bundle:nil] forCellReuseIdentifier:@"detailCell"];
-        cell = [tableView dequeueReusableCellWithIdentifier:@"detailCell"];
+        [tableView registerNib:[UINib nibWithNibName:kDetailCellNibName bundle:nil] forCellReuseIdentifier:kDetailCell];
+        cell = [tableView dequeueReusableCellWithIdentifier:kDetailCell];
     }
-    NSString *title = @"";
-    NSString *value = @"";
+    NSString *title = kEmptyString;
+    NSString *value = kEmptyString;
     switch (indexPath.row) {
         case From:
-            title = @"De: ";
+            title = NSLocalizedString(@"Cell_Title_From", nil);
             value = [self getSenders];
             [cell setDarkStyle];
             break;
         case Subject:
-            title = @"Asunto: ";
+            title = NSLocalizedString(@"Cell_Title_Subject", nil);
             value = [self getSubject];
             [cell setDarkStyle];
             [cell setValueBoldStyle];
             break;
         case Reference:
             self.referenceLbl.text = _dataSource.ref;
-            title = @"Referencia: ";
+            title = NSLocalizedString(@"Cell_Title_Reference", nil);
             value = [self getReference];
             [cell setDarkStyle];
             break;
         case RejectExplanation:
-            title = @"Motivo del rechazo: ";
+            title = NSLocalizedString(@"Cell_Title_RejectExplanation", nil);
             value = [self getRejectExplanation];
             [cell setDarkStyle];
             [cell increaseTitleLabelWidth: rejectCellTitleCellWidth];
             [cell hideLabelsIfNeeded: ![self rejectExplanationExists]];
             break;
         case AttachedDocument:
-            title = @"Documentos adjuntos";
+            title = NSLocalizedString(@"Cell_Title_AttachedDocument", nil);
             [cell setValueInNewViewStyle];
             [cell increaseTitleLabelWidth:largeTitleCellWidth];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         case Receivers:
-            title = @"Destinatarios";
+            title = NSLocalizedString(@"Cell_Title_Receivers", nil);
             [cell setValueInNewViewStyle];
             [cell increaseTitleLabelWidth: largeTitleCellWidth];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         case RequestType:
-            title = @"Operación: ";
+            title = NSLocalizedString(@"Cell_Title_RequestType", nil);
             value = [self getRequestType];
             [cell setClearStyle];
             [cell setValueBoldStyle];
             break;
         case SignType:
-            title = @"Tipo de firma: ";
+            title = NSLocalizedString(@"Cell_Title_SignType", nil);
             value = [self getSignType];
             [cell setClearStyle];
             break;
         case Date:
-            title = @"Fecha: ";
+            title = NSLocalizedString(@"Cell_Title_Date", nil);
             value = [self getDate];
             [cell setClearStyle];
             break;
         case ExpirationDate:
-            title = @"Expira: ";
+            title = NSLocalizedString(@"Cell_Title_ExpirationDate", nil);
             value = [self getExpirationDate];
             [cell setClearStyle];
             [cell hideLabelsIfNeeded: !_dataSource.expdate];
             break;
         case Application:
-            title = @"Aplicación: ";
+            title = NSLocalizedString(@"Cell_Title_Application", nil);
             value = [self getApplication];
             [cell setClearStyle];
             break;
+		case Message:
+			title = NSLocalizedString(@"Cell_Title_Message", nil);
+			value = [self getMessage];
+			[cell setClearStyle];
+            [cell hideLabelsIfNeeded: ![self messageExists]];
+			break;
     }
     [cell setCellTitle: title];
     [cell setCellValue: value];
@@ -196,7 +216,7 @@ CGFloat const largeTitleCellWidth = 200;
 -(NSString *)getSenders
 {
     NSMutableArray* senders = _dataSource.senders;
-    return [senders componentsJoinedByString:@"\r"];
+    return [senders componentsJoinedByString: kEndOfLine];
 }
 
 -(NSString *)getSubject
@@ -247,13 +267,19 @@ CGFloat const largeTitleCellWidth = 200;
     return application;
 }
 
+-(NSString *)getMessage
+{
+	NSString *message = _dataSource.msg;
+	return message;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:kMainStoryboardIPhoneIdentifier bundle:nil];
 
     switch (indexPath.row) {
         case AttachedDocument: {
-            AttachmentViewController *attachmentController =  (AttachmentViewController *)[storyboard instantiateViewControllerWithIdentifier:@"AttachmentsListView"];
+            AttachmentViewController *attachmentController =  (AttachmentViewController *)[storyboard instantiateViewControllerWithIdentifier:kAttachmentsListViewIdentifier];
             attachmentController.documentsDataSource = _dataSource.documents;
             attachmentController.attachedDocsDataSource = _dataSource.attachedDocs;
             [attachmentController setDetail:_dataSource];
@@ -262,7 +288,7 @@ CGFloat const largeTitleCellWidth = 200;
             break;
         }
         case Receivers: {
-            ReceiversViewController *receiversController =  (ReceiversViewController *)[storyboard instantiateViewControllerWithIdentifier:@"ReceiversListView"];
+            ReceiversViewController *receiversController =  (ReceiversViewController *)[storyboard instantiateViewControllerWithIdentifier:kReceiversListViewIdentifier];
             receiversController.dataSource = _dataSource.signlines;
             [self.navigationController pushViewController:receiversController animated:YES];
             break;
@@ -272,7 +298,7 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void)loadWebService
 {
-    NSString *url = [appConfig objectForKey:@"requestDetailURL"];
+    NSString *url = [appConfig objectForKey:kRequestDetailURLKeyName];
 
     DDLogDebug(@"DetailTableViewController::loadWebService.url=%@", url);
 
@@ -351,7 +377,7 @@ CGFloat const largeTitleCellWidth = 200;
 {
     DDLogDebug(@"Sign Action....\nAccept request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
 
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD show];
 
     if ([(Detail *)_dataSource type] == PFRequestTypeSign) {
         [self startSignRequest];
@@ -362,7 +388,7 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void) rejectActionClickContinueButton: (UIAlertController *)alertController {
     DDLogDebug(@"UnassignedRequestTableViewController::Reject request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    [SVProgressHUD show];
     if ([alertController.textFields count] != 0) {
         NSArray *textfields = alertController.textFields;
         UITextField *nameTextfield = textfields[0];
@@ -427,6 +453,9 @@ CGFloat const largeTitleCellWidth = 200;
         case Receivers:
             return defaultCellHeight;
             break;
+		case Message:
+			return (!_dataSource.msg)? noCellHeight : tableView.rowHeight;
+			break;
     }
     return tableView.rowHeight;
 }
@@ -438,6 +467,13 @@ CGFloat const largeTitleCellWidth = 200;
     return (_dataSource.rejt && [trimmedTextString length] != 0);
 }
 
+- (BOOL)messageExists
+{
+    // Avoid the strings only with whitespaces. By default from the server the reject object is @" " (length == 1)
+	NSString* trimmedTextString = [_dataSource.msg stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    return (_dataSource.msg && [trimmedTextString length] != 0);
+}
+
 - (void)showSenders
 {
     //Aling to the top the textviews for this Table View Cell
@@ -447,14 +483,14 @@ CGFloat const largeTitleCellWidth = 200;
     self.sendersTextView.textContainer.lineFragmentPadding = 0;
     
     NSMutableArray* senders = _dataSource.senders;
-    NSString *joinedSenders = [senders componentsJoinedByString:@"\r"];
+    NSString *joinedSenders = [senders componentsJoinedByString:kEndOfLine];
     self.sendersTextView.text = joinedSenders;
     // Scroll to the top
     [self.sendersTextView scrollRangeToVisible:NSMakeRange(0,0)];
     if ([senders count] > 2 ){
         self.sendersMoreButton.hidden = NO;
-        NSString *textButton1 = @"y ";
-        NSString *textButton2 = @" más";
+        NSString *textButton1 = NSLocalizedString(@"Detail_senders_first_button", nil);
+        NSString *textButton2 = NSLocalizedString(@"Detail_senders_second_button", nil);
         NSInteger *restOfSenders = [senders count] - 2;
         NSString *textButton = [NSString stringWithFormat:@"%@%ld%@",textButton1, (long)restOfSenders, textButton2];
         [self.sendersMoreButton setTitle:textButton forState:UIControlStateNormal];
@@ -486,7 +522,9 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void)doParse:(NSData *)data
 {
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
     NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:data];
     id <NSXMLParserDelegate> parser = [self parserForCurrentRequest];
     [nsXmlParser setDelegate:parser];
@@ -504,7 +542,7 @@ CGFloat const largeTitleCellWidth = 200;
         }
     }
     else {
-        [self didReceiveParserWithError:@"Se ha producido un error de conexión con el servidor"];
+        [self didReceiveParserWithError:NSLocalizedString(@"Detail_view_error_server_connection", nil)];
     }
 }
 
@@ -527,8 +565,8 @@ CGFloat const largeTitleCellWidth = 200;
     BOOL processedOK = TRUE;
 
     for (PFRequestResult *request in requestsSigned) {
-        if ([[request status] isEqualToString:@"KO"]) {
-            [self didReceiveError:[[NSString alloc] initWithFormat:@"Error al procesar la petición con codigo:%@", [request rejectid]]];
+        if ([[request status] isEqualToString:kKOStatusString]) {
+            [self didReceiveError:[[NSString alloc] initWithFormat:NSLocalizedString(@"Detail_view_error_processing_request", nil), [request rejectid]]];
             processedOK = FALSE;
         }
     }
@@ -545,7 +583,10 @@ CGFloat const largeTitleCellWidth = 200;
         [alertController addAction:actionOk];
         [self presentViewController:alertController animated:YES completion:nil];
     }
-    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
+	
+   dispatch_async(dispatch_get_main_queue(), ^{
+	   [self dismissViewControllerAnimated:YES completion:nil];
+	});
 
 }
 
@@ -557,14 +598,16 @@ CGFloat const largeTitleCellWidth = 200;
     
     [nsXmlParser setDelegate:parser];
     BOOL success = [nsXmlParser parse];
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
     
     if (success) {
         NSArray *rejectsReq = [parser dataSource];
         [self didReceiveRejectResult:rejectsReq];
     }
     else {
-        [self didReceiveError:@"Se ha producido un error de conexión con el servidor (501)"];
+        [self didReceiveError:NSLocalizedString(@"Detail_view_error_server_connection_501", nil)];
     }
 }
 
@@ -573,7 +616,7 @@ CGFloat const largeTitleCellWidth = 200;
     NSMutableArray *idsForRequestsWithError = [@[] mutableCopy];
 
     [approvedRequests enumerateObjectsUsingBlock:^(PFRequest *request, NSUInteger idx, BOOL *stop) {
-         if ([request.status isEqualToString:@"KO"]) {
+         if ([request.status isEqualToString:kKOStatusString]) {
              [idsForRequestsWithError addObject:request.reqid];
          }
      }];
@@ -588,19 +631,21 @@ CGFloat const largeTitleCellWidth = 200;
     } else {
         NSString *errorMessage;
         if (idsForRequestsWithError.count == 1) {
-            errorMessage = [NSString stringWithFormat:@"Error al procesar la petición con código:%@", idsForRequestsWithError[0]];
+            errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Detail_view_error_processing_request", nil), idsForRequestsWithError[0]];
         } else {
-            NSMutableString *errorIDSString = [@"" mutableCopy];
+            NSMutableString *errorIDSString = [kEmptyString mutableCopy];
             [idsForRequestsWithError enumerateObjectsUsingBlock:^(NSString *requestID, NSUInteger idx, BOOL *stop) {
-                 [errorIDSString appendFormat:@" %@", requestID];
+                 [errorIDSString appendFormat:kAppendFormatString, requestID];
              }];
-            errorMessage = [NSString stringWithFormat:@"Error al procesar las peticiones con códigos:%@", errorIDSString];
+            errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Detail_view_error_processing_multiple_request", nil), errorIDSString];
         }
         [self didReceiveError:errorMessage];
         [self dismissSelfView];
     }
 
-    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+	   [self dismissViewControllerAnimated:YES completion:nil];
+	});
 
 }
 
@@ -608,10 +653,10 @@ CGFloat const largeTitleCellWidth = 200;
 {
     BOOL finishOK = ![parser finishWithError];
     if (!finishOK) {
-        NSString *errorCode = [parser errorCode] == nil ? @"" : [parser errorCode];
-        NSString *err = [parser err] == nil ? @"" : [parser err];
-        [self didReceiveError: [NSString stringWithFormat: @"Mensaje del servidor:%@(%@)", err, errorCode]];
-        [_requestSignerController didReceiveParserWithError: [NSString stringWithFormat: @"Mensaje del servidor:%@(%@)", err, errorCode]];
+        NSString *errorCode = [parser errorCode] == nil ? kEmptyString : [parser errorCode];
+        NSString *err = [parser err] == nil ? kEmptyString : [parser err];
+        [self didReceiveError: [NSString stringWithFormat: NSLocalizedString(@"Detail_view_error_messages_from_server", nil), err, errorCode]];
+        [_requestSignerController didReceiveParserWithError: [NSString stringWithFormat: NSLocalizedString(@"Detail_view_error_messages_from_server", nil), err, errorCode]];
     } else {
         DDLogDebug(@"DetailTableViewController:: Parsing Detail XML message with no errors ");
         _dataSource = [parser dataSource];
@@ -622,7 +667,9 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void)didReceiveError:(NSString *)errorString
 {
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
     DDLogDebug(@"UnassignedRequestTableViewController::didReceiveParserWithError: %@", errorString);
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Error", nil) message:errorString preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
@@ -635,18 +682,20 @@ CGFloat const largeTitleCellWidth = 200;
 - (void)didReceiveSignerRequestResult:(NSArray *)requestsSigned
 {
     DDLogDebug(@"ModalSignerController::didReceiveSignerRequestResult");
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
 
     BOOL processedOK = YES;
-    NSString *msg = @"";
+    NSString *msg = kEmptyString;
 
     for (PFRequest *request in requestsSigned) {
-        if ([[request status] isEqualToString:@"KO"]) {
-            if (![msg isEqualToString:@""]) {
-                msg = @"Ocurrio un error al firmar algunas de las peticiones seleccionadas.";
+        if ([[request status] isEqualToString: kKOStatusString]) {
+            if (![msg isEqualToString:kEmptyString]) {
+                msg = NSLocalizedString(@"Detail_view_error_signing_selected_requests", nil);
                 break;
             } else {
-                msg = @"Ocurrio un error al firmar la peticion seleccionada";
+                msg = NSLocalizedString(@"Detail_view_error_signing_selected_request", nil);
             }
             processedOK = FALSE;
         }
@@ -668,7 +717,10 @@ CGFloat const largeTitleCellWidth = 200;
 }
 
 - (void)dismissSelfView {
-    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
+   dispatch_async(dispatch_get_main_queue(), ^{
+	   [self dismissViewControllerAnimated:YES completion:nil];
+	});
+	
     [(BaseListTVC *)self.navigationController.previousViewController refreshInfo];
     [self.navigationController popViewControllerAnimated:YES];
 }
