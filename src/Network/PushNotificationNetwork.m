@@ -56,7 +56,6 @@
         if (error) {
             failure(error);
         } else  {
-            NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
             Parser *parser = [Parser new];
             
             [parser parseValidateSubscription:data success:^(BOOL isValid) {
