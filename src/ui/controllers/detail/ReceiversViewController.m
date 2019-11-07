@@ -30,12 +30,6 @@
     [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
 }
 
-- (void)viewDidUnload
-{
-
-    [super viewDidUnload];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
