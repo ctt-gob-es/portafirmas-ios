@@ -49,7 +49,7 @@ static NSString *const kPFHelperClassNamePendingList = @"UnassignedRequestTableV
 	return PFRequestStatusPending;
 }
 
-+ (PFRequestCode)getPFRequestCodeForSection:(PFAttachmentVCSection)section
++ (PFRequestCode)getPFRequestCodeForSection:(NSInteger)section
 {
     switch (section) {
         case PFAttachmentVCSectionDocuments:
