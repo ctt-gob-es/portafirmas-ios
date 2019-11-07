@@ -108,7 +108,6 @@
 
 - (void)doParse:(NSData *)data
 {
-    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
     if (waitingPreSign) {
         waitingPreSign = NO;
         // create and init NSXMLParser object
@@ -242,9 +241,6 @@
     } else if ([mdalgo isEqualToString:@"sha-512"]) {
         result = [[CertificateUtils sharedWrapper] getSignatureBytesSHA512:data];
     }
-
-    // NSString *resBase64=[result base64EncodedString];
-    NSString *resBase64 = [Base64Utils base64EncodeData:result];
 }
 
 @end

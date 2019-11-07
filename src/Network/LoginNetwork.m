@@ -45,7 +45,6 @@
         if (error) {
             failure(error);
         } else  {
-            NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
             Parser *parser = [Parser new];
             
             [parser parseAuthData:data success:^(NSString *token) {
@@ -89,7 +88,6 @@
         if (error) {
             failure(error);
         } else  {
-            NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
             Parser *parser = [Parser new];
             
             [parser parseValidateData:data success:^(BOOL isValid) {
@@ -136,7 +134,6 @@
         if (error) {
             failure(error);
         } else  {
-            NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
             success();
             [userDNIManager deleteUserDNI];
         }
