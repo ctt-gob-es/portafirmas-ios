@@ -145,7 +145,9 @@
 - (void)startSendingSignRequests
 {
     [self enableUserInteraction:false];
-    [SVProgressHUD show];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
 
     requestSignerController = [RequestSignerController new];
     [requestSignerController setDelegate:self];
@@ -154,7 +156,9 @@
 
 - (void)startSendingApproveRequests
 {
-    [SVProgressHUD show];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     _waitingResponseType = PFWaitingResponseTypeApproval;
     NSString *requestData = [ApproveXMLController buildRequestWithRequestArray:_selectedRequestSetToApprove.allObjects];
     [self.wsDataController loadPostRequestWithData:requestData code:PFRequestCodeApprove];
@@ -275,7 +279,10 @@
 - (void)continueButtonClicked: (UIAlertController *)alertController {
     if (reject) {
         reject = NO;
-        [SVProgressHUD show];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD show];
+		});
+
         if ([alertController.textFields count] != 0) {
             NSArray *textfields = alertController.textFields;
             UITextField *nameTextfield = textfields[0];

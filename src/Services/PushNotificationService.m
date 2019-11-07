@@ -150,7 +150,9 @@
 - (void) updateToken: (NSString *) token {
     
     NSString *IDVendor = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    [SVProgressHUD show];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     [PushNotificationNetwork subscribeDevice:IDVendor withToken:token success:^{
         dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];

@@ -44,8 +44,9 @@
 - (void) loginWithCertificate:(void(^)(void))success failure:(void(^)(NSError *error))failure {
     
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-	[SVProgressHUD show];
-    
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     [LoginNetwork loginProcess:^(NSString *token) {
         self.serverSupportLogin = YES;
         NSString *decodedToken = [self decodeToken:token];
@@ -83,8 +84,9 @@
 }
 
 - (void) logout:(void(^)(void))success failure:(void(^)(NSError *error))failure {
-    
-	[SVProgressHUD show];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     
     [LoginNetwork logout:^{
 		dispatch_async(dispatch_get_main_queue(), ^{

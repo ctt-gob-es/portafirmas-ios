@@ -88,7 +88,9 @@
 - (void)loadDataWithProgressIndicator:(BOOL)showProgressIndicator
 {
     if (showProgressIndicator) {
-        [SVProgressHUD show];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD show];
+		});
     }
 
     NSString *data = [RequestListXMLController buildDefaultRequestWithState:_dataStatus pageNumber:_currentPage filters:_filtersDict];
@@ -232,7 +234,9 @@
     [detailVC setDataSourceRequest:selectedRequest];
     [detailVC setSignEnabled:enableSign];
     [detailVC setRequestId:selectedRequest.reqid];
-    [SVProgressHUD show];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
 }
 
 @end

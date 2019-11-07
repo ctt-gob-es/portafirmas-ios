@@ -67,7 +67,9 @@
 
 - (void)loadWebService
 {
-    [SVProgressHUD show];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     NSString *data = [PreviewXMLController buildRequestWithId:_docId];
 
     // loadRequest

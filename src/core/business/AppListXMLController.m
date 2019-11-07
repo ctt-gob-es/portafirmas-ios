@@ -51,8 +51,9 @@ static AppListXMLController *_sharedInstance = nil;
 
 - (void)requestAppsList
 {
-    
-    [SVProgressHUD show];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     NSString *requestString = [self buildRequest];
     [_wsDataController loadPostRequestWithData:requestString code:PFRequestCodeAppList];
     [_wsDataController startConnection];

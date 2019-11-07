@@ -366,8 +366,9 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void)signAction
 {
-    [SVProgressHUD show];
-
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     if ([(Detail *)_dataSource type] == PFRequestTypeSign) {
         [self startSignRequest];
     } else {
@@ -376,7 +377,9 @@ CGFloat const largeTitleCellWidth = 200;
 }
 
 - (void) rejectActionClickContinueButton: (UIAlertController *)alertController {
-    [SVProgressHUD show];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     if ([alertController.textFields count] != 0) {
         NSArray *textfields = alertController.textFields;
         UITextField *nameTextfield = textfields[0];

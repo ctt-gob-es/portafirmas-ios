@@ -72,8 +72,9 @@
 - (OSStatus)deleteCertificate:(PFCertificateInfo *)certificateInfo
 {
     OSStatus status = noErr;
-
-    [SVProgressHUD show];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     // Load certificate from Documents directory
     status = [OpenSSLCertificateHelper deleteCertificate:certificateInfo];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -160,8 +161,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    [SVProgressHUD show];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     PFCertificateInfo *selectedCertificate = arrayCerts[selectedIndexPath.row];
     
