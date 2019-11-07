@@ -19,19 +19,27 @@
                             <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" fixedFrame="YES" scrollEnabled="NO" indicatorStyle="black" editable="NO" text="Servidor a seleccionar" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="xYZ-4d-U1d">
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" scrollEnabled="NO" indicatorStyle="black" editable="NO" text="Servidor a seleccionar" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="xYZ-4d-U1d">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="37"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" red="0.68627450980000004" green="0.13725490200000001" blue="0.10980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <accessibility key="accessibilityConfiguration">
                                         <bool key="isElement" value="NO"/>
                                     </accessibility>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="37" id="tTa-5a-0Zb"/>
+                                    </constraints>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="16"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 </textView>
                             </subviews>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstItem="xYZ-4d-U1d" firstAttribute="leading" secondItem="y62-xB-T1Q" secondAttribute="leading" id="8EW-WV-Ihe"/>
+                                <constraint firstAttribute="bottom" secondItem="xYZ-4d-U1d" secondAttribute="bottom" constant="8" id="AS1-uB-yMo"/>
+                                <constraint firstItem="xYZ-4d-U1d" firstAttribute="top" secondItem="y62-xB-T1Q" secondAttribute="top" id="Efw-NB-fR5"/>
+                                <constraint firstAttribute="trailing" secondItem="xYZ-4d-U1d" secondAttribute="trailing" id="xws-2H-ka8"/>
+                            </constraints>
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ServersListCell" id="WJP-W2-iR4" customClass="ServersListCell">
