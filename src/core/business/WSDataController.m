@@ -128,10 +128,7 @@ struct {
 }
 
 // didReceiveResponse
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-}
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {}
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
