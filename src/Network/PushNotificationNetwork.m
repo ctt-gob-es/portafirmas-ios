@@ -16,7 +16,7 @@
 
 @implementation PushNotificationNetwork
 
-+ (void) subscribeDevice:(NSString *)deviceID withToken: (NSString*)token success: (void(^)())success failure:(void(^)(NSError *error))failure {
++ (void) subscribeDevice:(NSString *)deviceID withToken: (NSString*)token success: (void(^)(void))success failure:(void(^)(NSError *error))failure {
     NSString *opParameter = @"op";
     NSString *datParameter = @"dat";
     NSString *baseURL = SERVER_URL;
