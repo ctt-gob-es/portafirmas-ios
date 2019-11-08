@@ -406,7 +406,6 @@
         [self didReceivedApprovalResponse:data];
     }
 
-    _waitingResponseType = nil;
     [self cancelEditing];
 }
 
