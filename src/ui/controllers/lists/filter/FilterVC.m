@@ -88,7 +88,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self removeNotificationAboutPushNotifications];
+	[[KeyboardObserver getInstance] removeObserver:self];
+	[self removeNotificationAboutPushNotifications];
 }
 
 - (void)didReceiveMemoryWarning
