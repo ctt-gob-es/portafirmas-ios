@@ -476,6 +476,10 @@ static CertificateUtils *__sharedKeyWrapper = nil;
     uint8_t *signedHashBytes = NULL;
     size_t signedHashBytesSize = 0;
 
+	if (_privateKey == nil) {
+		return nil;
+	}
+	
     signedHashBytesSize = SecKeyGetBlockSize(_privateKey);
 
     // Malloc a buffer to hold signature.
