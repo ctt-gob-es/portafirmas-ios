@@ -47,23 +47,24 @@
 
 + (NSDate *)getGreaterDate:(NSArray *)datesArray
 {
-    NSArray *sortedDatesArray = [datesArray sortedArrayUsingComparator:^NSComparisonResult (id obj1, id obj2) {
-                                     if ([obj1 isKindOfClass:[NSDate class]] && [obj2 isKindOfClass:[NSDate class]]) {
-                                         return [(NSDate *)obj1 compare : (NSDate *)obj2];
-                                     }
-
-                                     return nil;
-                                 }];
-
-    return sortedDatesArray[0];
+	NSArray *sortedDatesArray = [datesArray sortedArrayUsingComparator:^NSComparisonResult (id obj1, id obj2) {
+		if ([obj1 isKindOfClass:[NSDate class]] && [obj2 isKindOfClass:[NSDate class]]) {
+			return [(NSDate *)obj1 compare : (NSDate *)obj2];
+		}
+		return nil;
+	}];
+	return sortedDatesArray[0];
 }
 
 + (BOOL)isNearToExpire: (NSString *)expirationDate inDays: (int) days {
-    NSDate *dateForExpiration = [DateHelper getDateFromString:expirationDate];
-    NSDate *currentDate = [NSDate date];
-    NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    NSDateComponents *components = [gregorianCalendar components:NSCalendarUnitDay fromDate:currentDate toDate:dateForExpiration options:0];
-    return ([components day] < days) && expirationDate ? true : false;
+	NSDate *dateForExpiration = [DateHelper getDateFromString:expirationDate];
+	if (dateForExpiration != nil) {
+		NSDate *currentDate = [NSDate date];
+		NSCalendar *gregorianCalendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+		NSDateComponents *components = [gregorianCalendar components:NSCalendarUnitDay fromDate:currentDate toDate:dateForExpiration options:0];
+		return ([components day] < days) && expirationDate ? true : false;
+	}
+	return false;
 }
 
 @end

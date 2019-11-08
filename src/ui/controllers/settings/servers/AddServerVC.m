@@ -24,9 +24,6 @@
     
     isEdit = NO;
     
-    DDLogDebug(@"Texto recibido Alias-> %@", aliasReceived);
-    DDLogDebug(@"URL   -> %@", urlRecived);
-    
     if (aliasReceived != NULL && urlRecived != NULL) {
         
         aliasTextField.text = [[NSString alloc]init];

@@ -59,12 +59,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewDidUnload
-{
-
-    [super viewDidUnload];
-}
-
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
@@ -73,10 +67,10 @@
 
 - (void)loadWebService
 {
-    [SVProgressHUD show];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     NSString *data = [PreviewXMLController buildRequestWithId:_docId];
-
-    DDLogDebug(@"PreviewXMLController::loadWebService.message data=%@", data);
 
     // loadRequest
     [dataController loadPostRequestWithData:data code:_requestCode];
@@ -88,7 +82,6 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
     });
-    DDLogDebug(@"UnassignedRequestTableViewController::didReceiveParserWithError: %@", errorString);
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
                                                                              message:errorString
                                                                       preferredStyle:UIAlertControllerStyleAlert];

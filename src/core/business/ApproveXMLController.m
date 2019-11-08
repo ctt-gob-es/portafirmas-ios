@@ -87,7 +87,6 @@
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qualifiedName attributes:attributeDict];
 
     if ([elementName isEqualToString:@"apprv"]) {
-        DDLogDebug(@"user element found – create a new instance of apprv class...");
 
         _requestResult = [PFRequestResult new];
         [_requestResult setRejectid:attributeDict[@"id"]];
@@ -95,7 +94,6 @@
     }
 
     if ([elementName isEqualToString:@"apprvs"]) {
-       DDLogDebug(@"user element found – create a new instance of apprv list class...");
         _dataSource = [@[] mutableCopy];
     }
 }

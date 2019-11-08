@@ -88,11 +88,12 @@
 - (void)loadDataWithProgressIndicator:(BOOL)showProgressIndicator
 {
     if (showProgressIndicator) {
-        [SVProgressHUD show];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD show];
+		});
     }
 
     NSString *data = [RequestListXMLController buildDefaultRequestWithState:_dataStatus pageNumber:_currentPage filters:_filtersDict];
-    DDLogDebug(@"BaseListTVC::loadData::data---\n%@", data);
     [_wsDataController loadPostRequestWithData:data code:PFRequestCodeList];
     [_wsDataController startConnection];
 }
@@ -132,7 +133,6 @@
         BOOL finishOK = ![parser finishWithError];
 
         if (!finishOK) {
-            DDLogError(@"Error  parsing  document!");
             [self didReceiveParserWithError:[NSString stringWithFormat:@"Mensaje del servidor:%@(%@)", [parser err], [parser errorCode]]];
             return;
         }
@@ -148,7 +148,6 @@
         [self.tableViewFooter setHidden:!self.moreDataAvailable];
         [self.tableView reloadData];
     } else {
-        DDLogError(@"Error parsing document!");
         [self didReceiveError:@"Se ha producido un error de conexión con el servidor"];
     }
 }
@@ -192,8 +191,6 @@
     RequestCellNoUI *editingCell = [self.tableView dequeueReusableCellWithIdentifier:kBaseListVCEditingCellIdentifier];
 
     if (!editingCell) {
-        DDLogError(@"UnassignedTableViewController::cellForRowAtIndexPath - Cell is nil");
-
         return nil;
     }
 
@@ -207,8 +204,6 @@
     RequestCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kBaseListVCCellIdentifier];
 
     if (!cell) {
-        DDLogError(@"BaseListTVC::cellForRowAtIndexPath - Cell is nil");
-
         return nil;
     }
 
@@ -239,7 +234,9 @@
     [detailVC setDataSourceRequest:selectedRequest];
     [detailVC setSignEnabled:enableSign];
     [detailVC setRequestId:selectedRequest.reqid];
-    [SVProgressHUD show];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
 }
 
 @end

@@ -305,7 +305,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [self hidePickers];
     [self.view endEditing:YES];
     [UIView animateWithDuration:0.3 animations:^{
-         [_sortPickerView setAlpha:1];
+         [self.sortPickerView setAlpha:1];
      }];
 }
 
@@ -315,7 +315,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         [self hidePickers];
         [self.view endEditing:YES];
         [UIView animateWithDuration:0.3 animations:^{
-             [_appPickerView setAlpha:1];
+			[self.appPickerView setAlpha:1];
          }];
     }
 }
@@ -448,7 +448,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         }
 
         [UIView animateWithDuration:0.3 animations:^{
-			[_datePicker setAlpha:1.0];
+			[self.datePicker setAlpha:1.0];
          } completion:^(BOOL finished) {
              [self updateContentOffsetForPicker];
          }];

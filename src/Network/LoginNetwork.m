@@ -45,8 +45,6 @@
         if (error) {
             failure(error);
         } else  {
-            NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-            DDLogDebug(@"Request reply: %@", requestReply);
             Parser *parser = [Parser new];
             
             [parser parseAuthData:data success:^(NSString *token) {
@@ -58,7 +56,7 @@
     }] resume];
 }
 
-+ (void) validateLogin:(NSString*)certificate withSignedToken:(NSString*)tokenSigned success: (void(^)())success failure:(void(^)(NSError *error))failure {
++ (void) validateLogin:(NSString*)certificate withSignedToken:(NSString*)tokenSigned success: (void(^)(void))success failure:(void(^)(NSError *error))failure {
     NSString *opParameter = @"op";
     NSString *datParameter = @"dat";
     NSString *baseURL = SERVER_URL;
@@ -90,8 +88,6 @@
         if (error) {
             failure(error);
         } else  {
-            NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-            DDLogDebug(@"Request reply: %@", requestReply);
             Parser *parser = [Parser new];
             
             [parser parseValidateData:data success:^(BOOL isValid) {
@@ -109,7 +105,7 @@
     }] resume];
 }
 
-+ (void) logout:(void(^)())success failure:(void(^)(NSError *error))failure {
++ (void) logout:(void(^)(void))success failure:(void(^)(NSError *error))failure {
     NSString *opParameter = @"op";
     NSString *datParameter = @"dat";
     NSString *baseURL = SERVER_URL;
@@ -138,8 +134,6 @@
         if (error) {
             failure(error);
         } else  {
-            NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-            DDLogDebug(@"Request reply: %@", requestReply);
             success();
             [userDNIManager deleteUserDNI];
         }

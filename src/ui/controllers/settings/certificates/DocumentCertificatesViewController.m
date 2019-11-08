@@ -118,8 +118,6 @@ int const kNormalLabelDistance = 20;
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    DDLogDebug(@"didReceiveMemoryWarning");
-
 }
 
 - (IBAction)didTapOnBackButton:(id)sender
@@ -206,7 +204,6 @@ int const kNormalLabelDistance = 20;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DDLogDebug(@"didSelectRowAtIndexPath row=%ld", (long)[indexPath row]);
     _selectedCertificate = [files objectAtIndex:[indexPath row]];
 }
 
@@ -246,22 +243,10 @@ int const kNormalLabelDistance = 20;
 #endif /* if TARGET_IPHONE_SIMULATOR */
 }
 
-- (void)viewDidUnload
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [SVProgressHUD dismiss];
-    });
-    [super viewDidUnload];
-}
-
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    DDLogDebug(@"DocumentCertificatesViewController::prepareForSegue identifier=%@", [segue identifier]);
-
     if ([segue.identifier isEqualToString:@"segueModalCertificates"]) {
         NSIndexPath *selectedRowIndexPath = [self.tableView indexPathForSelectedRow];
-        DDLogDebug(@"DocumentCertificatesViewController::prepareForSegue selected index=%ld", (long)[selectedRowIndexPath row]);
-
         // Sets data in Aplication delegate objet to be shared for the application's tab
         _selectedCertificate = [files objectAtIndex:[selectedRowIndexPath row]];
         ModalCertificatesController *modalController  = [segue destinationViewController];
@@ -295,7 +280,7 @@ int const kNormalLabelDistance = 20;
 }
 
 - (IBAction)filesAppButtonTapped:(id)sender {
-	UIDocumentMenuViewController *documentProviderMenu = [[UIDocumentMenuViewController alloc] initWithDocumentTypes:@[@"public.data"] inMode:UIDocumentPickerModeImport];
+	UIDocumentPickerViewController *documentProviderMenu = [[UIDocumentPickerViewController alloc] initWithDocumentTypes:@[@"public.data"] inMode:UIDocumentPickerModeImport];
 	documentProviderMenu.delegate = self;
 	documentProviderMenu.modalPresentationStyle = UIModalPresentationPopover;
 	UIPopoverPresentationController *popPC = documentProviderMenu.popoverPresentationController;
@@ -352,7 +337,7 @@ int const kNormalLabelDistance = 20;
 	}
 }
 
-- (void)documentMenu:(nonnull UIDocumentMenuViewController *)documentMenu didPickDocumentPicker:(nonnull UIDocumentPickerViewController *)documentPicker {
+- (void)documentMenu:(nonnull UIDocumentPickerViewController *)documentMenu didPickDocumentPicker:(nonnull UIDocumentPickerViewController *)documentPicker {
 	documentPicker.delegate = self;
 	[self presentViewController:documentPicker animated:YES completion:nil];
 }

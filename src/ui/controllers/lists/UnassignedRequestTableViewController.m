@@ -71,7 +71,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.navigationItem setRightBarButtonItems:@[_filterButtonItem, self.navigationItem.rightBarButtonItem] animated:YES];
+    [self.navigationItem setRightBarButtonItems:@[_filterButtonItem, self.navigationItem.rightBarButtonItem] animated:NO];
     [self assignMainTabToAppDelegate];
 }
 
@@ -86,17 +86,10 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+	[super viewWillDisappear: animated];
     [self.parentViewController setHidesBottomBarWhenPushed:TRUE];
     [self.navigationController setToolbarHidden:YES];
     [self.parentViewController.tabBarController.tabBar setHidden:NO];
-}
-
-- (void)viewDidUnload
-{
-    [self setSignBarButton:nil];
-    [self setRejectBarButton:nil];
-
-    [super viewDidUnload];
 }
 
 - (void)didReceiveMemoryWarning
@@ -106,13 +99,14 @@
 }
 
 - (void) assignMainTabToAppDelegate {
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    UINavigationController *nav = (UINavigationController *)self.presentingViewController;
-	
-	if (nav != nil && nav.presentedViewController != nil) {
-		UITabBarController *tabBarController = (UITabBarController *)nav.presentedViewController;
-		if (tabBarController != nil) {
-			appDelegate.mainTab = tabBarController;
+	AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+	UINavigationController *nav = (UINavigationController *)self.presentingViewController;
+	if (appDelegate.mainTab == nil) {
+		if (nav != nil && nav.presentedViewController != nil) {
+			UITabBarController *tabBarController = (UITabBarController *)nav.presentedViewController;
+			if (tabBarController != nil) {
+				appDelegate.mainTab = tabBarController;
+			}
 		}
 	}
 }
@@ -120,17 +114,13 @@
 #pragma mark - Network Calls
 
 - (void)loadData {
-    
-    DDLogDebug(@"UnassignedRequestTableViewController::loadRequestList");
-    _waitingResponseType = PFWaitingResponseTypeList;
+	_waitingResponseType = PFWaitingResponseTypeList;
     [super loadData];
 }
 
 - (IBAction)rejectAction:(id)sender {
     
     reject = YES;
-    DDLogDebug(@"Reject Action....");
-    
     // Preguntamos el por qué del rechazo
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Rejection_of_requests", nil) message:NSLocalizedString(@"Indicate_Reason_For_Rejection", nil) preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
@@ -149,28 +139,28 @@
 
 - (IBAction)cancelAction:(id)sender
 {
-    DDLogDebug(@"Cancel Action....");
     [self cancelEditing];
 }
 
 - (void)startSendingSignRequests
 {
     [self enableUserInteraction:false];
-    [SVProgressHUD show];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
 
     requestSignerController = [RequestSignerController new];
     [requestSignerController setDelegate:self];
-    DDLogDebug(@"Filas seleccionadas -> ");
     [requestSignerController loadPreSignRequestsWithCurrentCertificate:_selectedRequestsSetToSign.allObjects];
 }
 
 - (void)startSendingApproveRequests
 {
-    [SVProgressHUD show];
-
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     _waitingResponseType = PFWaitingResponseTypeApproval;
     NSString *requestData = [ApproveXMLController buildRequestWithRequestArray:_selectedRequestSetToApprove.allObjects];
-    DDLogDebug(@"UnassignedRequestTableViewController::startSendingApproveRequests------\n%@\n-----------------------------------------------------------------------\n", requestData);
     [self.wsDataController loadPostRequestWithData:requestData code:PFRequestCodeApprove];
     [self.wsDataController startConnection];
 }
@@ -228,8 +218,6 @@
 - (IBAction)editAction:(id)sender
 {
     if ([self.dataArray count] > 0) {
-        
-        DDLogDebug(@"Editing => %d", self.editing);
         [self setEditing: !self.editing animated: !self.editing];
     }
 }
@@ -242,7 +230,6 @@
 
 - (IBAction)signAction:(id)sender
 {
-    DDLogDebug(@"Sign Action....\nSelected rows=%lu", (unsigned long)[selectedRows count]);
     [self separateSignAndApproveRequests];
     [self showSignApproveAlert];
 }
@@ -292,14 +279,16 @@
 - (void)continueButtonClicked: (UIAlertController *)alertController {
     if (reject) {
         reject = NO;
-        [SVProgressHUD show];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD show];
+		});
+
         if ([alertController.textFields count] != 0) {
             NSArray *textfields = alertController.textFields;
             UITextField *nameTextfield = textfields[0];
             motivoRechazo = nameTextfield.text;
         }
         NSString *data = [RejectXMLController buildRequestWithIds:selectedRows motivoR:motivoRechazo];
-        DDLogDebug(@"UnassignedRequestTableViewController::rejectRequest input Data=%@", data);
         _waitingResponseType = PFWaitingResponseTypeRejection;
         [self.wsDataController loadPostRequestWithData:data code:PFRequestCodeReject];
         [self.wsDataController startConnection];
@@ -340,9 +329,6 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    
-    DDLogDebug(@"BaseListTVC::prepareForSegueWithIdentifier=%@", [segue identifier]);
-
     if ([[segue identifier] isEqualToString:@"segueDetail"]) {
         
         [self prepareForDetailSegue:segue enablingSigning:YES];
@@ -351,8 +337,6 @@
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
-    DDLogDebug(@"shouldPerformSegueWithIdentifier:%@", ([self isEditing]) ? @"YES" : @"NO");
-
     return (!([self isEditing]));
 }
 
@@ -361,8 +345,6 @@
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
     [super setEditing: editing animated:animated];
-    DDLogDebug(@"setEditing editing = %d", editing);
-
     if (editing) {
         [_selectButtonItem setTitle:@"Hecho"];
 		[self setEditingBottomBar];
@@ -458,7 +440,6 @@
 
 - (void)didReceivedApprovalResponse:(NSData *)responseData
 {
-    DDLogDebug(@"didReceivedApprovalResponse:\n%@", [[NSString alloc] initWithData:responseData encoding:NSUTF8StringEncoding]);
     NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:responseData];
     ApproveXMLController *parser = [[ApproveXMLController alloc] init];
 
@@ -516,7 +497,6 @@
 
 - (void)didReceiveSignerRequestResult:(NSArray *)requestsSigned
 {
-    DDLogDebug(@"UnsignedRequestTableViewController::didReceiveSignerRequestResult - reqs count: %lu", (unsigned long)[requestsSigned count]);
     [self enableUserInteraction: true];
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
