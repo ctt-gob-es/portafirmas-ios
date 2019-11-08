@@ -32,54 +32,63 @@
 }
 
 - (void) authID {
+	
+	LoginNetwork *loginNetwork = [LoginNetwork new];
     
-    [LoginNetwork loginProcess:^(NSString *token) {
+    [loginNetwork loginProcess:^(NSString *token) {
         NSString *decodedToken = [self decodeToken:token];
         NSString *signToken = [self signToken:decodedToken];
         NSString *certificate = [self certificateInBase64];
-		[LoginNetwork validateLogin:certificate withSignedToken:signToken success:nil failure:nil];
+		[loginNetwork validateLogin:certificate withSignedToken:signToken success:nil failure:nil];
     } failure:nil];
 }
     
+- (void)extracted:(void (^)(NSError *))failure success:(void (^)(void))success {
+	
+	LoginNetwork *loginNetwork = [LoginNetwork new];
+	
+	[loginNetwork loginProcess:^(NSString *token) {
+		self.serverSupportLogin = YES;
+		NSString *decodedToken = [self decodeToken:token];
+		self.currentSignToken = [self signToken:decodedToken];
+		NSString *certificate = [self certificateInBase64];
+		
+		[loginNetwork validateLogin:certificate withSignedToken:self.currentSignToken success:^{
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[SVProgressHUD dismiss];
+			});
+			if ([PushNotificationService instance].currentServer.userNotificationPermisionState) {
+				[[PushNotificationService instance] initializePushNotificationsService:false];
+			}
+			success();
+		} failure:^(NSError *error) {
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[SVProgressHUD dismiss];
+			});
+			self.serverSupportLogin = NO;
+			NSLog(@"Error: %@", error);
+			failure(error);
+		}];
+	} failure:^(NSError *error) {
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismiss];
+		});
+		
+		//Check if is old server
+		if (error != nil && error.code == PFLoginNotSupported) {
+			self.serverSupportLogin = NO;
+		}
+		failure(error);
+	}];
+}
+
 - (void) loginWithCertificate:(void(^)(void))success failure:(void(^)(NSError *error))failure {
     
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[SVProgressHUD show];
 	});
-    [LoginNetwork loginProcess:^(NSString *token) {
-        self.serverSupportLogin = YES;
-        NSString *decodedToken = [self decodeToken:token];
-        self.currentSignToken = [self signToken:decodedToken];
-        NSString *certificate = [self certificateInBase64];
-        
-        [LoginNetwork validateLogin:certificate withSignedToken:self.currentSignToken success:^{
-           dispatch_async(dispatch_get_main_queue(), ^{
-				[SVProgressHUD dismiss];
-			});
-            if ([PushNotificationService instance].currentServer.userNotificationPermisionState) {
-                [[PushNotificationService instance] initializePushNotificationsService:false];
-            }
-            success();
-        } failure:^(NSError *error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-				[SVProgressHUD dismiss];
-			});
-            self.serverSupportLogin = NO;
-			NSLog(@"Error: %@", error);
-            failure(error);
-        }];
-    } failure:^(NSError *error) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-			[SVProgressHUD dismiss];
-		});
-        
-        //Check if is old server
-        if (error != nil && error.code == PFLoginNotSupported) {
-            self.serverSupportLogin = NO;
-        }
-        failure(error);
-    }];
+	[self extracted:failure success:success];
     
 }
 
@@ -87,8 +96,10 @@
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[SVProgressHUD show];
 	});
-    
-    [LoginNetwork logout:^{
+
+	LoginNetwork *loginNetwork = [LoginNetwork new];
+
+	[loginNetwork logout:^{
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];
 		});
