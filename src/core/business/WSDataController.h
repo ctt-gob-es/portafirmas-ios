@@ -14,9 +14,10 @@
 - (void)didReceiveParserWithError:(NSString *)errorString;
 @end
 
-@interface WSDataController : NSObject
+@interface WSDataController : NSObject <NSURLSessionDataDelegate>
 {
-    NSURLConnection *connectionInProgress;
+    NSURLSession *connectionInProgress;
+	NSURLSessionDataTask *dataTask;
     NSMutableData *xmlData;
     BOOL REQUEST_POST;
 

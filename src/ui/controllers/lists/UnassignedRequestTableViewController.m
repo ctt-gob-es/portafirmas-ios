@@ -329,6 +329,11 @@
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
+	
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
+	
     return (!([self isEditing]));
 }
 
@@ -407,6 +412,9 @@
     }
 
     [self cancelEditing];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[self.tableView reloadData];
+	});
 }
 
 - (void)didReceivedRejectionResponse:(NSData *)responseData
@@ -522,6 +530,7 @@
         [self cancelEditing];
         [self refreshInfo];
     }
+	[[self tableView] reloadData];
 }
 
 - (void)didReceiveRejectResult:(NSArray *)requestsSigned
@@ -545,9 +554,9 @@
         _waitingResponseType = PFWaitingResponseTypeList;
         [super loadData];
         // Peticiones rechazadas corrrectamente
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil)
-                                                                                 message:NSLocalizedString(@"Correctly_rejected_requests", nil)
-                                                                          preferredStyle:UIAlertControllerStyleAlert];
+		UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil)
+																				 message:NSLocalizedString(@"Correctly_rejected_requests", nil)
+																		  preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
                                                            style:UIAlertActionStyleDefault
                                                          handler:nil];
