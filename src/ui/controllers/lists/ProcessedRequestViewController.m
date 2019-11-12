@@ -37,6 +37,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+	[super viewWillDisappear:animated];
     [self.parentViewController setHidesBottomBarWhenPushed:TRUE];
     [self.navigationController setToolbarHidden:YES];
 }
@@ -57,8 +58,6 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    DDLogDebug(@"BaseListTVC::prepareForSegueWithIdentifier=%@", [segue identifier]);
-
     if ([[segue identifier] isEqualToString:@"segueDetail"]) {
         [self prepareForDetailSegue:segue enablingSigning:NO];
     }

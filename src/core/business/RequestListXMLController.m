@@ -97,19 +97,15 @@
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qualifiedName attributes:attributeDict];
 
     if ([elementName isEqualToString:@"rqt"]) {
-        DDLogDebug(@"user element found – create a new instance of rqt class...");
-
         request = [[PFRequest alloc] initWithDict:attributeDict];
         waitingForDocument = FALSE;
     }
 
     if ([elementName isEqualToString:@"docs"]) {
-        DDLogDebug(@"user element found – create a new instance of docs list class...");
         documentList = [@[] mutableCopy];
     }
 
     if ([elementName isEqualToString:@"doc"]) {
-        DDLogDebug(@"user element found – create a new instance of document class...");
         // We reached the end of the XML document
         waitingForDocument = YES;
         document = [[Document alloc]init];
@@ -126,7 +122,6 @@
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
     NSString *strNew = [string stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-    DDLogDebug(@"string -> %@", string);
     strNew = [strNew stringByReplacingOccurrencesOfString:@"\t" withString:@""];
     strNew = [strNew stringByReplacingOccurrencesOfString:@"&_lt;" withString:@"<"];
     strNew = [strNew stringByReplacingOccurrencesOfString:@"&_gt;" withString:@">"];

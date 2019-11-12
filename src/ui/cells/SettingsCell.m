@@ -26,8 +26,8 @@ CGFloat const kHalfHeightForSwitch = 16;
 - (void)setupForType:(SettingsCellType)type
 {
     NSDictionary *typeDict = (NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:KEYS_ARRAY[type]];
-    DDLogDebug(@"TypeDict -> %@", [typeDict allKeys]);
-    if (typeDict && [typeDict.allKeys containsObject:kPFUserDefaultsKeyAlias]) {
+	if (typeDict && [typeDict.allKeys containsObject:kPFUserDefaultsKeyAlias]) {
+        
         [_titleLabel setText:typeDict[kPFUserDefaultsKeyAlias]];
         [_titleLabel setTextColor:[UIColor blackColor]];
     } else if ((SettingsCellType)type == SettingsCellTypeRemoteCertificates) {

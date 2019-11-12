@@ -24,9 +24,6 @@
     
     isEdit = NO;
     
-    DDLogDebug(@"Texto recibido Alias-> %@", aliasReceived);
-    DDLogDebug(@"URL   -> %@", urlRecived);
-    
     if (aliasReceived != NULL && urlRecived != NULL) {
         
         aliasTextField.text = [[NSString alloc]init];
@@ -88,7 +85,9 @@
 
 - (IBAction)didClickCancelButton:(id)sender
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+	dispatch_async(dispatch_get_main_queue(), ^{
+	   [self dismissViewControllerAnimated:YES completion:nil];
+	});
 }
 
 - (IBAction)didClickSaveButton:(id)sender
@@ -118,8 +117,10 @@
         [[NSUserDefaults standardUserDefaults] setObject:serversArray forKey:kPFUserDefaultsKeyServersArray];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
+	
+	dispatch_async(dispatch_get_main_queue(), ^{
+	   [self dismissViewControllerAnimated:YES completion:nil];
+	});
 }
 
 - (IBAction)textFieldDidChange:(id)sender

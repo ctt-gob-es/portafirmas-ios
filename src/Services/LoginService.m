@@ -32,64 +32,67 @@
 }
 
 - (void) authID {
-    
-    [LoginNetwork loginProcess:^(NSString *token) {
-        DDLogDebug(@"Token = %@", token);
+	
+	LoginNetwork *loginNetwork = [LoginNetwork new];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
+    [loginNetwork loginProcess:^(NSString *token) {
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismiss];
+		});
         NSString *decodedToken = [self decodeToken:token];
         NSString *signToken = [self signToken:decodedToken];
-        DDLogDebug(@"Sign Token = %@", signToken);
         NSString *certificate = [self certificateInBase64];
-        
-        [LoginNetwork validateLogin:certificate withSignedToken:signToken success:^{
-            DDLogDebug(@"Login validated");
-        } failure:^(NSError *error) {
-            DDLogError(@"Error starting login process");
-            DDLogError(@"Error: %@", error);
-        }];
-    } failure:^(NSError *error) {
-        DDLogError(@"Error starting login process");
-        DDLogError(@"Error: %@", error);
-    }];
+		[loginNetwork validateLogin:certificate withSignedToken:signToken success:nil failure:nil];
+	} failure:^(NSError *error){
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismiss];
+		});
+	}
+	 ];
 }
     
-- (void) loginWithCertificate:(void(^)())success failure:(void(^)(NSError *error))failure {
-    
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-    
-    [LoginNetwork loginProcess:^(NSString *token) {
-        self.serverSupportLogin = YES;
-        DDLogDebug(@"Token = %@", token);
-        NSString *decodedToken = [self decodeToken:token];
-        self.currentSignToken = [self signToken:decodedToken];
-        DDLogDebug(@"Sign Token = %@", self.currentSignToken);
-        NSString *certificate = [self certificateInBase64];
-        
-        [LoginNetwork validateLogin:certificate withSignedToken:self.currentSignToken success:^{
-            [SVProgressHUD dismiss];
-            DDLogDebug(@"Login validated");
-            if ([PushNotificationService instance].currentServer.userNotificationPermisionState) {
-                [[PushNotificationService instance] initializePushNotificationsService:false];
-            }
-            success();
-        } failure:^(NSError *error) {
-            [SVProgressHUD dismiss];
-            DDLogError(@"Error starting login process");
-            DDLogError(@"Error: %@", error);
-            self.serverSupportLogin = NO;
-            failure(error);
-        }];
-    } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
-        DDLogError(@"Error starting login process");
-        
-        //Check if is old server
-        if (error != nil && error.code == PFLoginNotSupported) {
-            self.serverSupportLogin = NO;
-            DDLogError(@"Error: %@", error);
-        }
-        failure(error);
-    }];
-    
+- (void)extracted:(void (^)(NSError *))failure success:(void (^)(void))success {
+	
+	LoginNetwork *loginNetwork = [LoginNetwork new];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
+	
+	[loginNetwork loginProcess:^(NSString *token) {
+		self.serverSupportLogin = YES;
+		NSString *decodedToken = [self decodeToken:token];
+		self.currentSignToken = [self signToken:decodedToken];
+		NSString *certificate = [self certificateInBase64];
+		
+		[loginNetwork validateLogin:certificate withSignedToken:self.currentSignToken success:^{
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[SVProgressHUD dismiss];
+			});
+			if ([PushNotificationService instance].currentServer.userNotificationPermisionState) {
+				[[PushNotificationService instance] initializePushNotificationsService:false];
+			}
+			success();
+		} failure:^(NSError *error) {
+			dispatch_async(dispatch_get_main_queue(), ^{
+				[SVProgressHUD dismiss];
+			});
+			self.serverSupportLogin = NO;
+			NSLog(@"Error: %@", error);
+			failure(error);
+		}];
+	} failure:^(NSError *error) {
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismiss];
+		});
+		
+		//Check if is old server
+		if (error != nil && error.code == PFLoginNotSupported) {
+			self.serverSupportLogin = NO;
+		}
+		failure(error);
+	}];
 }
 
 - (void) loginWithRemoteCertificates:(void(^)())success failure:(void(^)(NSError *error))failure {
@@ -111,20 +114,35 @@
 	}];
 }
 
-- (void) logout:(void(^)())success failure:(void(^)(NSError *error))failure {
+- (void) loginWithCertificate:(void(^)(void))success failure:(void(^)(NSError *error))failure {
+
     
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
+	[self extracted:failure success:success];
     
-    [LoginNetwork logout:^{
-        [SVProgressHUD dismiss];
-        DDLogDebug(@"Logout finish with success");
+}
+
+- (void) logout:(void(^)(void))success failure:(void(^)(NSError *error))failure {
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
+
+	LoginNetwork *loginNetwork = [LoginNetwork new];
+
+	[loginNetwork logout:^{
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismiss];
+		});
         self.serverSupportLogin = false;
         self.currentSignToken = @"";
         [CookieTools removeJSessionIDCookies];
         success();
     } failure:^(NSError *error) {
-        [SVProgressHUD dismiss];
-        DDLogDebug(@"Logout finish with failure");
+       dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismiss];
+		});
         self.serverSupportLogin = false;
         self.currentSignToken = @"";
         [CookieTools removeJSessionIDCookies];

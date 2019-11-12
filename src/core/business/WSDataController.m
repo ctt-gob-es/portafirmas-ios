@@ -61,7 +61,6 @@ struct {
                             (unsigned long)code, [msgData base64EncodedString]];
 
         NSString *newURL = [wsURLString stringByAppendingString:params];
-       DDLogDebug(@"WSDataController::loadPostRequestWithURL.GET Url=%@", newURL);
 
         request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:newURL]
                                           cachePolicy:NSURLRequestReloadIgnoringCacheData
@@ -71,9 +70,6 @@ struct {
         NSString *post = [NSString stringWithFormat: @"op=%lu&dat=%@",(unsigned long)code, [msgData base64EncodedString]];
         NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
         NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
-        DDLogDebug(@"\n");
-        DDLogDebug(@"WSDataController -> Valor postLength ->    %@", postLength);
-        DDLogDebug(@"\n\n");
 
         request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:wsURLString]
                                           cachePolicy:NSURLRequestReloadIgnoringCacheData
@@ -94,18 +90,19 @@ struct {
         }
     }
 
-    // Clear out the existing connection if there is one
-    if (connectionInProgress) {
-        [connectionInProgress cancel];
+    if (dataTask.state == NSURLSessionTaskStateRunning) {
+        [dataTask cancel];
         connectionInProgress = nil;
     }
-    // Instantiate the object to hold all incoming data
-    xmlData = [[NSMutableData alloc] init];
-
-    // Create and initiate the connection
-    connectionInProgress = [[NSURLConnection alloc] initWithRequest:request
-                                                           delegate:self
-                                                   startImmediately:NO];
+	NSURLSessionConfiguration * defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+	defaultConfigObject.requestCachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+	connectionInProgress = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: [NSOperationQueue mainQueue]];
+	self->dataTask = [connectionInProgress dataTaskWithRequest:request
+											 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+					  {
+		self->xmlData = [NSMutableData dataWithData:data];
+		[self doParse: self->xmlData];
+	}];
 }
 
 - (void)loadRequestsWithURL:( NSString *)wsURLString
@@ -115,75 +112,60 @@ struct {
     NSURLRequest *request = [NSURLRequest requestWithURL:url
                                              cachePolicy:NSURLRequestReloadIgnoringCacheData
                                          timeoutInterval:TIMEOUT_FOR_SERVER];
-
-    // Clear out the existing connection if there is one
-    if (connectionInProgress) {
-        [connectionInProgress cancel];
+    if (dataTask.state == NSURLSessionTaskStateRunning) {
+        [dataTask cancel];
         connectionInProgress = nil;
     }
+	NSURLSessionConfiguration * defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+	defaultConfigObject.requestCachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+	connectionInProgress = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: [NSOperationQueue mainQueue]];
+	self->dataTask = [connectionInProgress dataTaskWithRequest:request
+												completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+									  {
+		self->xmlData = [NSMutableData dataWithData:data];
+		[self doParse: self->xmlData];
+	}];
 
-    // Create and initiate the connection
-    connectionInProgress = [[NSURLConnection alloc] initWithRequest:request
-                                                           delegate:self
-                                                   startImmediately:NO];
-
-    // Instantiate the object to hold all incoming data
-    xmlData = [[NSMutableData alloc] init];
 }
 
-// didReceiveResponse
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-
-    DDLogDebug(@"WSDataController::connection didReceive Response =%@", [httpResponse allHeaderFields]);
+-(void) URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data{
+	[xmlData appendData:data];
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    DDLogDebug(@"Succeeded! Received %lu bytes of data", (unsigned long)[data length]);
-    [xmlData appendData:data];
-}
+-(void) URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error{
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD dismiss];
+	});
+	connectionInProgress = nil;
+	xmlData = nil;
+	NSString *errorString = [NSString stringWithFormat:@"Load failed: %@",
+							 [error localizedDescription]];
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    DDLogDebug(@"Datos totales descargados: %lu", (unsigned long)[xmlData length]);
-    [self doParse: xmlData];
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    [SVProgressHUD dismiss];
-    connectionInProgress = nil;
-    xmlData = nil;
-    NSString *errorString = [NSString stringWithFormat:@"Load failed: %@",
-                             [error localizedDescription]];
-
-    if ([_delegate respondsToSelector:@selector(didReceiveParserWithError:)]) {
-        [_delegate didReceiveParserWithError:errorString];
-    }
+	if ([_delegate respondsToSelector:@selector(didReceiveParserWithError:)]) {
+		[_delegate didReceiveParserWithError:errorString];
+	}
 }
 
 - (void)doParse:(NSData *)data
 {
-    DDLogDebug(@"doParse data: \n\n%@", [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding]);
     [_delegate doParse: data];
 }
 
 - (void)cancelConnection
 {
-    // Clear out the existing connection if there is one
-    if (connectionInProgress) {
-        [connectionInProgress cancel];
+    if (dataTask.state == NSURLSessionTaskStateRunning) {
+        [dataTask cancel];
         connectionInProgress = nil;
     }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
 }
 
 - (void)startConnection
 {
-    if (connectionInProgress) {
-        [connectionInProgress scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-        [connectionInProgress start];
+    if (dataTask.state != NSURLSessionTaskStateRunning) {
+        [dataTask resume];
     }
 }
 

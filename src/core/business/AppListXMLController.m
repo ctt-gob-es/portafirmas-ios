@@ -51,11 +51,10 @@ static AppListXMLController *_sharedInstance = nil;
 
 - (void)requestAppsList
 {
-    
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     NSString *requestString = [self buildRequest];
-    DDLogDebug(@"AppListXMLController::requestAppsList---\n%@", requestString);
-    DDLogDebug(@"AppListXMLController::requestAppsList---\n%@", requestString);
     [_wsDataController loadPostRequestWithData:requestString code:PFRequestCodeAppList];
     [_wsDataController startConnection];
    
@@ -95,9 +94,9 @@ static AppListXMLController *_sharedInstance = nil;
 
 - (void)doParse:(NSData *)data
 {
-    [SVProgressHUD dismiss];
-
-   DDLogDebug(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
     NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:data];
     [nsXmlParser setDelegate:self];
     BOOL success = [nsXmlParser parse];
@@ -115,7 +114,9 @@ static AppListXMLController *_sharedInstance = nil;
 
 - (void)didReceiveParserWithError:(NSString *)errorString
 {
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
     _appsArray = nil;
 }
 

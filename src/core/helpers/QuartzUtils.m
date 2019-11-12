@@ -43,8 +43,6 @@
                 CGContextSetBlendMode(c, kCGBlendModeSourceAtop);
                 CGContextFillRect(c, rect);
                 result = UIGraphicsGetImageFromCurrentImageContext();
-            } else {
-                DDLogDebug(@"No context?");
             }
             UIGraphicsEndImageContext();
         }

@@ -88,11 +88,12 @@
 - (void)loadDataWithProgressIndicator:(BOOL)showProgressIndicator
 {
     if (showProgressIndicator) {
-        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD show];
+		});
     }
 
     NSString *data = [RequestListXMLController buildDefaultRequestWithState:_dataStatus pageNumber:_currentPage filters:_filtersDict];
-    DDLogDebug(@"BaseListTVC::loadData::data---\n%@", data);
     [_wsDataController loadPostRequestWithData:data code:PFRequestCodeList];
     [_wsDataController startConnection];
 }
@@ -108,7 +109,7 @@
 }
 
 - (void)refreshInfoWithFilters:(NSDictionary *)filters
-{
+{	
     _filtersDict = [filters mutableCopy];
     [self resetLazyLoad];
     [self loadData];
@@ -124,13 +125,11 @@
     RequestListXMLController *parser = [[RequestListXMLController alloc] initXMLParser];
     [nsXmlParser setDelegate:parser];
     BOOL success = [nsXmlParser parse];
-    [SVProgressHUD dismiss];
 
     if (success) {
         BOOL finishOK = ![parser finishWithError];
 
         if (!finishOK) {
-            DDLogError(@"Error  parsing  document!");
             [self didReceiveParserWithError:[NSString stringWithFormat:@"Mensaje del servidor:%@(%@)", [parser err], [parser errorCode]]];
             return;
         }
@@ -146,14 +145,18 @@
         [self.tableViewFooter setHidden:!self.moreDataAvailable];
         [self.tableView reloadData];
     } else {
-        DDLogError(@"Error parsing document!");
         [self didReceiveError:@"Se ha producido un error de conexión con el servidor"];
     }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
 }
 
 - (void)didReceiveParserWithError:(NSString *)errorString
 {
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
     [self setMoreDataAvailable:NO];
     [self.tableViewFooter setHidden:!self.moreDataAvailable];
     [self didReceiveError:errorString];
@@ -188,8 +191,6 @@
     RequestCellNoUI *editingCell = [self.tableView dequeueReusableCellWithIdentifier:kBaseListVCEditingCellIdentifier];
 
     if (!editingCell) {
-        DDLogError(@"UnassignedTableViewController::cellForRowAtIndexPath - Cell is nil");
-
         return nil;
     }
 
@@ -203,8 +204,6 @@
     RequestCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kBaseListVCCellIdentifier];
 
     if (!cell) {
-        DDLogError(@"BaseListTVC::cellForRowAtIndexPath - Cell is nil");
-
         return nil;
     }
 
@@ -228,15 +227,16 @@
 
 - (void)prepareForDetailSegue:(UIStoryboardSegue *)segue enablingSigning:(BOOL)enableSign
 {
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-
     NSInteger selectedRow = [self.tableView indexPathForSelectedRow].row;
+	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:true];
     DetailTableViewController *detailVC = [segue destinationViewController];
     PFRequest *selectedRequest = self.dataArray[selectedRow];
-
     [detailVC setDataSourceRequest:selectedRequest];
     [detailVC setSignEnabled:enableSign];
     [detailVC setRequestId:selectedRequest.reqid];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
 }
 
 @end

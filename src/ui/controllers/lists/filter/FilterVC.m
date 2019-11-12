@@ -88,7 +88,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self removeNotificationAboutPushNotifications];
+	[[KeyboardObserver getInstance] removeObserver:self];
+	[self removeNotificationAboutPushNotifications];
 }
 
 - (void)didReceiveMemoryWarning
@@ -234,7 +235,9 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (IBAction)didClickCancelButton:(id)sender
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+   dispatch_async(dispatch_get_main_queue(), ^{
+	   [self dismissViewControllerAnimated:YES completion:nil];
+	});
 }
 
 - (IBAction)didClickAcceptButton:(id)sender
@@ -291,10 +294,11 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         [baseTVC refreshInfoWithFilters:filters];
     }
     
-    [self dismissViewControllerAnimated:YES completion:^{
-        
-         [baseTVC refreshInfoWithFilters:filters];
-     }];
+	dispatch_async(dispatch_get_main_queue(), ^{
+	  [self dismissViewControllerAnimated:YES completion:^{
+		   [baseTVC refreshInfoWithFilters:filters];
+	   }];
+	});
 }
 
 - (IBAction)didClickSortCriteriaButton:(id)sender
@@ -302,7 +306,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [self hidePickers];
     [self.view endEditing:YES];
     [UIView animateWithDuration:0.3 animations:^{
-         [_sortPickerView setAlpha:1];
+         [self.sortPickerView setAlpha:1];
      }];
 }
 
@@ -312,7 +316,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         [self hidePickers];
         [self.view endEditing:YES];
         [UIView animateWithDuration:0.3 animations:^{
-             [_appPickerView setAlpha:1];
+			[self.appPickerView setAlpha:1];
          }];
     }
 }
@@ -425,7 +429,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     } else {
 
         [self.view endEditing:YES];
-
+		_datePicker.backgroundColor = [UIColor whiteColor];
         if ([_currentTextField isEqual:_startDateTextField]) {
             if (_startDate) {
                 [_datePicker setDate:_startDate];
@@ -445,7 +449,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         }
 
         [UIView animateWithDuration:0.3 animations:^{
-             [_datePicker setAlpha:1.0];
+			[self.datePicker setAlpha:1.0];
          } completion:^(BOOL finished) {
              [self updateContentOffsetForPicker];
          }];

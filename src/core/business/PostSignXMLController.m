@@ -20,7 +20,6 @@
 // Builds Web Service Request message
 + (NSString *)buildRequestWithCert:(NSString *)cert witRequestList:(NSArray *)requests;
 {
-    DDLogDebug(@"certificado => %@", cert);
     NSMutableString *mesg = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rqttri>\n"];
    
     if (![[LoginService instance] serverSupportLogin]) {
@@ -79,11 +78,6 @@
     [requestsMsg appendString:@"</reqs></rqttri>\n"];
     
     [mesg appendString:requestsMsg];
-
-    DDLogDebug(@"\n\n");
-   DDLogDebug(@"mesg -> \n\n%@", mesg);
-    DDLogDebug(@"\n\n");
-    
     return mesg;
 }
 
@@ -109,7 +103,6 @@
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qualifiedName attributes:attributeDict];
 
     if ([elementName isEqualToString:@"req"]) {
-       DDLogDebug(@"user element found – create a new instance of req class...");
 
         request = [[PFRequest alloc] init];
         /*
@@ -119,13 +112,7 @@
 
         // if We attributes in the user elements, you can extract them here:
         request.reqid = [attributeDict objectForKey:@"id"];
-       DDLogDebug(@"id attribute found: %@", request.reqid);
-
-        DDLogDebug(@"\n \n");
-        DDLogDebug(@"------------------");
-        DDLogDebug(@"element name: %@", elementName);
         request.status = [attributeDict objectForKey:@"status"];
-        DDLogDebug(@"status attribute found: %@", request.status);
 
         /*
            if (!documentList) {
@@ -179,8 +166,6 @@
 
         return;
     }
-    DDLogDebug(@"element for %@ es: %@", elementName, currentElementValue);
-
     // [currentElementValue release];
     currentElementValue = nil;
 }

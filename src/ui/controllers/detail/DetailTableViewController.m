@@ -53,7 +53,7 @@ typedef enum cellTypes
 	Message
 } CellTypes;
 
-NSInteger *const numberOfRows = 12;
+NSInteger const numberOfRows = 12;
 CGFloat const defaultCellHeight = 44;
 CGFloat const noCellHeight = 0;
 CGFloat const rejectCellTitleCellWidth = 150;
@@ -79,7 +79,9 @@ CGFloat const largeTitleCellWidth = 200;
     self = [super initWithCoder:aDecoder];
 
     if (self) {
-        [SVProgressHUD dismiss];
+        dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismiss];
+		});
         wsController = [[WSDataController alloc] init];
         wsController.delegate = self;
         _signEnabled = FALSE;
@@ -90,31 +92,25 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    DDLogDebug(@"DetailTableViewController::viewWillAppear");
     self.navigationController.toolbarHidden = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+	[super viewWillDisappear:animated];
     [wsController cancelConnection];
+    [self setBtnDocumentAction:nil];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    DDLogDebug(@"DetailTableViewController::viewDidLoad");
     [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
     // Enable or disable  action button
     [_btnDocumentAction setEnabled:_signEnabled];
     [self loadWebService];
     self.tableView.estimatedRowHeight = defaultCellHeight;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-}
-
-- (void)viewDidUnload
-{
-    [self setBtnDocumentAction:nil];
-    [super viewDidUnload];
 }
 
 - (void)didReceiveMemoryWarning
@@ -296,13 +292,7 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void)loadWebService
 {
-    NSString *url = [appConfig objectForKey:kRequestDetailURLKeyName];
-
-    DDLogDebug(@"DetailTableViewController::loadWebService.url=%@", url);
-
     NSString *data = [DetailXMLController buildRequestWithId:_requestId];
-    DDLogDebug(@"DetailTableViewController::loadWebService.message data=%@", data);
-
     // Load Detail request
     _waitingResponseType = PFWaitingResponseTypeDetail;
     [wsController loadPostRequestWithData:data code:4];
@@ -355,7 +345,6 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void)rejectAction
 {
-    DDLogDebug(@"Reject Action....");
     // Preguntamos el por qué del rechazo
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Rejection_of_requests", nil) message:NSLocalizedString(@"Indicate_Reason_For_Rejection", nil) preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
@@ -373,10 +362,9 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void)signAction
 {
-    DDLogDebug(@"Sign Action....\nAccept request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
-
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     if ([(Detail *)_dataSource type] == PFRequestTypeSign) {
         [self startSignRequest];
     } else {
@@ -385,15 +373,15 @@ CGFloat const largeTitleCellWidth = 200;
 }
 
 - (void) rejectActionClickContinueButton: (UIAlertController *)alertController {
-    DDLogDebug(@"UnassignedRequestTableViewController::Reject request....Selected rows=%lu", (unsigned long)[_selectedRows count]);
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     if ([alertController.textFields count] != 0) {
         NSArray *textfields = alertController.textFields;
         UITextField *nameTextfield = textfields[0];
         motivoRechazo = nameTextfield.text;
     }
     NSString *data = [RejectXMLController buildRequestWithIds:_selectedRows motivoR: motivoRechazo];
-    DDLogDebug(@"UnassignedRequestTableViewController::rejectRequest input Data=%@", data);
     _waitingResponseType = PFWaitingResponseTypeRejection;
     [wsController loadPostRequestWithData:data code:PFRequestCodeReject];
     [wsController startConnection];
@@ -414,7 +402,6 @@ CGFloat const largeTitleCellWidth = 200;
     _waitingResponseType = PFWaitingResponseTypeApproval;
     NSString *requestData = [ApproveXMLController buildRequestWithRequestArray:@[_dataSource]];
 
-    DDLogDebug(@"DetailTableViewController::startApprovalRequest------\n%@\n------------------------------------------------------------\n", requestData);
     [wsController loadPostRequestWithData:requestData code:PFRequestCodeApprove];
     [wsController startConnection];
 }
@@ -489,7 +476,7 @@ CGFloat const largeTitleCellWidth = 200;
         self.sendersMoreButton.hidden = NO;
         NSString *textButton1 = NSLocalizedString(@"Detail_senders_first_button", nil);
         NSString *textButton2 = NSLocalizedString(@"Detail_senders_second_button", nil);
-        NSInteger *restOfSenders = [senders count] - 2;
+        NSInteger restOfSenders = [senders count] - 2;
         NSString *textButton = [NSString stringWithFormat:@"%@%ld%@",textButton1, (long)restOfSenders, textButton2];
         [self.sendersMoreButton setTitle:textButton forState:UIControlStateNormal];
     } else{
@@ -520,7 +507,9 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void)doParse:(NSData *)data
 {
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
     NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:data];
     id <NSXMLParserDelegate> parser = [self parserForCurrentRequest];
     [nsXmlParser setDelegate:parser];
@@ -579,7 +568,10 @@ CGFloat const largeTitleCellWidth = 200;
         [alertController addAction:actionOk];
         [self presentViewController:alertController animated:YES completion:nil];
     }
-    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
+	
+   dispatch_async(dispatch_get_main_queue(), ^{
+	   [self dismissViewControllerAnimated:YES completion:nil];
+	});
 
 }
 
@@ -591,7 +583,9 @@ CGFloat const largeTitleCellWidth = 200;
     
     [nsXmlParser setDelegate:parser];
     BOOL success = [nsXmlParser parse];
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
     
     if (success) {
         NSArray *rejectsReq = [parser dataSource];
@@ -634,7 +628,9 @@ CGFloat const largeTitleCellWidth = 200;
         [self dismissSelfView];
     }
 
-    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+	   [self dismissViewControllerAnimated:YES completion:nil];
+	});
 
 }
 
@@ -647,7 +643,6 @@ CGFloat const largeTitleCellWidth = 200;
         [self didReceiveError: [NSString stringWithFormat: NSLocalizedString(@"Detail_view_error_messages_from_server", nil), err, errorCode]];
         [_requestSignerController didReceiveParserWithError: [NSString stringWithFormat: NSLocalizedString(@"Detail_view_error_messages_from_server", nil), err, errorCode]];
     } else {
-        DDLogDebug(@"DetailTableViewController:: Parsing Detail XML message with no errors ");
         _dataSource = [parser dataSource];
         [self loadDetailInfo];
         [self.tableView reloadData];
@@ -656,8 +651,9 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void)didReceiveError:(NSString *)errorString
 {
-    [SVProgressHUD dismiss];
-    DDLogDebug(@"UnassignedRequestTableViewController::didReceiveParserWithError: %@", errorString);
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Error", nil) message:errorString preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
     [alertController addAction:cancel];
@@ -668,8 +664,9 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void)didReceiveSignerRequestResult:(NSArray *)requestsSigned
 {
-    DDLogDebug(@"ModalSignerController::didReceiveSignerRequestResult");
-    [SVProgressHUD dismiss];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
 
     BOOL processedOK = YES;
     NSString *msg = kEmptyString;
@@ -702,7 +699,10 @@ CGFloat const largeTitleCellWidth = 200;
 }
 
 - (void)dismissSelfView {
-    [_documentActionSheet dismissViewControllerAnimated:YES completion:nil];
+   dispatch_async(dispatch_get_main_queue(), ^{
+	   [self dismissViewControllerAnimated:YES completion:nil];
+	});
+	
     [(BaseListTVC *)self.navigationController.previousViewController refreshInfo];
     [self.navigationController popViewControllerAnimated:YES];
 }

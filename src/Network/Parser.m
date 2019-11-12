@@ -64,7 +64,6 @@ NSString *subscriptionValidateOkKey = @"ok";
         failure(nil);
         
     } failure:^(NSError *error) {
-        DDLogError(@"Error: %@", error);
         failure(error);
     }];
 }
@@ -79,7 +78,6 @@ NSString *subscriptionValidateOkKey = @"ok";
     XMLParser *parser = [[XMLParser alloc] init];
     
     [parser parseData:data success:^(id parsedData) {
-        DDLogDebug(@"Data: %@", parsedData);
         if (parsedData != nil) {
             NSDictionary *parsedDataDict = (NSDictionary *)parsedData;
             NSDictionary *validationDict = [parsedDataDict objectForKey:logValidateKey];
@@ -102,7 +100,6 @@ NSString *subscriptionValidateOkKey = @"ok";
         failure(nil);
         
     } failure:^(NSError *error) {
-        DDLogError(@"Error: %@", error);
         failure(error);
     }];
 }
@@ -133,7 +130,6 @@ NSString *subscriptionValidateOkKey = @"ok";
         failure(nil);
         
     } failure:^(NSError *error) {
-        DDLogError(@"Error: %@", error);
         failure(error);
     }];
 }
