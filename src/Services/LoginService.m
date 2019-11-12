@@ -34,18 +34,31 @@
 - (void) authID {
 	
 	LoginNetwork *loginNetwork = [LoginNetwork new];
-    
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     [loginNetwork loginProcess:^(NSString *token) {
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismiss];
+		});
         NSString *decodedToken = [self decodeToken:token];
         NSString *signToken = [self signToken:decodedToken];
         NSString *certificate = [self certificateInBase64];
 		[loginNetwork validateLogin:certificate withSignedToken:signToken success:nil failure:nil];
-    } failure:nil];
+	} failure:^(NSError *error){
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismiss];
+		});
+	}
+	 ];
 }
     
 - (void)extracted:(void (^)(NSError *))failure success:(void (^)(void))success {
 	
 	LoginNetwork *loginNetwork = [LoginNetwork new];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
 	
 	[loginNetwork loginProcess:^(NSString *token) {
 		self.serverSupportLogin = YES;
