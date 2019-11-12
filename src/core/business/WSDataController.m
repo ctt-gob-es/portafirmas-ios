@@ -167,9 +167,6 @@ struct {
     if (dataTask.state != NSURLSessionTaskStateRunning) {
         [dataTask resume];
     }
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [SVProgressHUD dismiss];
-    });
 }
 
 @end
