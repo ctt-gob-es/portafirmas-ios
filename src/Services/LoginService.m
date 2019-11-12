@@ -95,7 +95,7 @@
 	}];
 }
 
-- (void) loginWithRemoteCertificates:(void(^)())success failure:(void(^)(NSError *error))failure {
+- (void) loginWithRemoteCertificates:(void(^)(void))success failure:(void(^)(NSError *error))failure {
 	LoginNetwork *loginNetwork = [LoginNetwork new];
 	[loginNetwork loginProcess:^(NSString *token) {
 		NSLog(@"Token = %@", token);
