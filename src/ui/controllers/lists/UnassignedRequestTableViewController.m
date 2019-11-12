@@ -269,12 +269,11 @@
 }
 
 - (void)continueButtonClicked: (UIAlertController *)alertController {
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     if (reject) {
         reject = NO;
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[SVProgressHUD show];
-		});
-
         if ([alertController.textFields count] != 0) {
             NSArray *textfields = alertController.textFields;
             UITextField *nameTextfield = textfields[0];
