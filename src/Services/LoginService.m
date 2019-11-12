@@ -103,12 +103,9 @@
 		success();
 	} failure:^(NSError *error) {
 		[SVProgressHUD dismiss];
-		DDLogError(@"Error starting login process");
-		
 		//Check if is old server
 		if (error != nil && error.code == PFLoginNotSupported) {
 			self.serverSupportLogin = NO;
-			DDLogError(@"Error: %@", error);
 		}
 		failure(error);
 	}];
