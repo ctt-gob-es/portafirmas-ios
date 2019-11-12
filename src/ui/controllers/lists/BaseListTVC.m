@@ -109,7 +109,7 @@
 }
 
 - (void)refreshInfoWithFilters:(NSDictionary *)filters
-{
+{	
     _filtersDict = [filters mutableCopy];
     [self resetLazyLoad];
     [self loadData];
@@ -125,9 +125,6 @@
     RequestListXMLController *parser = [[RequestListXMLController alloc] initXMLParser];
     [nsXmlParser setDelegate:parser];
     BOOL success = [nsXmlParser parse];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [SVProgressHUD dismiss];
-    });
 
     if (success) {
         BOOL finishOK = ![parser finishWithError];
@@ -150,6 +147,9 @@
     } else {
         [self didReceiveError:@"Se ha producido un error de conexión con el servidor"];
     }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
 }
 
 - (void)didReceiveParserWithError:(NSString *)errorString

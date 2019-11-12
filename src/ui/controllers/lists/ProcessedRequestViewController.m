@@ -37,6 +37,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+	[super viewWillDisappear:animated];
     [self.parentViewController setHidesBottomBarWhenPushed:TRUE];
     [self.navigationController setToolbarHidden:YES];
 }

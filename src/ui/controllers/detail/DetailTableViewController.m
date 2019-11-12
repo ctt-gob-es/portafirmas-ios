@@ -97,7 +97,9 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+	[super viewWillDisappear:animated];
     [wsController cancelConnection];
+    [self setBtnDocumentAction:nil];
 }
 
 - (void)viewDidLoad
@@ -109,12 +111,6 @@ CGFloat const largeTitleCellWidth = 200;
     [self loadWebService];
     self.tableView.estimatedRowHeight = defaultCellHeight;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-}
-
-- (void)viewDidUnload
-{
-    [self setBtnDocumentAction:nil];
-    [super viewDidUnload];
 }
 
 - (void)didReceiveMemoryWarning

@@ -269,12 +269,11 @@
 }
 
 - (void)continueButtonClicked: (UIAlertController *)alertController {
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     if (reject) {
         reject = NO;
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[SVProgressHUD show];
-		});
-
         if ([alertController.textFields count] != 0) {
             NSArray *textfields = alertController.textFields;
             UITextField *nameTextfield = textfields[0];
@@ -407,6 +406,9 @@
     }
 
     [self cancelEditing];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[self.tableView reloadData];
+	});
 }
 
 - (void)didReceivedRejectionResponse:(NSData *)responseData
@@ -522,6 +524,7 @@
         [self cancelEditing];
         [self refreshInfo];
     }
+	[[self tableView] reloadData];
 }
 
 - (void)didReceiveRejectResult:(NSArray *)requestsSigned
@@ -545,9 +548,9 @@
         _waitingResponseType = PFWaitingResponseTypeList;
         [super loadData];
         // Peticiones rechazadas corrrectamente
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil)
-                                                                                 message:NSLocalizedString(@"Correctly_rejected_requests", nil)
-                                                                          preferredStyle:UIAlertControllerStyleAlert];
+		UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil)
+																				 message:NSLocalizedString(@"Correctly_rejected_requests", nil)
+																		  preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *actionOk = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
                                                            style:UIAlertActionStyleDefault
                                                          handler:nil];
