@@ -84,7 +84,6 @@
 
 - (void) loginWithCertificate:(void(^)(void))success failure:(void(^)(NSError *error))failure {
     
-    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[SVProgressHUD show];
 	});
