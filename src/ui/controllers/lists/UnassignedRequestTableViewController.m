@@ -329,11 +329,6 @@
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender
 {
-	
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[SVProgressHUD show];
-	});
-	
     return (!([self isEditing]));
 }
 
