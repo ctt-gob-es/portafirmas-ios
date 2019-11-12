@@ -84,7 +84,6 @@
 			failure(error);
 		} else  {
 			NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-			DDLogDebug(@"Request reply: %@", requestReply);
 			Parser *parser = [Parser new];
 			[parser parseAuthWithRemoteCertificates:data success:^(NSString *token) {
 				success(token);
