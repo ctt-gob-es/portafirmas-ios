@@ -96,7 +96,8 @@
 }
 
 - (void) loginWithRemoteCertificates:(void(^)())success failure:(void(^)(NSError *error))failure {
-	[LoginNetwork loginProcess:^(NSString *token) {
+	LoginNetwork *loginNetwork = [LoginNetwork new];
+	[loginNetwork loginProcess:^(NSString *token) {
 		NSLog(@"Token = %@", token);
 		self.urlForRemoteCertificates = token;
 		//TODO: Almacenar la URL y los parametros como se almacena el token en el método anterior
