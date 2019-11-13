@@ -95,7 +95,7 @@
 	}] resume];
 }
 
-- (void) validateLogin:(NSString*)certificate withSignedToken:(NSString*)tokenSigned success: (void(^)())success failure:(void(^)(NSError *error))failure {
+- (void) validateLogin:(NSString*)certificate withSignedToken:(NSString*)tokenSigned success: (void(^)(void))success failure:(void(^)(NSError *error))failure {
     NSString *opParameter = @"op";
     NSString *datParameter = @"dat";
     NSString *baseURL = SERVER_URL;
