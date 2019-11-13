@@ -21,6 +21,10 @@
 @end
 
 @implementation LoginService
+
+NSString *kContentKey = @"content";
+NSString *kUrl = @"url";
+NSString *kSessionId = @"sessionId";
     
 + (LoginService *)instance {
     static LoginService *loginService = nil;
@@ -167,11 +171,11 @@
 }
 
 -(void) setRemoteCertificatesParameters: (NSDictionary *) content {
-	if([content objectForKey:@"url"]){
-		self.urlForRemoteCertificates = [[content objectForKey:@"url"] objectForKey: @"content"];
+	if([content objectForKey:kUrl]){
+		self.urlForRemoteCertificates = [[content objectForKey:kUrl] objectForKey: kContentKey];
 	}
-	if([content objectForKey:@"sessionId"]){
-		self.sessionId = [[content objectForKey:@"sessionId"] objectForKey: @"content"];
+	if([content objectForKey:kSessionId]){
+		self.sessionId = [[content objectForKey:kSessionId] objectForKey: kContentKey];
 	}
 }
 
