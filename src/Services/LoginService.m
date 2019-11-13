@@ -22,9 +22,9 @@
 
 @implementation LoginService
 
-NSString *kContentKey = @"content";
-NSString *kUrl = @"url";
-NSString *kSessionId = @"sessionId";
+static NSString *const kContentKey = @"content";
+static NSString *const kUrl = @"url";
+static NSString *const kSessionId = @"sessionId";
     
 + (LoginService *)instance {
     static LoginService *loginService = nil;

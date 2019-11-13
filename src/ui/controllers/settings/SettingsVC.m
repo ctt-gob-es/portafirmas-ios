@@ -24,6 +24,9 @@ static NSString *const kSettingsVCCellIdentifier = @"SettingsCell";
 static NSString *const kSettingsVCSegueIdentifierServerURLs = @"showServerListVC";
 static NSString *const kSettingsVCSegueIdentifierCertificates = @"showRegisteredCertificates";
 static NSString *const kSettingsVCSegueIdentifierAccess = @"showRequests";
+static NSString *const kError = @"error";
+static NSString *const kOk = @"ok";
+static NSString *const kStringSlash = @"/";
 
 typedef NS_ENUM (NSInteger, SettingsVCSection)
 {
@@ -252,12 +255,13 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 #pragma mark - WebViewDelegate
 
 -(BOOL) webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-	NSLog(@"shouldStartLoadWithRequest:  %@", request);
 	NSString *requestString = [[request URL] absoluteString];
-
-	NSArray *urlFragments= [requestString componentsSeparatedByString: @"/"];
-	
-	NSLog(@"urlFragments: %@", urlFragments[0]);
+	NSArray *urlFragments= [requestString componentsSeparatedByString: kStringSlash];
+	if ([[urlFragments lastObject] rangeOfString:kError].location != NSNotFound) {
+		[[ErrorService instance] showLoginErrorAlertView];
+		[self.webView removeFromSuperview];
+		return NO;
+	}
 	return YES;
 }
 
