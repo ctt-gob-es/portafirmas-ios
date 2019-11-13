@@ -148,10 +148,10 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 #pragma mark - Navigation Methods
 
-- (void) showLoginWebView:(void(^)())success failure:(void(^)(NSError *error))failure {
+- (void) showLoginWebView:(void(^)(void))success failure:(void(^)(NSError *error))failure {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		self.webView = [[UIWebView alloc] initWithFrame: self.view.bounds];
-		[_webView setDelegate:self];
+		[self->_webView setDelegate:self];
 		NSString *url=[[LoginService instance] urlForRemoteCertificates];
 		NSURL *nsurl=[NSURL URLWithString:url];
 		NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
