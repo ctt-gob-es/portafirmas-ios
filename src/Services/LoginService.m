@@ -167,7 +167,9 @@
 }
 
 -(void) setRemoteCertificatesParameters: (NSDictionary *) content {
-	// TO DO store the session an the url
+	if([content objectForKey:@"pepe"]){
+		self.urlForRemoteCertificates = [[content objectForKey:@"url"] objectForKey: @"content"];
+	}
 }
 
 @end
