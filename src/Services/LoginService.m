@@ -167,8 +167,11 @@
 }
 
 -(void) setRemoteCertificatesParameters: (NSDictionary *) content {
-	if([content objectForKey:@"pepe"]){
+	if([content objectForKey:@"url"]){
 		self.urlForRemoteCertificates = [[content objectForKey:@"url"] objectForKey: @"content"];
+	}
+	if([content objectForKey:@"sessionId"]){
+		self.sessionId = [[content objectForKey:@"sessionId"] objectForKey: @"content"];
 	}
 }
 

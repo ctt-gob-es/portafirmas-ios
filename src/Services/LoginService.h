@@ -12,6 +12,7 @@
 
 @property (nonatomic) BOOL serverSupportLogin;
 @property (nonatomic, strong) NSString *urlForRemoteCertificates;
+@property (nonatomic, strong) NSString *sessionId;
 
 + (LoginService *)instance;
 - (void) authID;
