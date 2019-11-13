@@ -55,7 +55,7 @@
     }] resume];
 }
 
-- (void) loginWithRemoteCertificates:(void(^)(NSString *token))success failure:(void(^)(NSError *error))failure {
+- (void) loginWithRemoteCertificates:(void(^)(NSDictionary *content))success failure:(void(^)(NSError *error))failure {
 	
 	NSString *opParameter = @"op";
 	NSString *datParameter = @"dat";
@@ -85,8 +85,10 @@
 		} else  {
 			NSString *requestReply = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
 			Parser *parser = [Parser new];
-			[parser parseAuthWithRemoteCertificates:data success:^(NSString *token) {
-				success(token);
+			[parser parseAuthWithRemoteCertificates:data success:^(NSDictionary *content) {
+				success(content);
+				
+				
 				//Token is the url
 			} failure:^(NSError *error) {
 				failure(error);

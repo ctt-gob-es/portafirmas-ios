@@ -97,10 +97,8 @@
 
 - (void) loginWithRemoteCertificates:(void(^)(void))success failure:(void(^)(NSError *error))failure {
 	LoginNetwork *loginNetwork = [LoginNetwork new];
-	[loginNetwork loginProcess:^(NSString *token) {
-		NSLog(@"Token = %@", token);
-		self.urlForRemoteCertificates = token;
-		//TODO: Almacenar la URL y los parametros como se almacena el token en el método anterior
+	[loginNetwork loginWithRemoteCertificates:^(NSDictionary *content) {
+		[self setRemoteCertificatesParameters: content];
 		success();
 	} failure:^(NSError *error) {
 		[SVProgressHUD dismiss];
@@ -167,4 +165,9 @@
     NSData *certificateData = [CertificateUtils sharedWrapper].publicKeyBits;
     return [Base64Utils base64EncodeData:certificateData];
 }
+
+-(void) setRemoteCertificatesParameters: (NSDictionary *) content {
+	// TO DO store the session an the url
+}
+
 @end

@@ -164,8 +164,9 @@ BOOL NSStringEqualsXMLNullString(NSString *string);
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
 	[self.foundCharacters appendString:string];
 }
+
 - (void)parser:(NSXMLParser *)parser foundCDATA:(NSData *)CDATABlock {
-	
+	[self.foundCDATA appendData:CDATABlock];
 }
 
 #pragma mark Attributes Cleaning
