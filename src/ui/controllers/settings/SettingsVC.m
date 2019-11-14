@@ -251,6 +251,16 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 		[self.webView removeFromSuperview];
 		return NO;
 	}
+	if ([[urlFragments lastObject] rangeOfString:kOk].location != NSNotFound) {
+		[self.webView removeFromSuperview];
+		//op 2 and op 6
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self performSegueWithIdentifier:kSettingsVCSegueIdentifierAccess sender:self];
+		});
+		//no permite porque "No tiene certificado asociado al Portafirmas seleccionado."
+		
+		return NO;
+	}
 	return YES;
 }
 
