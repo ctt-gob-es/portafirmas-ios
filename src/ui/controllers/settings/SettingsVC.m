@@ -151,7 +151,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 #pragma mark - Navigation Methods
 
-- (void) showLoginWebView:(void(^)(void))success failure:(void(^)(NSError *error))failure {
+- (void) showLoginWebView {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		self.webView = [[UIWebView alloc] initWithFrame: self.view.bounds];
 		[self->_webView setDelegate:self];
@@ -168,18 +168,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 	if ([identifier isEqualToString:kSettingsVCSegueIdentifierAccess]) {
 		if ([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyRemoteCertificatesSelection]) {
 			[[LoginService instance] loginWithRemoteCertificates:^{
-				[self showLoginWebView:^{
-					segue = YES;
-					dispatch_async(dispatch_get_main_queue(), ^{
-						[self performSegueWithIdentifier:identifier sender:self];
-					});
-				} failure:^(NSError *error) {
-					segue = NO;
-					dispatch_async(dispatch_get_main_queue(), ^{
-						[[ErrorService instance] showLoginErrorAlertView];
-					});
-				}];
-				NSLog(@"loginWithRemoteCertificates");
+				[self showLoginWebView];
 			} failure:^(NSError *error) {
 				segue = NO;
 				dispatch_async(dispatch_get_main_queue(), ^{
