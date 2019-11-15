@@ -83,6 +83,7 @@ static NSString *const kSessionId = @"sessionId";
 				[SVProgressHUD dismiss];
 			});
 			self.serverSupportLogin = NO;
+			self.remoteCertificateLoginOK = NO;
 			NSLog(@"Error: %@", error);
 			failure(error);
 		}];
@@ -95,6 +96,7 @@ static NSString *const kSessionId = @"sessionId";
 		if (error != nil && error.code == PFLoginNotSupported) {
 			self.serverSupportLogin = NO;
 		}
+		self.remoteCertificateLoginOK = NO;
 		failure(error);
 	}];
 }
@@ -103,6 +105,7 @@ static NSString *const kSessionId = @"sessionId";
 	LoginNetwork *loginNetwork = [LoginNetwork new];
 	[loginNetwork loginWithRemoteCertificates:^(NSDictionary *content) {
 		[self setRemoteCertificatesParameters: content];
+		self.remoteCertificateLoginOK = YES;
 		success();
 	} failure:^(NSError *error) {
 		[SVProgressHUD dismiss];
@@ -110,6 +113,7 @@ static NSString *const kSessionId = @"sessionId";
 		if (error != nil && error.code == PFLoginNotSupported) {
 			self.serverSupportLogin = NO;
 		}
+		self.remoteCertificateLoginOK = NO;
 		failure(error);
 	}];
 }
@@ -135,7 +139,8 @@ static NSString *const kSessionId = @"sessionId";
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];
 		});
-        self.serverSupportLogin = false;
+        self.serverSupportLogin = NO;
+		self.remoteCertificateLoginOK = NO;
         self.currentSignToken = @"";
         [CookieTools removeJSessionIDCookies];
         success();
@@ -143,7 +148,8 @@ static NSString *const kSessionId = @"sessionId";
        dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];
 		});
-        self.serverSupportLogin = false;
+        self.serverSupportLogin = NO;
+		self.remoteCertificateLoginOK = NO;
         self.currentSignToken = @"";
         [CookieTools removeJSessionIDCookies];
         failure(error);

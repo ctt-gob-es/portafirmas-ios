@@ -205,18 +205,18 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 {    
     if ([segue.identifier isEqualToString:kSettingsVCSegueIdentifierAccess]) {
         
-        if (![userDefaultsKeys containsObject:kPFUserDefaultsKeyCurrentCertificate]) {
-                
+        if (![userDefaultsKeys containsObject:kPFUserDefaultsKeyCurrentCertificate] && ![[LoginService instance] remoteCertificateLoginOK]) {
+
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"No tiene certificado asociado al Portafirmas seleccionado."
                                                                                         message:@"Por favor, seleccione uno para continuar."
                                                                                   preferredStyle:UIAlertControllerStyleAlert];
-            
+
             UIAlertAction *actionOk = [UIAlertAction actionWithTitle:@"Aceptar"
                                                                    style:UIAlertActionStyleDefault
                                                                  handler:nil]; //You can use a block here to handle a press on this button
             [alertController addAction:actionOk];
             [self presentViewController:alertController animated:YES completion:nil];
-            
+
         }
         else {
             [self prepareForAccessSegue:segue];
@@ -253,12 +253,9 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 	}
 	if ([[urlFragments lastObject] rangeOfString:kOk].location != NSNotFound) {
 		[self.webView removeFromSuperview];
-		//op 2 and op 6
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[self performSegueWithIdentifier:kSettingsVCSegueIdentifierAccess sender:self];
 		});
-		//no permite porque "No tiene certificado asociado al Portafirmas seleccionado."
-		
 		return NO;
 	}
 	return YES;

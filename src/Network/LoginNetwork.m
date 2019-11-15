@@ -11,6 +11,7 @@
 #import "Parser.h"
 #import "NSString+XMLSafe.h"
 #import "userDNIManager.h"
+#import "LoginService.h"
 
 #define SERVER_URL ((NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyCurrentServer])[kPFUserDefaultsKeyURL]
 
