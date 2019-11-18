@@ -56,19 +56,21 @@ struct {
     NSData *msgData = [data dataUsingEncoding:NSUTF8StringEncoding];
     NSMutableURLRequest *request;
 
+	NSString *params = [NSString stringWithFormat:@"?op=%lu&dat=%@",
+						   (unsigned long)code, [msgData base64EncodedString]];
+	
+	if ([[LoginService instance] sessionId]){
+		params = [NSString stringWithFormat:@"%@%@", params , [NSString stringWithFormat:@"&ssid=%@", [[LoginService instance] sessionId]]];
+	}
+	
     if (!REQUEST_POST) {
-        NSString *params = [NSString stringWithFormat:@"?op=%lu&dat=%@",
-                            (unsigned long)code, [msgData base64EncodedString]];
-
-        NSString *newURL = [wsURLString stringByAppendingString:params];
+		NSString *newURL = [wsURLString stringByAppendingString:params];
 
         request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:newURL]
                                           cachePolicy:NSURLRequestReloadIgnoringCacheData
                                       timeoutInterval:TIMEOUT_FOR_SERVER];
     } else {
-        
-        NSString *post = [NSString stringWithFormat: @"op=%lu&dat=%@",(unsigned long)code, [msgData base64EncodedString]];
-        NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+        NSData *postData = [params dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
         NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
 
         request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:wsURLString]

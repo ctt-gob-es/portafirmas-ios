@@ -26,9 +26,13 @@
 	NSString *dataString = @"<lgnrq />";
     NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
     
-    NSString *params = [NSString stringWithFormat: @"%@=%lu&%@=%@", opParameter,
-                      (unsigned long)operation, datParameter, [data base64EncodedString]];
-    
+	NSString *params = [NSString stringWithFormat: @"%@=%lu&%@=%@&%@=%@", opParameter,
+                      (unsigned long)operation, datParameter, [data base64EncodedString],@"ssid",[[LoginService instance] sessionId]];
+	
+	if ([[LoginService instance] sessionId]){
+		params = [NSString stringWithFormat:@"%@%@", params , [NSString stringWithFormat:@"&ssid=%@", [[LoginService instance] sessionId]]];
+	}
+	
     NSData *postData = [params dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
     
