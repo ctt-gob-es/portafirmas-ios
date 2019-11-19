@@ -63,6 +63,15 @@
     }
 }
 
+- (void) sendSignRequestForFIRe:(NSArray *)requests {
+	NSLog(@"sendSignRequestForFIRe");
+	_dataSource = [[NSMutableArray alloc] init];
+	NSString *data = [PreSignXMLController buildRequestWithoutCertWitRequestList:requests];
+	_wsController.delegate = self;
+	[_wsController loadPostRequestWithData:data code:16];
+	[_wsController startConnection];
+}
+
 - (void)loadPreSignDetailWithCurrentCertificate:(Detail *)detail
 {
     PFRequest *request = [[PFRequest alloc] init];

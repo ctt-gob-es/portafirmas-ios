@@ -40,6 +40,7 @@
 - (void)loadPreSignRequestsWithCurrentCertificate:(NSArray *)requests;
 - (void)loadPreSignDetailWithCurrentCertificate:(Detail *)detail;
 - (void)loadPostSignRequest:(NSArray *)requests;
+- (void) sendSignRequestForFIRe:(NSArray *)requests;
 
 - (void)cancelConnection;
 - (void)didReceiveParserWithError:(NSString *)errorString;

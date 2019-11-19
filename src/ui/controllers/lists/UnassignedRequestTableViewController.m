@@ -140,10 +140,13 @@
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[SVProgressHUD show];
 	});
-
     requestSignerController = [RequestSignerController new];
     [requestSignerController setDelegate:self];
-    [requestSignerController loadPreSignRequestsWithCurrentCertificate:_selectedRequestsSetToSign.allObjects];
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyRemoteCertificatesSelection]) {
+		[requestSignerController sendSignRequestForFIRe:_selectedRequestsSetToSign.allObjects];
+	} else {
+		[requestSignerController loadPreSignRequestsWithCurrentCertificate:_selectedRequestsSetToSign.allObjects];
+	}
 }
 
 - (void)startSendingApproveRequests
