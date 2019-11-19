@@ -53,49 +53,40 @@ struct {
 
 - (void)loadPostRequestWithURL:(NSString *)wsURLString code:(NSInteger)code data:(NSString *)data
 {
-    NSData *msgData = [data dataUsingEncoding:NSUTF8StringEncoding];
-    NSMutableURLRequest *request;
-
-	NSString *params = [NSString stringWithFormat:@"?op=%lu&dat=%@",
-						   (unsigned long)code, [msgData base64EncodedString]];
-	
-	if ([[LoginService instance] sessionId]){
-		params = [NSString stringWithFormat:@"%@%@", params , [NSString stringWithFormat:@"&ssid=%@", [[LoginService instance] sessionId]]];
-	}
-	
-    if (!REQUEST_POST) {
+	NSData *msgData = [data dataUsingEncoding:NSUTF8StringEncoding];
+	NSMutableURLRequest *request;
+	NSString *operationAndData = [NSString stringWithFormat: @"op=%lu&dat=%@",(unsigned long)code, [msgData base64EncodedString]];
+	if (!REQUEST_POST) {
+		NSString *params = [NSString stringWithFormat:@"?%@", operationAndData];
+		params = [self includeSsidIfExists:params];
 		NSString *newURL = [wsURLString stringByAppendingString:params];
-
-        request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:newURL]
-                                          cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                      timeoutInterval:TIMEOUT_FOR_SERVER];
-    } else {
-        NSData *postData = [params dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-        NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
-
-        request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:wsURLString]
-                                          cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                      timeoutInterval:TIMEOUT_FOR_SERVER];
-
-        [request setHTTPMethod:@"POST"];
-        [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
-        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-        [request setHTTPBody:postData];
-        
-        if ([[LoginService instance] serverSupportLogin]) {
-            NSDictionary *cookieDict = [CookieTools JSessionID];
-            
-            if (cookieDict != nil) {
-                [request setAllHTTPHeaderFields:cookieDict];
-                [request setHTTPShouldHandleCookies:YES];
-            }
-        }
-    }
-
-    if (dataTask.state == NSURLSessionTaskStateRunning) {
-        [dataTask cancel];
-        connectionInProgress = nil;
-    }
+		request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:newURL]
+										  cachePolicy:NSURLRequestReloadIgnoringCacheData
+									  timeoutInterval:TIMEOUT_FOR_SERVER];
+	} else {
+		NSString *post = operationAndData;
+		post = [self includeSsidIfExists:post];
+		NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+		NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
+		request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:wsURLString]
+										  cachePolicy:NSURLRequestReloadIgnoringCacheData
+									  timeoutInterval:TIMEOUT_FOR_SERVER];
+		[request setHTTPMethod:@"POST"];
+		[request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+		[request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+		[request setHTTPBody:postData];
+		if ([[LoginService instance] serverSupportLogin]) {
+			NSDictionary *cookieDict = [CookieTools JSessionID];
+			if (cookieDict != nil) {
+				[request setAllHTTPHeaderFields:cookieDict];
+				[request setHTTPShouldHandleCookies:YES];
+			}
+		}
+	}
+	if (dataTask.state == NSURLSessionTaskStateRunning) {
+		[dataTask cancel];
+		connectionInProgress = nil;
+	}
 	NSURLSessionConfiguration * defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
 	defaultConfigObject.requestCachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
 	connectionInProgress = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: [NSOperationQueue mainQueue]];
@@ -169,6 +160,14 @@ struct {
     if (dataTask.state != NSURLSessionTaskStateRunning) {
         [dataTask resume];
     }
+}
+
+- (NSString *) includeSsidIfExists: (NSString *)currentParams {
+	NSString *paramsWithSsid = currentParams;
+	if ([[LoginService instance] sessionId]){
+		paramsWithSsid = [NSString stringWithFormat:@"%@%@", currentParams , [NSString stringWithFormat:@"&ssid=%@", [[LoginService instance] sessionId]]];
+	}
+	return paramsWithSsid;
 }
 
 @end
