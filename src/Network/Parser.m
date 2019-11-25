@@ -84,6 +84,20 @@ NSString *subscriptionValidateOkKey = @"ok";
     }];
 }
 
+- (void) parseFIRMeResponse: (NSData *)data success: (void(^)(NSDictionary *content))success failure:(void(^)(NSError *))failure {
+	XMLParser *parser = [[XMLParser alloc] init];
+	__block NSString *pfUnivErrorDomain = PFUnivErrorDomain;
+	[parser parseData:data success:^(id parsedData) {
+        if (parsedData != nil) {
+            NSDictionary *parsedDataDict = (NSDictionary *)parsedData;
+			success(parsedDataDict);
+        }
+        failure(nil);
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+}
+
 - (void) parseValidateData: (NSData *)data success: (void(^)(BOOL isValid))success failure:(void(^)(NSError *))failure {
     
     XMLParser *parser = [[XMLParser alloc] init];
