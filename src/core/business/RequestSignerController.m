@@ -74,8 +74,7 @@
 		NSDictionary *responseDict = [content objectForKey:@"cfrqt"];
 		NSString *cfrqtValue = [responseDict objectForKey:@"ok"];
 		if ([cfrqtValue isEqualToString:@"true"]) {
-			//TO DO go to the URL
-			
+			[[self delegate] showFIRMeWebView:[[NSURL alloc] initWithString:[responseDict objectForKey:@"content"]]];
 		} else {
 			[[self delegate] didReceiveErrorInFIRMeRequest:@"Se ha producido un error de conexión con el servidor"];
 		}

@@ -21,6 +21,7 @@
 #import "ApproveXMLController.h"
 #import "LoginService.h"
 #import "userDNIManager.h"
+#import <WebKit/WebKit.h>
 
 #define TAB_BAR_HIDDEN_FRAME CGRectMake(-10, -10, 0, 0)
 
@@ -36,6 +37,7 @@
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *filterButtonItem;
+@property (strong, nonatomic) UIWebView *webView;
 
 @end
 
@@ -579,6 +581,18 @@
 	[self cancelEditing];
 	[self refreshInfo];
 	[[self tableView] reloadData];
+}
+
+- (void)showFIRMeWebView:(NSURL *) url {
+	 dispatch_async(dispatch_get_main_queue(), ^{
+		 self.webView = [[UIWebView alloc] initWithFrame: self.view.bounds];
+		 [self->_webView setDelegate:self];
+		 NSString *url=[[LoginService instance] urlForRemoteCertificates];
+		 NSURL *nsurl=[NSURL URLWithString:url];
+		 NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
+		 [self.webView loadRequest: nsrequest];
+		 [self.view addSubview: self.webView];
+	 });
 }
 
 #pragma mark - UIAlertViewDelegate

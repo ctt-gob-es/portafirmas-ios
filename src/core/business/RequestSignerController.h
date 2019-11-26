@@ -18,6 +18,7 @@
 @optional
 - (void)didReceiveError:(NSString *)errorString;
 - (void)didReceiveErrorInFIRMeRequest:(NSString *)errorString;
+- (void)showFIRMeWebView:(NSURL *) url;
 
 @end
 
