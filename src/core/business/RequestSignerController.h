@@ -17,6 +17,7 @@
 
 @optional
 - (void)didReceiveError:(NSString *)errorString;
+- (void)didReceiveErrorInFIRMeRequest:(NSString *)errorString;
 
 @end
 

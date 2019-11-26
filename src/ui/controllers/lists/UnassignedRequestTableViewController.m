@@ -563,6 +563,24 @@
     [self cancelEditing];
 }
 
+-(void)didReceiveErrorInFIRMeRequest:(NSString *)errorString {
+	[self enableUserInteraction: true];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
+	UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil)
+																			 message:errorString
+																	  preferredStyle:UIAlertControllerStyleAlert];
+	UIAlertAction *actionOk = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
+													   style:UIAlertActionStyleDefault
+													 handler:nil];
+	[alertController addAction:actionOk];
+	[self presentViewController:alertController animated:YES completion:nil];
+	[self cancelEditing];
+	[self refreshInfo];
+	[[self tableView] reloadData];
+}
+
 #pragma mark - UIAlertViewDelegate
 
 - (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
