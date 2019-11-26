@@ -11,6 +11,7 @@
 #import "NSString+XMLSafe.h"
 #import "CookieTools.h"
 #import "LoginService.h"
+#import "Parser.h"
 
 #define SERVER_URL ((NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyCurrentServer])[kPFUserDefaultsKeyURL]
 
@@ -96,6 +97,36 @@ struct {
 		self->xmlData = [NSMutableData dataWithData:data];
 		[self doParse: self->xmlData];
 	}];
+}
+
+-(void) postSignRequestWithFIRMe:(NSData *)data code: (NSInteger) code success:(void(^)(NSDictionary *content))success failure:(void(^)(NSError *error))failure {
+		NSString *opParameter = @"op";
+		NSString *datParameter = @"dat";
+		NSString *baseURL = SERVER_URL;
+		NSString *params = [NSString stringWithFormat: @"%@=%lu&%@=%@", opParameter,
+							(unsigned long)code, datParameter, [data base64EncodedString]];
+		NSData *postData = [params dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+		NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
+		NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+		[request setURL:[NSURL URLWithString:baseURL]];
+		[request setHTTPMethod:@"POST"];
+		[request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+		[request setHTTPBody:postData];
+		[request setHTTPShouldHandleCookies:YES];
+		[request setTimeoutInterval:30.0];
+		NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+		[[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+			if (error) {
+				failure(error);
+			} else  {
+				Parser *parser = [Parser new];
+				[parser parseFIRMeResponse:data success:^(NSDictionary *content) {
+					success(content);
+				} failure:^(NSError *error) {
+					failure(error);
+				}];
+			}
+		}] resume];
 }
 
 - (void)loadRequestsWithURL:( NSString *)wsURLString
