@@ -63,7 +63,7 @@
     return mesg;
 }
 
-+ (NSString *)buildRequestWithoutCertWitRequestList:(NSArray *)requests{
++ (NSData *)buildRequestWithoutCertWithRequestList:(NSArray *)requests{
 	NSMutableString *mesg = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rqttri>\n"];
 	NSMutableString *requestsMsg = [[NSMutableString alloc] initWithString:@"<reqs>"];
 	for (int i = 0; i < [requests count]; i++) {
@@ -72,7 +72,8 @@
 	}
     [requestsMsg appendString:@"</reqs></rqttri>\n"];
     [mesg appendString:requestsMsg];
-	return mesg;
+	NSData *mesgData = [mesg dataUsingEncoding:NSUTF8StringEncoding];
+	return mesgData;
 }
 
 - (PreSignXMLController *)initXMLParser
