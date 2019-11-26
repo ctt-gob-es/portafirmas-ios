@@ -18,6 +18,7 @@
 #import "Document.h"
 #import "Param.h"
 #import "Base64Utils.h"
+#import "PFError.h"
 
 @implementation RequestSignerController
 
@@ -65,10 +66,22 @@
 
 - (void) sendSignRequestForFIRe:(NSArray *)requests {
 	NSLog(@"sendSignRequestForFIRe");
+	NSInteger code = 16;
 	_dataSource = [[NSMutableArray alloc] init];
-	NSString *data = [PreSignXMLController buildRequestWithoutCertWitRequestList:requests];
+	NSData *data = [PreSignXMLController buildRequestWithoutCertWithRequestList:requests];
 	_wsController.delegate = self;
-	[_wsController loadPostRequestWithData:data code:16];
+	[_wsController postSignRequestWithFIRMe:data code:code success:^(NSDictionary *content) {
+		NSDictionary *responseDict = [content objectForKey:@"cfrqt"];
+		NSString *cfrqtValue = [responseDict objectForKey:@"ok"];
+		if ([cfrqtValue isEqualToString:@"true"]) {
+			//TO DO go to the URL
+			
+		} else {
+			[[self delegate] didReceiveErrorInFIRMeRequest:@"Se ha producido un error de conexión con el servidor"];
+		}
+	} failure:^(NSError *error) {
+		[[self delegate] didReceiveErrorInFIRMeRequest:@"Se ha producido un error de conexión con el servidor"];
+	}];
 	[_wsController startConnection];
 }
 
