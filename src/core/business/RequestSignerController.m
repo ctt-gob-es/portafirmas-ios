@@ -76,10 +76,10 @@
 		if ([cfrqtValue isEqualToString:@"true"]) {
 			[[self delegate] showFIRMeWebView:[[NSURL alloc] initWithString:[responseDict objectForKey:@"content"]]];
 		} else {
-			[[self delegate] didReceiveErrorInFIRMeRequest:@"Se ha producido un error de conexión con el servidor"];
+			[[self delegate] didReceiveErrorInFIRMeRequest:NSLocalizedString(@"Alert_View_Error_Signing", nil)];
 		}
 	} failure:^(NSError *error) {
-		[[self delegate] didReceiveErrorInFIRMeRequest:@"Se ha producido un error de conexión con el servidor"];
+		[[self delegate] didReceiveErrorInFIRMeRequest:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
 	}];
 	[_wsController startConnection];
 }

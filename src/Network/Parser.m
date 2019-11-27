@@ -91,7 +91,6 @@ NSString *subscriptionValidateOkKey = @"ok";
             NSDictionary *parsedDataDict = (NSDictionary *)parsedData;
 			success(parsedDataDict);
         }
-        failure(nil);
     } failure:^(NSError *error) {
         failure(error);
     }];
