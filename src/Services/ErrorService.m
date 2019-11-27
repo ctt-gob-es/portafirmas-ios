@@ -32,8 +32,7 @@
 }
 
 - (void) showAlertViewWithMessage: (NSString *) message {
-    [self showAlertViewWithTitle:@"" andMessage:message]
-    ;
+    [self showAlertViewWithTitle:@"" andMessage:message];
 }
 
 - (void) showAlertViewWithTitle: (NSString *) title andMessage: (NSString*) message {

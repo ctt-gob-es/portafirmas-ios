@@ -12,6 +12,9 @@
 
 FOUNDATION_EXPORT NSString *const P12EXTENSION;
 FOUNDATION_EXPORT NSString *const PFXEXTENSION;
+FOUNDATION_EXPORT NSString *const kError;
+FOUNDATION_EXPORT NSString *const kOk;
+FOUNDATION_EXPORT NSString *const kStringSlash;
 
 @end
 

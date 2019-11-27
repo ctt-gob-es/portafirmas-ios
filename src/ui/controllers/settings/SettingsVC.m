@@ -24,9 +24,6 @@ static NSString *const kSettingsVCCellIdentifier = @"SettingsCell";
 static NSString *const kSettingsVCSegueIdentifierServerURLs = @"showServerListVC";
 static NSString *const kSettingsVCSegueIdentifierCertificates = @"showRegisteredCertificates";
 static NSString *const kSettingsVCSegueIdentifierAccess = @"showRequests";
-static NSString *const kError = @"error";
-static NSString *const kOk = @"ok";
-static NSString *const kStringSlash = @"/";
 
 typedef NS_ENUM (NSInteger, SettingsVCSection)
 {

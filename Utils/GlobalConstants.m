@@ -12,5 +12,8 @@
 
 NSString *const P12EXTENSION = @"p12";
 NSString *const PFXEXTENSION = @"pfx";
+NSString *const kError = @"error";
+NSString *const kOk = @"ok";
+NSString *const kStringSlash = @"/";
 
 @end
