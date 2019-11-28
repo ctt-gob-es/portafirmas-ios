@@ -38,5 +38,6 @@
 // Builds Web Service Request message
 + (NSString *)buildRequestWithCert:(NSString *)cert witRequestList:(NSArray *)requestArr;
 + (NSData *)buildRequestWithoutCertWithRequestList:(NSArray *)requests;
++ (NSData *)buildDataForSigningPrechargedRequestInFIRe;
 
 @end

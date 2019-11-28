@@ -76,6 +76,12 @@
 	return mesgData;
 }
 
++ (NSData *)buildDataForSigningPrechargedRequestInFIRe {
+	NSMutableString *mesg = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<cfrq />\n"];
+	NSData *mesgData = [mesg dataUsingEncoding:NSUTF8StringEncoding];
+	return mesgData;
+}
+
 - (PreSignXMLController *)initXMLParser
 {
     self = [super init];
