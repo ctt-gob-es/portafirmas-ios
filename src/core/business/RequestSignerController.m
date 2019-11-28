@@ -65,7 +65,6 @@
 }
 
 - (void) sendSignRequestForFIRe:(NSArray *)requests {
-	NSLog(@"sendSignRequestForFIRe");
 	NSInteger code = 16;
 	_dataSource = [[NSMutableArray alloc] init];
 	NSData *data = [PreSignXMLController buildRequestWithoutCertWithRequestList:requests];
@@ -77,6 +76,27 @@
 			[[self delegate] showFIRMeWebView:[[NSURL alloc] initWithString:[responseDict objectForKey:@"content"]]];
 		} else {
 			[[self delegate] didReceiveErrorInFIRMeRequest:NSLocalizedString(@"Alert_View_Error_Signing", nil)];
+		}
+	} failure:^(NSError *error) {
+		[[self delegate] didReceiveErrorInFIRMeRequest:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
+	}];
+	[_wsController startConnection];
+}
+
+-(void) signPrechargedRequestInFIRe {
+	NSLog(@"signPrechargedRequestInFIRe");
+	NSInteger code = 17;
+	NSData *data = [PreSignXMLController buildDataForSigningPrechargedRequestInFIRe];
+	_wsController.delegate = self;
+	[_wsController postSignRequestWithFIRMe2:data code:code success:^(NSDictionary *content) {
+		NSDictionary *responseDict = [content objectForKey:@"cfsig"];
+		if ([[responseDict objectForKey:@"ok"] isEqualToString:@"true"]) {
+			[[self delegate] didReceiveCorrectSignResponseFromFIRe];
+		} else if ([[responseDict objectForKey:@"ok"] isEqualToString:@"false"]) {
+			NSLog(@"error cfsigvalue:FALSE");
+			//TO DO seleccionar el error y mostrar comportamiento correspondiente
+		} else {
+			NSLog(@"error cfsigvalue NO EXISTE");
 		}
 	} failure:^(NSError *error) {
 		[[self delegate] didReceiveErrorInFIRMeRequest:NSLocalizedString(@"FIRe_error_in_server_message", nil)];

@@ -36,6 +36,7 @@
     PFWaitingResponseType _waitingResponseType;
     BOOL _didSetUpTabBar, reject;
     NSString *motivoRechazo;
+    RequestSignerController *_requestSignerController;
 }
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *filterButtonItem;
@@ -164,6 +165,13 @@
     [self.wsDataController startConnection];
 }
 
+-(void) signPrechargedRequestForFIRe {
+	if (!_requestSignerController) {
+		_requestSignerController = [RequestSignerController new];
+	}
+    [_requestSignerController setDelegate:self];
+	[_requestSignerController signPrechargedRequestInFIRe];
+}
 
 #pragma mark - User Interface
 
@@ -595,6 +603,20 @@
 	 });
 }
 
+-(void) didReceiveCorrectSignResponseFromFIRe {
+	[self refreshInfo];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD dismissWithCompletion:^{
+			[self enableUserInteraction: true];
+			[super loadData];
+			UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil) message:NSLocalizedString(@"Alert_View_Everything_Signed_Correctly", nil) preferredStyle:UIAlertControllerStyleAlert];
+			UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+			[alertController addAction:cancel];
+			[self presentViewController:alertController animated:YES completion:nil];
+		}];
+	});
+}
+
 #pragma mark - UIAlertViewDelegate
 
 - (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
@@ -618,13 +640,16 @@
 		 });
 		return NO;
 	}
-//	if ([[urlFragments lastObject] rangeOfString:kOk].location != NSNotFound) {
-//		[self.webView removeFromSuperview];
-//		dispatch_async(dispatch_get_main_queue(), ^{
-//			[self performSegueWithIdentifier:kSettingsVCSegueIdentifierAccess sender:self];
-//		});
-//		return NO;
-//	}
+	if ([[urlFragments lastObject] rangeOfString:kOk].location != NSNotFound) {
+		[self.webView removeFromSuperview];
+		[self refreshInfo];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismissWithCompletion:^{
+				[self signPrechargedRequestForFIRe];
+			}];
+		 });
+		return NO;
+	}
 	return YES;
 }
 

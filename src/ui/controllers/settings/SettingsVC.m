@@ -14,6 +14,7 @@
 #import "PFError.h"
 #import "ErrorService.h"
 #import <WebKit/WebKit.h>
+#import "GlobalConstants.h"
 
 static const NSInteger kSettingsVCNumberOfSections = 3;
 static const NSInteger kSettingsVCNumberOfRowsPerSection = 1;
