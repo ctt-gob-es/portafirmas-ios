@@ -604,15 +604,15 @@
 }
 
 -(void) didReceiveCorrectSignResponseFromFIRe {
-	[self refreshInfo];
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[SVProgressHUD dismissWithCompletion:^{
 			[self enableUserInteraction: true];
-			[super loadData];
 			UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil) message:NSLocalizedString(@"Alert_View_Everything_Signed_Correctly", nil) preferredStyle:UIAlertControllerStyleAlert];
 			UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
 			[alertController addAction:cancel];
-			[self presentViewController:alertController animated:YES completion:nil];
+			[self presentViewController:alertController animated:YES completion:^{
+				[self refreshInfo];
+			}];
 		}];
 	});
 }
