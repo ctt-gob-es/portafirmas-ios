@@ -617,6 +617,11 @@
 	});
 }
 
+
+-(void)didReceiveErrorSignResponseFromFIRe: (NSInteger) errorNumber {
+	NSLog(@"errorNumber: %ld", (long)errorNumber);
+}
+
 #pragma mark - UIAlertViewDelegate
 
 - (UIModalPresentationStyle)adaptivePresentationStyleForPresentationController:(UIPresentationController *)controller {
@@ -642,7 +647,6 @@
 	}
 	if ([[urlFragments lastObject] rangeOfString:kOk].location != NSNotFound) {
 		[self.webView removeFromSuperview];
-		[self refreshInfo];
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismissWithCompletion:^{
 				[self signPrechargedRequestForFIRe];
