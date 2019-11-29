@@ -45,6 +45,7 @@
 - (void)loadPreSignDetailWithCurrentCertificate:(Detail *)detail;
 - (void)loadPostSignRequest:(NSArray *)requests;
 - (void)sendSignRequestForFIRe:(NSArray *)requests;
+- (void) sendSignRequestForFIReFromDetailView:(Detail *)request;
 - (void)signPrechargedRequestInFIRe;
 
 - (void)cancelConnection;

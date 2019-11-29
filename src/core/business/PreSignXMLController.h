@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "XMLController.h"
+#import "Detail.h"
 
 @class PFRequest;
 @class Document;
@@ -38,6 +39,7 @@
 // Builds Web Service Request message
 + (NSString *)buildRequestWithCert:(NSString *)cert witRequestList:(NSArray *)requestArr;
 + (NSData *)buildRequestWithoutCertWithRequestList:(NSArray *)requests;
++ (NSData *)buildRequestWithoutCertWithRequest:(Detail *)request;
 + (NSData *)buildDataForSigningPrechargedRequestInFIRe;
 
 @end

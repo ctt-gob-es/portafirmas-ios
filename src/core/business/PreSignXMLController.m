@@ -76,6 +76,16 @@
 	return mesgData;
 }
 
++ (NSData *)buildRequestWithoutCertWithRequest:(Detail *)request {
+	NSMutableString *mesg = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rqttri>\n"];
+	NSMutableString *requestsMsg = [[NSMutableString alloc] initWithString:@"<reqs>"];
+	[requestsMsg appendFormat:@"<req id=\"%@\"/>", [request detailid]];
+    [requestsMsg appendString:@"</reqs></rqttri>\n"];
+    [mesg appendString:requestsMsg];
+	NSData *mesgData = [mesg dataUsingEncoding:NSUTF8StringEncoding];
+	return mesgData;
+}
+
 + (NSData *)buildDataForSigningPrechargedRequestInFIRe {
 	NSMutableString *mesg = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<cfrq />\n"];
 	NSData *mesgData = [mesg dataUsingEncoding:NSUTF8StringEncoding];

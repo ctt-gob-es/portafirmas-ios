@@ -83,6 +83,24 @@
 	[_wsController startConnection];
 }
 
+- (void) sendSignRequestForFIReFromDetailView:(Detail *)request {
+	NSInteger code = 16;
+	NSData *data = [PreSignXMLController buildRequestWithoutCertWithRequest:request];
+	_wsController.delegate = self;
+	[_wsController postSignRequestWithFIRMe:data code:code success:^(NSDictionary *content) {
+		NSDictionary *responseDict = [content objectForKey:@"cfrqt"];
+		NSString *cfrqtValue = [responseDict objectForKey:@"ok"];
+		if ([cfrqtValue isEqualToString:@"true"]) {
+			[[self delegate] showFIRMeWebView:[[NSURL alloc] initWithString:[responseDict objectForKey:@"content"]]];
+		} else {
+			[[self delegate] showErrorInFIReAndRefresh:NSLocalizedString(@"Alert_View_Error_Signing", nil)];
+		}
+	} failure:^(NSError *error) {
+		[[self delegate] showErrorInFIReAndRefresh:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
+	}];
+	[_wsController startConnection];
+}
+
 -(void) signPrechargedRequestInFIRe {
 	NSLog(@"signPrechargedRequestInFIRe");
 	NSInteger code = 17;
