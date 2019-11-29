@@ -20,6 +20,7 @@
 - (void)didReceiveErrorInFIRMeRequest:(NSString *)errorString;
 - (void)showFIRMeWebView:(NSURL *) url;
 - (void)didReceiveCorrectSignResponseFromFIRe;
+- (void)didReceiveErrorSignResponseFromFIRe:(NSInteger)error;
 
 @end
 
