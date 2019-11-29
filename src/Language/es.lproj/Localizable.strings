@@ -112,3 +112,8 @@
 //FIRe
 "FIRe_error_message" = "Ocurrió un error durante la preparación de los dataos para la firma.";
 "FIRe_error_in_server_message" = "Se ha producido un error de conexión con el servidor.";
+"FIRe_error_in_communication" = "Error en la comunicación con FIRe.";
+"FIRe_error_in_sign_operation" = "Error en la operación de firma.";
+"FIRe_error_in_some_sign_operation" = "Error en la firma de alguno de los documentos firmados.";
+"FIRe_undetermined_error" = "Error indeterminado con FIRe.";
+"FIRe_problem_with_response" = "Problema con la respuesta de FIRe.";

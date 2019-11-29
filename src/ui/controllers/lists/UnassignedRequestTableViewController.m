@@ -631,25 +631,25 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 		ErrorNumber error = errorNumber;
 		switch (error) {
 			case error1:
-				[self showErrorInFIRMeRequest:@"Error en la comunicación con FIRe."];
+				[self showErrorInFIRMeRequest:NSLocalizedString(@"FIRe_error_in_communication", nil)];
 				[self cancelEditing];
 				break;
 			case error2:
-				[self showErrorInFIRMeRequest:@"Error en la operación de firma."];
+				[self showErrorInFIRMeRequest:NSLocalizedString(@"FIRe_error_in_sign_operation", nil)];
 				[self cancelEditing];
 				break;
 			case error3:
-				[self showErrorInFIRMeRequest:@"Error en la firma de alguno de los documentos firmados."];
+				[self showErrorInFIRMeRequest:NSLocalizedString(@"FIRe_error_in_some_sign_operation", nil)];
 				[self cancelEditing];
 				[self refreshInfo];
 				break;
 			default:
-				[self showErrorInFIRMeRequest:@"Error indeterminado con FIRe."];
+				[self showErrorInFIRMeRequest:NSLocalizedString(@"FIRe_undetermined_error", nil)];
 				[self cancelEditing];
 				break;
 		}
 	} else {
-		[self showErrorInFIRMeRequest:@"Problema con la respuesta de FIRe."];
+		[self showErrorInFIRMeRequest:NSLocalizedString(@"FIRe_problem_with_response", nil)];
 		[self cancelEditing];
 	}
 }
