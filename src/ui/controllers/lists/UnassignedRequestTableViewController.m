@@ -27,6 +27,12 @@
 
 #define TAB_BAR_HIDDEN_FRAME CGRectMake(-10, -10, 0, 0)
 
+typedef NS_ENUM(NSUInteger, ErrorNumber) {
+    error1 = 1,
+    error2,
+    error3
+} ;
+
 @interface UnassignedRequestTableViewController() <UIPopoverPresentationControllerDelegate>
 {
     CGRect _tabBarFrame;
@@ -575,24 +581,6 @@
     [self cancelEditing];
 }
 
--(void)didReceiveErrorInFIRMeRequest:(NSString *)errorString {
-	[self enableUserInteraction: true];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [SVProgressHUD dismiss];
-    });
-	UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil)
-																			 message:errorString
-																	  preferredStyle:UIAlertControllerStyleAlert];
-	UIAlertAction *actionOk = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
-													   style:UIAlertActionStyleDefault
-													 handler:nil];
-	[alertController addAction:actionOk];
-	[self presentViewController:alertController animated:YES completion:nil];
-	[self cancelEditing];
-	[self refreshInfo];
-	[[self tableView] reloadData];
-}
-
 - (void)showFIRMeWebView:(NSURL *) url {
 	 dispatch_async(dispatch_get_main_queue(), ^{
 		 self.webView = [[UIWebView alloc] initWithFrame: self.view.bounds];
@@ -617,9 +605,53 @@
 	});
 }
 
+-(void)showErrorInFIRMeRequest:(NSString *)errorString {
+	[self enableUserInteraction: true];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
+	UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil)
+																			 message:errorString
+																	  preferredStyle:UIAlertControllerStyleAlert];
+	UIAlertAction *actionOk = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
+													   style:UIAlertActionStyleDefault
+													 handler:nil];
+	[alertController addAction:actionOk];
+	[self presentViewController:alertController animated:YES completion:nil];
+}
+
+-(void)showErrorInFIReAndRefresh:(NSString *)errorString {
+	[self showErrorInFIRMeRequest:errorString];
+	[self cancelEditing];
+	[self refreshInfo];
+}
 
 -(void)didReceiveErrorSignResponseFromFIRe: (NSInteger) errorNumber {
-	NSLog(@"errorNumber: %ld", (long)errorNumber);
+	if(errorNumber){
+		ErrorNumber error = errorNumber;
+		switch (error) {
+			case error1:
+				[self showErrorInFIRMeRequest:@"Error en la comunicación con FIRe."];
+				[self cancelEditing];
+				break;
+			case error2:
+				[self showErrorInFIRMeRequest:@"Error en la operación de firma."];
+				[self cancelEditing];
+				break;
+			case error3:
+				[self showErrorInFIRMeRequest:@"Error en la firma de alguno de los documentos firmados."];
+				[self cancelEditing];
+				[self refreshInfo];
+				break;
+			default:
+				[self showErrorInFIRMeRequest:@"Error indeterminado con FIRe."];
+				[self cancelEditing];
+				break;
+		}
+	} else {
+		[self showErrorInFIRMeRequest:@"Problema con la respuesta de FIRe."];
+		[self cancelEditing];
+	}
 }
 
 #pragma mark - UIAlertViewDelegate

@@ -17,7 +17,7 @@
 
 @optional
 - (void)didReceiveError:(NSString *)errorString;
-- (void)didReceiveErrorInFIRMeRequest:(NSString *)errorString;
+- (void)showErrorInFIReAndRefresh:(NSString *)errorString;
 - (void)showFIRMeWebView:(NSURL *) url;
 - (void)didReceiveCorrectSignResponseFromFIRe;
 - (void)didReceiveErrorSignResponseFromFIRe:(NSInteger)error;
