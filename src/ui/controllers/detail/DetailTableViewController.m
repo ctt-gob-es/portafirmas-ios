@@ -721,4 +721,26 @@ CGFloat const largeTitleCellWidth = 200;
 	 });
 }
 
+#pragma mark - WebViewDelegate
+
+-(BOOL) webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+	NSString *requestString = [[request URL] absoluteString];
+	NSArray *urlFragments= [requestString componentsSeparatedByString: kStringSlash];
+	if ([[urlFragments lastObject] rangeOfString:kError].location != NSNotFound) {
+		[self.webView removeFromSuperview];
+			}];
+		 });
+		return NO;
+	}
+	if ([[urlFragments lastObject] rangeOfString:kOk].location != NSNotFound) {
+		[self.webView removeFromSuperview];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismissWithCompletion:^{
+			}];
+		 });
+		return NO;
+	}
+	return YES;
+}
+
 @end
