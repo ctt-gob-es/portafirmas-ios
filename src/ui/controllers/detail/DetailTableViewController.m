@@ -18,6 +18,8 @@
 #import "RejectXMLController.h"
 #import "ApproveXMLController.h"
 #import "DetailCell.h"
+#import "GlobalConstants.h"
+
 
 static NSString *const kDetailCell = @"detailCell";
 static NSString *const kDetailCellNibName = @"DetailCell";
