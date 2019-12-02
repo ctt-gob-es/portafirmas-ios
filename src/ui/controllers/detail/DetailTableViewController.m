@@ -68,6 +68,8 @@ CGFloat const largeTitleCellWidth = 200;
     BOOL isSuccessReject;
 }
 
+@property (strong, nonatomic) UIWebView *webView;
+
 @end
 
 @implementation DetailTableViewController
