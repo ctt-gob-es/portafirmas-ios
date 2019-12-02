@@ -583,7 +583,11 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 
 - (void)showFIRMeWebView:(NSURL *) url {
 	 dispatch_async(dispatch_get_main_queue(), ^{
-		 self.webView = [[UIWebView alloc] initWithFrame: self.view.bounds];
+		 [SVProgressHUD dismiss];
+		 [self enableUserInteraction: true];
+		 [self.navigationController setNavigationBarHidden:YES animated:YES];
+		 [self.navigationController setToolbarHidden:YES animated:NO];
+		 self.webView = [[UIWebView alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
 		 [self->_webView setDelegate:self];
 		 NSURLRequest *nsrequest=[NSURLRequest requestWithURL:url];
 		 [self.webView loadRequest: nsrequest];
@@ -594,7 +598,6 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 -(void) didReceiveCorrectSignResponseFromFIRe {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[SVProgressHUD dismissWithCompletion:^{
-			[self enableUserInteraction: true];
 			UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil) message:NSLocalizedString(@"Alert_View_Everything_Signed_Correctly", nil) preferredStyle:UIAlertControllerStyleAlert];
 			UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
 			[alertController addAction:cancel];
@@ -606,7 +609,6 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 }
 
 -(void)showErrorInFIRMeRequest:(NSString *)errorString {
-	[self enableUserInteraction: true];
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
     });
