@@ -707,4 +707,16 @@ CGFloat const largeTitleCellWidth = 200;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)showFIRMeWebView:(NSURL *) url {
+	 dispatch_async(dispatch_get_main_queue(), ^{
+		 [SVProgressHUD dismiss];
+		 [self.navigationController setNavigationBarHidden:YES animated:YES];
+		 self.webView = [[UIWebView alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+		 [self->_webView setDelegate:self];
+		 NSURLRequest *nsrequest=[NSURLRequest requestWithURL:url];
+		 [self.webView loadRequest: nsrequest];
+		 [self.view addSubview: self.webView];
+	 });
+}
+
 @end
