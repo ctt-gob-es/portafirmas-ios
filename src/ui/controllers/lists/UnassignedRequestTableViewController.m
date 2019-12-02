@@ -673,6 +673,8 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 		[self refreshInfo];
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismissWithCompletion:^{
+				[self.navigationController setNavigationBarHidden:NO animated:YES];
+				[self.navigationController setToolbarHidden:NO animated:NO];
 				[self enableUserInteraction: true];
 				[[ErrorService instance] showAlertViewWithTitle:NSLocalizedString(@"Alert_View_Error", nil) andMessage: NSLocalizedString(@"FIRe_error_message", nil)];
 			}];
@@ -684,6 +686,8 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismissWithCompletion:^{
 				[self signPrechargedRequestForFIRe];
+				[self.navigationController setNavigationBarHidden:NO animated:YES];
+				[self.navigationController setToolbarHidden:NO animated:NO];
 			}];
 		 });
 		return NO;
