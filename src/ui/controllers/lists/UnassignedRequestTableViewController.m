@@ -608,7 +608,7 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 	});
 }
 
-- (void)showErrorInFIRMeRequest:(NSString *)errorString {
+- (void)showErrorInFIReRequest:(NSString *)errorString {
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
     });
@@ -623,7 +623,7 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 }
 
 - (void)showErrorInFIReAndRefresh:(NSString *)errorString {
-	[self showErrorInFIRMeRequest:errorString];
+	[self showErrorInFIReRequest:errorString];
 	[self cancelEditing];
 	[self refreshInfo];
 }
@@ -633,25 +633,25 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 		ErrorNumber error = errorNumber;
 		switch (error) {
 			case error1:
-				[self showErrorInFIRMeRequest:NSLocalizedString(@"FIRe_error_in_communication", nil)];
+				[self showErrorInFIReRequest:NSLocalizedString(@"FIRe_error_in_communication", nil)];
 				[self cancelEditing];
 				break;
 			case error2:
-				[self showErrorInFIRMeRequest:NSLocalizedString(@"FIRe_error_in_sign_operation", nil)];
+				[self showErrorInFIReRequest:NSLocalizedString(@"FIRe_error_in_sign_operation", nil)];
 				[self cancelEditing];
 				break;
 			case error3:
-				[self showErrorInFIRMeRequest:NSLocalizedString(@"FIRe_error_in_some_sign_operation", nil)];
+				[self showErrorInFIReRequest:NSLocalizedString(@"FIRe_error_in_some_sign_operation", nil)];
 				[self cancelEditing];
 				[self refreshInfo];
 				break;
 			default:
-				[self showErrorInFIRMeRequest:NSLocalizedString(@"FIRe_undetermined_error", nil)];
+				[self showErrorInFIReRequest:NSLocalizedString(@"FIRe_undetermined_error", nil)];
 				[self cancelEditing];
 				break;
 		}
 	} else {
-		[self showErrorInFIRMeRequest:NSLocalizedString(@"FIRe_problem_with_response", nil)];
+		[self showErrorInFIReRequest:NSLocalizedString(@"FIRe_problem_with_response", nil)];
 		[self cancelEditing];
 	}
 }
