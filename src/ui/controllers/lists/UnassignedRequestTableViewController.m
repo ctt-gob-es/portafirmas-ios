@@ -171,7 +171,7 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
     [self.wsDataController startConnection];
 }
 
--(void) signPrechargedRequestForFIRe {
+- (void) signPrechargedRequestForFIRe {
 	if (!_requestSignerController) {
 		_requestSignerController = [RequestSignerController new];
 	}
@@ -608,7 +608,7 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 	});
 }
 
--(void)showErrorInFIRMeRequest:(NSString *)errorString {
+- (void)showErrorInFIRMeRequest:(NSString *)errorString {
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
     });
@@ -622,13 +622,13 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 	[self presentViewController:alertController animated:YES completion:nil];
 }
 
--(void)showErrorInFIReAndRefresh:(NSString *)errorString {
+- (void)showErrorInFIReAndRefresh:(NSString *)errorString {
 	[self showErrorInFIRMeRequest:errorString];
 	[self cancelEditing];
 	[self refreshInfo];
 }
 
--(void)didReceiveErrorSignResponseFromFIRe: (NSInteger) errorNumber {
+- (void)didReceiveErrorSignResponseFromFIRe: (NSInteger) errorNumber {
 	if(errorNumber){
 		ErrorNumber error = errorNumber;
 		switch (error) {
