@@ -84,6 +84,11 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
     [super viewDidLoad];
     [self.navigationItem setRightBarButtonItems:@[_filterButtonItem, self.navigationItem.rightBarButtonItem] animated:NO];
     [self assignMainTabToAppDelegate];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(didReceiveErrorSignResponseFromFIReFromDetail:)
+		name:@"didReceiveErrorSignResponseFromFIRe"
+	  object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated

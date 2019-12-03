@@ -664,6 +664,14 @@ CGFloat const largeTitleCellWidth = 200;
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
+- (void) didReceiveErrorSignResponseFromFIRe: (NSInteger) errorNumber {
+	[self.navigationController popToRootViewControllerAnimated:YES];
+	[self.navigationController setNavigationBarHidden:NO animated:YES];
+	[self.navigationController setToolbarHidden:NO animated:NO];
+	NSString *stringErrorNumber = [NSString stringWithFormat: @"%ld", (long)errorNumber];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"didReceiveErrorSignResponseFromFIRe" object:self userInfo:@{@"errorNumber" : stringErrorNumber}];
+}
+
 #pragma mark - RequestSignerEvent
 
 - (void)didReceiveSignerRequestResult:(NSArray *)requestsSigned
