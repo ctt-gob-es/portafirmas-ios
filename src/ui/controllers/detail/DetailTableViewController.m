@@ -19,7 +19,7 @@
 #import "ApproveXMLController.h"
 #import "DetailCell.h"
 #import "GlobalConstants.h"
-
+#import "ErrorService.h"
 
 static NSString *const kDetailCell = @"detailCell";
 static NSString *const kDetailCellNibName = @"DetailCell";
@@ -730,14 +730,23 @@ CGFloat const largeTitleCellWidth = 200;
 	NSArray *urlFragments= [requestString componentsSeparatedByString: kStringSlash];
 	if ([[urlFragments lastObject] rangeOfString:kError].location != NSNotFound) {
 		[self.webView removeFromSuperview];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismissWithCompletion:^{
+				[self.navigationController setNavigationBarHidden:NO animated:YES];
+				[self.navigationController popToRootViewControllerAnimated:YES];
+				[[ErrorService instance] showAlertViewWithTitle:NSLocalizedString(@"Alert_View_Error", nil) andMessage: NSLocalizedString(@"FIRe_error_message", nil)];
 			}];
 		 });
 		return NO;
 	}
 	if ([[urlFragments lastObject] rangeOfString:kOk].location != NSNotFound) {
 		[self.webView removeFromSuperview];
+		
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismissWithCompletion:^{
+//				[self signPrechargedRequestForFIRe];
+//				[self.navigationController setNavigationBarHidden:NO animated:YES];
+//				[self.navigationController setToolbarHidden:NO animated:NO];
 			}];
 		 });
 		return NO;
