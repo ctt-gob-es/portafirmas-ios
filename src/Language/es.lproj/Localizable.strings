@@ -16,7 +16,7 @@
 "Alert_View_Process_Approve" = "Se van a procesar %lu peticiones de visto bueno.";
 "Alert_View_Process_Sign" = "Se van a procesar %lu peticiones de firma.";
 "Alert_View_Request_Processed_Correctly" = "Peticiones procesadas correctamente";
-"Alert_View_Request_Signed_Correctly" = "Peticiones firmadas correctamente";
+"Alert_View_Request_Signed_Correctly" = "Peticiones firmadas correctamente.";
 "Alert_View_Error" = "Error";
 "Alert_View_certificated_removed_correctly" = "Se ha eliminado el certificado correctamente";
 "Alert_View_An_Error_Has_Ocurred" = "Se ha producido un error";
@@ -30,7 +30,7 @@
 "Alert_View_Accept" = "Aceptar";
 
 //Alert view messages after signing
-"Alert_View_Everything_Signed_Correctly" = "Peticiones firmadas correctamente";
+"Alert_View_Everything_Signed_Correctly" = "Peticiones firmadas correctamente.";
 "Alert_View_One_Signature_Failed_In_Single_Request" = "Ocurrió un error al firmar la peticion seleccionada";
 "Alert_View_One_Signature_Failed_In_Multilple_Request" = "Ocurrió un error al firmar una de las peticiones seleccionadas";
 "Alert_View_Multiple_Signatures_Failed_In_Multiple_Request" = "Ocurrió un error al firmar algunas de las peticiones seleccionadas";
