@@ -615,10 +615,17 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 
 - (void)didReceiveResponseFromFIReFromDetail:(NSNotification *)notification {
 	NSString *stringErrorNumber = [notification.userInfo valueForKey:@"errorNumber"];
-	NSInteger errorNumber = [stringErrorNumber intValue];
-	if (errorNumber){
-		[self showErrorSignResponseFromFIRe: errorNumber];
-	} else {
+	NSString *correctSign = [notification.userInfo valueForKey:@"correctSign"];
+	if ([stringErrorNumber length] != 0) {
+		NSInteger errorNumber = [stringErrorNumber intValue];
+		if (errorNumber){
+			[self showErrorSignResponseFromFIRe: errorNumber];
+		} else {
+			[self showErrorInFIReRequest:NSLocalizedString(@"FIRe_problem_with_response", nil)];
+		}
+	} else if ([correctSign length] != 0) {
+		[self didReceiveCorrectSignResponseFromFIRe];
+	} else{
 		[self showErrorInFIReRequest:NSLocalizedString(@"FIRe_problem_with_response", nil)];
 	}
 }
