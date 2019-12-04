@@ -489,7 +489,7 @@ CGFloat const largeTitleCellWidth = 200;
         NSInteger restOfSenders = [senders count] - 2;
         NSString *textButton = [NSString stringWithFormat:@"%@%ld%@",textButton1, (long)restOfSenders, textButton2];
         [self.sendersMoreButton setTitle:textButton forState:UIControlStateNormal];
-    } else{
+    } else {
         self.sendersMoreButton.hidden = YES;
     }
 }
