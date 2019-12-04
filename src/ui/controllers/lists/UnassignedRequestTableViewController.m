@@ -625,7 +625,7 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 		}
 	} else if ([correctSign length] != 0) {
 		[self didReceiveCorrectSignResponseFromFIRe];
-	} else{
+	} else {
 		[self showErrorInFIReRequest:NSLocalizedString(@"FIRe_problem_with_response", nil)];
 	}
 }

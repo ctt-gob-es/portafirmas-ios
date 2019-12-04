@@ -29,6 +29,10 @@
 "Alert_View_Server_Going_To_Be_Selected" = "Se va a seleccionar el servidor %@ con url %@.";
 "Alert_View_Accept" = "Aceptar";
 
+//Global errors
+"Global_Error_Server_Connection" = "Se ha producido un error de conexión con el servidor.";
+"Global_error_server_error_and_error_code" = "Se ha producido un error en el servidor:%@(%@)";
+
 //Alert view messages after signing
 "Alert_View_Everything_Signed_Correctly" = "Peticiones firmadas correctamente.";
 "Alert_View_One_Signature_Failed_In_Single_Request" = "Ocurrió un error al firmar la peticion seleccionada";
@@ -74,7 +78,7 @@
 "Cell_Title_Message" = "Mensaje: ";
 "Detail_senders_first_button" = "y ";
 "Detail_senders_second_button" = " más";
-"Detail_view_error_server_connection" = "Se ha producido un error de conexión con el servidor";
+"Detail_view_error_server_connection" = "Se ha producido un error de conexión con el servidor.";
 "Detail_view_error_processing_request" = "Error al procesar la petición con codigo:%@";
 "Detail_view_error_processing_multiple_request" = "Error al procesar las peticiones con códigos:%@";
 "Detail_view_error_server_connection_501" = "Se ha producido un error de conexión con el servidor (501)";
