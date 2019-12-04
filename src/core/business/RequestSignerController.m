@@ -111,7 +111,6 @@
 		if ([[responseDict objectForKey:@"ok"] isEqualToString:@"true"]) {
 			[[self delegate] didReceiveCorrectSignResponseFromFIRe];
 		} else if ([[responseDict objectForKey:@"ok"] isEqualToString:@"false"]) {
-			NSLog(@"error cfsigvalue:FALSE");
 			[[self delegate] didReceiveErrorSignResponseFromFIRe:[responseDict objectForKey:@"er"]];
 		} else {
 			[[self delegate] didReceiveErrorInPrechargedFIReRequest:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
