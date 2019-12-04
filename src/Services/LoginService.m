@@ -119,13 +119,10 @@ static NSString *const kSessionId = @"sessionId";
 }
 
 - (void) loginWithCertificate:(void(^)(void))success failure:(void(^)(NSError *error))failure {
-
-    
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[SVProgressHUD show];
 	});
 	[self extracted:failure success:success];
-    
 }
 
 - (void) logout:(void(^)(void))success failure:(void(^)(NSError *error))failure {
