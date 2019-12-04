@@ -673,12 +673,11 @@ CGFloat const largeTitleCellWidth = 200;
 	}];
 }
 
-- (void) didReceiveErrorSignResponseFromFIRe: (NSInteger) errorNumber {
+- (void) didReceiveErrorSignResponseFromFIRe: (NSString *) error {
 	[self.navigationController popToRootViewControllerAnimated:YES];
 	[self.navigationController setNavigationBarHidden:NO animated:YES];
 	[self.navigationController setToolbarHidden:NO animated:NO];
-	NSString *stringErrorNumber = [NSString stringWithFormat: @"%ld", (long)errorNumber];
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"didReceiveResponseFromFIRe" object:self userInfo:@{@"errorNumber" : stringErrorNumber}];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"didReceiveResponseFromFIRe" object:self userInfo:@{@"errorNumber" : error}];
 }
 
 - (void)didReceiveErrorInPrechargedFIReRequest:(NSString *)error{
