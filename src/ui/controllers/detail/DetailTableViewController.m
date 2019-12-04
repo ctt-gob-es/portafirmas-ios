@@ -675,14 +675,10 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void) didReceiveErrorSignResponseFromFIRe: (NSString *) error {
 	[self.navigationController popToRootViewControllerAnimated:YES];
-	[self.navigationController setNavigationBarHidden:NO animated:YES];
-	[self.navigationController setToolbarHidden:NO animated:NO];
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"didReceiveResponseFromFIRe" object:self userInfo:@{@"errorNumber" : error}];
 }
 
 - (void)didReceiveErrorInPrechargedFIReRequest:(NSString *)error{
-	[self.navigationController setNavigationBarHidden:NO animated:YES];
-	[self.navigationController setToolbarHidden:NO animated:NO];
 	[self didReceiveError:error];
 }
 
@@ -770,9 +766,9 @@ CGFloat const largeTitleCellWidth = 200;
 		[self.webView removeFromSuperview];
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismissWithCompletion:^{
+				[self.navigationController setNavigationBarHidden:NO animated:YES];
+				[self.navigationController setToolbarHidden:NO animated:NO];
 				[self signPrechargedRequestForFIRe];
-//				[self.navigationController setNavigationBarHidden:NO animated:YES];
-//				[self.navigationController setToolbarHidden:NO animated:NO];
 			}];
 		 });
 		return NO;
