@@ -667,15 +667,7 @@ CGFloat const largeTitleCellWidth = 200;
     }
 }
 
-- (void)didReceiveError:(NSString *)errorString
-{
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [SVProgressHUD dismiss];
-//    });
-//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Error", nil) message:errorString preferredStyle:UIAlertControllerStyleAlert];
-//    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
-//    [alertController addAction:cancel];
-//    [self presentViewController:alertController animated:YES completion:nil];
+- (void)didReceiveError:(NSString *)errorString {
 	[SVProgressHUD dismissWithCompletion:^{
 		[[ErrorService instance] showAlertViewWithTitle:NSLocalizedString(@"Alert_View_Error", nil) andMessage: errorString];
 	}];
