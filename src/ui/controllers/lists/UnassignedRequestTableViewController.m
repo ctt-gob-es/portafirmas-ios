@@ -614,12 +614,12 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 }
 
 - (void)didReceiveResponseFromFIReFromDetail:(NSNotification *)notification {
-	NSString *stringErrorNumber = [notification.userInfo valueForKey:@"error"];
+	NSString *stringErrorNumber = [notification.userInfo valueForKey:@"errorNumber"];
 	NSInteger errorNumber = [stringErrorNumber intValue];
 	if (errorNumber){
 		[self showErrorSignResponseFromFIRe: errorNumber];
-	} else if ([stringErrorNumber length] != 0) {
-		[self showErrorInFIReAndRefresh: stringErrorNumber];
+	} else {
+		[self showErrorInFIReRequest:NSLocalizedString(@"FIRe_problem_with_response", nil)];
 	}
 }
 
