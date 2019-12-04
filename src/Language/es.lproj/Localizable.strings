@@ -116,4 +116,4 @@
 "FIRe_error_in_sign_operation" = "Error en la operación de firma.";
 "FIRe_error_in_some_sign_operation" = "Error en la firma de alguno de los documentos firmados.";
 "FIRe_undetermined_error" = "Error indeterminado con FIRe.";
-"FIRe_problem_with_response" = "Problema con la respuesta de FIRe.";
+"FIRe_problem_with_response" = "Problema con la respuesta del servidor de FIRe.";
