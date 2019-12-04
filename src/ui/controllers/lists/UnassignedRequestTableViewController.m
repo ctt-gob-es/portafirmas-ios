@@ -86,8 +86,8 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
     [self assignMainTabToAppDelegate];
 	
 	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(didReceiveErrorSignResponseFromFIReFromDetail:)
-		name:@"didReceiveErrorSignResponseFromFIRe"
+											 selector:@selector(didReceiveResponseFromFIReFromDetail:)
+		name:@"didReceiveResponseFromFIRe"
 	  object:nil];
 }
 
@@ -613,7 +613,7 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 	});
 }
 
-- (void)didReceiveErrorSignResponseFromFIReFromDetail:(NSNotification *)notification {
+- (void)didReceiveResponseFromFIReFromDetail:(NSNotification *)notification {
 	NSString *stringErrorNumber = [notification.userInfo valueForKey:@"error"];
 	NSInteger errorNumber = [stringErrorNumber intValue];
 	if (errorNumber){

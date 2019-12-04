@@ -55,6 +55,12 @@ typedef enum cellTypes
 	Message
 } CellTypes;
 
+typedef NS_ENUM(NSUInteger, ErrorNumber) {
+    error1 = 1,
+    error2,
+    error3
+} ;
+
 NSInteger const numberOfRows = 12;
 CGFloat const defaultCellHeight = 44;
 CGFloat const noCellHeight = 0;
@@ -507,6 +513,14 @@ CGFloat const largeTitleCellWidth = 200;
     return YES;
 }
 
+- (void) signPrechargedRequestForFIRe {
+	if (!_requestSignerController) {
+		_requestSignerController = [RequestSignerController new];
+	}
+    [_requestSignerController setDelegate:self];
+	[_requestSignerController signPrechargedRequestInFIRe];
+}
+
 #pragma mark - WSDataController delegate
 
 - (void)doParse:(NSData *)data
@@ -655,13 +669,16 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void)didReceiveError:(NSString *)errorString
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [SVProgressHUD dismiss];
-    });
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Error", nil) message:errorString preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
-    [alertController addAction:cancel];
-    [self presentViewController:alertController animated:YES completion:nil];
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [SVProgressHUD dismiss];
+//    });
+//    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Error", nil) message:errorString preferredStyle:UIAlertControllerStyleAlert];
+//    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+//    [alertController addAction:cancel];
+//    [self presentViewController:alertController animated:YES completion:nil];
+	[SVProgressHUD dismissWithCompletion:^{
+		[[ErrorService instance] showAlertViewWithTitle:NSLocalizedString(@"Alert_View_Error", nil) andMessage: errorString];
+	}];
 }
 
 - (void) didReceiveErrorSignResponseFromFIRe: (NSInteger) errorNumber {
@@ -669,7 +686,12 @@ CGFloat const largeTitleCellWidth = 200;
 	[self.navigationController setNavigationBarHidden:NO animated:YES];
 	[self.navigationController setToolbarHidden:NO animated:NO];
 	NSString *stringErrorNumber = [NSString stringWithFormat: @"%ld", (long)errorNumber];
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"didReceiveErrorSignResponseFromFIRe" object:self userInfo:@{@"errorNumber" : stringErrorNumber}];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"didReceiveResponseFromFIRe" object:self userInfo:@{@"errorNumber" : stringErrorNumber}];
+}
+
+
+- (void) showErrorInFIReAndRefresh: (NSString *) error {
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"didReceiveResponseFromFIRe" object:self userInfo:@{@"error" : error}];
 }
 
 #pragma mark - RequestSignerEvent
@@ -749,10 +771,9 @@ CGFloat const largeTitleCellWidth = 200;
 	}
 	if ([[urlFragments lastObject] rangeOfString:kOk].location != NSNotFound) {
 		[self.webView removeFromSuperview];
-		
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismissWithCompletion:^{
-//				[self signPrechargedRequestForFIRe];
+				[self signPrechargedRequestForFIRe];
 //				[self.navigationController setNavigationBarHidden:NO animated:YES];
 //				[self.navigationController setToolbarHidden:NO animated:NO];
 			}];
