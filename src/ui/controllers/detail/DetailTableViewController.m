@@ -687,7 +687,6 @@ CGFloat const largeTitleCellWidth = 200;
 	[self didReceiveError:error];
 }
 
-
 - (void) showErrorInFIReAndRefresh: (NSString *) error {
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"didReceiveResponseFromFIRe" object:self userInfo:@{@"error" : error}];
 }
