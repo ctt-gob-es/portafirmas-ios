@@ -667,6 +667,11 @@ CGFloat const largeTitleCellWidth = 200;
     }
 }
 
+- (void) didReceiveCorrectSignResponseFromFIRe {
+	[self.navigationController popToRootViewControllerAnimated:YES];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"didReceiveResponseFromFIRe" object:self userInfo:@{@"correctSign" : NSLocalizedString(@"Alert_View_Everything_Signed_Correctly", nil) }];
+}
+
 - (void)didReceiveError:(NSString *)errorString {
 	[SVProgressHUD dismissWithCompletion:^{
 		[[ErrorService instance] showAlertViewWithTitle:NSLocalizedString(@"Alert_View_Error", nil) andMessage: errorString];
