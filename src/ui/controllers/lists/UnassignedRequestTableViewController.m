@@ -645,9 +645,7 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 				[self cancelEditing];
 				break;
 			case error3:
-				[self showErrorInFIReRequest:NSLocalizedString(@"FIRe_error_in_some_sign_operation", nil)];
-				[self cancelEditing];
-				[self refreshInfo];
+				[self showErrorInFIReAndRefresh:NSLocalizedString(@"FIRe_error_in_some_sign_operation", nil)];
 				break;
 			default:
 				[self showErrorInFIReRequest:NSLocalizedString(@"FIRe_undetermined_error", nil)];
@@ -661,9 +659,8 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 }
 
 - (void)showErrorInFIReAndRefresh:(NSString *)errorString {
-	[self showErrorInFIReRequest:errorString];
-	[self cancelEditing];
 	[self refreshInfo];
+	[[ErrorService instance] showAlertViewWithTitle:NSLocalizedString(@"Alert_View_Error", nil) andMessage: errorString];
 }
 
 - (void)showErrorInFIReAndDeselectRows:(NSString *)errorString {
