@@ -628,6 +628,10 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 	[self showErrorSignResponseFromFIRe: errorNumber];
 }
 
+- (void)didReceiveErrorInPrechargedFIReRequest:(NSString *)error{
+	[self showErrorInFIReAndDeselectRows: error];
+}
+
 - (void)showErrorSignResponseFromFIRe: (NSInteger) errorNumber {
 	if(errorNumber){
 		ErrorNumber error = errorNumber;

@@ -93,10 +93,10 @@
 		if ([cfrqtValue isEqualToString:@"true"]) {
 			[[self delegate] showFIRMeWebView:[[NSURL alloc] initWithString:[responseDict objectForKey:@"content"]]];
 		} else {
-			[[self delegate] showErrorInFIReAndRefresh:NSLocalizedString(@"Alert_View_Error_Signing", nil)];
+			[[self delegate] didReceiveError:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
 		}
 	} failure:^(NSError *error) {
-		[[self delegate] showErrorInFIReAndRefresh:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
+		[[self delegate] didReceiveError:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
 	}];
 	[_wsController startConnection];
 }
@@ -114,10 +114,10 @@
 			NSLog(@"error cfsigvalue:FALSE");
 			[[self delegate] didReceiveErrorSignResponseFromFIRe:[responseDict objectForKey:@"er"]];
 		} else {
-			[[self delegate] showErrorInFIReAndRefresh:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
+			[[self delegate] didReceiveErrorInPrechargedFIReRequest:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
 		}
 	} failure:^(NSError *error) {
-		[[self delegate] showErrorInFIReAndRefresh:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
+		[[self delegate] didReceiveErrorInPrechargedFIReRequest:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
 	}];
 	[_wsController startConnection];
 }

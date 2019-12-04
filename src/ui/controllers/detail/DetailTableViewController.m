@@ -681,6 +681,12 @@ CGFloat const largeTitleCellWidth = 200;
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"didReceiveResponseFromFIRe" object:self userInfo:@{@"errorNumber" : stringErrorNumber}];
 }
 
+- (void)didReceiveErrorInPrechargedFIReRequest:(NSString *)error{
+	[self.navigationController setNavigationBarHidden:NO animated:YES];
+	[self.navigationController setToolbarHidden:NO animated:NO];
+	[self didReceiveError:error];
+}
+
 
 - (void) showErrorInFIReAndRefresh: (NSString *) error {
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"didReceiveResponseFromFIRe" object:self userInfo:@{@"error" : error}];

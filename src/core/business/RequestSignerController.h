@@ -22,6 +22,7 @@
 - (void)showFIRMeWebView:(NSURL *) url;
 - (void)didReceiveCorrectSignResponseFromFIRe;
 - (void)didReceiveErrorSignResponseFromFIRe:(NSString *)error;
+- (void)didReceiveErrorInPrechargedFIReRequest:(NSString *)error;
 
 @end
 
