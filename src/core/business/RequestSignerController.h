@@ -18,9 +18,10 @@
 @optional
 - (void)didReceiveError:(NSString *)errorString;
 - (void)showErrorInFIReAndRefresh:(NSString *)errorString;
+- (void)showErrorInFIReAndDeselectRows:(NSString *)errorString;
 - (void)showFIRMeWebView:(NSURL *) url;
 - (void)didReceiveCorrectSignResponseFromFIRe;
-- (void)didReceiveErrorSignResponseFromFIRe:(NSInteger)error;
+- (void)didReceiveErrorSignResponseFromFIRe:(NSString *)error;
 
 @end
 

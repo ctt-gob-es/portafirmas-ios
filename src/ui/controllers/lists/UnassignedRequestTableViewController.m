@@ -613,27 +613,22 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 	});
 }
 
-- (void)showErrorInFIReRequest:(NSString *)errorString {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [SVProgressHUD dismiss];
-    });
-	UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil)
-																			 message:errorString
-																	  preferredStyle:UIAlertControllerStyleAlert];
-	UIAlertAction *actionOk = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
-													   style:UIAlertActionStyleDefault
-													 handler:nil];
-	[alertController addAction:actionOk];
-	[self presentViewController:alertController animated:YES completion:nil];
+- (void)didReceiveErrorSignResponseFromFIReFromDetail:(NSNotification *)notification {
+	NSString *stringErrorNumber = [notification.userInfo valueForKey:@"error"];
+	NSInteger errorNumber = [stringErrorNumber intValue];
+	if (errorNumber){
+		[self showErrorSignResponseFromFIRe: errorNumber];
+	} else if ([stringErrorNumber length] != 0) {
+		[self showErrorInFIReAndRefresh: stringErrorNumber];
+	}
 }
 
-- (void)showErrorInFIReAndRefresh:(NSString *)errorString {
-	[self showErrorInFIReRequest:errorString];
-	[self cancelEditing];
-	[self refreshInfo];
+- (void)didReceiveErrorSignResponseFromFIRe: (NSString *) error {
+	NSInteger errorNumber = [error intValue];
+	[self showErrorSignResponseFromFIRe: errorNumber];
 }
 
-- (void)didReceiveErrorSignResponseFromFIRe: (NSInteger) errorNumber {
+- (void)showErrorSignResponseFromFIRe: (NSInteger) errorNumber {
 	if(errorNumber){
 		ErrorNumber error = errorNumber;
 		switch (error) {
@@ -659,6 +654,24 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 		[self showErrorInFIReRequest:NSLocalizedString(@"FIRe_problem_with_response", nil)];
 		[self cancelEditing];
 	}
+}
+
+- (void)showErrorInFIReAndRefresh:(NSString *)errorString {
+	[self showErrorInFIReRequest:errorString];
+	[self cancelEditing];
+	[self refreshInfo];
+}
+
+- (void)showErrorInFIReAndDeselectRows:(NSString *)errorString {
+	[self showErrorInFIReRequest:errorString];
+	[self setEditing:NO animated:NO];
+	[self enableUserInteraction:YES];
+}
+
+- (void)showErrorInFIReRequest:(NSString *)errorString {
+	[SVProgressHUD dismissWithCompletion:^{
+		[[ErrorService instance] showAlertViewWithTitle:NSLocalizedString(@"Alert_View_Error", nil) andMessage: errorString];
+	}];
 }
 
 #pragma mark - UIAlertViewDelegate

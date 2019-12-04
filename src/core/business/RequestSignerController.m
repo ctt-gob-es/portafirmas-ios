@@ -75,10 +75,10 @@
 		if ([cfrqtValue isEqualToString:@"true"]) {
 			[[self delegate] showFIRMeWebView:[[NSURL alloc] initWithString:[responseDict objectForKey:@"content"]]];
 		} else {
-			[[self delegate] showErrorInFIReAndRefresh:NSLocalizedString(@"Alert_View_Error_Signing", nil)];
+			[[self delegate] showErrorInFIReAndDeselectRows:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
 		}
 	} failure:^(NSError *error) {
-		[[self delegate] showErrorInFIReAndRefresh:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
+		[[self delegate] showErrorInFIReAndDeselectRows:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
 	}];
 	[_wsController startConnection];
 }
@@ -112,10 +112,9 @@
 			[[self delegate] didReceiveCorrectSignResponseFromFIRe];
 		} else if ([[responseDict objectForKey:@"ok"] isEqualToString:@"false"]) {
 			NSLog(@"error cfsigvalue:FALSE");
-			NSInteger errorNumber =[[responseDict objectForKey:@"er"] intValue];
-			[[self delegate] didReceiveErrorSignResponseFromFIRe:errorNumber];
+			[[self delegate] didReceiveErrorSignResponseFromFIRe:[responseDict objectForKey:@"er"]];
 		} else {
-			NSLog(@"error cfsigvalue NO EXISTE");
+			[[self delegate] showErrorInFIReAndRefresh:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
 		}
 	} failure:^(NSError *error) {
 		[[self delegate] showErrorInFIReAndRefresh:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
