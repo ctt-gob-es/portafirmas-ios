@@ -107,12 +107,13 @@
     NSString *datParameter = @"dat";
     NSString *baseURL = SERVER_URL;
     NSInteger operation = 11;
-   NSString *dataStringOne = @"<rqtvl><cert>";
-    NSString *dataStringTwo = @"</cert><pkcs1>";
-    NSString *dataStringThree = @"</pkcs1></rqtvl>";
-    
-    NSString *dataString = [NSString stringWithFormat:@"%@%@%@%@%@",dataStringOne, certificate, dataStringTwo, tokenSigned, dataStringThree];
-    
+	NSMutableString *dataString = [[NSMutableString alloc] initWithString:@"<rqtvl>"];
+	if (certificate){
+		NSString *certificateString = [NSString stringWithFormat:@"<cert>%@</cert>", certificate];
+		[dataString appendString:certificateString];
+	}
+	NSString *tokenSignedString = [NSString stringWithFormat:@"<pkcs1>%@</pkcs1></rqtvl>", tokenSigned];
+	[dataString appendString:tokenSignedString];
     NSString *xmlSafeString = [dataString xmlSafeString];
     NSData *data = [xmlSafeString  dataUsingEncoding:NSUTF8StringEncoding];
     NSString *params = [NSString stringWithFormat: @"%@=%lu&%@=%@", opParameter,
