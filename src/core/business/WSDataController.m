@@ -99,7 +99,7 @@ struct {
 	}];
 }
 
--(void) postSignRequestWithFIRMe:(NSData *)data code: (NSInteger) code success:(void(^)(NSDictionary *content))success failure:(void(^)(NSError *error))failure {
+-(void) postSignRequestWithFIRe:(NSData *)data code: (NSInteger) code success:(void(^)(NSDictionary *content))success failure:(void(^)(NSError *error))failure {
 		NSString *opParameter = @"op";
 		NSString *datParameter = @"dat";
 		NSString *baseURL = SERVER_URL;

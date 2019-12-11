@@ -26,7 +26,7 @@
 
 - (void)loadPostRequestWithData:(NSString *)data code:(NSInteger)code;
 - (void)loadPostRequestWithURL:(NSString *)wsURLString code:(NSInteger)code data:(NSString *)data;
--(void) postSignRequestWithFIRMe:(NSData *)data code: (NSInteger) code success:(void(^)(NSDictionary *content))success failure:(void(^)(NSError *error))failure;
+-(void) postSignRequestWithFIRe:(NSData *)data code: (NSInteger) code success:(void(^)(NSDictionary *content))success failure:(void(^)(NSError *error))failure;
 - (void)loadRequestsWithURL:( NSString *)wsURLString;
 - (void)cancelConnection;
 - (void)startConnection;

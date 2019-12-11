@@ -70,7 +70,7 @@
 	_dataSource = [[NSMutableArray alloc] init];
 	NSData *data = [PreSignXMLController buildRequestWithoutCertWithRequestList:requests];
 	_wsController.delegate = self;
-	[_wsController postSignRequestWithFIRMe:data code:code success:^(NSDictionary *content) {
+	[_wsController postSignRequestWithFIRe:data code:code success:^(NSDictionary *content) {
 		NSDictionary *responseDict = [content objectForKey:kCfrqtTag];
 		NSString *cfrqtValue = [responseDict objectForKey:kOk];
 		if ([cfrqtValue isEqualToString:kTrue]) {
@@ -88,7 +88,7 @@
 	NSInteger code = 16;
 	NSData *data = [PreSignXMLController buildRequestWithoutCertWithRequest:request];
 	_wsController.delegate = self;
-	[_wsController postSignRequestWithFIRMe:data code:code success:^(NSDictionary *content) {
+	[_wsController postSignRequestWithFIRe:data code:code success:^(NSDictionary *content) {
 		NSDictionary *responseDict = [content objectForKey:kCfrqtTag];
 		NSString *cfrqtValue = [responseDict objectForKey:kOk];
 		if ([cfrqtValue isEqualToString:kTrue]) {
@@ -106,7 +106,7 @@
 	NSInteger code = 17;
 	NSData *data = [PreSignXMLController buildDataForSigningPrechargedRequestInFIRe];
 	_wsController.delegate = self;
-	[_wsController postSignRequestWithFIRMe2:data code:code success:^(NSDictionary *content) {
+	[_wsController postSignRequestWithFIRe:data code:code success:^(NSDictionary *content) {
 		NSDictionary *responseDict = [content objectForKey:kCfsigTag];
 		if ([[responseDict objectForKey:kOk] isEqualToString:kTrue]) {
 			[[self delegate] didReceiveCorrectSignResponseFromFIRe];
