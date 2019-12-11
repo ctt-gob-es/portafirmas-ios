@@ -693,8 +693,8 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 
 -(BOOL) webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
 	NSString *requestString = [[request URL] absoluteString];
-	NSArray *urlFragments= [requestString componentsSeparatedByString: kStringSlash];
-	if ([[urlFragments lastObject] rangeOfString:kError].location != NSNotFound) {
+	NSArray *urlFragments= [requestString componentsSeparatedByString: kQuestionMarkString];
+	if ([[urlFragments firstObject] rangeOfString:kError].location != NSNotFound) {
 		[self.webView removeFromSuperview];
 		[self refreshInfo];
 		dispatch_async(dispatch_get_main_queue(), ^{
@@ -707,7 +707,7 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 		 });
 		return NO;
 	}
-	if ([[urlFragments lastObject] rangeOfString:kOk].location != NSNotFound) {
+	if ([[urlFragments firstObject] rangeOfString:kOk].location != NSNotFound) {
 		[self.webView removeFromSuperview];
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismissWithCompletion:^{
