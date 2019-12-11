@@ -22,7 +22,9 @@
     NSMutableString *mesg = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rqttri>\n"];
     
     if (![[LoginService instance] serverSupportLogin]) {
-        [mesg appendFormat:@"<cert>%@</cert>\n", cert];
+		if (cert) {
+			[mesg appendFormat:@"<cert>%@</cert>\n", cert];
+		}
     }
 
     // Filters list message
