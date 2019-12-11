@@ -114,7 +114,7 @@
 "settings_cell_remote_certificates_message" = "Usar certificados remotos";
 
 //FIRe
-"FIRe_error_message" = "Ocurrió un error durante la preparación de los dataos para la firma.";
+"FIRe_error_message" = "Ocurrió un error durante la preparación de los datos para la firma.";
 "FIRe_error_in_server_message" = "Se ha producido un error de conexión con el servidor.";
 "FIRe_error_in_communication" = "Error en la comunicación con FIRe.";
 "FIRe_error_in_sign_operation" = "Error en la operación de firma.";
