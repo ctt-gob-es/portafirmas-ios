@@ -34,11 +34,12 @@
         CertificateUtils *cert = [CertificateUtils sharedWrapper];
         NSString *certificado = [NSData base64EncodeData:[cert publicKeyBits]];
         // Formats lists message
-        NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
-        
-        [certlabel appendFormat:@"%@\n", certificado];
-        [certlabel appendString:@"</cert>\n"];
-        [mesg appendString:certlabel];
+		if (certificado) {
+			NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
+			[certlabel appendFormat:@"%@\n", certificado];
+			[certlabel appendString:@"</cert>\n"];
+			[mesg appendString:certlabel];
+		}
     }
 
     NSMutableString *fmts = [[NSMutableString alloc] initWithString:@"<fmts>\n"];
