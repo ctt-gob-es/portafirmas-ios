@@ -754,8 +754,10 @@ CGFloat const largeTitleCellWidth = 200;
 
 -(BOOL) webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
 	NSString *requestString = [[request URL] absoluteString];
-	NSArray *urlFragments= [requestString componentsSeparatedByString: kQuestionMarkString];
-	if ([[urlFragments firstObject] rangeOfString:kError].location != NSNotFound) {
+	NSArray *urlComponents = [requestString componentsSeparatedByString: kQuestionMarkString];
+	NSString *urlString = [urlComponents firstObject];
+	NSArray *urlFragments= [urlString componentsSeparatedByString: kStringSlash];
+	if ([[urlFragments lastObject] rangeOfString:kError].location != NSNotFound) {
 		[self.webView removeFromSuperview];
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismissWithCompletion:^{
@@ -766,7 +768,7 @@ CGFloat const largeTitleCellWidth = 200;
 		 });
 		return NO;
 	}
-	if ([[urlFragments firstObject] rangeOfString:kOk].location != NSNotFound) {
+	if ([[urlFragments lastObject] rangeOfString:kOk].location != NSNotFound) {
 		[self.webView removeFromSuperview];
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismissWithCompletion:^{
