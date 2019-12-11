@@ -28,11 +28,12 @@
         NSString *certificado = [NSData base64EncodeData:[cert publicKeyBits]];
         
         // Formats lists message
-        NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
-        
-        [certlabel appendFormat:@"%@\n", certificado];
-        [certlabel appendString:@"</cert>\n"];
-        [mesg appendString:certlabel];
+		if (certificado) {
+			NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
+			[certlabel appendFormat:@"%@\n", certificado];
+			[certlabel appendString:@"</cert>\n"];
+			[mesg appendString:certlabel];
+		}
     }
 
     // Nuevo elemento añadido en B64 donde se almacenará el motivo del rechazo
