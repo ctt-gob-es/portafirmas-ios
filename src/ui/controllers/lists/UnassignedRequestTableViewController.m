@@ -156,10 +156,12 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[SVProgressHUD show];
 	});
-    requestSignerController = [RequestSignerController new];
-    [requestSignerController setDelegate:self];
+	if (!_requestSignerController) {
+		_requestSignerController = [RequestSignerController new];
+	}
+    [_requestSignerController setDelegate:self];
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyRemoteCertificatesSelection]) {
-		[requestSignerController sendSignRequestForFIRe:_selectedRequestsSetToSign.allObjects];
+		[_requestSignerController sendSignRequestForFIRe:_selectedRequestsSetToSign.allObjects];
 	} else {
 		[requestSignerController loadPreSignRequestsWithCurrentCertificate:_selectedRequestsSetToSign.allObjects];
 	}

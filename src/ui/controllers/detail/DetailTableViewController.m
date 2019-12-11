@@ -401,10 +401,16 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void)startSignRequest
 {
-    _waitingResponseType = PFWaitingResponseTypeSign;
-    _requestSignerController = [[RequestSignerController alloc] init];
-    _requestSignerController.delegate = self;
-    [_requestSignerController loadPreSignDetailWithCurrentCertificate:_dataSource];
+	_waitingResponseType = PFWaitingResponseTypeSign;
+	if (!_requestSignerController) {
+		_requestSignerController = [RequestSignerController new];
+	}
+	[_requestSignerController setDelegate:self];
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyRemoteCertificatesSelection]) {
+		[_requestSignerController sendSignRequestForFIReFromDetailView:_dataSource];
+	} else {
+		[_requestSignerController loadPreSignDetailWithCurrentCertificate:_dataSource];
+	}
 }
 
 - (void)startApprovalRequest
