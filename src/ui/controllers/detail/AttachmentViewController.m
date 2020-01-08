@@ -50,7 +50,7 @@
     NSMutableArray *sections = [NSMutableArray new];
     
     Source *docSource = [Source new];
-    docSource.title = NSLocalizedString(@"Document_Section", nil);
+    docSource.title = @"Document_Section".localized;
     docSource.type = PFAttachmentTypeDocument;
     docSource.subType = PFAttachmentVCSectionDocuments;
     docSource.elements = _documentsDataSource.count;
@@ -60,13 +60,13 @@
     if (_detail && _detail.type == PFRequestTypeSign && _requestStatus == PFRequestStatusSigned) {
         
         Source *docSignSource = [Source new];
-        docSignSource.title =  NSLocalizedString(@"Sign_Section", nil);
+        docSignSource.title =  @"Sign_Section".localized;
         docSignSource.type = PFAttachmentTypeDocument;
         docSignSource.subType = PFAttachmentVCSectionSignatures;
         docSignSource.elements = _documentsDataSource.count;
         
         Source *docReportSignSource = [Source new];
-        docReportSignSource.title = NSLocalizedString(@"Sign_Report_Section", nil);
+        docReportSignSource.title = @"Sign_Report_Section".localized;
         docReportSignSource.type = PFAttachmentTypeDocument;
         docReportSignSource.subType = PFAttachmentVCSectionSignaturesReport;
         docReportSignSource.elements = _documentsDataSource.count;
@@ -77,7 +77,7 @@
     
     if (_attachedDocsDataSource != nil && _attachedDocsDataSource.count > 0) {
         Source *attachedDocSource = [Source new];
-        attachedDocSource.title = NSLocalizedString(@"Annexes_Section", nil); 
+        attachedDocSource.title = @"Annexes_Section".localized; 
         attachedDocSource.type = PFAttachmentTypeAttachedDoc;
         attachedDocSource.subType = PFAttachmentVCSectionAttachedDocs;
         attachedDocSource.elements = _attachedDocsDataSource.count;

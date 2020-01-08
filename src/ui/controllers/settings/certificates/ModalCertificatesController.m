@@ -70,10 +70,10 @@
         }
     } else {
         _infoLabel = @"El certificado se ha cargado correctamente";
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Loaded_Certificate", nil)
-                                                                                 message:NSLocalizedString(@"Alert_View_Loaded_Certificate_In_Your_App", nil)
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Alert_View_Loaded_Certificate".localized
+                                                                                 message:@"Alert_View_Loaded_Certificate_In_Your_App".localized
                                                                           preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Ok".localized style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
             // Boton OK presionado - certificado cargado correctamente
             [self.passwordText resignFirstResponder];
             [self.passwordText removeFromSuperview];

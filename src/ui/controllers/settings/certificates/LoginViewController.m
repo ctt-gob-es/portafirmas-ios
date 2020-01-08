@@ -128,19 +128,19 @@
             switch (status) {
                 case noErr :
                 case errSecItemNotFound:
-                    _infoLabel = NSLocalizedString(@"Certificate_Removed_Correctly", nil);
+                    _infoLabel = @"Certificate_Removed_Correctly".localized;
                     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyCurrentCertificate];
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     [[CertificateUtils sharedWrapper] setSelectedCertificateName:nil];
         
                     break;
                 default:
-                    _infoLabel = NSLocalizedString(@"Alert_View_An_Error_Has_Ocurred", nil);
+                    _infoLabel = @"Alert_View_An_Error_Has_Ocurred".localized;
                     break;
             }
         
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:_infoLabel message:nil preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle: @"Ok".localized
                                                            style:UIAlertActionStyleDefault
                                                          handler:nil];
         [alert addAction:actionOk];
@@ -181,10 +181,10 @@
         dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];
 		});
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Error_When_Loading_certificate", nil)
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Alert_View_Error_When_Loading_certificate".localized
                                                                                  message:nil
                                                                           preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
         [alertController addAction:cancel];
         [self presentViewController:alertController animated:YES completion:nil];
     }
