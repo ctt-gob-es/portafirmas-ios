@@ -21,13 +21,13 @@
 }
 
 - (void) showLoginErrorAlertView {
-    NSString * msg = NSLocalizedString(@"Alert_View_Login_Failure_Message", nil);
+    NSString * msg = @"Alert_View_Login_Failure_Message".localized;
     [self showAlertViewWithMessage:msg];
 }
 
 - (void) showNotAllowNotifications {
-    NSString * title = NSLocalizedString(@"Alert_View_Disable_Notifications_Title", nil);
-    NSString * msg = NSLocalizedString(@"Alert_View_Disable_Notifications_Message", nil);
+    NSString * title = @"Alert_View_Disable_Notifications_Title".localized;
+    NSString * msg = @"Alert_View_Disable_Notifications_Message".localized;
     [self showAlertViewWithTitle:title andMessage:msg];
 }
 
@@ -40,7 +40,7 @@
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Alert_View_Ok_Option", nil) style:UIAlertActionStyleDefault
+    UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"Alert_View_Ok_Option".localized style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {}];
     
     [alert addAction:defaultAction];

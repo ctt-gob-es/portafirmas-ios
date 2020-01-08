@@ -244,7 +244,7 @@ CGFloat const largeTitleCellWidth = 200;
 
 -(NSString *)getRequestType
 {
-    NSString *requestType = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? NSLocalizedString(@"Request_Type_Firma", nil) : NSLocalizedString(@"Request_Type_Visto_Bueno", nil);
+    NSString *requestType = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? @"Request_Type_Firma".localized : @"Request_Type_Visto_Bueno".localized;
     return requestType;
 }
 
@@ -429,7 +429,7 @@ CGFloat const largeTitleCellWidth = 200;
     self.inputDateLbl.text = _dataSource.date;
     self.sendersMoreButton.hidden = YES;
     self.signLinesTypeLbl.text = _dataSource.signlinestype;
-    NSString *requestTypeText = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? NSLocalizedString(@"Request_Type_Firma", nil) : NSLocalizedString(@"Request_Type_Visto_Bueno", nil);
+    NSString *requestTypeText = [(PFRequest *)_dataSource type] == PFRequestTypeSign ?@"Request_Type_Firma".localized : @"Request_Type_Visto_Bueno".localized;
     self.requestTypeLbl.text = requestTypeText;
     [self showSenders];
     _selectedRows = nil;

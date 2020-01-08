@@ -54,7 +54,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.titleBar.title =[NSString stringWithFormat: NSLocalizedString(@"Configuration_Page_Title", nil),[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+    self.titleBar.title =[NSString stringWithFormat: @"Configuration_Page_Title".localized,[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
 }
 
 - (void)viewWillAppear:(BOOL)animated

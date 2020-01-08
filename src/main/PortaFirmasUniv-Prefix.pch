@@ -20,6 +20,7 @@
     #import "PFBaseTVC.h"
     #import "PFBaseVC.h"
     #import "KeyboardObserver.h"
+	#import "NSString+Extension.h"
 
 #endif
 

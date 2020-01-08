@@ -76,10 +76,10 @@
 		if ([cfrqtValue isEqualToString:kTrue]) {
 			[[self delegate] showFIRMeWebView:[[NSURL alloc] initWithString:[responseDict objectForKey:kContentKey]]];
 		} else {
-			[[self delegate] showErrorInFIReAndDeselectRows:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
+			[[self delegate] showErrorInFIReAndDeselectRows: @"FIRe_error_in_server_message".localized];
 		}
 	} failure:^(NSError *error) {
-		[[self delegate] showErrorInFIReAndDeselectRows:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
+		[[self delegate] showErrorInFIReAndDeselectRows: @"FIRe_error_in_server_message".localized];
 	}];
 	[_wsController startConnection];
 }
@@ -94,10 +94,10 @@
 		if ([cfrqtValue isEqualToString:kTrue]) {
 			[[self delegate] showFIRMeWebView:[[NSURL alloc] initWithString:[responseDict objectForKey:kContentKey]]];
 		} else {
-			[[self delegate] didReceiveError:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
+			[[self delegate] didReceiveError:@"FIRe_error_in_server_message".localized];
 		}
 	} failure:^(NSError *error) {
-		[[self delegate] didReceiveError:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
+		[[self delegate] didReceiveError:@"FIRe_error_in_server_message".localized];
 	}];
 	[_wsController startConnection];
 }
@@ -113,10 +113,10 @@
 		} else if ([[responseDict objectForKey:kOk] isEqualToString:kFalse]) {
 			[[self delegate] didReceiveErrorSignResponseFromFIRe:[responseDict objectForKey: kErrorFIReKey]];
 		} else {
-			[[self delegate] didReceiveErrorInPrechargedFIReRequest:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
+			[[self delegate] didReceiveErrorInPrechargedFIReRequest:@"FIRe_error_in_server_message".localized];
 		}
 	} failure:^(NSError *error) {
-		[[self delegate] didReceiveErrorInPrechargedFIReRequest:NSLocalizedString(@"FIRe_error_in_server_message", nil)];
+		[[self delegate] didReceiveErrorInPrechargedFIReRequest:@"FIRe_error_in_server_message".localized];
 	}];
 	[_wsController startConnection];
 }
@@ -187,7 +187,7 @@
             BOOL finishWithError = [parser finishWithError];
 
             if (finishWithError) {
-                [[self delegate] didReceiveError:[NSString stringWithFormat:NSLocalizedString(@"Global_error_server_error_and_error_code", nil), [parser err], [parser errorCode]]];
+                [[self delegate] didReceiveError:[NSString stringWithFormat:@"Global_error_server_error_and_error_code".localized, [parser err], [parser errorCode]]];
                 return;
             }
 
@@ -196,7 +196,7 @@
 
             [self loadPostSignRequest:preSignRequests];
         } else {
-            [[self delegate] didReceiveError:NSLocalizedString(@"Global_Error_Server_Connection", nil)];
+            [[self delegate] didReceiveError:@"Global_Error_Server_Connection".localized];
         }
     } else if (waitingPostSign) {
         waitingPostSign = NO;
@@ -218,7 +218,7 @@
             [_dataSource addObjectsFromArray: [parser dataSource]];
             [self sendNextRequest];
         } else {
-            [[self delegate] didReceiveError:NSLocalizedString(@"Global_Error_Server_Connection", nil)];
+            [[self delegate] didReceiveError:@"Global_Error_Server_Connection".localized];
         }
     }
 }

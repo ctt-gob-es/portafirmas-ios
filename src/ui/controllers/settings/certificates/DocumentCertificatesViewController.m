@@ -59,7 +59,7 @@ int const kNormalLabelDistance = 20;
     [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
 
 	// Styles
-	self.navigationItem.title = NSLocalizedString(@"available_certificates", nil);
+	self.navigationItem.title = @"available_certificates".localized;
 	[self setMessageStyle];
 	[self setButtonStyle];
 
@@ -77,7 +77,7 @@ int const kNormalLabelDistance = 20;
 		}
 		UIButton *filesAppButton = [UIButton buttonWithType:UIButtonTypeCustom];
 		[filesAppButton addTarget:self action:@selector(filesAppButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-		[filesAppButton setTitle:NSLocalizedString(@"files_app_button", nil) forState:UIControlStateNormal];
+		[filesAppButton setTitle:@"files_app_button".localized forState:UIControlStateNormal];
 		filesAppButton.frame = CGRectMake(0, (self.messageContainerView.frame.origin.y + self.messageContainerView.frame.size.height - kFilesAppButtonNormalHeight), self.view.frame.size.width, kFilesAppButtonNormalHeight);
 		[filesAppButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
 		[self.view addSubview:filesAppButton];
@@ -86,15 +86,15 @@ int const kNormalLabelDistance = 20;
 - (void)setMessageStyle {
 	if (!availableCertificates) {
 		[self.descriptionLabel setFont:[UIFont boldSystemFontOfSize:17]];
-		self.descriptionLabel.text = NSLocalizedString(@"available_certificates_description_label", nil);
-		self.firstOptionTitleLabel.text = NSLocalizedString(@"available_certificates_first_option_title_label", nil);
+		self.descriptionLabel.text = @"available_certificates_description_label".localized;
+		self.firstOptionTitleLabel.text = @"available_certificates_first_option_title_label".localized;
 		self.firstOptionTitleLabel.hidden = false;
-		self.firstOptionDescriptionLabel.text = NSLocalizedString(@"available_certificates_first_option_description_label", nil);
+		self.firstOptionDescriptionLabel.text = @"available_certificates_first_option_description_label".localized;
 		self.firstOptionDescriptionLabel.hidden = false;
-		self.secondOptionTitleLabel.text = NSLocalizedString(@"available_certificates_second_option_title_label", nil);
+		self.secondOptionTitleLabel.text = @"available_certificates_second_option_title_label".localized;
 		self.secondOptionTitleLabel.hidden = false;
 	} else {
-		self.descriptionLabel.text = NSLocalizedString(@"available_certificates_description_when_available_certificates", nil);
+		self.descriptionLabel.text = @"available_certificates_description_when_available_certificates".localized;
 		self.firstOptionTitleLabel.hidden = true;
 		self.firstOptionDescriptionLabel.hidden = true;
 		self.secondOptionTitleLabel.hidden = true;
@@ -187,11 +187,11 @@ int const kNormalLabelDistance = 20;
         NSError *error;
         NSString *message;
         BOOL success = [fileManager removeItemAtPath:filePath error:&error];
-        message = success ? NSLocalizedString(@"Alert_View_certificated_removed_correctly", nil) : NSLocalizedString(@"Alert_View_An_Error_Has_Ocurred", nil);
+        message = success ? @"Alert_View_certificated_removed_correctly".localized : @"Alert_View_An_Error_Has_Ocurred".localized;
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil
                                                                                  message:message
                                                                           preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
         [alertController addAction:cancel];
         [self presentViewController:alertController animated:YES completion:nil];
         files = [self findFiles:[NSArray arrayWithObjects:P12EXTENSION, PFXEXTENSION, nil]];
@@ -302,7 +302,7 @@ int const kNormalLabelDistance = 20;
 		
 		NSString* fileType = [url.lastPathComponent pathExtension];
 		Boolean correctFileType = false ;
-		NSString *alertMessage = [NSString stringWithFormat:NSLocalizedString(@"files_app_alert_message_incorrect_file", nil), [url lastPathComponent]];
+		NSString *alertMessage = [NSString stringWithFormat:@"files_app_alert_message_incorrect_file".localized, [url lastPathComponent]];
 		if ([fileType  isEqualToString: P12EXTENSION] || [fileType  isEqualToString: PFXEXTENSION]) {
 			correctFileType = true;
 		}
@@ -315,11 +315,11 @@ int const kNormalLabelDistance = 20;
 			[fileManager copyItemAtURL:url toURL: fileDirectory error:&copyError];
 			if (!copyError)
 			{
-				alertMessage = [NSString stringWithFormat:NSLocalizedString(@"files_app_alert_message_success", nil), [url lastPathComponent]];
+				alertMessage = [NSString stringWithFormat:@"files_app_alert_message_success".localized, [url lastPathComponent]];
 			}
 			else
 			{
-				alertMessage = [NSString stringWithFormat:NSLocalizedString(@"files_app_alert_message_cannot_add_certificate", nil), [url lastPathComponent]];
+				alertMessage = [NSString stringWithFormat:@"files_app_alert_message_cannot_add_certificate".localized, [url lastPathComponent]];
 			}
 			files = [self findFiles:@[P12EXTENSION, PFXEXTENSION]];
 			[self.tableView reloadData];
@@ -330,7 +330,7 @@ int const kNormalLabelDistance = 20;
 												  alertControllerWithTitle: nil
 												  message:alertMessage
 												  preferredStyle:UIAlertControllerStyleAlert];
-			[alertController addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"files_app_alert_affirmative_button", nil) style:UIAlertActionStyleDefault handler:nil]];
+			[alertController addAction:[UIAlertAction actionWithTitle: @"files_app_alert_affirmative_button".localized style:UIAlertActionStyleDefault handler:nil]];
 			[self presentViewController:alertController animated:YES completion:nil];
 			
 		});
