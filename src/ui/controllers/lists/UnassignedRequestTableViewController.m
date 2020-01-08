@@ -131,13 +131,13 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
     
     reject = YES;
     // Preguntamos el por qué del rechazo
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Rejection_of_requests", nil) message:NSLocalizedString(@"Indicate_Reason_For_Rejection", nil) preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
-    UIAlertAction *conti = [UIAlertAction actionWithTitle:NSLocalizedString(@"Continue", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle: @"Rejection_of_requests".localized message: @"Indicate_Reason_For_Rejection" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Cancel".localized style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *conti = [UIAlertAction actionWithTitle: @"Continue".localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         [self continueButtonClicked:alert];
     }];
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.placeholder = NSLocalizedString(@"Reason_For_Rejection", nil);
+        textField.placeholder = @"Reason_For_Rejection".localized;
         textField.keyboardType = UIKeyboardTypeDefault;
     }];
     [alert addAction:cancel];
@@ -272,19 +272,19 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
     NSString *message;
 
     if (_selectedRequestSetToApprove && _selectedRequestSetToApprove.count > 0 && _selectedRequestsSetToSign && _selectedRequestsSetToSign.count > 0) {
-        message = [NSString stringWithFormat:NSLocalizedString(@"Alert_View_Process_Sign_and_Approve", nil), (unsigned long)_selectedRequestsSetToSign.count, (unsigned long)_selectedRequestSetToApprove.count];
+        message = [NSString stringWithFormat: @"Alert_View_Process_Sign_and_Approve".localized, (unsigned long)_selectedRequestsSetToSign.count, (unsigned long)_selectedRequestSetToApprove.count];
     }
     else if (_selectedRequestSetToApprove && _selectedRequestSetToApprove.count > 0) {
-        message = [NSString stringWithFormat:NSLocalizedString(@"Alert_View_Process_Approve", nil), (unsigned long)_selectedRequestSetToApprove.count];
+        message = [NSString stringWithFormat: @"Alert_View_Process_Approve".localized, (unsigned long)_selectedRequestSetToApprove.count];
     }
     else if (_selectedRequestsSetToSign && _selectedRequestsSetToSign.count > 0) {
-        message = [NSString stringWithFormat:NSLocalizedString(@"Alert_View_Process_Sign", nil), (unsigned long)_selectedRequestsSetToSign.count];
+        message = [NSString stringWithFormat: @"Alert_View_Process_Sign".localized, (unsigned long)_selectedRequestsSetToSign.count];
     }
 
     if (message) {
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Notice", nil) message:message preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
-        UIAlertAction *conti = [UIAlertAction actionWithTitle:NSLocalizedString(@"Continue", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle: @"Alert_View_Notice".localized message:message preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Cancel".localized style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *conti = [UIAlertAction actionWithTitle: @"Continue".localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             [self continueButtonClicked: alert];
         }];
         [alert addAction:cancel];
@@ -491,8 +491,8 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 
     if (idsForRequestsWithError.count == 0) {
         // @" Peticiones firmadas corrrectamente"
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil) message:NSLocalizedString(@"Alert_View_Request_Signed_Correctly", nil) preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized message: @"Alert_View_Request_Signed_Correctly".localized preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
         [alertController addAction:cancel];
         [self presentViewController:alertController animated:YES completion:nil];
         
@@ -531,17 +531,17 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
     // Mostramos un mensaje modal con el resultado de la operacion
     if (requestsWithError.count == 0) {
         // Peticiones firmadas corrrectamente
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil) message:NSLocalizedString(@"Alert_View_Everything_Signed_Correctly", nil) preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized message: @"Alert_View_Everything_Signed_Correctly".localized preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
         [alertController addAction:cancel];
         [self presentViewController:alertController animated:YES completion:nil];
     } else {
         // Operacion finalizada con errores
-        NSString *msg = requestsWithError.count == 1 ? (requestsSigned.count == 1 ?  NSLocalizedString(@"Alert_View_One_Signature_Failed_In_Single_Request", nil) : NSLocalizedString(@"Alert_View_One_Signature_Failed_In_Multilple_Request", nil)) : NSLocalizedString(@"Alert_View_Multiple_Signatures_Failed_In_Multiple_Request", nil);
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", @"")
+        NSString *msg = requestsWithError.count == 1 ? (requestsSigned.count == 1 ?  @"Alert_View_One_Signature_Failed_In_Single_Request".localized : @"Alert_View_One_Signature_Failed_In_Multilple_Request".localized) : @"Alert_View_Multiple_Signatures_Failed_In_Multiple_Request".localized;
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Error".localized
                                                                                  message:msg
                                                                           preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
         [alertController addAction:cancel];
         [self presentViewController:alertController animated:YES completion:nil];
     }
@@ -561,11 +561,11 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
     BOOL processedOK = TRUE;
     for (PFRequestResult *request in requestsSigned) {
         if ([[request status] isEqualToString:@"KO"]) {
-            NSString *message = [[NSString alloc] initWithFormat:NSLocalizedString(@"Alert_View_Error_When_Processing_Request", nil), [request rejectid]];
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
+            NSString *message = [[NSString alloc] initWithFormat: @"Alert_View_Error_When_Processing_Request".localized, [request rejectid]];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Error".localized
                                                                                      message:message
                                                                               preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
             [alertController addAction:cancel];
             [self presentViewController:alertController animated:YES completion:nil];
             processedOK = FALSE;
@@ -577,10 +577,10 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
         _waitingResponseType = PFWaitingResponseTypeList;
         [super loadData];
         // Peticiones rechazadas corrrectamente
-		UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil)
-																				 message:NSLocalizedString(@"Correctly_rejected_requests", nil)
+		UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized
+																				 message: @"Correctly_rejected_requests".localized
 																		  preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle: @"Ok".localized
                                                            style:UIAlertActionStyleDefault
                                                          handler:nil];
         [alertController addAction:actionOk];
@@ -607,8 +607,8 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 -(void) didReceiveCorrectSignResponseFromFIRe {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[SVProgressHUD dismissWithCompletion:^{
-			UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil) message:NSLocalizedString(@"Alert_View_Everything_Signed_Correctly", nil) preferredStyle:UIAlertControllerStyleAlert];
-			UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+			UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized message: @"Alert_View_Everything_Signed_Correctly".localized preferredStyle:UIAlertControllerStyleAlert];
+			UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
 			[alertController addAction:cancel];
 			[self presentViewController:alertController animated:YES completion:^{
 				[self refreshInfo];
@@ -625,12 +625,12 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 		if (errorNumber){
 			[self showErrorSignResponseFromFIRe: errorNumber];
 		} else {
-			[self showErrorInFIReRequest:NSLocalizedString(@"FIRe_problem_with_response", nil)];
+			[self showErrorInFIReRequest: @"FIRe_problem_with_response".localized];
 		}
 	} else if ([correctSign length] != 0) {
 		[self didReceiveCorrectSignResponseFromFIRe];
 	} else {
-		[self showErrorInFIReRequest:NSLocalizedString(@"FIRe_problem_with_response", nil)];
+		[self showErrorInFIReRequest: @"FIRe_problem_with_response".localized];
 	}
 }
 
@@ -648,30 +648,30 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 		ErrorNumber error = errorNumber;
 		switch (error) {
 			case error1:
-				[self showErrorInFIReRequest:NSLocalizedString(@"FIRe_error_in_communication", nil)];
+				[self showErrorInFIReRequest: @"FIRe_error_in_communication".localized];
 				[self cancelEditing];
 				break;
 			case error2:
-				[self showErrorInFIReRequest:NSLocalizedString(@"FIRe_error_in_sign_operation", nil)];
+				[self showErrorInFIReRequest: @"FIRe_error_in_sign_operation".localized];
 				[self cancelEditing];
 				break;
 			case error3:
-				[self showErrorInFIReAndRefresh:NSLocalizedString(@"FIRe_error_in_some_sign_operation", nil)];
+				[self showErrorInFIReAndRefresh: @"FIRe_error_in_some_sign_operation".localized];
 				break;
 			default:
-				[self showErrorInFIReRequest:NSLocalizedString(@"FIRe_undetermined_error", nil)];
+				[self showErrorInFIReRequest: @"FIRe_undetermined_error".localized];
 				[self cancelEditing];
 				break;
 		}
 	} else {
-		[self showErrorInFIReRequest:NSLocalizedString(@"FIRe_problem_with_response", nil)];
+		[self showErrorInFIReRequest: @"FIRe_problem_with_response".localized];
 		[self cancelEditing];
 	}
 }
 
 - (void)showErrorInFIReAndRefresh:(NSString *)errorString {
 	[self refreshInfo];
-	[[ErrorService instance] showAlertViewWithTitle:NSLocalizedString(@"Alert_View_Error", nil) andMessage: errorString];
+	[[ErrorService instance] showAlertViewWithTitle: @"Alert_View_Error".localized andMessage: errorString];
 }
 
 - (void)showErrorInFIReAndDeselectRows:(NSString *)errorString {
@@ -682,7 +682,7 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 
 - (void)showErrorInFIReRequest:(NSString *)errorString {
 	[SVProgressHUD dismissWithCompletion:^{
-		[[ErrorService instance] showAlertViewWithTitle:NSLocalizedString(@"Alert_View_Error", nil) andMessage: errorString];
+		[[ErrorService instance] showAlertViewWithTitle: @"Alert_View_Error".localized andMessage: errorString];
 	}];
 }
 
@@ -709,7 +709,7 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 				[self.navigationController setNavigationBarHidden:NO animated:YES];
 				[self.navigationController setToolbarHidden:NO animated:NO];
 				[self enableUserInteraction: true];
-				[[ErrorService instance] showAlertViewWithTitle:NSLocalizedString(@"Alert_View_Error", nil) andMessage: NSLocalizedString(@"FIRe_error_message", nil)];
+				[[ErrorService instance] showAlertViewWithTitle: @"Alert_View_Error".localized andMessage: @"FIRe_error_message".localized];
 			}];
 		 });
 		return decisionHandler(WKNavigationActionPolicyCancel);
