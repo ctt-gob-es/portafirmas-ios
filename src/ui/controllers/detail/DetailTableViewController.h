@@ -11,8 +11,9 @@
 #import "WSDataController.h"
 #import "RequestSignerController.h"
 #import "PFRequest.h"
+#import <WebKit/WebKit.h>
 
-@interface DetailTableViewController : UITableViewController<WSDelegate, UIActionSheetDelegate, RequestSignerEvent, UIAlertViewDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface DetailTableViewController : UITableViewController<WSDelegate, UIActionSheetDelegate, RequestSignerEvent, UIAlertViewDelegate, UITableViewDelegate, UITableViewDataSource, WKNavigationDelegate>
 {
 
     Detail *_dataSource;

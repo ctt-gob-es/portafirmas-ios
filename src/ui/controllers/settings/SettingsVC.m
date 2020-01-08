@@ -42,7 +42,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 @property (nonatomic, strong) IBOutlet UIButton *accessButton;
 @property (strong, nonatomic) IBOutlet UINavigationItem *titleBar;
-@property (strong, nonatomic) UIWebView *webView;
+@property (strong, nonatomic) WKWebView *webView;
 
 @end
 
@@ -151,8 +151,9 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 - (void) showLoginWebView {
 	dispatch_async(dispatch_get_main_queue(), ^{
-		self.webView = [[UIWebView alloc] initWithFrame: self.view.bounds];
-		[self->_webView setDelegate:self];
+		WKWebViewConfiguration *wkWebViewConfiguration = [[WKWebViewConfiguration alloc] init];
+		self.webView = [[WKWebView alloc] initWithFrame: self.view.bounds configuration: wkWebViewConfiguration];
+		self.webView.navigationDelegate = self;
 		NSString *url=[[LoginService instance] urlForRemoteCertificates];
 		NSURL *nsurl=[NSURL URLWithString:url];
 		NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
@@ -241,22 +242,23 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 #pragma mark - WebViewDelegate
 
--(BOOL) webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
-	NSString *requestString = [[request URL] absoluteString];
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    NSURLRequest *request = navigationAction.request;
+    NSString *requestString = [[request URL]absoluteString];
 	NSArray *urlFragments= [requestString componentsSeparatedByString: kStringSlash];
 	if ([[urlFragments lastObject] rangeOfString:kError].location != NSNotFound) {
 		[[ErrorService instance] showLoginErrorAlertView];
 		[self.webView removeFromSuperview];
-		return NO;
+		return decisionHandler(WKNavigationActionPolicyCancel);
 	}
 	if ([[urlFragments lastObject] rangeOfString:kOk].location != NSNotFound) {
 		[self.webView removeFromSuperview];
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[self performSegueWithIdentifier:kSettingsVCSegueIdentifierAccess sender:self];
 		});
-		return NO;
+		return decisionHandler(WKNavigationActionPolicyCancel);
 	}
-	return YES;
+    decisionHandler(WKNavigationActionPolicyAllow);
 }
 
 @end

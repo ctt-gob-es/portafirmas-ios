@@ -11,6 +11,6 @@
 #import "SettingsCell.h"
 #import <WebKit/WebKit.h>
 
-@interface SettingsVC : PFBaseTVC <ServerListTVCDelegate, SettingsCellDelegate, UIWebViewDelegate>
+@interface SettingsVC : PFBaseTVC <ServerListTVCDelegate, SettingsCellDelegate, UIWebViewDelegate, WKNavigationDelegate>
 
 @end

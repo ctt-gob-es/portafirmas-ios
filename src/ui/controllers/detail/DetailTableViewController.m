@@ -20,6 +20,7 @@
 #import "DetailCell.h"
 #import "GlobalConstants.h"
 #import "ErrorService.h"
+#import <WebKit/WebKit.h>
 
 static NSString *const kDetailCell = @"detailCell";
 static NSString *const kDetailCellNibName = @"DetailCell";
@@ -76,7 +77,7 @@ CGFloat const largeTitleCellWidth = 200;
     BOOL isSuccessReject;
 }
 
-@property (strong, nonatomic) UIWebView *webView;
+@property (strong, nonatomic) WKWebView *webView;
 
 @end
 
@@ -748,8 +749,9 @@ CGFloat const largeTitleCellWidth = 200;
 	 dispatch_async(dispatch_get_main_queue(), ^{
 		 [SVProgressHUD dismiss];
 		 [self.navigationController setNavigationBarHidden:YES animated:YES];
-		 self.webView = [[UIWebView alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-		 [self->_webView setDelegate:self];
+		 WKWebViewConfiguration *wkWebViewConfiguration = [[WKWebViewConfiguration alloc] init];
+		 self.webView = [[WKWebView alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) configuration: wkWebViewConfiguration];
+		 self.webView.navigationDelegate = self;
 		 NSURLRequest *nsrequest=[NSURLRequest requestWithURL:url];
 		 [self.webView loadRequest: nsrequest];
 		 [self.view addSubview: self.webView];
@@ -758,7 +760,8 @@ CGFloat const largeTitleCellWidth = 200;
 
 #pragma mark - WebViewDelegate
 
--(BOOL) webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType{
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    NSURLRequest *request = navigationAction.request;
 	NSString *requestString = [[request URL] absoluteString];
 	NSArray *urlComponents = [requestString componentsSeparatedByString: kQuestionMarkString];
 	NSString *urlString = [urlComponents firstObject];
@@ -772,7 +775,7 @@ CGFloat const largeTitleCellWidth = 200;
 				[[ErrorService instance] showAlertViewWithTitle:NSLocalizedString(@"Alert_View_Error", nil) andMessage: NSLocalizedString(@"FIRe_error_message", nil)];
 			}];
 		 });
-		return NO;
+		return decisionHandler(WKNavigationActionPolicyCancel);
 	}
 	if ([[urlFragments lastObject] rangeOfString:kOk].location != NSNotFound) {
 		[self.webView removeFromSuperview];
@@ -783,9 +786,9 @@ CGFloat const largeTitleCellWidth = 200;
 				[self signPrechargedRequestForFIRe];
 			}];
 		 });
-		return NO;
+		return decisionHandler(WKNavigationActionPolicyCancel);
 	}
-	return YES;
+	decisionHandler(WKNavigationActionPolicyAllow);
 }
 
 @end
