@@ -28,11 +28,12 @@
         NSString *certificado = [NSData base64EncodeData:[cert publicKeyBits]];
         
         // Formats lists message
-        NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
-        
-        [certlabel appendFormat:@"%@\n", certificado];
-        [certlabel appendString:@"</cert>\n"];
-        [mesg appendString:certlabel];
+		if (certificado) {
+			NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
+			[certlabel appendFormat:@"%@\n", certificado];
+			[certlabel appendString:@"</cert>\n"];
+			[mesg appendString:certlabel];
+		}
     }
 
     // Nuevo elemento añadido en B64 donde se almacenará el motivo del rechazo
@@ -56,9 +57,6 @@
 
     [mesg appendString:reqrjcts];
     [mesg appendString:@"</reqrjcts>"];
-    
-    DDLogDebug(@"Lo que hay en el XML -> %@", mesg);
-
     return mesg;
 }
 
@@ -81,8 +79,6 @@
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qualifiedName attributes:attributeDict];
 
     if ([elementName isEqualToString:@"rjct"]) {
-        DDLogDebug(@"user element found – create a new instance of rjct class...");
-
         reject = [[PFRequestResult alloc] init];
         // We do not have any attributes in the user elements, but if
         // you do, you can extract them here:
@@ -91,7 +87,6 @@
     }
 
     if ([elementName isEqualToString:@"rjcts"]) {
-       DDLogDebug(@"user element found – create a new instance of rjcts list class...");
         _dataSource = [[NSMutableArray alloc] init];
     }
 }

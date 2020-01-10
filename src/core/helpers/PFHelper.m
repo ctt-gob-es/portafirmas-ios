@@ -22,8 +22,7 @@ static NSString *const kPFHelperClassNamePendingList = @"UnassignedRequestTableV
     } else if ([string isEqualToString:@"VISTOBUENO"]) {
         return PFRequestTypeApprove;
     }
-
-    return nil;
+    return PFRequestTypeApprove;
 }
 
 + (PFRequestStatus)getPFRequestStatusFromString:(NSString *)string
@@ -33,7 +32,6 @@ static NSString *const kPFHelperClassNamePendingList = @"UnassignedRequestTableV
     } else if ([string isEqualToString:@"FIRMADO"]) {
         return PFRequestStatusSigned;
     }
-    
     return PFRequestStatusPending;
 }
 
@@ -48,11 +46,10 @@ static NSString *const kPFHelperClassNamePendingList = @"UnassignedRequestTableV
     } else if ([className isEqualToString:kPFHelperClassNamePendingList]) {
         return PFRequestStatusPending;
     }
-
-    return nil;
+	return PFRequestStatusPending;
 }
 
-+ (PFRequestCode)getPFRequestCodeForSection:(PFAttachmentVCSection)section
++ (PFRequestCode)getPFRequestCodeForSection:(NSInteger)section
 {
     switch (section) {
         case PFAttachmentVCSectionDocuments:
@@ -64,6 +61,7 @@ static NSString *const kPFHelperClassNamePendingList = @"UnassignedRequestTableV
         case PFAttachmentVCSectionAttachedDocs:
             return PFRequestCodeDocumentPreview;
     }
+	return PFRequestCodeDocumentPreview;
 }
 
 + (NSString *)getPFSortCriteriaValueForRow:(PFSortPickerRow)row

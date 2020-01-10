@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="83s-En-Yoh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="83s-En-Yoh">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15508"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,19 +19,27 @@
                             <rect key="frame" x="0.0" y="0.0" width="375" height="45"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" fixedFrame="YES" scrollEnabled="NO" indicatorStyle="black" editable="NO" text="Servidor a seleccionar" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="xYZ-4d-U1d">
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" scrollEnabled="NO" indicatorStyle="black" editable="NO" text="Servidor a seleccionar" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="xYZ-4d-U1d">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="37"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                     <color key="backgroundColor" red="0.68627450980000004" green="0.13725490200000001" blue="0.10980392160000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <accessibility key="accessibilityConfiguration">
                                         <bool key="isElement" value="NO"/>
                                     </accessibility>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="37" id="tTa-5a-0Zb"/>
+                                    </constraints>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="16"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 </textView>
                             </subviews>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstItem="xYZ-4d-U1d" firstAttribute="leading" secondItem="y62-xB-T1Q" secondAttribute="leading" id="8EW-WV-Ihe"/>
+                                <constraint firstAttribute="bottom" secondItem="xYZ-4d-U1d" secondAttribute="bottom" constant="8" id="AS1-uB-yMo"/>
+                                <constraint firstItem="xYZ-4d-U1d" firstAttribute="top" secondItem="y62-xB-T1Q" secondAttribute="top" id="Efw-NB-fR5"/>
+                                <constraint firstAttribute="trailing" secondItem="xYZ-4d-U1d" secondAttribute="trailing" id="xws-2H-ka8"/>
+                            </constraints>
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ServersListCell" id="WJP-W2-iR4" customClass="ServersListCell">
@@ -86,11 +94,7 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Km-ge-Tsk" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <barButtonItem title="Editar" id="cUT-PO-At2">
-                    <connections>
-                        <action selector="didClickEditButton:" destination="Rg6-FS-H8G" id="RCb-bD-Fzc"/>
-                    </connections>
-                </barButtonItem>
+                <barButtonItem title="Editar" id="cUT-PO-At2"/>
             </objects>
             <point key="canvasLocation" x="-4380" y="-982.75862068965523"/>
         </scene>
@@ -208,7 +212,6 @@
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="editBarButtonItem" destination="WIy-kb-5CA" id="Fsp-5b-yeh"/>
-                        <outlet property="view" destination="y5z-sx-50W" id="6wG-yO-DH5"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ybc-f5-aKu" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -320,7 +323,6 @@
                         <outlet property="firstOptionTitleLabel" destination="Scs-f9-W3u" id="u00-0G-GYv"/>
                         <outlet property="messageContainerView" destination="9wT-U9-tPb" id="k30-cF-AsL"/>
                         <outlet property="secondOptionTitleLabel" destination="20Y-sb-TmV" id="gLu-qF-LUB"/>
-                        <outlet property="view" destination="Alm-Qt-99l" id="J0x-eV-RXy"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wS2-cF-3Rw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -376,7 +378,7 @@
             <objects>
                 <tableViewController modalTransitionStyle="flipHorizontal" hidesBottomBarWhenPushed="YES" id="LYt-De-Eua" customClass="DetailTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" sectionIndexMinimumDisplayRowCount="8" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="1Ek-a1-fwh">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
@@ -732,7 +734,6 @@
                         <outlet property="signLinesTypeLbl" destination="BFX-6i-tsi" id="DWF-ep-cIj"/>
                         <outlet property="subjectTextView" destination="DUx-Vt-IyK" id="v1n-oB-vh1"/>
                         <outlet property="subjectTitleTextView" destination="bzF-Bl-D0k" id="GZC-kQ-SsY"/>
-                        <outlet property="view" destination="1Ek-a1-fwh" id="67P-ng-3Ka"/>
                         <outletCollection property="cellBehindExpirationDate" destination="mGE-2t-G1a" id="TkS-OK-nef"/>
                         <outletCollection property="cellBehindRejectExplanation" destination="iW1-Ni-vC9" id="CzB-Yp-Vnj"/>
                         <outletCollection property="cellBehindRejectExplanation" destination="8BW-RJ-qpP" id="F9b-6C-zZs"/>
@@ -754,7 +755,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="ReceiversListView" modalTransitionStyle="flipHorizontal" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Whf-Lg-Wlz" customClass="ReceiversViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="amM-w9-afS">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
@@ -784,9 +785,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Destinatarios" id="vm1-Si-AgJ"/>
-                    <connections>
-                        <outlet property="view" destination="amM-w9-afS" id="rA4-Qf-Jyh"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vdn-zE-CPu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -821,7 +819,6 @@
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="view" destination="049-Ae-aDs" id="dII-L5-tvu"/>
                         <outlet property="webView" destination="tKE-ak-LHM" id="9J6-FT-Duq"/>
                     </connections>
                 </viewController>
@@ -1186,9 +1183,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Adjuntos" id="0Rb-ti-XIY"/>
-                    <connections>
-                        <outlet property="view" destination="ZuO-hk-Ka7" id="ZaE-0l-FhZ"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rme-Ws-8Qv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1368,7 +1362,6 @@
                         <outlet property="selectButtonItem" destination="BA9-Fn-GOB" id="pia-Z8-eNx"/>
                         <outlet property="signBarButton" destination="PVg-8e-aIa" id="gzo-gX-AO9"/>
                         <outlet property="tableViewFooter" destination="sMH-sR-3u5" id="XQJ-Af-1ph"/>
-                        <outlet property="view" destination="JSh-qa-PVv" id="jjb-1w-D4l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1pW-mX-qhG" sceneMemberID="firstResponder"/>
@@ -1909,7 +1902,6 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="_messageView" destination="cQ2-Kt-lMH" id="gz2-R7-mWf"/>
-                        <outlet property="password" destination="LFJ-3t-AhZ" id="C17-Ti-Hin"/>
                         <outlet property="passwordText" destination="LFJ-3t-AhZ" id="5hO-o3-P4C"/>
                         <outlet property="registrarBtn" destination="TVi-n4-VwM" id="sKH-qM-G5A"/>
                     </connections>
@@ -1959,7 +1951,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="SendersListView" modalTransitionStyle="flipHorizontal" id="rnV-KU-W7J" customClass="SendersViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Ixu-Qt-Eyp">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
@@ -2006,7 +1998,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="nx9-6d-emn"/>
-        <segue reference="47P-jN-2H3"/>
-        <segue reference="f7k-Dd-rat"/>
+        <segue reference="8G8-nU-8OZ"/>
+        <segue reference="mrf-vS-Wze"/>
     </inferredMetricsTieBreakers>
 </document>

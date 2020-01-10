@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "RequestSignerController.h"
 #import "BaseListTVC.h"
+#import <WebKit/WebKit.h>
 
-@interface UnassignedRequestTableViewController : BaseListTVC <RequestSignerEvent, UIAlertViewDelegate, UIPopoverPresentationControllerDelegate>
+@interface UnassignedRequestTableViewController : BaseListTVC <RequestSignerEvent, UIAlertViewDelegate, UIPopoverPresentationControllerDelegate, UIWebViewDelegate, WKNavigationDelegate>
 {
     RequestSignerController *requestSignerController;
     NSMutableArray *selectedRows;

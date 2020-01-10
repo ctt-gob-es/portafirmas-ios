@@ -11,6 +11,7 @@
 #import "NSString+XMLSafe.h"
 #import "CookieTools.h"
 #import "LoginService.h"
+#import "Parser.h"
 
 #define SERVER_URL ((NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyCurrentServer])[kPFUserDefaultsKeyURL]
 
@@ -53,59 +54,79 @@ struct {
 
 - (void)loadPostRequestWithURL:(NSString *)wsURLString code:(NSInteger)code data:(NSString *)data
 {
-    NSData *msgData = [data dataUsingEncoding:NSUTF8StringEncoding];
-    NSMutableURLRequest *request;
+	NSData *msgData = [data dataUsingEncoding:NSUTF8StringEncoding];
+	NSMutableURLRequest *request;
+	NSString *operationAndData = [NSString stringWithFormat: @"op=%lu&dat=%@",(unsigned long)code, [msgData base64EncodedString]];
+	if (!REQUEST_POST) {
+		NSString *params = [NSString stringWithFormat:@"?%@", operationAndData];
+		params = [self includeSsidIfExists:params];
+		NSString *newURL = [wsURLString stringByAppendingString:params];
+		request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:newURL]
+										  cachePolicy:NSURLRequestReloadIgnoringCacheData
+									  timeoutInterval:TIMEOUT_FOR_SERVER];
+	} else {
+		NSString *post = operationAndData;
+		post = [self includeSsidIfExists:post];
+		NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+		NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
+		request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:wsURLString]
+										  cachePolicy:NSURLRequestReloadIgnoringCacheData
+									  timeoutInterval:TIMEOUT_FOR_SERVER];
+		[request setHTTPMethod:@"POST"];
+		[request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+		[request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+		[request setHTTPBody:postData];
+		if ([[LoginService instance] serverSupportLogin]) {
+			NSDictionary *cookieDict = [CookieTools JSessionID];
+			if (cookieDict != nil) {
+				[request setAllHTTPHeaderFields:cookieDict];
+				[request setHTTPShouldHandleCookies:YES];
+			}
+		}
+	}
+	if (dataTask.state == NSURLSessionTaskStateRunning) {
+		[dataTask cancel];
+		connectionInProgress = nil;
+	}
+	NSURLSessionConfiguration * defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+	defaultConfigObject.requestCachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+	connectionInProgress = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: [NSOperationQueue mainQueue]];
+	self->dataTask = [connectionInProgress dataTaskWithRequest:request
+											 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+					  {
+		self->xmlData = [NSMutableData dataWithData:data];
+		[self doParse: self->xmlData];
+	}];
+}
 
-    if (!REQUEST_POST) {
-        NSString *params = [NSString stringWithFormat:@"?op=%lu&dat=%@",
-                            (unsigned long)code, [msgData base64EncodedString]];
-
-        NSString *newURL = [wsURLString stringByAppendingString:params];
-       DDLogDebug(@"WSDataController::loadPostRequestWithURL.GET Url=%@", newURL);
-
-        request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:newURL]
-                                          cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                      timeoutInterval:TIMEOUT_FOR_SERVER];
-    } else {
-        
-        NSString *post = [NSString stringWithFormat: @"op=%lu&dat=%@",(unsigned long)code, [msgData base64EncodedString]];
-        NSData *postData = [post dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-        NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
-        DDLogDebug(@"\n");
-        DDLogDebug(@"WSDataController -> Valor postLength ->    %@", postLength);
-        DDLogDebug(@"\n\n");
-
-        request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:wsURLString]
-                                          cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                      timeoutInterval:TIMEOUT_FOR_SERVER];
-
-        [request setHTTPMethod:@"POST"];
-        [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
-        [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-        [request setHTTPBody:postData];
-        
-        if ([[LoginService instance] serverSupportLogin]) {
-            NSDictionary *cookieDict = [CookieTools JSessionID];
-            
-            if (cookieDict != nil) {
-                [request setAllHTTPHeaderFields:cookieDict];
-                [request setHTTPShouldHandleCookies:YES];
-            }
-        }
-    }
-
-    // Clear out the existing connection if there is one
-    if (connectionInProgress) {
-        [connectionInProgress cancel];
-        connectionInProgress = nil;
-    }
-    // Instantiate the object to hold all incoming data
-    xmlData = [[NSMutableData alloc] init];
-
-    // Create and initiate the connection
-    connectionInProgress = [[NSURLConnection alloc] initWithRequest:request
-                                                           delegate:self
-                                                   startImmediately:NO];
+-(void) postSignRequestWithFIRe:(NSData *)data code: (NSInteger) code success:(void(^)(NSDictionary *content))success failure:(void(^)(NSError *error))failure {
+		NSString *opParameter = @"op";
+		NSString *datParameter = @"dat";
+		NSString *baseURL = SERVER_URL;
+		NSString *params = [NSString stringWithFormat: @"%@=%lu&%@=%@", opParameter,
+							(unsigned long)code, datParameter, [data base64EncodedString]];
+		NSData *postData = [params dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+		NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
+		NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+		[request setURL:[NSURL URLWithString:baseURL]];
+		[request setHTTPMethod:@"POST"];
+		[request setValue:postLength forHTTPHeaderField:@"Content-Length"];
+		[request setHTTPBody:postData];
+		[request setHTTPShouldHandleCookies:YES];
+		[request setTimeoutInterval:30.0];
+		NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+		[[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+			if (error) {
+				failure(error);
+			} else  {
+				Parser *parser = [Parser new];
+				[parser parseFIRMeResponse:data success:^(NSDictionary *content) {
+					success(content);
+				} failure:^(NSError *error) {
+					failure(error);
+				}];
+			}
+		}] resume];
 }
 
 - (void)loadRequestsWithURL:( NSString *)wsURLString
@@ -115,78 +136,69 @@ struct {
     NSURLRequest *request = [NSURLRequest requestWithURL:url
                                              cachePolicy:NSURLRequestReloadIgnoringCacheData
                                          timeoutInterval:TIMEOUT_FOR_SERVER];
-
-    // Clear out the existing connection if there is one
-    if (connectionInProgress) {
-        [connectionInProgress cancel];
+    if (dataTask.state == NSURLSessionTaskStateRunning) {
+        [dataTask cancel];
         connectionInProgress = nil;
     }
+	NSURLSessionConfiguration * defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+	defaultConfigObject.requestCachePolicy = NSURLRequestReloadIgnoringLocalCacheData;
+	connectionInProgress = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: self delegateQueue: [NSOperationQueue mainQueue]];
+	self->dataTask = [connectionInProgress dataTaskWithRequest:request
+												completionHandler:^(NSData *data, NSURLResponse *response, NSError *error)
+									  {
+		self->xmlData = [NSMutableData dataWithData:data];
+		[self doParse: self->xmlData];
+	}];
 
-    // Create and initiate the connection
-    connectionInProgress = [[NSURLConnection alloc] initWithRequest:request
-                                                           delegate:self
-                                                   startImmediately:NO];
-
-    // Instantiate the object to hold all incoming data
-    xmlData = [[NSMutableData alloc] init];
 }
 
-// didReceiveResponse
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
-{
-    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-
-    DDLogDebug(@"WSDataController::connection didReceive Response =%@", [httpResponse allHeaderFields]);
+-(void) URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data{
+	[xmlData appendData:data];
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
-{
-    DDLogDebug(@"Succeeded! Received %lu bytes of data", (unsigned long)[data length]);
-    [xmlData appendData:data];
-}
+-(void) URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error{
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD dismiss];
+	});
+	connectionInProgress = nil;
+	xmlData = nil;
+	NSString *errorString = [NSString stringWithFormat:@"Load failed: %@",
+							 [error localizedDescription]];
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{
-    DDLogDebug(@"Datos totales descargados: %lu", (unsigned long)[xmlData length]);
-    [self doParse: xmlData];
-}
-
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [SVProgressHUD dismiss];
-    });
-    connectionInProgress = nil;
-    xmlData = nil;
-    NSString *errorString = [NSString stringWithFormat:@"Load failed: %@",
-                             [error localizedDescription]];
-
-    if ([_delegate respondsToSelector:@selector(didReceiveParserWithError:)]) {
-        [_delegate didReceiveParserWithError:errorString];
-    }
+	if ([_delegate respondsToSelector:@selector(didReceiveParserWithError:)]) {
+		[_delegate didReceiveParserWithError:errorString];
+	}
 }
 
 - (void)doParse:(NSData *)data
 {
-    DDLogDebug(@"doParse data: \n\n%@", [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding]);
     [_delegate doParse: data];
 }
 
 - (void)cancelConnection
 {
-    // Clear out the existing connection if there is one
-    if (connectionInProgress) {
-        [connectionInProgress cancel];
+    if (dataTask.state == NSURLSessionTaskStateRunning) {
+        [dataTask cancel];
         connectionInProgress = nil;
     }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
 }
 
 - (void)startConnection
 {
-    if (connectionInProgress) {
-        [connectionInProgress scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-        [connectionInProgress start];
+    if (dataTask.state != NSURLSessionTaskStateRunning) {
+        [dataTask resume];
     }
+}
+
+- (NSString *) includeSsidIfExists: (NSString *)currentParams {
+	NSString *paramsWithSsid = currentParams;
+	if ([[LoginService instance] sessionId]){
+		paramsWithSsid = [NSString stringWithFormat:@"%@%@", currentParams , [NSString stringWithFormat:@"&ssid=%@", [[LoginService instance] sessionId]]];
+	}
+	return paramsWithSsid;
 }
 
 @end

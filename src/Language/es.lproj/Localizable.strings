@@ -16,7 +16,7 @@
 "Alert_View_Process_Approve" = "Se van a procesar %lu peticiones de visto bueno.";
 "Alert_View_Process_Sign" = "Se van a procesar %lu peticiones de firma.";
 "Alert_View_Request_Processed_Correctly" = "Peticiones procesadas correctamente";
-"Alert_View_Request_Signed_Correctly" = "Peticiones firmadas correctamente";
+"Alert_View_Request_Signed_Correctly" = "Peticiones firmadas correctamente.";
 "Alert_View_Error" = "Error";
 "Alert_View_certificated_removed_correctly" = "Se ha eliminado el certificado correctamente";
 "Alert_View_An_Error_Has_Ocurred" = "Se ha producido un error";
@@ -29,11 +29,16 @@
 "Alert_View_Server_Going_To_Be_Selected" = "Se va a seleccionar el servidor %@ con url %@.";
 "Alert_View_Accept" = "Aceptar";
 
+//Global errors
+"Global_Error_Server_Connection" = "Se ha producido un error de conexión con el servidor.";
+"Global_error_server_error_and_error_code" = "Se ha producido un error en el servidor:%@(%@)";
+
 //Alert view messages after signing
-"Alert_View_Everything_Signed_Correctly" = "Peticiones firmadas correctamente";
+"Alert_View_Everything_Signed_Correctly" = "Peticiones firmadas correctamente.";
 "Alert_View_One_Signature_Failed_In_Single_Request" = "Ocurrió un error al firmar la peticion seleccionada";
 "Alert_View_One_Signature_Failed_In_Multilple_Request" = "Ocurrió un error al firmar una de las peticiones seleccionadas";
 "Alert_View_Multiple_Signatures_Failed_In_Multiple_Request" = "Ocurrió un error al firmar algunas de las peticiones seleccionadas";
+"Alert_View_Error_Signing" = "Se ha producido un error de firmado";
 
 //Filter View
 "Filter_View_Push_Notification_Pending_Title" = "Activar sistema de notificaciones";
@@ -73,7 +78,7 @@
 "Cell_Title_Message" = "Mensaje: ";
 "Detail_senders_first_button" = "y ";
 "Detail_senders_second_button" = " más";
-"Detail_view_error_server_connection" = "Se ha producido un error de conexión con el servidor";
+"Detail_view_error_server_connection" = "Se ha producido un error de conexión con el servidor.";
 "Detail_view_error_processing_request" = "Error al procesar la petición con codigo:%@";
 "Detail_view_error_processing_multiple_request" = "Error al procesar las peticiones con códigos:%@";
 "Detail_view_error_server_connection_501" = "Se ha producido un error de conexión con el servidor (501)";
@@ -104,3 +109,15 @@
 "available_certificates_first_option_title_label" = "Opción 1:";
 "available_certificates_first_option_description_label" = "1. Conecte su dispositivo a su PC o Mac.\n2. Localice el certificado que desea instalar ....(debe conocer el pin del certificado)\n3. En iTunes seleccione su certificado y arrástrelo a la ventana de documentos...\n4. Vuelva a esta pantalla y regístrelo en el almacen del dispositivo.";
 "available_certificates_second_option_title_label" = "Opción 2:";
+
+// Settings cell
+"settings_cell_remote_certificates_message" = "Usar certificados remotos";
+
+//FIRe
+"FIRe_error_message" = "Ocurrió un error durante la preparación de los datos para la firma.";
+"FIRe_error_in_server_message" = "Se ha producido un error de conexión con el servidor.";
+"FIRe_error_in_communication" = "Error en la comunicación con FIRe.";
+"FIRe_error_in_sign_operation" = "Error en la operación de firma.";
+"FIRe_error_in_some_sign_operation" = "Error en la firma de alguno de los documentos firmados.";
+"FIRe_undetermined_error" = "Error indeterminado con FIRe.";
+"FIRe_problem_with_response" = "Problema con la respuesta del servidor de FIRe.";

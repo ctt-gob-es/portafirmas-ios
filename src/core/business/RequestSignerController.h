@@ -17,6 +17,12 @@
 
 @optional
 - (void)didReceiveError:(NSString *)errorString;
+- (void)showErrorInFIReAndRefresh:(NSString *)errorString;
+- (void)showErrorInFIReAndDeselectRows:(NSString *)errorString;
+- (void)showFIRMeWebView:(NSURL *) url;
+- (void)didReceiveCorrectSignResponseFromFIRe;
+- (void)didReceiveErrorSignResponseFromFIRe:(NSString *)error;
+- (void)didReceiveErrorInPrechargedFIReRequest:(NSString *)error;
 
 @end
 
@@ -40,6 +46,9 @@
 - (void)loadPreSignRequestsWithCurrentCertificate:(NSArray *)requests;
 - (void)loadPreSignDetailWithCurrentCertificate:(Detail *)detail;
 - (void)loadPostSignRequest:(NSArray *)requests;
+- (void)sendSignRequestForFIRe:(NSArray *)requests;
+- (void) sendSignRequestForFIReFromDetailView:(Detail *)request;
+- (void)signPrechargedRequestInFIRe;
 
 - (void)cancelConnection;
 - (void)didReceiveParserWithError:(NSString *)errorString;

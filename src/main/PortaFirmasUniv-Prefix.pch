@@ -20,12 +20,7 @@
     #import "PFBaseTVC.h"
     #import "PFBaseVC.h"
     #import "KeyboardObserver.h"
-    #import "DDLog.h"
-#ifdef DEBUG
-static const int ddLogLevel = LOG_LEVEL_VERBOSE;
-#else
-static const int ddLogLevel = LOG_LEVEL_ERROR;
-#endif
+	#import "NSString+Extension.h"
 
 #endif
 

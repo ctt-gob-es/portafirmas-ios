@@ -48,12 +48,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewDidUnload
-{
-    arrayCerts = nil;
-    [super viewDidUnload];
-}
-
 #pragma mark - User Interface
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -78,21 +72,14 @@
 - (OSStatus)deleteCertificate:(PFCertificateInfo *)certificateInfo
 {
     OSStatus status = noErr;
-
-    [SVProgressHUD show];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     // Load certificate from Documents directory
     status = [OpenSSLCertificateHelper deleteCertificate:certificateInfo];
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
     });
-
-    if (status == noErr) {
-        DDLogDebug(@"deleterWithCertificateName::Certificate %@ is deleted from keychain:", certificateInfo.subject);
-    }
-    else {
-        DDLogDebug(@"deleterWithCertificateName::Certificate %@ is deleted from keychain:", certificateInfo.subject);
-        DDLogDebug(@"No Se ha eliminado el certificado correctamente.Error: %i", (int)status);
-    }
 
     return status;
 }
@@ -106,25 +93,15 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    DDLogDebug(@"LoginViewController::numberOfRowsInSection=%ld. rows=%ld", (long)section, (unsigned long)[arrayCerts count]);
     [self.editButtonItem setEnabled:[arrayCerts count] > 0];
-
     return [arrayCerts count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DDLogDebug(@"LoginViewController::cellForRowAtIndexPath row=%ld", (long)[indexPath row]);
-
     static NSString *CellIdentifier = @"CertificateCell";
     CertificateCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-
-    if (cell == nil) {
-        DDLogDebug(@"LoginViewController::cell is nill");
-    }
-    
     [cell setCertificateInfo:arrayCerts[indexPath.row] forEditingCell:self.isEditing];
-
     return cell;
 }
 
@@ -151,19 +128,19 @@
             switch (status) {
                 case noErr :
                 case errSecItemNotFound:
-                    _infoLabel = NSLocalizedString(@"Certificate_Removed_Correctly", nil);
+                    _infoLabel = @"Certificate_Removed_Correctly".localized;
                     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyCurrentCertificate];
                     [[NSUserDefaults standardUserDefaults] synchronize];
                     [[CertificateUtils sharedWrapper] setSelectedCertificateName:nil];
         
                     break;
                 default:
-                    _infoLabel = NSLocalizedString(@"Alert_View_An_Error_Has_Ocurred", nil);
+                    _infoLabel = @"Alert_View_An_Error_Has_Ocurred".localized;
                     break;
             }
         
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:_infoLabel message:nil preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle: @"Ok".localized
                                                            style:UIAlertActionStyleDefault
                                                          handler:nil];
         [alert addAction:actionOk];
@@ -184,16 +161,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    [SVProgressHUD show];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
     PFCertificateInfo *selectedCertificate = arrayCerts[selectedIndexPath.row];
     
-    DDLogDebug(@"LoginViewController::prepareForSegue selected index=%ld", (long)selectedIndexPath.row);
-    DDLogDebug(@"LoginViewController:: certificado seleccionado -> %@", selectedCertificate.subject);
-    
     if ([[CertificateUtils sharedWrapper] searchIdentityByName:selectedCertificate.subject] == YES) {
-        DDLogDebug(@"LoginViewController::prepareForSegue::selected certificate....");
         [[NSUserDefaults standardUserDefaults] setObject:@{kPFUserDefaultsKeyAlias:selectedCertificate.subject} forKey:kPFUserDefaultsKeyCurrentCertificate];
         [[NSUserDefaults standardUserDefaults] synchronize];
         [[CertificateUtils sharedWrapper] setSelectedCertificateName:selectedCertificate.subject];
@@ -207,10 +181,10 @@
         dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];
 		});
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Error_When_Loading_certificate", nil)
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Alert_View_Error_When_Loading_certificate".localized
                                                                                  message:nil
                                                                           preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
         [alertController addAction:cancel];
         [self presentViewController:alertController animated:YES completion:nil];
     }

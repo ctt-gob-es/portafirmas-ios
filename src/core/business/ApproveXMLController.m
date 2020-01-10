@@ -55,12 +55,14 @@
 + (NSString *)certificateTag
 {
     NSString *certificateString = [NSData base64EncodeData:[[CertificateUtils sharedWrapper] publicKeyBits]];
-    NSMutableString *certificateTag = [@"<cert>\n" mutableCopy];
-
-    [certificateTag appendFormat:@"%@\n", certificateString];
-    [certificateTag appendString:@"</cert>\n"];
-
-    return certificateTag;
+	if (certificateString){
+		NSMutableString *certificateTag = [@"<cert>\n" mutableCopy];
+		[certificateTag appendFormat:@"%@\n", certificateString];
+		[certificateTag appendString:@"</cert>\n"];
+		return certificateTag;
+	} else {
+		return @"";
+	}
 }
 
 + (NSString *)requestsIDTagWithRequests:(NSArray *)requestsArray
@@ -87,7 +89,6 @@
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qualifiedName attributes:attributeDict];
 
     if ([elementName isEqualToString:@"apprv"]) {
-        DDLogDebug(@"user element found – create a new instance of apprv class...");
 
         _requestResult = [PFRequestResult new];
         [_requestResult setRejectid:attributeDict[@"id"]];
@@ -95,7 +96,6 @@
     }
 
     if ([elementName isEqualToString:@"apprvs"]) {
-       DDLogDebug(@"user element found – create a new instance of apprv list class...");
         _dataSource = [@[] mutableCopy];
     }
 }

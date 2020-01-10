@@ -50,7 +50,7 @@
     NSMutableArray *sections = [NSMutableArray new];
     
     Source *docSource = [Source new];
-    docSource.title = NSLocalizedString(@"Document_Section", nil);
+    docSource.title = @"Document_Section".localized;
     docSource.type = PFAttachmentTypeDocument;
     docSource.subType = PFAttachmentVCSectionDocuments;
     docSource.elements = _documentsDataSource.count;
@@ -60,13 +60,13 @@
     if (_detail && _detail.type == PFRequestTypeSign && _requestStatus == PFRequestStatusSigned) {
         
         Source *docSignSource = [Source new];
-        docSignSource.title =  NSLocalizedString(@"Sign_Section", nil);
+        docSignSource.title =  @"Sign_Section".localized;
         docSignSource.type = PFAttachmentTypeDocument;
         docSignSource.subType = PFAttachmentVCSectionSignatures;
         docSignSource.elements = _documentsDataSource.count;
         
         Source *docReportSignSource = [Source new];
-        docReportSignSource.title = NSLocalizedString(@"Sign_Report_Section", nil);
+        docReportSignSource.title = @"Sign_Report_Section".localized;
         docReportSignSource.type = PFAttachmentTypeDocument;
         docReportSignSource.subType = PFAttachmentVCSectionSignaturesReport;
         docReportSignSource.elements = _documentsDataSource.count;
@@ -77,7 +77,7 @@
     
     if (_attachedDocsDataSource != nil && _attachedDocsDataSource.count > 0) {
         Source *attachedDocSource = [Source new];
-        attachedDocSource.title = NSLocalizedString(@"Annexes_Section", nil); 
+        attachedDocSource.title = @"Annexes_Section".localized; 
         attachedDocSource.type = PFAttachmentTypeAttachedDoc;
         attachedDocSource.subType = PFAttachmentVCSectionAttachedDocs;
         attachedDocSource.elements = _attachedDocsDataSource.count;
@@ -107,8 +107,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    DDLogDebug(@"AttachmentViewController::cellForRowAtIndexPath row=%ld", (long)[indexPath row]);
-
     static NSString *CellIdentifier = @"AttachmentsCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 
@@ -162,7 +160,6 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    DDLogDebug(@"AttachmentViewController::prepareForSegue identifier=%@", [segue identifier]);
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
 
     if ([segue.identifier isEqualToString:@"segueShowPreview"]) {
@@ -173,7 +170,6 @@
         
         if (sourceSection.type == PFAttachmentTypeDocument) {
             Document *selectedDoc = _documentsDataSource[selectedIndexPath.row];
-            DDLogDebug(@"AttachmentViewController::prepareForSegue document Id:%@", [selectedDoc docid]);
             [selectedDoc prepareForRequestWithCode:requestCode];
             [previewViewController setDocId:selectedDoc.docid];
             previewViewController.requestCode = requestCode;
@@ -181,35 +177,11 @@
             
         } else {
             AttachedDoc *selectedDoc = _attachedDocsDataSource[selectedIndexPath.row];
-            DDLogDebug(@"AttachmentViewController::prepareForSegue document Id:%@", [selectedDoc docid]);
             [previewViewController setDocId:selectedDoc.docid];
             previewViewController.requestCode = requestCode;
             previewViewController.attachedDataSource = selectedDoc;
         }
     }
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    UIInterfaceOrientation des = self.interfaceOrientation;
-
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) { // iPad
-        if (des == UIInterfaceOrientationPortrait || des == UIInterfaceOrientationPortraitUpsideDown) { // ipad-portairait
-
-        } else { // ipad -landscape
-
-        }
-    } else { // iphone
-        UIInterfaceOrientation des = self.interfaceOrientation;
-
-        if (des == UIInterfaceOrientationPortrait || des == UIInterfaceOrientationPortraitUpsideDown) { // iphone portrait
-
-        } else { // iphone -landscape
-
-        }
-    }
-
-    return YES;
 }
 
 @end

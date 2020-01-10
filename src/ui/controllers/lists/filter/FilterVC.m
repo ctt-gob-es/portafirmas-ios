@@ -88,7 +88,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self removeNotificationAboutPushNotifications];
+	[[KeyboardObserver getInstance] removeObserver:self];
+	[self removeNotificationAboutPushNotifications];
 }
 
 - (void)didReceiveMemoryWarning
@@ -135,8 +136,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (void) showNotificationSectionState {
     
-    NSString *notificationStatePending = NSLocalizedString(@"Filter_View_Push_Notification_Pending_Title", nil);
-    NSString *notificationStateSet = NSLocalizedString(@"Filter_View_Push_Notification_Enabled_Title", nil);
+    NSString *notificationStatePending = @"Filter_View_Push_Notification_Pending_Title".localized;
+    NSString *notificationStateSet = @"Filter_View_Push_Notification_Enabled_Title".localized;
     
     if ([PushNotificationService instance].currentServer.userNotificationPermisionState) {
         self.notificationStateLabel.text = notificationStateSet;
@@ -305,7 +306,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [self hidePickers];
     [self.view endEditing:YES];
     [UIView animateWithDuration:0.3 animations:^{
-         [_sortPickerView setAlpha:1];
+         [self.sortPickerView setAlpha:1];
      }];
 }
 
@@ -315,7 +316,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         [self hidePickers];
         [self.view endEditing:YES];
         [UIView animateWithDuration:0.3 animations:^{
-             [_appPickerView setAlpha:1];
+			[self.appPickerView setAlpha:1];
          }];
     }
 }
@@ -448,7 +449,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         }
 
         [UIView animateWithDuration:0.3 animations:^{
-			[_datePicker setAlpha:1.0];
+			[self.datePicker setAlpha:1.0];
          } completion:^(BOOL finished) {
              [self updateContentOffsetForPicker];
          }];

@@ -51,11 +51,10 @@ static AppListXMLController *_sharedInstance = nil;
 
 - (void)requestAppsList
 {
-    
-    [SVProgressHUD show];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     NSString *requestString = [self buildRequest];
-    DDLogDebug(@"AppListXMLController::requestAppsList---\n%@", requestString);
-    DDLogDebug(@"AppListXMLController::requestAppsList---\n%@", requestString);
     [_wsDataController loadPostRequestWithData:requestString code:PFRequestCodeAppList];
     [_wsDataController startConnection];
    
@@ -83,12 +82,14 @@ static AppListXMLController *_sharedInstance = nil;
 - (NSString *)certificateTag
 {
     NSString *certificateString = [NSData base64EncodeData:[[CertificateUtils sharedWrapper] publicKeyBits]];
-    NSMutableString *certificateTag = [@"<cert>\n" mutableCopy];
-
-    [certificateTag appendFormat:@"%@\n", certificateString];
-    [certificateTag appendString:@"</cert>\n"];
-
-    return certificateTag;
+	if (certificateString){
+		NSMutableString *certificateTag = [@"<cert>\n" mutableCopy];
+		[certificateTag appendFormat:@"%@\n", certificateString];
+		[certificateTag appendString:@"</cert>\n"];
+		return certificateTag;
+	} else {
+		return @"";
+	}
 }
 
 #pragma mark - WSDelegate
@@ -98,8 +99,6 @@ static AppListXMLController *_sharedInstance = nil;
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
     });
-
-   DDLogDebug(@"%@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
     NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:data];
     [nsXmlParser setDelegate:self];
     BOOL success = [nsXmlParser parse];

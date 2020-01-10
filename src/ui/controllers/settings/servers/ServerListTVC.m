@@ -50,8 +50,6 @@ static long cellSelected;
 
 #pragma mark - User Interaction
 - (void)handleTapGesture:(UITapGestureRecognizer *)tapGesture {
-    
-    DDLogDebug(@"handleTapGesture");
     [self becomeFirstResponder];
     CGPoint p = [tapGesture locationInView: self.tableView];
     NSIndexPath *indexPathCell = [self.tableView indexPathForRowAtPoint: p];
@@ -80,11 +78,8 @@ static long cellSelected;
 }
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
-    
-    BOOL *result = NO;
-    
+    BOOL result = NO;
     if (@selector(selectAction:) == action || @selector(editAction:) == action) {
-        
         result = YES;
     }
     return result;
@@ -92,19 +87,17 @@ static long cellSelected;
 
 #pragma mark - UIMenuController Methods
 - (void)selectAction:(id)sender {
-    DDLogDebug(@"selectAction");
-    DDLogDebug(@"Se ha seleccionado la celda %ld", cellSelected);
     NSDictionary *serverInfo = _serversArray[cellSelected];
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"", nil)
-                                                                             message:[NSString stringWithFormat:NSLocalizedString(@"Alert_View_Server_Going_To_Be_Selected", nil), serverInfo[kPFUserDefaultsKeyAlias],serverInfo[kPFUserDefaultsKeyURL]]
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@""
+                                                                             message:[NSString stringWithFormat:@"Alert_View_Server_Going_To_Be_Selected".localized, serverInfo[kPFUserDefaultsKeyAlias],serverInfo[kPFUserDefaultsKeyURL]]
                                                                                       preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
-    UIAlertAction *accept = [UIAlertAction actionWithTitle:NSLocalizedString(@"Alert_View_Accept", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        NSDictionary *serverInfo = _serversArray[cellSelected];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Cancel".localized style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *accept = [UIAlertAction actionWithTitle:@"Alert_View_Accept".localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+		NSDictionary *serverInfo = self->_serversArray[cellSelected];
         [[NSUserDefaults standardUserDefaults] setObject:serverInfo forKey:kPFUserDefaultsKeyCurrentServer];
         [[NSUserDefaults standardUserDefaults] synchronize];
-        if (_delegate) {
-            [_delegate serverListDidSelectServer:serverInfo];
+        if (self.delegate) {
+            [self.delegate serverListDidSelectServer:serverInfo];
         }
         [self.navigationController popViewControllerAnimated:YES];
     }];
@@ -115,10 +108,6 @@ static long cellSelected;
 }
 
 -(void) editAction: (id)sender {
-    
-    DDLogDebug(@"editAction");
-    DDLogDebug(@"Se preciona la celda -> %ld", cellSelected);
-
     [self performSegueWithIdentifier:@"showEditServerVC" sender:self];
 }
 
@@ -143,9 +132,6 @@ static long cellSelected;
         
         vc.aliasReceived = alias;
         vc.urlRecived = url;
-        DDLogDebug(@"Alias %@", vc.aliasReceived);
-        DDLogDebug(@"URL %@", vc.urlRecived);
-
     }
 }
 
@@ -166,7 +152,6 @@ static long cellSelected;
                                           action:@selector(handleTapGesture:)];
     
     if (!cell) {
-        DDLogError(@"ServersListVC::cellForRowAtIndexPath - Cell is nil");
         return nil;
     }
     

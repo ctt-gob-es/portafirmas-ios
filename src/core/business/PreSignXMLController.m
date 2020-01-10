@@ -19,11 +19,12 @@
 // Builds Web Service Request message
 + (NSString *)buildRequestWithCert:(NSString *)cert witRequestList:(NSArray *)requests;
 {
-    DDLogDebug(@"+++++++ Presign +++++++");
     NSMutableString *mesg = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rqttri>\n"];
     
     if (![[LoginService instance] serverSupportLogin]) {
-        [mesg appendFormat:@"<cert>%@</cert>\n", cert];
+		if (cert) {
+			[mesg appendFormat:@"<cert>%@</cert>\n", cert];
+		}
     }
 
     // Filters list message
@@ -64,6 +65,35 @@
     return mesg;
 }
 
++ (NSData *)buildRequestWithoutCertWithRequestList:(NSArray *)requests{
+	NSMutableString *mesg = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rqttri>\n"];
+	NSMutableString *requestsMsg = [[NSMutableString alloc] initWithString:@"<reqs>"];
+	for (int i = 0; i < [requests count]; i++) {
+		PFRequest *request = [requests objectAtIndex:i];
+		[requestsMsg appendFormat:@"<req id=\"%@\"/>", [request reqid]];
+	}
+    [requestsMsg appendString:@"</reqs></rqttri>\n"];
+    [mesg appendString:requestsMsg];
+	NSData *mesgData = [mesg dataUsingEncoding:NSUTF8StringEncoding];
+	return mesgData;
+}
+
++ (NSData *)buildRequestWithoutCertWithRequest:(Detail *)request {
+	NSMutableString *mesg = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<rqttri>\n"];
+	NSMutableString *requestsMsg = [[NSMutableString alloc] initWithString:@"<reqs>"];
+	[requestsMsg appendFormat:@"<req id=\"%@\"/>", [request detailid]];
+    [requestsMsg appendString:@"</reqs></rqttri>\n"];
+    [mesg appendString:requestsMsg];
+	NSData *mesgData = [mesg dataUsingEncoding:NSUTF8StringEncoding];
+	return mesgData;
+}
+
++ (NSData *)buildDataForSigningPrechargedRequestInFIRe {
+	NSMutableString *mesg = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<cfrq />\n"];
+	NSData *mesgData = [mesg dataUsingEncoding:NSUTF8StringEncoding];
+	return mesgData;
+}
+
 - (PreSignXMLController *)initXMLParser
 {
     self = [super init];
@@ -86,8 +116,6 @@
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qualifiedName attributes:attributeDict];
 
     if ([elementName isEqualToString:@"req"]) {
-        DDLogDebug(@"PreSignXMLController::user element found – create a new instance of rqt class...");
-
         request = [[PFRequest alloc] init];
         documentList = [[NSMutableArray alloc] init];
 
@@ -97,7 +125,6 @@
     }
 
     if ([elementName isEqualToString:@"doc"]) {
-        DDLogDebug(@"PreSignXMLController::user element found – create a new instance of document class...");
         // We reached the end of the XML document
         waitingForDocument = YES;
         document = [[Document alloc]init];
@@ -109,14 +136,12 @@
     }
 
     if ([elementName isEqualToString:@"p"]) {
-        DDLogDebug(@"PreSignXMLController::p element found");
         // addresses is an NSMutableArray instance variable
         NSString *atributosP = [attributeDict objectForKey:@"n"];
 
         if (atributosP) {
             ssparam = [[Param alloc]init];
             ssparam.key = atributosP;
-            DDLogDebug(@"Atributo n del parametro -> %@", atributosP);
         }
 
         return;

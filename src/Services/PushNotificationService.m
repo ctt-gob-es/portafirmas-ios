@@ -150,7 +150,9 @@
 - (void) updateToken: (NSString *) token {
     
     NSString *IDVendor = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-    [SVProgressHUD show];
+	dispatch_async(dispatch_get_main_queue(), ^{
+		[SVProgressHUD show];
+	});
     [PushNotificationNetwork subscribeDevice:IDVendor withToken:token success:^{
         dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];
@@ -159,15 +161,12 @@
         NSString *certificate = [[LoginService instance] certificateInBase64];
         [[ServerManager instance] addServer:SERVER_URL withToken:token withCertificate:certificate andUserNotificationPermisionState:true];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
-        DDLogDebug(@"Push Notification Token Registered");
     } failure:^(NSError *error) {
         self.isNotificationRequired = false;
         dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];
 		});
         [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
-        DDLogError(@"Error subscribing token");
-        DDLogError(@"Error: %@", error);
     }];
 }
 

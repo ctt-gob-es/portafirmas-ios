@@ -85,6 +85,7 @@
 		3CC403861AB9EDBA006F8803 /* CertificateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC403851AB9EDBA006F8803 /* CertificateCell.m */; };
 		3CD199A51AC2C952007E9E35 /* UINavigationController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */; };
 		921EAE2F22AFB631005D6D5B /* GlobalConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EAE2E22AFB631005D6D5B /* GlobalConstants.m */; };
+		9226966F23C60FAD00F099F0 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9226966E23C60FAD00F099F0 /* NSString+Extension.m */; };
 		992987C2AA230FF0604BD234 /* libPods-PortaFirmasUniv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0A9AB702FDB8ACDEBFCF67 /* libPods-PortaFirmasUniv.a */; };
 		B23D243720BDBB0200345E0B /* userDNIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B23D243620BDBB0200345E0B /* userDNIManager.m */; };
 		B240774920AAEE0900A8EE1C /* DetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B240774820AAEE0900A8EE1C /* DetailCell.m */; };
@@ -163,7 +164,7 @@
 		3C00AD981AB71ACB00EF6886 /* SignLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignLine.m; sourceTree = "<group>"; };
 		3C00ADA01AB71AD800EF6886 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = main/AppDelegate.h; sourceTree = "<group>"; };
 		3C00ADA11AB71AD800EF6886 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = main/AppDelegate.m; sourceTree = "<group>"; };
-		3C00ADA21AB71AD800EF6886 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = main/main.m; sourceTree = "<group>"; };
+		3C00ADA21AB71AD800EF6886 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 5; lastKnownFileType = sourcecode.c.objc; name = main.m; path = main/main.m; sourceTree = "<group>"; };
 		3C00ADA31AB71AD800EF6886 /* PortaFirmasUniv-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "PortaFirmasUniv-Info.plist"; path = "main/PortaFirmasUniv-Info.plist"; sourceTree = "<group>"; };
 		3C00ADA41AB71AD800EF6886 /* PortaFirmasUniv-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PortaFirmasUniv-Prefix.pch"; path = "main/PortaFirmasUniv-Prefix.pch"; sourceTree = "<group>"; };
 		3C00ADA81AB71B0B00EF6886 /* Base64Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Utils.h; sourceTree = "<group>"; };
@@ -261,6 +262,8 @@
 		862DBE2D1FC5F494A173087E /* Pods-PortaFirmasUniv.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortaFirmasUniv.release.xcconfig"; path = "Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv.release.xcconfig"; sourceTree = "<group>"; };
 		921EAE2E22AFB631005D6D5B /* GlobalConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalConstants.m; sourceTree = "<group>"; };
 		921EAE3022AFB672005D6D5B /* GlobalConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalConstants.h; sourceTree = "<group>"; };
+		9226966D23C60F3F00F099F0 /* NSString+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
+		9226966E23C60FAD00F099F0 /* NSString+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
 		B23D243520BDBB0200345E0B /* userDNIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = userDNIManager.h; sourceTree = "<group>"; };
 		B23D243620BDBB0200345E0B /* userDNIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = userDNIManager.m; sourceTree = "<group>"; };
 		B240774720AAEE0900A8EE1C /* DetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailCell.h; sourceTree = "<group>"; };
@@ -345,6 +348,7 @@
 		1C9F2004163E93C3007A170B = {
 			isa = PBXGroup;
 			children = (
+				9226966A23C60E0900F099F0 /* Extensions */,
 				3C0A7EBB1AB19DB200F793AA /* lib */,
 				3CA898EE1AA5BC8D0035012D /* res */,
 				3CA898EC1AA5BC740035012D /* src */,
@@ -780,6 +784,15 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		9226966A23C60E0900F099F0 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9226966D23C60F3F00F099F0 /* NSString+Extension.h */,
+				9226966E23C60FAD00F099F0 /* NSString+Extension.m */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		B29014E8215829BE008A9B83 /* UIFont */ = {
 			isa = PBXGroup;
 			children = (
@@ -922,7 +935,7 @@
 		1C9F2006163E93C3007A170B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = "Solid Gear Projects S.L.";
 				TargetAttributes = {
 					1C9F200E163E93C3007A170B = {
@@ -1038,6 +1051,7 @@
 				3C00AD9D1AB71ACB00EF6886 /* PFRequestResult.m in Sources */,
 				3C00AD871AB71A8700EF6886 /* UnassignedRequestTableViewController.m in Sources */,
 				3C00ADE01AB71B3100EF6886 /* NSDate+Utils.m in Sources */,
+				9226966F23C60FAD00F099F0 /* NSString+Extension.m in Sources */,
 				BC5BF9DE1FDFC97000B1CF0C /* HelpViewController.m in Sources */,
 				BCF083361FC46A8B00450FE7 /* Parser.m in Sources */,
 				3CA899601AA60E6C0035012D /* RequestCell.m in Sources */,
@@ -1139,22 +1153,42 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1172,16 +1206,36 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos6.0]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
@@ -1199,7 +1253,7 @@
 			baseConfigurationReference = E616382C6011BCF1C72ABE60 /* Pods-PortaFirmasUniv.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CODE_SIGN_ENTITLEMENTS = res/conf/PortaFirmasUniv.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1210,8 +1264,8 @@
 				GCC_PREFIX_HEADER = "src/main/PortaFirmasUniv-Prefix.pch";
 				INFOPLIST_FILE = "src/main/PortaFirmasUniv-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = es.gob.afirma.Portafirmas;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_NAME = "Port@firmas";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1225,7 +1279,7 @@
 			baseConfigurationReference = 862DBE2D1FC5F494A173087E /* Pods-PortaFirmasUniv.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CODE_SIGN_ENTITLEMENTS = res/conf/PortaFirmasUniv.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";

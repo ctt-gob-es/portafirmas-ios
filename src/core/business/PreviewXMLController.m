@@ -36,10 +36,12 @@
         CertificateUtils *cert = [CertificateUtils sharedWrapper];
         NSString *certificado = [NSData base64EncodeData:[cert publicKeyBits]];
         // Formats lists message
-        NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
-        [certlabel appendFormat:@"%@\n", certificado];
-        [certlabel appendString:@"</cert>\n"];
-        [mesg appendString:certlabel];
+		if (certificado) {
+			NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
+			[certlabel appendFormat:@"%@\n", certificado];
+			[certlabel appendString:@"</cert>\n"];
+			[mesg appendString:certlabel];
+		}
     }
  
     [mesg appendFormat:@"</rqtprw>\n"];
@@ -57,8 +59,6 @@
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qualifiedName attributes:attributeDict];
 
     if ([elementName isEqualToString:@"prw"]) {
-        DDLogDebug(@"user element found – create a new instance of prw class...");
-
         _dataSource = [[Preview alloc] init];
         // We do not have any attributes in the user elements, but if
         // you do, you can extract them here:
@@ -101,7 +101,6 @@
         // We reached the end of the XML document
         return;
     } else {
-        DDLogDebug(@"PreviewXMLController::element name=%@", elementName);
         [_dataSource setValue:currentElementValue forKey:elementName];
     }
 

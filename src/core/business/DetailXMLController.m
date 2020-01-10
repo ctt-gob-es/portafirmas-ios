@@ -32,10 +32,12 @@
         CertificateUtils *cert = [CertificateUtils sharedWrapper];
          NSString *certificado = [NSData base64EncodeData:[cert publicKeyBits]];
          // Formats lists message
-         NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
-         [certlabel appendFormat:@"%@\n", certificado];
-         [certlabel appendString:@"</cert>\n"];
-         [mesg appendString:certlabel];
+		if (certificado) {
+			NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
+			[certlabel appendFormat:@"%@\n", certificado];
+			[certlabel appendString:@"</cert>\n"];
+			[mesg appendString:certlabel];
+		}
     }
     
     [mesg appendFormat:@"</rqtdtl>\n"];
@@ -61,28 +63,21 @@
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qualifiedName attributes:attributeDict];
 
     if ([elementName isEqualToString:@"dtl"]) {
-       DDLogDebug(@"user element found – create a new instance of dtl class...");
-
         _detail = [[Detail alloc] initWithDict:attributeDict];
         waitingForDocument = FALSE;
         waitingForAttachedDoc = FALSE;
     }
 
     if ([elementName isEqualToString:@"snders"]) {
-        DDLogDebug(@"user element found – create a new instance of snders list class...");
         waitingForSenders = YES;
         senders = [[NSMutableArray alloc ]init];
     }
 
     if ([elementName isEqualToString:@"sgnlines"]) {
-       DDLogDebug(@"user element found – create a new instance of signlines list class...");
-
         signlines = [[NSMutableArray alloc ]init];
     }
 
     if ([elementName isEqualToString:@"sgnline"]) {
-        DDLogDebug(@"user element found – create a new instance of sgnline class...");
-
         waitingForSignline = YES;
         signline = [[SignLine alloc ]init];
 
@@ -90,34 +85,24 @@
     }
 
     if ([elementName isEqualToString:@"docs"]) {
-        DDLogDebug(@"user element found – create a new instance of docs list class...");
-
         documents = [[NSMutableArray alloc ]init];
     }
 
     if ([elementName isEqualToString:@"doc"]) {
-        DDLogDebug(@"user element found – create a new instance of doc class...");
         // We reached the end of the XML document
         waitingForDocument = YES;
         document = [[Document alloc ]init];
-
         document.docid = [attributeDict objectForKey:@"docid"];
-        DDLogDebug(@"user element found – document docid=%@", [attributeDict objectForKey:@"docid"]);
     }
     
     if ([elementName isEqualToString:@"attachedList"]){
-        DDLogDebug(@"user element found – create a new instance of attached list class");
-        
         attachedDocs = [NSMutableArray new];
     }
     
     if ([elementName isEqualToString:@"attached"]) {
         waitingForAttachedDoc = YES;
         attachedDoc = [AttachedDoc new];
-        
         attachedDoc.docid = [attributeDict objectForKey:@"docid"];
-        
-        DDLogDebug(@"user element found – attached docid=%@", [attributeDict objectForKey:@"docid"]);
     }
 }
 

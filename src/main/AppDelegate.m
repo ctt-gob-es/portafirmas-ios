@@ -7,9 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "DDASLLogger.h"
-#import "DDTTYLogger.h"
-#import "DDFileLogger.h"
 #import "NSData+Conversion.h"
 #import "UnassignedRequestTableViewController.h"
 #import "LoginService.h"
@@ -36,14 +33,13 @@
 
 void uncaughtExceptionHandler(NSException *exception)
 {
-    DDLogError(@"CRASH: %@", exception);
-    DDLogError(@"Stack Trace: %@", [exception callStackSymbols]);
+	NSLog(@"CRASH: %@", exception);
+    NSLog(@"Stack Trace: %@", [exception callStackSymbols]);
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    [self setupLogger];
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     [self customizeAppearance];
     [self loadSelectedCertificate];
@@ -89,14 +85,6 @@ void uncaughtExceptionHandler(NSException *exception)
     [self.window setBackgroundColor:[UIColor whiteColor]];
 }
 
-- (void)setupLogger
-{
-    // Configure CocoaLumberjack
-    [DDLog addLogger:[DDASLLogger sharedInstance]];
-    [DDLog addLogger:[DDTTYLogger sharedInstance]];
-
-}
-
 - (void)loadSelectedCertificate
 {
     NSArray *userDefaultsKeys = [[NSUserDefaults standardUserDefaults] dictionaryRepresentation].allKeys;
@@ -133,9 +121,7 @@ void uncaughtExceptionHandler(NSException *exception)
 #pragma mark - Notifications Support
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(nonnull NSData *)deviceToken {
-    NSString *tokenHex = [deviceToken hexadecimalString];
-   // [DDLogDebug(@"Device Token for notifications, token: %@", [tokenHex uppercaseString]);
-     
+    NSString *tokenHex = [deviceToken hexadecimalString];     
    // [self showAlertView:[tokenHex uppercaseString]];
     
     /*if (!IOS_NEWER_OR_EQUAL_TO_10 && [[PushNotificationService instance] hasUserAllowNotifications] == false) {
@@ -149,12 +135,9 @@ void uncaughtExceptionHandler(NSException *exception)
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(nonnull NSError *)error {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
-    DDLogError(@"Error Register for remote notifications: %@", error);
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-    DDLogDebug(@"Receive remote notification: %@", userInfo);
-    
     if (userInfo != nil) {
         if ([NotificationHandler isNotificationForUserLogged:userInfo]){
             [self openPendingTabAndLoadData];

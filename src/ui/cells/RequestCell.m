@@ -34,7 +34,7 @@
 - (void)getExpirationLabelValue:(NSString *)expirationDate {
     _expirationDate.hidden = expirationDate == nil;
     if (expirationDate){
-        NSString* expirationDateText = [NSLocalizedString(@"Expiration_text_message", nil) stringByAppendingString:expirationDate];
+        NSString* expirationDateText = [@"Expiration_text_message".localized stringByAppendingString:expirationDate];
         [_expirationDate setText:expirationDateText];
     }
 }

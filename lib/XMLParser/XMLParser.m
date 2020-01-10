@@ -62,6 +62,10 @@ BOOL NSStringEqualsXMLNullString(NSString *string);
 	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
 		self.parser = [[[NSXMLParser alloc] initWithData:data] autorelease];
 		
+		NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+
+		NSLog(@"%@",dataString);
+		
 		[self setSuccess:success];
 		[self setFailure:failure];
 		
@@ -160,8 +164,9 @@ BOOL NSStringEqualsXMLNullString(NSString *string);
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
 	[self.foundCharacters appendString:string];
 }
+
 - (void)parser:(NSXMLParser *)parser foundCDATA:(NSData *)CDATABlock {
-	
+	[self.foundCDATA appendData:CDATABlock];
 }
 
 #pragma mark Attributes Cleaning

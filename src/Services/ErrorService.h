@@ -12,5 +12,6 @@
 + (ErrorService *)instance;
 - (void) showLoginErrorAlertView;
 - (void) showNotAllowNotifications;
+- (void) showAlertViewWithTitle: (NSString *) title andMessage: (NSString*) message;
 @end
 

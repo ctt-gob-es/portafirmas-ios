@@ -21,7 +21,6 @@
 
 - (IBAction)clickImport:(id)sender
 {
-    DDLogDebug(@"ClickImport");
     _password = _passwordText.text;
 
     if (!_password || [_password isEqualToString:@""]) {
@@ -35,13 +34,6 @@
 {
     [super viewDidLoad];
     [_passwordText becomeFirstResponder];
-}
-
-- (void)viewDidUnload
-{
-    [self setPasswordText:nil];
-    [self set_messageView:nil];
-    [super viewDidUnload];
 }
 
 - (void)registerWithCertificate
@@ -78,18 +70,15 @@
         }
     } else {
         _infoLabel = @"El certificado se ha cargado correctamente";
-        DDLogDebug(@"registerWithCertificateName::Certificate is loaded");
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Loaded_Certificate", nil)
-                                                                                 message:NSLocalizedString(@"Alert_View_Loaded_Certificate_In_Your_App", nil)
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Alert_View_Loaded_Certificate".localized
+                                                                                 message:@"Alert_View_Loaded_Certificate_In_Your_App".localized
                                                                           preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Ok".localized style:UIAlertActionStyleCancel handler:^(UIAlertAction * action) {
             // Boton OK presionado - certificado cargado correctamente
-            DDLogDebug(@"registerWithCertificateName::Certificado cargado");
-            DDLogDebug(@"registerWithCertificateName::Volvemos a la vista anterior...");
-            [_passwordText resignFirstResponder];
-            [_passwordText removeFromSuperview];
-            if (_delegate) {
-                [_delegate certificateAdded];
+            [self.passwordText resignFirstResponder];
+            [self.passwordText removeFromSuperview];
+            if (self.delegate) {
+                [self.delegate certificateAdded];
             }
         }];
         [alertController addAction:cancel];
@@ -103,7 +92,6 @@
 /* Boton volver*/
 - (IBAction)clickCancel:(id)sender
 {
-    DDLogDebug(@"registerWithCertificateName::Volvemos a la vista anterior...");
     [self.navigationController popViewControllerAnimated:YES];
 }
 
