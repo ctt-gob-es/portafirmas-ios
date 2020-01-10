@@ -82,10 +82,10 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
     });
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Error".localized
                                                                              message:errorString
                                                                       preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
     [alertController addAction:cancel];
     [self presentViewController:alertController animated:YES completion:nil];
 }
@@ -162,10 +162,10 @@
 {
     if (!_isShowingAlertView) {
         _isShowingAlertView = YES;
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Preview_Not_Available", nil)
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Alert_View_Preview_Not_Available".localized
                                                                                  message:message
                                                                           preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
         [alertController addAction:cancel];
         [self presentViewController:alertController animated:YES completion:nil];
     }

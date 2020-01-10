@@ -21,6 +21,10 @@
 @end
 
 @implementation LoginService
+
+static NSString *const kContentKey = @"content";
+static NSString *const kUrl = @"url";
+static NSString *const kSessionId = @"sessionId";
     
 + (LoginService *)instance {
     static LoginService *loginService = nil;
@@ -79,6 +83,7 @@
 				[SVProgressHUD dismiss];
 			});
 			self.serverSupportLogin = NO;
+			self.remoteCertificateLoginOK = NO;
 			NSLog(@"Error: %@", error);
 			failure(error);
 		}];
@@ -91,17 +96,33 @@
 		if (error != nil && error.code == PFLoginNotSupported) {
 			self.serverSupportLogin = NO;
 		}
+		self.remoteCertificateLoginOK = NO;
+		failure(error);
+	}];
+}
+
+- (void) loginWithRemoteCertificates:(void(^)(void))success failure:(void(^)(NSError *error))failure {
+	LoginNetwork *loginNetwork = [LoginNetwork new];
+	[loginNetwork loginWithRemoteCertificates:^(NSDictionary *content) {
+		[self setRemoteCertificatesParameters: content];
+		self.remoteCertificateLoginOK = YES;
+		success();
+	} failure:^(NSError *error) {
+		[SVProgressHUD dismiss];
+		//Check if is old server
+		if (error != nil && error.code == PFLoginNotSupported) {
+			self.serverSupportLogin = NO;
+		}
+		self.remoteCertificateLoginOK = NO;
 		failure(error);
 	}];
 }
 
 - (void) loginWithCertificate:(void(^)(void))success failure:(void(^)(NSError *error))failure {
-    
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[SVProgressHUD show];
 	});
 	[self extracted:failure success:success];
-    
 }
 
 - (void) logout:(void(^)(void))success failure:(void(^)(NSError *error))failure {
@@ -115,7 +136,8 @@
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];
 		});
-        self.serverSupportLogin = false;
+        self.serverSupportLogin = NO;
+		self.remoteCertificateLoginOK = NO;
         self.currentSignToken = @"";
         [CookieTools removeJSessionIDCookies];
         success();
@@ -123,7 +145,8 @@
        dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];
 		});
-        self.serverSupportLogin = false;
+        self.serverSupportLogin = NO;
+		self.remoteCertificateLoginOK = NO;
         self.currentSignToken = @"";
         [CookieTools removeJSessionIDCookies];
         failure(error);
@@ -149,4 +172,14 @@
     NSData *certificateData = [CertificateUtils sharedWrapper].publicKeyBits;
     return [Base64Utils base64EncodeData:certificateData];
 }
+
+-(void) setRemoteCertificatesParameters: (NSDictionary *) content {
+	if([content objectForKey:kUrl]){
+		self.urlForRemoteCertificates = [[content objectForKey:kUrl] objectForKey: kContentKey];
+	}
+	if([content objectForKey:kSessionId]){
+		self.sessionId = [[content objectForKey:kSessionId] objectForKey: kContentKey];
+	}
+}
+
 @end

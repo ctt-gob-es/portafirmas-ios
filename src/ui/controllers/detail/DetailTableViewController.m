@@ -18,6 +18,9 @@
 #import "RejectXMLController.h"
 #import "ApproveXMLController.h"
 #import "DetailCell.h"
+#import "GlobalConstants.h"
+#import "ErrorService.h"
+#import <WebKit/WebKit.h>
 
 static NSString *const kDetailCell = @"detailCell";
 static NSString *const kDetailCellNibName = @"DetailCell";
@@ -53,6 +56,12 @@ typedef enum cellTypes
 	Message
 } CellTypes;
 
+typedef NS_ENUM(NSUInteger, ErrorNumber) {
+    error1 = 1,
+    error2,
+    error3
+} ;
+
 NSInteger const numberOfRows = 12;
 CGFloat const defaultCellHeight = 44;
 CGFloat const noCellHeight = 0;
@@ -67,6 +76,8 @@ CGFloat const largeTitleCellWidth = 200;
     NSString *motivoRechazo;
     BOOL isSuccessReject;
 }
+
+@property (strong, nonatomic) WKWebView *webView;
 
 @end
 
@@ -133,70 +144,70 @@ CGFloat const largeTitleCellWidth = 200;
     NSString *value = kEmptyString;
     switch (indexPath.row) {
         case From:
-            title = NSLocalizedString(@"Cell_Title_From", nil);
+            title = @"Cell_Title_From".localized;
             value = [self getSenders];
             [cell setDarkStyle];
             break;
         case Subject:
-            title = NSLocalizedString(@"Cell_Title_Subject", nil);
+            title = @"Cell_Title_Subject".localized;
             value = [self getSubject];
             [cell setDarkStyle];
             [cell setValueBoldStyle];
             break;
         case Reference:
             self.referenceLbl.text = _dataSource.ref;
-            title = NSLocalizedString(@"Cell_Title_Reference", nil);
+            title = @"Cell_Title_Reference".localized;
             value = [self getReference];
             [cell setDarkStyle];
             break;
         case RejectExplanation:
-            title = NSLocalizedString(@"Cell_Title_RejectExplanation", nil);
+            title = @"Cell_Title_RejectExplanation";
             value = [self getRejectExplanation];
             [cell setDarkStyle];
             [cell increaseTitleLabelWidth: rejectCellTitleCellWidth];
             [cell hideLabelsIfNeeded: ![self rejectExplanationExists]];
             break;
         case AttachedDocument:
-            title = NSLocalizedString(@"Cell_Title_AttachedDocument", nil);
+            title = @"Cell_Title_AttachedDocument";
             [cell setValueInNewViewStyle];
             [cell increaseTitleLabelWidth:largeTitleCellWidth];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         case Receivers:
-            title = NSLocalizedString(@"Cell_Title_Receivers", nil);
+            title = @"Cell_Title_Receivers".localized;
             [cell setValueInNewViewStyle];
             [cell increaseTitleLabelWidth: largeTitleCellWidth];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;
         case RequestType:
-            title = NSLocalizedString(@"Cell_Title_RequestType", nil);
+            title = @"Cell_Title_RequestType".localized;
             value = [self getRequestType];
             [cell setClearStyle];
             [cell setValueBoldStyle];
             break;
         case SignType:
-            title = NSLocalizedString(@"Cell_Title_SignType", nil);
+            title = @"Cell_Title_SignType".localized;
             value = [self getSignType];
             [cell setClearStyle];
             break;
         case Date:
-            title = NSLocalizedString(@"Cell_Title_Date", nil);
+            title = @"Cell_Title_Date".localized;
             value = [self getDate];
             [cell setClearStyle];
             break;
         case ExpirationDate:
-            title = NSLocalizedString(@"Cell_Title_ExpirationDate", nil);
+            title = @"Cell_Title_ExpirationDate".localized;
             value = [self getExpirationDate];
             [cell setClearStyle];
             [cell hideLabelsIfNeeded: !_dataSource.expdate];
             break;
         case Application:
-            title = NSLocalizedString(@"Cell_Title_Application", nil);
+            title = @"Cell_Title_Application".localized;
             value = [self getApplication];
             [cell setClearStyle];
             break;
 		case Message:
-			title = NSLocalizedString(@"Cell_Title_Message", nil);
+			title = @"Cell_Title_Message".localized;
 			value = [self getMessage];
 			[cell setClearStyle];
             [cell hideLabelsIfNeeded: ![self messageExists]];
@@ -233,7 +244,7 @@ CGFloat const largeTitleCellWidth = 200;
 
 -(NSString *)getRequestType
 {
-    NSString *requestType = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? NSLocalizedString(@"Request_Type_Firma", nil) : NSLocalizedString(@"Request_Type_Visto_Bueno", nil);
+    NSString *requestType = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? @"Request_Type_Firma".localized : @"Request_Type_Visto_Bueno".localized;
     return requestType;
 }
 
@@ -303,9 +314,9 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (IBAction)didTapDocumentActionButton:(id)sender
 {
-    NSString *signButtonTitle = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? NSLocalizedString(@"Sign", nil) : NSLocalizedString(@"Approval", nil);
+    NSString *signButtonTitle = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? @"Sign".localized : @"Approval".localized;
     UIAlertController *alertController = [self obtainAlertController];
-    UIAlertAction* reject = [UIAlertAction actionWithTitle:NSLocalizedString(@"Reject", nil)
+    UIAlertAction* reject = [UIAlertAction actionWithTitle:@"Reject".localized
                                                      style:UIAlertActionStyleDefault
                                                    handler:^(UIAlertAction * action)
                              {
@@ -317,7 +328,7 @@ CGFloat const largeTitleCellWidth = 200;
                            {
                                [self signAction];
                            }];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel".localized style:UIAlertActionStyleCancel handler:nil];
     [alertController addAction:reject];
     [alertController addAction:sign];
     [alertController addAction:cancel];
@@ -346,13 +357,13 @@ CGFloat const largeTitleCellWidth = 200;
 - (void)rejectAction
 {
     // Preguntamos el por qué del rechazo
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Rejection_of_requests", nil) message:NSLocalizedString(@"Indicate_Reason_For_Rejection", nil) preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
-    UIAlertAction *conti = [UIAlertAction actionWithTitle:NSLocalizedString(@"Continue", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Rejection_of_requests".localized message:@"Indicate_Reason_For_Rejection".localized preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel".localized style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *conti = [UIAlertAction actionWithTitle:@"Continue".localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         [self rejectActionClickContinueButton:alert];
     }];
     [alert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        textField.placeholder = NSLocalizedString(@"Reason_For_Rejection", nil);
+        textField.placeholder = @"Reason_For_Rejection".localized;
         textField.keyboardType = UIKeyboardTypeDefault;
     }];
     [alert addAction:cancel];
@@ -391,10 +402,16 @@ CGFloat const largeTitleCellWidth = 200;
 
 - (void)startSignRequest
 {
-    _waitingResponseType = PFWaitingResponseTypeSign;
-    _requestSignerController = [[RequestSignerController alloc] init];
-    _requestSignerController.delegate = self;
-    [_requestSignerController loadPreSignDetailWithCurrentCertificate:_dataSource];
+	_waitingResponseType = PFWaitingResponseTypeSign;
+	if (!_requestSignerController) {
+		_requestSignerController = [RequestSignerController new];
+	}
+	[_requestSignerController setDelegate:self];
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyRemoteCertificatesSelection]) {
+		[_requestSignerController sendSignRequestForFIReFromDetailView:_dataSource];
+	} else {
+		[_requestSignerController loadPreSignDetailWithCurrentCertificate:_dataSource];
+	}
 }
 
 - (void)startApprovalRequest
@@ -412,7 +429,7 @@ CGFloat const largeTitleCellWidth = 200;
     self.inputDateLbl.text = _dataSource.date;
     self.sendersMoreButton.hidden = YES;
     self.signLinesTypeLbl.text = _dataSource.signlinestype;
-    NSString *requestTypeText = [(PFRequest *)_dataSource type] == PFRequestTypeSign ? NSLocalizedString(@"Request_Type_Firma", nil) : NSLocalizedString(@"Request_Type_Visto_Bueno", nil);
+    NSString *requestTypeText = [(PFRequest *)_dataSource type] == PFRequestTypeSign ?@"Request_Type_Firma".localized : @"Request_Type_Visto_Bueno".localized;
     self.requestTypeLbl.text = requestTypeText;
     [self showSenders];
     _selectedRows = nil;
@@ -474,12 +491,12 @@ CGFloat const largeTitleCellWidth = 200;
     [self.sendersTextView scrollRangeToVisible:NSMakeRange(0,0)];
     if ([senders count] > 2 ){
         self.sendersMoreButton.hidden = NO;
-        NSString *textButton1 = NSLocalizedString(@"Detail_senders_first_button", nil);
-        NSString *textButton2 = NSLocalizedString(@"Detail_senders_second_button", nil);
+        NSString *textButton1 = @"Detail_senders_first_button".localized;
+        NSString *textButton2 = @"Detail_senders_second_button".localized;
         NSInteger restOfSenders = [senders count] - 2;
         NSString *textButton = [NSString stringWithFormat:@"%@%ld%@",textButton1, (long)restOfSenders, textButton2];
         [self.sendersMoreButton setTitle:textButton forState:UIControlStateNormal];
-    } else{
+    } else {
         self.sendersMoreButton.hidden = YES;
     }
 }
@@ -501,6 +518,14 @@ CGFloat const largeTitleCellWidth = 200;
     }
 
     return YES;
+}
+
+- (void) signPrechargedRequestForFIRe {
+	if (!_requestSignerController) {
+		_requestSignerController = [RequestSignerController new];
+	}
+    [_requestSignerController setDelegate:self];
+	[_requestSignerController signPrechargedRequestInFIRe];
 }
 
 #pragma mark - WSDataController delegate
@@ -527,7 +552,7 @@ CGFloat const largeTitleCellWidth = 200;
         }
     }
     else {
-        [self didReceiveParserWithError:NSLocalizedString(@"Detail_view_error_server_connection", nil)];
+        [self didReceiveParserWithError:@"Detail_view_error_server_connection".localized];
     }
 }
 
@@ -551,16 +576,16 @@ CGFloat const largeTitleCellWidth = 200;
 
     for (PFRequestResult *request in requestsSigned) {
         if ([[request status] isEqualToString:kKOStatusString]) {
-            [self didReceiveError:[[NSString alloc] initWithFormat:NSLocalizedString(@"Detail_view_error_processing_request", nil), [request rejectid]]];
+            [self didReceiveError:[[NSString alloc] initWithFormat:@"Detail_view_error_processing_request".localized, [request rejectid]]];
             processedOK = FALSE;
         }
     }
 
     if (processedOK) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil)
-                                                                                 message:NSLocalizedString(@"Correctly_rejected_requests", nil)
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized
+                                                                                 message: @"Correctly_rejected_requests".localized
                                                                           preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *actionOk = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil)
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle: @"Ok".localized
                                                            style:UIAlertActionStyleDefault
                                                          handler:^(UIAlertAction * _Nonnull action) {
                                                              [self dismissSelfView];
@@ -592,7 +617,7 @@ CGFloat const largeTitleCellWidth = 200;
         [self didReceiveRejectResult:rejectsReq];
     }
     else {
-        [self didReceiveError:NSLocalizedString(@"Detail_view_error_server_connection_501", nil)];
+        [self didReceiveError:@"Detail_view_error_server_connection_501".localized];
     }
 }
 
@@ -608,21 +633,21 @@ CGFloat const largeTitleCellWidth = 200;
 
     if (idsForRequestsWithError.count == 0) {
         // @" Peticiones firmadas corrrectamente"
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil) message:NSLocalizedString(@"Alert_View_Request_Processed_Correctly", nil) preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized message: @"Alert_View_Request_Processed_Correctly".localized preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
         [alertController addAction:cancel];
         [self presentViewController:alertController animated:YES completion:nil];
         [self dismissSelfView];
     } else {
         NSString *errorMessage;
         if (idsForRequestsWithError.count == 1) {
-            errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Detail_view_error_processing_request", nil), idsForRequestsWithError[0]];
+            errorMessage = [NSString stringWithFormat: @"Detail_view_error_processing_request".localized, idsForRequestsWithError[0]];
         } else {
             NSMutableString *errorIDSString = [kEmptyString mutableCopy];
             [idsForRequestsWithError enumerateObjectsUsingBlock:^(NSString *requestID, NSUInteger idx, BOOL *stop) {
                  [errorIDSString appendFormat:kAppendFormatString, requestID];
              }];
-            errorMessage = [NSString stringWithFormat:NSLocalizedString(@"Detail_view_error_processing_multiple_request", nil), errorIDSString];
+            errorMessage = [NSString stringWithFormat:@"Detail_view_error_processing_multiple_request".localized, errorIDSString];
         }
         [self didReceiveError:errorMessage];
         [self dismissSelfView];
@@ -640,8 +665,8 @@ CGFloat const largeTitleCellWidth = 200;
     if (!finishOK) {
         NSString *errorCode = [parser errorCode] == nil ? kEmptyString : [parser errorCode];
         NSString *err = [parser err] == nil ? kEmptyString : [parser err];
-        [self didReceiveError: [NSString stringWithFormat: NSLocalizedString(@"Detail_view_error_messages_from_server", nil), err, errorCode]];
-        [_requestSignerController didReceiveParserWithError: [NSString stringWithFormat: NSLocalizedString(@"Detail_view_error_messages_from_server", nil), err, errorCode]];
+        [self didReceiveError: [NSString stringWithFormat: @"Detail_view_error_messages_from_server".localized, err, errorCode]];
+        [_requestSignerController didReceiveParserWithError: [NSString stringWithFormat: @"Detail_view_error_messages_from_server".localized, err, errorCode]];
     } else {
         _dataSource = [parser dataSource];
         [self loadDetailInfo];
@@ -649,15 +674,28 @@ CGFloat const largeTitleCellWidth = 200;
     }
 }
 
-- (void)didReceiveError:(NSString *)errorString
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [SVProgressHUD dismiss];
-    });
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Alert_View_Error", nil) message:errorString preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
-    [alertController addAction:cancel];
-    [self presentViewController:alertController animated:YES completion:nil];
+- (void) didReceiveCorrectSignResponseFromFIRe {
+	[self.navigationController popToRootViewControllerAnimated:YES];
+	[[NSNotificationCenter defaultCenter] postNotificationName: @"didReceiveResponseFromFIRe" object:self userInfo:@{@"correctSign" : @"Alert_View_Everything_Signed_Correctly".localized }];
+}
+
+- (void)didReceiveError:(NSString *)errorString {
+	[SVProgressHUD dismissWithCompletion:^{
+		[[ErrorService instance] showAlertViewWithTitle: @"Alert_View_Error".localized andMessage: errorString];
+	}];
+}
+
+- (void) didReceiveErrorSignResponseFromFIRe: (NSString *) error {
+	[self.navigationController popToRootViewControllerAnimated:YES];
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"didReceiveResponseFromFIRe" object:self userInfo:@{@"errorNumber" : error}];
+}
+
+- (void)didReceiveErrorInPrechargedFIReRequest:(NSString *)error{
+	[self didReceiveError:error];
+}
+
+- (void) showErrorInFIReAndRefresh: (NSString *) error {
+	[[NSNotificationCenter defaultCenter] postNotificationName:@"didReceiveResponseFromFIRe" object:self userInfo:@{@"error" : error}];
 }
 
 #pragma mark - RequestSignerEvent
@@ -674,20 +712,20 @@ CGFloat const largeTitleCellWidth = 200;
     for (PFRequest *request in requestsSigned) {
         if ([[request status] isEqualToString: kKOStatusString]) {
             if (![msg isEqualToString:kEmptyString]) {
-                msg = NSLocalizedString(@"Detail_view_error_signing_selected_requests", nil);
+                msg = @"Detail_view_error_signing_selected_requests".localized;
                 break;
             } else {
-                msg = NSLocalizedString(@"Detail_view_error_signing_selected_request", nil);
+                msg = @"Detail_view_error_signing_selected_request".localized;
             }
             processedOK = FALSE;
         }
     }
     if (processedOK) {
         // @" Peticiones firmadas corrrectamente"
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Info", nil)
-                                                                                 message:NSLocalizedString(@"Alert_View_Everything_Signed_Correctly", nil)
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized
+                                                                                 message: @"Alert_View_Everything_Signed_Correctly".localized
                                                                           preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             [self dismissSelfView];
         }];
         [alertController addAction:cancel];
@@ -705,6 +743,52 @@ CGFloat const largeTitleCellWidth = 200;
 	
     [(BaseListTVC *)self.navigationController.previousViewController refreshInfo];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)showFIRMeWebView:(NSURL *) url {
+	 dispatch_async(dispatch_get_main_queue(), ^{
+		 [SVProgressHUD dismiss];
+		 [self.navigationController setNavigationBarHidden:YES animated:YES];
+		 WKWebViewConfiguration *wkWebViewConfiguration = [[WKWebViewConfiguration alloc] init];
+		 self.webView = [[WKWebView alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) configuration: wkWebViewConfiguration];
+		 self.webView.navigationDelegate = self;
+		 NSURLRequest *nsrequest=[NSURLRequest requestWithURL:url];
+		 [self.webView loadRequest: nsrequest];
+		 [self.view addSubview: self.webView];
+	 });
+}
+
+#pragma mark - WebViewDelegate
+
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    NSURLRequest *request = navigationAction.request;
+	NSString *requestString = [[request URL] absoluteString];
+	NSArray *urlComponents = [requestString componentsSeparatedByString: kQuestionMarkString];
+	NSString *urlString = [urlComponents firstObject];
+	NSArray *urlFragments= [urlString componentsSeparatedByString: kStringSlash];
+	if ([[urlFragments lastObject] rangeOfString:kError].location != NSNotFound) {
+		[self.webView removeFromSuperview];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismissWithCompletion:^{
+				[self.navigationController setNavigationBarHidden:NO animated:YES];
+				[self.navigationController popToRootViewControllerAnimated:YES];
+				[[ErrorService instance] showAlertViewWithTitle: @"Alert_View_Error".localized andMessage: @"FIRe_error_message".localized];
+			}];
+		 });
+		return decisionHandler(WKNavigationActionPolicyCancel);
+	}
+	if ([[urlFragments lastObject] rangeOfString:kOk].location != NSNotFound) {
+		[self.webView removeFromSuperview];
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[SVProgressHUD dismissWithCompletion:^{
+				[self.navigationController setNavigationBarHidden:NO animated:YES];
+				[self.navigationController setToolbarHidden:NO animated:NO];
+				[self signPrechargedRequestForFIRe];
+			}];
+		 });
+		return decisionHandler(WKNavigationActionPolicyCancel);
+	}
+	decisionHandler(WKNavigationActionPolicyAllow);
 }
 
 @end

@@ -55,12 +55,14 @@
 + (NSString *)certificateTag
 {
     NSString *certificateString = [NSData base64EncodeData:[[CertificateUtils sharedWrapper] publicKeyBits]];
-    NSMutableString *certificateTag = [@"<cert>\n" mutableCopy];
-
-    [certificateTag appendFormat:@"%@\n", certificateString];
-    [certificateTag appendString:@"</cert>\n"];
-
-    return certificateTag;
+	if (certificateString){
+		NSMutableString *certificateTag = [@"<cert>\n" mutableCopy];
+		[certificateTag appendFormat:@"%@\n", certificateString];
+		[certificateTag appendString:@"</cert>\n"];
+		return certificateTag;
+	} else {
+		return @"";
+	}
 }
 
 + (NSString *)requestsIDTagWithRequests:(NSArray *)requestsArray

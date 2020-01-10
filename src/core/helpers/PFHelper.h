@@ -74,6 +74,8 @@ static NSString *const kPFUserDefaultsKeyAlias = @"alias";
 static NSString *const kPFUserDefaultsKeyURL = @"URL";
 static NSString *const kPFUserDefaultsKeyDNI = @"DNI";
 static NSString *const kPFUserDefaultsKeyServersArray = @"serversArray";
+static NSString *const kPFUserDefaultsKeyRemoteCertificates = @"remoteCertificates";
+static NSString *const kPFUserDefaultsKeyRemoteCertificatesSelection = @"remoteCertificatesSelection";
 
 static NSString *const kPFCertInfoKeyIssuer = @"issuer";
 static NSString *const kPFCertInfoKeySubject = @"subject";

@@ -18,6 +18,8 @@
 #import "Document.h"
 #import "Param.h"
 #import "Base64Utils.h"
+#import "PFError.h"
+#import "GlobalConstants.h"
 
 @implementation RequestSignerController
 
@@ -61,6 +63,62 @@
     } else {
         [[self delegate] didReceiveSignerRequestResult:_dataSource];
     }
+}
+
+- (void) sendSignRequestForFIRe:(NSArray *)requests {
+	NSInteger code = 16;
+	_dataSource = [[NSMutableArray alloc] init];
+	NSData *data = [PreSignXMLController buildRequestWithoutCertWithRequestList:requests];
+	_wsController.delegate = self;
+	[_wsController postSignRequestWithFIRe:data code:code success:^(NSDictionary *content) {
+		NSDictionary *responseDict = [content objectForKey:kCfrqtTag];
+		NSString *cfrqtValue = [responseDict objectForKey:kOk];
+		if ([cfrqtValue isEqualToString:kTrue]) {
+			[[self delegate] showFIRMeWebView:[[NSURL alloc] initWithString:[responseDict objectForKey:kContentKey]]];
+		} else {
+			[[self delegate] showErrorInFIReAndDeselectRows: @"FIRe_error_in_server_message".localized];
+		}
+	} failure:^(NSError *error) {
+		[[self delegate] showErrorInFIReAndDeselectRows: @"FIRe_error_in_server_message".localized];
+	}];
+	[_wsController startConnection];
+}
+
+- (void) sendSignRequestForFIReFromDetailView:(Detail *)request {
+	NSInteger code = 16;
+	NSData *data = [PreSignXMLController buildRequestWithoutCertWithRequest:request];
+	_wsController.delegate = self;
+	[_wsController postSignRequestWithFIRe:data code:code success:^(NSDictionary *content) {
+		NSDictionary *responseDict = [content objectForKey:kCfrqtTag];
+		NSString *cfrqtValue = [responseDict objectForKey:kOk];
+		if ([cfrqtValue isEqualToString:kTrue]) {
+			[[self delegate] showFIRMeWebView:[[NSURL alloc] initWithString:[responseDict objectForKey:kContentKey]]];
+		} else {
+			[[self delegate] didReceiveError:@"FIRe_error_in_server_message".localized];
+		}
+	} failure:^(NSError *error) {
+		[[self delegate] didReceiveError:@"FIRe_error_in_server_message".localized];
+	}];
+	[_wsController startConnection];
+}
+
+-(void) signPrechargedRequestInFIRe {
+	NSInteger code = 17;
+	NSData *data = [PreSignXMLController buildDataForSigningPrechargedRequestInFIRe];
+	_wsController.delegate = self;
+	[_wsController postSignRequestWithFIRe:data code:code success:^(NSDictionary *content) {
+		NSDictionary *responseDict = [content objectForKey:kCfsigTag];
+		if ([[responseDict objectForKey:kOk] isEqualToString:kTrue]) {
+			[[self delegate] didReceiveCorrectSignResponseFromFIRe];
+		} else if ([[responseDict objectForKey:kOk] isEqualToString:kFalse]) {
+			[[self delegate] didReceiveErrorSignResponseFromFIRe:[responseDict objectForKey: kErrorFIReKey]];
+		} else {
+			[[self delegate] didReceiveErrorInPrechargedFIReRequest:@"FIRe_error_in_server_message".localized];
+		}
+	} failure:^(NSError *error) {
+		[[self delegate] didReceiveErrorInPrechargedFIReRequest:@"FIRe_error_in_server_message".localized];
+	}];
+	[_wsController startConnection];
 }
 
 - (void)loadPreSignDetailWithCurrentCertificate:(Detail *)detail
@@ -129,8 +187,7 @@
             BOOL finishWithError = [parser finishWithError];
 
             if (finishWithError) {
-                [[self delegate] didReceiveError:[NSString stringWithFormat:@"Se ha producido un error en el servidor:%@(%@)", [parser err], [parser errorCode]]];
-
+                [[self delegate] didReceiveError:[NSString stringWithFormat:@"Global_error_server_error_and_error_code".localized, [parser err], [parser errorCode]]];
                 return;
             }
 
@@ -139,7 +196,7 @@
 
             [self loadPostSignRequest:preSignRequests];
         } else {
-            [[self delegate] didReceiveError:@"Se ha producido un error de conexión con el servidor"];
+            [[self delegate] didReceiveError:@"Global_Error_Server_Connection".localized];
         }
     } else if (waitingPostSign) {
         waitingPostSign = NO;
@@ -161,7 +218,7 @@
             [_dataSource addObjectsFromArray: [parser dataSource]];
             [self sendNextRequest];
         } else {
-            [[self delegate] didReceiveError:@"Se ha producido un error de conexión con el servidor"];
+            [[self delegate] didReceiveError:@"Global_Error_Server_Connection".localized];
         }
     }
 }

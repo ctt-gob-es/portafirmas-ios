@@ -85,6 +85,7 @@
 		3CC403861AB9EDBA006F8803 /* CertificateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC403851AB9EDBA006F8803 /* CertificateCell.m */; };
 		3CD199A51AC2C952007E9E35 /* UINavigationController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */; };
 		921EAE2F22AFB631005D6D5B /* GlobalConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EAE2E22AFB631005D6D5B /* GlobalConstants.m */; };
+		9226966F23C60FAD00F099F0 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9226966E23C60FAD00F099F0 /* NSString+Extension.m */; };
 		992987C2AA230FF0604BD234 /* libPods-PortaFirmasUniv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0A9AB702FDB8ACDEBFCF67 /* libPods-PortaFirmasUniv.a */; };
 		B23D243720BDBB0200345E0B /* userDNIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B23D243620BDBB0200345E0B /* userDNIManager.m */; };
 		B240774920AAEE0900A8EE1C /* DetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B240774820AAEE0900A8EE1C /* DetailCell.m */; };
@@ -261,6 +262,8 @@
 		862DBE2D1FC5F494A173087E /* Pods-PortaFirmasUniv.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortaFirmasUniv.release.xcconfig"; path = "Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv.release.xcconfig"; sourceTree = "<group>"; };
 		921EAE2E22AFB631005D6D5B /* GlobalConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalConstants.m; sourceTree = "<group>"; };
 		921EAE3022AFB672005D6D5B /* GlobalConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalConstants.h; sourceTree = "<group>"; };
+		9226966D23C60F3F00F099F0 /* NSString+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
+		9226966E23C60FAD00F099F0 /* NSString+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
 		B23D243520BDBB0200345E0B /* userDNIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = userDNIManager.h; sourceTree = "<group>"; };
 		B23D243620BDBB0200345E0B /* userDNIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = userDNIManager.m; sourceTree = "<group>"; };
 		B240774720AAEE0900A8EE1C /* DetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailCell.h; sourceTree = "<group>"; };
@@ -345,6 +348,7 @@
 		1C9F2004163E93C3007A170B = {
 			isa = PBXGroup;
 			children = (
+				9226966A23C60E0900F099F0 /* Extensions */,
 				3C0A7EBB1AB19DB200F793AA /* lib */,
 				3CA898EE1AA5BC8D0035012D /* res */,
 				3CA898EC1AA5BC740035012D /* src */,
@@ -780,6 +784,15 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		9226966A23C60E0900F099F0 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9226966D23C60F3F00F099F0 /* NSString+Extension.h */,
+				9226966E23C60FAD00F099F0 /* NSString+Extension.m */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		B29014E8215829BE008A9B83 /* UIFont */ = {
 			isa = PBXGroup;
 			children = (
@@ -1038,6 +1051,7 @@
 				3C00AD9D1AB71ACB00EF6886 /* PFRequestResult.m in Sources */,
 				3C00AD871AB71A8700EF6886 /* UnassignedRequestTableViewController.m in Sources */,
 				3C00ADE01AB71B3100EF6886 /* NSDate+Utils.m in Sources */,
+				9226966F23C60FAD00F099F0 /* NSString+Extension.m in Sources */,
 				BC5BF9DE1FDFC97000B1CF0C /* HelpViewController.m in Sources */,
 				BCF083361FC46A8B00450FE7 /* Parser.m in Sources */,
 				3CA899601AA60E6C0035012D /* RequestCell.m in Sources */,

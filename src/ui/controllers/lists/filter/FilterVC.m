@@ -136,8 +136,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (void) showNotificationSectionState {
     
-    NSString *notificationStatePending = NSLocalizedString(@"Filter_View_Push_Notification_Pending_Title", nil);
-    NSString *notificationStateSet = NSLocalizedString(@"Filter_View_Push_Notification_Enabled_Title", nil);
+    NSString *notificationStatePending = @"Filter_View_Push_Notification_Pending_Title".localized;
+    NSString *notificationStateSet = @"Filter_View_Push_Notification_Enabled_Title".localized;
     
     if ([PushNotificationService instance].currentServer.userNotificationPermisionState) {
         self.notificationStateLabel.text = notificationStateSet;

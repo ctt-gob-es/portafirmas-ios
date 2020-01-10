@@ -88,11 +88,11 @@ static long cellSelected;
 #pragma mark - UIMenuController Methods
 - (void)selectAction:(id)sender {
     NSDictionary *serverInfo = _serversArray[cellSelected];
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"", nil)
-                                                                             message:[NSString stringWithFormat:NSLocalizedString(@"Alert_View_Server_Going_To_Be_Selected", nil), serverInfo[kPFUserDefaultsKeyAlias],serverInfo[kPFUserDefaultsKeyURL]]
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@""
+                                                                             message:[NSString stringWithFormat:@"Alert_View_Server_Going_To_Be_Selected".localized, serverInfo[kPFUserDefaultsKeyAlias],serverInfo[kPFUserDefaultsKeyURL]]
                                                                                       preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
-    UIAlertAction *accept = [UIAlertAction actionWithTitle:NSLocalizedString(@"Alert_View_Accept", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Cancel".localized style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *accept = [UIAlertAction actionWithTitle:@"Alert_View_Accept".localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
 		NSDictionary *serverInfo = self->_serversArray[cellSelected];
         [[NSUserDefaults standardUserDefaults] setObject:serverInfo forKey:kPFUserDefaultsKeyCurrentServer];
         [[NSUserDefaults standardUserDefaults] synchronize];

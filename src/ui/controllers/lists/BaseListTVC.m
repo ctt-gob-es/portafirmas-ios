@@ -164,10 +164,10 @@
 
 - (void)didReceiveError:(NSString *)errorString
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Error".localized
                                                                              message:errorString
                                                                       preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Ok", nil) style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
     [alertController addAction:cancel];
     [self presentViewController:alertController animated:YES completion:nil];
 }
