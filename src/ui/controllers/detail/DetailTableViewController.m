@@ -168,7 +168,7 @@ CGFloat const largeTitleCellWidth = 200;
             [cell hideLabelsIfNeeded: ![self rejectExplanationExists]];
             break;
         case AttachedDocument:
-            title = @"Cell_Title_AttachedDocument";
+            title = @"Cell_Title_AttachedDocument".localized;
             [cell setValueInNewViewStyle];
             [cell increaseTitleLabelWidth:largeTitleCellWidth];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
