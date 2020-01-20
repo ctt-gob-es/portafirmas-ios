@@ -164,7 +164,7 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyRemoteCertificatesSelection]) {
 		[_requestSignerController sendSignRequestForFIRe:_selectedRequestsSetToSign.allObjects];
 	} else {
-		[requestSignerController loadPreSignRequestsWithCurrentCertificate:_selectedRequestsSetToSign.allObjects];
+		[_requestSignerController loadPreSignRequestsWithCurrentCertificate:_selectedRequestsSetToSign.allObjects];
 	}
 }
 
