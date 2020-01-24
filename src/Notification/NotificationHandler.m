@@ -45,14 +45,14 @@
     return @"";
 }
 
-+(NSString *) extractHashDNIOfBody: (NSString *) body {
++ (NSString *) extractHashDNIOfBody: (NSString *) body {
 	// TODO: Create the logic to obtain hash DNI from notification body.
 	
 	// Use a hardcoded hash DNI and extracted from 11111111H :
     return @"abe9025c434334c053adb108b83ff2e6f1dd3993";
 }
 
-+(NSString *) hashWithSHA1AndBase64: (NSString *) string {
++ (NSString *) hashWithSHA1AndBase64: (NSString *) string {
 	// With the original string
 	NSString *originalString = string;
 	NSData *data = [originalString dataUsingEncoding:NSUTF8StringEncoding];
