@@ -10,7 +10,6 @@
 #import "PreviewXMLController.h"
 #import "WSDataController.h"
 #import "AppDelegate.h"
-#import "Base64Utils.h"
 #import "XMLController.h"
 #import "AttachedDoc.h"
 #import "Document.h"
