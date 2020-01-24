@@ -161,7 +161,7 @@ CGFloat const largeTitleCellWidth = 200;
             [cell setDarkStyle];
             break;
         case RejectExplanation:
-            title = @"Cell_Title_RejectExplanation";
+            title = @"Cell_Title_RejectExplanation".localized;
             value = [self getRejectExplanation];
             [cell setDarkStyle];
             [cell increaseTitleLabelWidth: rejectCellTitleCellWidth];

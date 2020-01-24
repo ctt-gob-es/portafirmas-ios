@@ -31,7 +31,6 @@
 		3C00AD9F1AB71ACB00EF6886 /* SignLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C00AD981AB71ACB00EF6886 /* SignLine.m */; };
 		3C00ADA51AB71AD800EF6886 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C00ADA11AB71AD800EF6886 /* AppDelegate.m */; };
 		3C00ADA61AB71AD800EF6886 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C00ADA21AB71AD800EF6886 /* main.m */; };
-		3C00ADB41AB71B0B00EF6886 /* Base64Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C00ADA91AB71B0B00EF6886 /* Base64Utils.m */; };
 		3C00ADB51AB71B0B00EF6886 /* CertificateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C00ADAB1AB71B0B00EF6886 /* CertificateUtils.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3C00ADB61AB71B0B00EF6886 /* ColorChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C00ADAD1AB71B0B00EF6886 /* ColorChart.m */; };
 		3C00ADB71AB71B0B00EF6886 /* DateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C00ADAF1AB71B0B00EF6886 /* DateHelper.m */; };
@@ -167,8 +166,6 @@
 		3C00ADA21AB71AD800EF6886 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 5; lastKnownFileType = sourcecode.c.objc; name = main.m; path = main/main.m; sourceTree = "<group>"; };
 		3C00ADA31AB71AD800EF6886 /* PortaFirmasUniv-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "PortaFirmasUniv-Info.plist"; path = "main/PortaFirmasUniv-Info.plist"; sourceTree = "<group>"; };
 		3C00ADA41AB71AD800EF6886 /* PortaFirmasUniv-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PortaFirmasUniv-Prefix.pch"; path = "main/PortaFirmasUniv-Prefix.pch"; sourceTree = "<group>"; };
-		3C00ADA81AB71B0B00EF6886 /* Base64Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Utils.h; sourceTree = "<group>"; };
-		3C00ADA91AB71B0B00EF6886 /* Base64Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64Utils.m; sourceTree = "<group>"; };
 		3C00ADAA1AB71B0B00EF6886 /* CertificateUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CertificateUtils.h; sourceTree = "<group>"; };
 		3C00ADAB1AB71B0B00EF6886 /* CertificateUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertificateUtils.m; sourceTree = "<group>"; };
 		3C00ADAC1AB71B0B00EF6886 /* ColorChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorChart.h; sourceTree = "<group>"; };
@@ -617,8 +614,6 @@
 			children = (
 				B2E4AEBD20599935000DD0C3 /* ArrayHelper.h */,
 				B2E4AEBC20599934000DD0C3 /* ArrayHelper.m */,
-				3C00ADA81AB71B0B00EF6886 /* Base64Utils.h */,
-				3C00ADA91AB71B0B00EF6886 /* Base64Utils.m */,
 				3C00ADAA1AB71B0B00EF6886 /* CertificateUtils.h */,
 				3C00ADAB1AB71B0B00EF6886 /* CertificateUtils.m */,
 				3C00ADAC1AB71B0B00EF6886 /* ColorChart.h */,
@@ -1103,7 +1098,6 @@
 				BC71EE3A1FDEB51C0040F8A2 /* DefaultServersData.m in Sources */,
 				3C00ADB81AB71B0B00EF6886 /* PFHelper.m in Sources */,
 				3C00AD991AB71ACB00EF6886 /* Detail.m in Sources */,
-				3C00ADB41AB71B0B00EF6886 /* Base64Utils.m in Sources */,
 				3C00ADD51AB71B1700EF6886 /* DetailXMLController.m in Sources */,
 				3CC403791AB96D18006F8803 /* ModalCertificatesController.m in Sources */,
 				3CD199A51AC2C952007E9E35 /* UINavigationController+Utils.m in Sources */,

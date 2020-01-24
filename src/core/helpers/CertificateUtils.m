@@ -345,7 +345,7 @@ static CertificateUtils *__sharedKeyWrapper = nil;
     CC_SHA256_Final(hashBytes, &ctx);
 
     // Build up the SHA1 blob.
-    hash = [NSData dataWithBytes:(const void *)hashBytes length:(NSUInteger)CC_SHA512_DIGEST_LENGTH];
+    hash = [NSData dataWithBytes:(const void *)hashBytes length:(NSUInteger)CC_SHA256_DIGEST_LENGTH];
 
     if (hashBytes) {
         free(hashBytes);

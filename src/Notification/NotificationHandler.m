@@ -9,7 +9,6 @@
 #import "NotificationHandler.h"
 #import "Notification.h"
 #import "NSData+Base64.h"
-#import "Base64Utils.h"
 #import "CertificateUtils.h"
 
 #define SERVER_URL ((NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyCurrentServer])[kPFUserDefaultsKeyURL]
@@ -45,14 +44,14 @@
     return @"";
 }
 
-+(NSString *) extractHashDNIOfBody: (NSString *) body {
++ (NSString *) extractHashDNIOfBody: (NSString *) body {
 	// TODO: Create the logic to obtain hash DNI from notification body.
 	
 	// Use a hardcoded hash DNI and extracted from 11111111H :
     return @"abe9025c434334c053adb108b83ff2e6f1dd3993";
 }
 
-+(NSString *) hashWithSHA1AndBase64: (NSString *) string {
++ (NSString *) hashWithSHA1AndBase64: (NSString *) string {
 	// With the original string
 	NSString *originalString = string;
 	NSData *data = [originalString dataUsingEncoding:NSUTF8StringEncoding];
@@ -60,7 +59,7 @@
 	NSData *hashMessage = [CertificateUtils getHashBytesSHA1:data] ;
 	NSLog(@"hashMessage: %@", hashMessage);
 	// Encode it in Base64
-	NSString *hashAndBase64 = [Base64Utils base64EncodeData: hashMessage];
+	NSString *hashAndBase64 = [hashMessage base64EncodedString];
 	NSLog(@"hashAndBase64: %@", hashAndBase64);
 	return hashAndBase64;
 }

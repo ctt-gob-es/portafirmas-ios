@@ -10,7 +10,6 @@
 #import "Detail.h"
 #import "PFRequest.h"
 #import "CertificateUtils.h"
-#import "Base64Utils.h"
 #import "NSData+Base64.h"
 #import "LoginService.h"
 
@@ -38,10 +37,8 @@
 
     // Nuevo elemento añadido en B64 donde se almacenará el motivo del rechazo
     if (mot != NULL && ![mot isEqualToString:@""]) {
-        
-        NSString *motivoB64 = [Base64Utils base64EncodeString: mot];
+		NSString *motivoB64 = [[mot dataUsingEncoding: NSUTF8StringEncoding] base64EncodedString];
         NSMutableString *rsn = [[NSMutableString alloc] initWithString:@"<rsn>\n"];
-        
         [rsn appendFormat:@"%@\n", motivoB64];
         [rsn appendString:@"</rsn>\n"];
         [mesg appendString:rsn];

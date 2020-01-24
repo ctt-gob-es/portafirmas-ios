@@ -131,7 +131,7 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
     
     reject = YES;
     // Preguntamos el por qué del rechazo
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle: @"Rejection_of_requests".localized message: @"Indicate_Reason_For_Rejection" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle: @"Rejection_of_requests".localized message: @"Indicate_Reason_For_Rejection".localized preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Cancel".localized style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *conti = [UIAlertAction actionWithTitle: @"Continue".localized style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
         [self continueButtonClicked:alert];

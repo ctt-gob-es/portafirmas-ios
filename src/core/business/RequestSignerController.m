@@ -17,7 +17,6 @@
 #import "PFRequest.h"
 #import "Document.h"
 #import "Param.h"
-#import "Base64Utils.h"
 #import "PFError.h"
 #import "GlobalConstants.h"
 
@@ -52,9 +51,8 @@
     if (_pendingRequestIndex < [_pendingRequests count]) {
         NSArray *nextRequest = [[NSArray alloc] initWithObjects:_pendingRequests[_pendingRequestIndex], nil];
         waitingPreSign = TRUE;
-        
         NSData *certificateData = [[CertificateUtils sharedWrapper] publicKeyBits];
-        NSString *certificateB64 = [Base64Utils base64EncodeData:certificateData];
+		NSString *certificateB64 = [certificateData base64EncodedString];
         NSString *data = [PreSignXMLController buildRequestWithCert:certificateB64 witRequestList: nextRequest];
         _wsController.delegate = self;
         [_wsController loadPostRequestWithData:data code:0];
@@ -136,8 +134,8 @@
 
     NSData *certificateData = [CertificateUtils sharedWrapper].publicKeyBits;
     // dataFromBase64String
-    // NSString *certificateB64 = [certificateData base64EncodedString];
-    NSString *certificateB64 = [Base64Utils base64EncodeData:certificateData];
+     NSString *certificateB64 = [certificateData base64EncodedString];
+	
     NSString *data = [PostSignXMLController buildRequestWithCert:certificateB64 witRequestList:requests];
     waitingPostSign = YES;
 
@@ -260,7 +258,7 @@
         return;
     }
     
-    NSData *data = [Base64Utils base64DecodeString:preSignResult];
+	NSData *data = [[NSData alloc] initWithBase64EncodedString:preSignResult options:0];
     NSData *result = nil;
     if ([mdalgo isEqualToString:@"sha-1"] || [mdalgo isEqualToString:@"sha1"]) {
         result = [[CertificateUtils sharedWrapper] getSignatureBytesSHA1:data];
@@ -271,8 +269,7 @@
     } else if ([mdalgo isEqualToString:@"sha-512"] || [mdalgo isEqualToString:@"sha512"]) {
         result = [[CertificateUtils sharedWrapper] getSignatureBytesSHA512:data];
     }
-    // reqDoc.result=[result base64EncodedString];
-    reqDoc.result = [Base64Utils base64EncodeData: result];
+	reqDoc.result = [result base64EncodedStringWithOptions:0];
 }
 
 - (void)showSignature:(NSString *)dataStr withCertificate:(CertificateUtils *)certificate withMdalgo:(NSString *)mdalgo
