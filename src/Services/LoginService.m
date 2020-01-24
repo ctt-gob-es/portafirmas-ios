@@ -170,7 +170,7 @@ static NSString *const kSessionId = @"sessionId";
 
 - (NSString *) certificateInBase64 {
     NSData *certificateData = [CertificateUtils sharedWrapper].publicKeyBits;
-    return [Base64Utils base64EncodeData:certificateData];
+	return [certificateData base64EncodedString];
 }
 
 -(void) setRemoteCertificatesParameters: (NSDictionary *) content {
