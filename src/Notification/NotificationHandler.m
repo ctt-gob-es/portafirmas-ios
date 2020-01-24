@@ -9,7 +9,6 @@
 #import "NotificationHandler.h"
 #import "Notification.h"
 #import "NSData+Base64.h"
-#import "Base64Utils.h"
 #import "CertificateUtils.h"
 
 #define SERVER_URL ((NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyCurrentServer])[kPFUserDefaultsKeyURL]
