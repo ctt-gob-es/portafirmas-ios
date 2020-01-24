@@ -9,7 +9,6 @@
 #import "LoginService.h"
 #import "LoginNetwork.h"
 #import "CertificateUtils.h"
-#import "Base64Utils.h"
 #import "NSData+Base64.h"
 #import "PFError.h"
 #import "CookieTools.h"
@@ -163,9 +162,8 @@ static NSString *const kSessionId = @"sessionId";
 }
 
 - (NSString *) decodeToken: (NSString *) token {
-    NSData *data = [Base64Utils base64DecodeString:token];
-    return [[NSString alloc] initWithData:data
-                                 encoding:NSUTF8StringEncoding];
+	NSData *data = [[NSData alloc] initWithBase64EncodedString:token options:0];
+    return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 
 - (NSString *) certificateInBase64 {
