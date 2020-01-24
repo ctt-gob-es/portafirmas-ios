@@ -10,7 +10,6 @@
 #import "Detail.h"
 #import "PFRequest.h"
 #import "CertificateUtils.h"
-#import "Base64Utils.h"
 #import "NSData+Base64.h"
 #import "LoginService.h"
 
