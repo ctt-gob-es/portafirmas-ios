@@ -10,7 +10,6 @@
 #import "PFRequest.h"
 #import "Document.h"
 #import "Param.h"
-#import "Base64Utils.h"
 #import "LoginService.h"
 
 @implementation PostSignXMLController
