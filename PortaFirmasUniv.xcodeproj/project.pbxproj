@@ -1258,7 +1258,7 @@
 				GCC_PREFIX_HEADER = "src/main/PortaFirmasUniv-Prefix.pch";
 				INFOPLIST_FILE = "src/main/PortaFirmasUniv-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.5.2;
+				MARKETING_VERSION = 1.5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = es.gob.afirma.Portafirmas;
 				PRODUCT_NAME = "Port@firmas";
 				PROVISIONING_PROFILE = "";
@@ -1284,7 +1284,7 @@
 				GCC_PREFIX_HEADER = "src/main/PortaFirmasUniv-Prefix.pch";
 				INFOPLIST_FILE = "src/main/PortaFirmasUniv-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				MARKETING_VERSION = 1.5.2;
+				MARKETING_VERSION = 1.5.3;
 				PRODUCT_BUNDLE_IDENTIFIER = es.gob.afirma.Portafirmas;
 				PRODUCT_NAME = "Port@firmas";
 				PROVISIONING_PROFILE = "";
