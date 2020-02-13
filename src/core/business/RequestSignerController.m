@@ -52,7 +52,7 @@
         NSArray *nextRequest = [[NSArray alloc] initWithObjects:_pendingRequests[_pendingRequestIndex], nil];
         waitingPreSign = TRUE;
         NSData *certificateData = [[CertificateUtils sharedWrapper] publicKeyBits];
-		NSString *certificateB64 = [certificateData base64EncodedString];
+        NSString *certificateB64 = [certificateData base64EncodedStringWithOptions: NSDataBase64Encoding76CharacterLineLength];
         NSString *data = [PreSignXMLController buildRequestWithCert:certificateB64 witRequestList: nextRequest];
         _wsController.delegate = self;
         [_wsController loadPostRequestWithData:data code:0];
@@ -134,7 +134,7 @@
 
     NSData *certificateData = [CertificateUtils sharedWrapper].publicKeyBits;
     // dataFromBase64String
-     NSString *certificateB64 = [certificateData base64EncodedString];
+    NSString *certificateB64 = [certificateData base64EncodedStringWithOptions: NSDataBase64Encoding76CharacterLineLength];
 	
     NSString *data = [PostSignXMLController buildRequestWithCert:certificateB64 witRequestList:requests];
     waitingPostSign = YES;
