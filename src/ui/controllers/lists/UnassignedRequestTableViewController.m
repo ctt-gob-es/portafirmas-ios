@@ -599,6 +599,7 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 		 self.webView = [[WKWebView alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) configuration: wkWebViewConfiguration];
 		 self.webView.navigationDelegate = self;
 		 NSURLRequest *nsrequest=[NSURLRequest requestWithURL:url];
+         [self.tableView scrollToRowAtIndexPath: [NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
 		 [self.webView loadRequest: nsrequest];
 		 [self.view addSubview: self.webView];
 	 });
