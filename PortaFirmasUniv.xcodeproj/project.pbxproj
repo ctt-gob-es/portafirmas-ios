@@ -85,6 +85,7 @@
 		3CD199A51AC2C952007E9E35 /* UINavigationController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */; };
 		921EAE2F22AFB631005D6D5B /* GlobalConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EAE2E22AFB631005D6D5B /* GlobalConstants.m */; };
 		9226966F23C60FAD00F099F0 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9226966E23C60FAD00F099F0 /* NSString+Extension.m */; };
+		92469F1225792B4100494DCF /* GetRolesNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 92469F1125792B4100494DCF /* GetRolesNetwork.m */; };
 		992987C2AA230FF0604BD234 /* libPods-PortaFirmasUniv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0A9AB702FDB8ACDEBFCF67 /* libPods-PortaFirmasUniv.a */; };
 		B23D243720BDBB0200345E0B /* userDNIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B23D243620BDBB0200345E0B /* userDNIManager.m */; };
 		B240774920AAEE0900A8EE1C /* DetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B240774820AAEE0900A8EE1C /* DetailCell.m */; };
@@ -261,6 +262,8 @@
 		921EAE3022AFB672005D6D5B /* GlobalConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalConstants.h; sourceTree = "<group>"; };
 		9226966D23C60F3F00F099F0 /* NSString+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
 		9226966E23C60FAD00F099F0 /* NSString+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
+		92469F1025792B4100494DCF /* GetRolesNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetRolesNetwork.h; sourceTree = "<group>"; };
+		92469F1125792B4100494DCF /* GetRolesNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetRolesNetwork.m; sourceTree = "<group>"; };
 		B23D243520BDBB0200345E0B /* userDNIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = userDNIManager.h; sourceTree = "<group>"; };
 		B23D243620BDBB0200345E0B /* userDNIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = userDNIManager.m; sourceTree = "<group>"; };
 		B240774720AAEE0900A8EE1C /* DetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailCell.h; sourceTree = "<group>"; };
@@ -868,6 +871,8 @@
 		BCEF37B21FB338BC00374541 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				92469F1025792B4100494DCF /* GetRolesNetwork.h */,
+				92469F1125792B4100494DCF /* GetRolesNetwork.m */,
 				BCEF37B31FB338E500374541 /* PushNotificationNetwork.h */,
 				BCEF37B41FB338E500374541 /* PushNotificationNetwork.m */,
 				BCF619A51FC4379D009C5B50 /* LoginNetwork.h */,
@@ -1059,6 +1064,7 @@
 				3C00ADA61AB71AD800EF6886 /* main.m in Sources */,
 				3CB68F611AB81BAD00BEB067 /* ServersListCell.m in Sources */,
 				BC65EFD61FE3D856003AF04F /* Server.m in Sources */,
+				92469F1225792B4100494DCF /* GetRolesNetwork.m in Sources */,
 				3C00AD9E1AB71ACB00EF6886 /* Preview.m in Sources */,
 				BC0D3E1A2004C3A900CB73BB /* AttachedDoc.m in Sources */,
 				3C00ADB51AB71B0B00EF6886 /* CertificateUtils.m in Sources */,
