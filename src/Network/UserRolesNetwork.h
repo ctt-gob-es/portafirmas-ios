@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface GetRolesNetwork : NSObject
+@interface UserRolesNetwork : NSObject
 
-- (void) getRoles:(void(^)(void))success failure:(void(^)(NSError *error))failure;
+- (void) getUserRoles:(void(^)(NSDictionary *content))success failure:(void(^)(NSError *error))failure;
 
 @end

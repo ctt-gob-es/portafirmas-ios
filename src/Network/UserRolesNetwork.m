@@ -7,16 +7,17 @@
 //
 
 #import "CookieTools.h"
-#import "GetRolesNetwork.h"
+#import "UserRolesNetwork.h"
 #import "LoginService.h"
 #import "NSData+Base64.h"
 #import "Parser.h"
+#import "UserRolesService.h"
 
 #define SERVER_URL ((NSDictionary *)[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyCurrentServer])[kPFUserDefaultsKeyURL]
 
-@implementation GetRolesNetwork
+@implementation UserRolesNetwork
 
-- (void) loginProcess:(void(^)(void))success failure:(void(^)(NSError *error))failure {
+- (void) getUserRoles:(void(^)(NSDictionary *content))success failure:(void(^)(NSError *error))failure {
     NSString *opParameter = @"op";
     NSString *datParameter = @"dat";
     NSString *baseURL = SERVER_URL;
@@ -32,11 +33,13 @@
     }
     
     NSData *postData = [params dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
+    NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[params length]];
     
+//    NSString *baseURL = [NSString stringWithFormat:@"%@?%@", SERVER_URL, params];
+
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:[NSURL URLWithString:baseURL]];
-    [request setHTTPMethod:@"GET"];
+    [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody:postData];
     [request setTimeoutInterval:30.0];
@@ -55,12 +58,8 @@
             failure(error);
         } else {
             Parser *parser = [Parser new];
-            [parser parseValidateSubscription:data success:^(BOOL isValid) {
-                if (isValid) {
-                    success();
-                }else{
-                    failure(nil);
-                }
+            [parser parseUserRoles:data success:^(NSDictionary *content) {
+                success(content);
             } failure:^(NSError *error) {
                 failure(error);
             }];

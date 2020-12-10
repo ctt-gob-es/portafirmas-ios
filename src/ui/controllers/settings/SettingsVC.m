@@ -15,6 +15,7 @@
 #import "ErrorService.h"
 #import <WebKit/WebKit.h>
 #import "GlobalConstants.h"
+#import "UserRolesService.h"
 
 static const NSInteger kSettingsVCNumberOfSections = 3;
 static const NSInteger kSettingsVCNumberOfRowsPerSection = 1;
@@ -167,7 +168,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 	if ([identifier isEqualToString:kSettingsVCSegueIdentifierAccess]) {
 		if ([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyRemoteCertificatesSelection]) {
 			[[LoginService instance] loginWithRemoteCertificates:^{
-				[self showLoginWebView];
+                [self showLoginWebView];
 			} failure:^(NSError *error) {
 				segue = NO;
 				dispatch_async(dispatch_get_main_queue(), ^{
@@ -178,7 +179,19 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 			[[LoginService instance] loginWithCertificate:^{
 				segue = YES;
 				dispatch_async(dispatch_get_main_queue(), ^{
-					[self performSegueWithIdentifier:identifier sender:self];
+                    [[UserRolesService instance] getUserRoles:^(NSDictionary *content) {
+                        printf("Success");
+                        NSDictionary *responseDict = [content objectForKey:kErrorRqsrcnfg];
+                        if (responseDict != NULL) {
+            
+                        } else {
+                            [self performSegueWithIdentifier:identifier sender:self];
+                        }
+                    } failure:^(NSError *error) {
+                        printf("error");
+                        //Call fails and continuous
+                        [self performSegueWithIdentifier:identifier sender:self];
+                    }];
 				});
 			} failure:^(NSError *error) {
 				if (error != nil && error.code == PFLoginNotSupported) {

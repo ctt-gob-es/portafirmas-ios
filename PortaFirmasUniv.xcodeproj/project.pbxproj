@@ -85,7 +85,8 @@
 		3CD199A51AC2C952007E9E35 /* UINavigationController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */; };
 		921EAE2F22AFB631005D6D5B /* GlobalConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EAE2E22AFB631005D6D5B /* GlobalConstants.m */; };
 		9226966F23C60FAD00F099F0 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9226966E23C60FAD00F099F0 /* NSString+Extension.m */; };
-		92469F1225792B4100494DCF /* GetRolesNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 92469F1125792B4100494DCF /* GetRolesNetwork.m */; };
+		92469F1225792B4100494DCF /* UserRolesNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 92469F1125792B4100494DCF /* UserRolesNetwork.m */; };
+		92469F1C257938A900494DCF /* UserRolesService.m in Sources */ = {isa = PBXBuildFile; fileRef = 92469F1B257938A900494DCF /* UserRolesService.m */; };
 		992987C2AA230FF0604BD234 /* libPods-PortaFirmasUniv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0A9AB702FDB8ACDEBFCF67 /* libPods-PortaFirmasUniv.a */; };
 		B23D243720BDBB0200345E0B /* userDNIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B23D243620BDBB0200345E0B /* userDNIManager.m */; };
 		B240774920AAEE0900A8EE1C /* DetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B240774820AAEE0900A8EE1C /* DetailCell.m */; };
@@ -262,8 +263,10 @@
 		921EAE3022AFB672005D6D5B /* GlobalConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalConstants.h; sourceTree = "<group>"; };
 		9226966D23C60F3F00F099F0 /* NSString+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
 		9226966E23C60FAD00F099F0 /* NSString+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
-		92469F1025792B4100494DCF /* GetRolesNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GetRolesNetwork.h; sourceTree = "<group>"; };
-		92469F1125792B4100494DCF /* GetRolesNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GetRolesNetwork.m; sourceTree = "<group>"; };
+		92469F1025792B4100494DCF /* UserRolesNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserRolesNetwork.h; sourceTree = "<group>"; };
+		92469F1125792B4100494DCF /* UserRolesNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserRolesNetwork.m; sourceTree = "<group>"; };
+		92469F1B257938A900494DCF /* UserRolesService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = UserRolesService.m; path = Services/UserRolesService.m; sourceTree = "<group>"; };
+		92469F1E257938C700494DCF /* UserRolesService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UserRolesService.h; path = Services/UserRolesService.h; sourceTree = "<group>"; };
 		B23D243520BDBB0200345E0B /* userDNIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = userDNIManager.h; sourceTree = "<group>"; };
 		B23D243620BDBB0200345E0B /* userDNIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = userDNIManager.m; sourceTree = "<group>"; };
 		B240774720AAEE0900A8EE1C /* DetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailCell.h; sourceTree = "<group>"; };
@@ -846,6 +849,8 @@
 				BCF619A31FC42DC2009C5B50 /* LoginService.m */,
 				BC6C92371FE2C14200AB95D5 /* ErrorService.h */,
 				BC6C92381FE2C14200AB95D5 /* ErrorService.m */,
+				92469F1E257938C700494DCF /* UserRolesService.h */,
+				92469F1B257938A900494DCF /* UserRolesService.m */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -871,8 +876,8 @@
 		BCEF37B21FB338BC00374541 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				92469F1025792B4100494DCF /* GetRolesNetwork.h */,
-				92469F1125792B4100494DCF /* GetRolesNetwork.m */,
+				92469F1025792B4100494DCF /* UserRolesNetwork.h */,
+				92469F1125792B4100494DCF /* UserRolesNetwork.m */,
 				BCEF37B31FB338E500374541 /* PushNotificationNetwork.h */,
 				BCEF37B41FB338E500374541 /* PushNotificationNetwork.m */,
 				BCF619A51FC4379D009C5B50 /* LoginNetwork.h */,
@@ -1059,12 +1064,13 @@
 				3C00ADDA1AB71B1700EF6886 /* RequestListXMLController.m in Sources */,
 				BC46A0E91FD6CBEB004D0C33 /* PFError.m in Sources */,
 				BCF083621FC72E3100450FE7 /* NSString+XMLSafe.m in Sources */,
+				92469F1C257938A900494DCF /* UserRolesService.m in Sources */,
 				3C00AD751AB71A6300EF6886 /* DetailTableViewController.m in Sources */,
 				3CC4036D1AB96D0F006F8803 /* AddServerVC.m in Sources */,
 				3C00ADA61AB71AD800EF6886 /* main.m in Sources */,
 				3CB68F611AB81BAD00BEB067 /* ServersListCell.m in Sources */,
 				BC65EFD61FE3D856003AF04F /* Server.m in Sources */,
-				92469F1225792B4100494DCF /* GetRolesNetwork.m in Sources */,
+				92469F1225792B4100494DCF /* UserRolesNetwork.m in Sources */,
 				3C00AD9E1AB71ACB00EF6886 /* Preview.m in Sources */,
 				BC0D3E1A2004C3A900CB73BB /* AttachedDoc.m in Sources */,
 				3C00ADB51AB71B0B00EF6886 /* CertificateUtils.m in Sources */,
