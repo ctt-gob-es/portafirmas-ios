@@ -83,6 +83,8 @@ static NSString *const kPFCertInfoKeyStartDate = @"startDate";
 static NSString *const kPFCertInfoKeyEndDate = @"endDate";
 static NSString *const kPFCertInfoKeyPurpose = @"purpose";
 
+static NSString *const kPFCertInfoKeyUserRoles = @"userRoles";
+
 @interface PFHelper : NSObject
 
 + (PFRequestType)getPFRequestTypeFromString:(NSString *)string;

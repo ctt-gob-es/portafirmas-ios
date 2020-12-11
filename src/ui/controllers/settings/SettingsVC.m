@@ -183,14 +183,27 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
                         printf("Success");
                         NSDictionary *responseDict = [content objectForKey:kErrorRqsrcnfg];
                         if (responseDict != NULL) {
-            
+                            // Old system that does not suppor roles maybe show something
+                            
                         } else {
-                            [self performSegueWithIdentifier:identifier sender:self];
+                            NSDictionary *responseUserRolesDict = [[content objectForKey:@"rsgtsrcg"] objectForKey:@"rls"];
+                            if ([responseUserRolesDict count] == 0) {
+                                //User with no roles
+                            } else {
+                                //User with roles
+                                [[NSUserDefaults standardUserDefaults] setObject:responseUserRolesDict forKey:kPFCertInfoKeyUserRoles];
+                                [[NSUserDefaults standardUserDefaults] synchronize];
+                            }
                         }
+                        segue = YES;
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self performSegueWithIdentifier:identifier sender:self];
+                        });
                     } failure:^(NSError *error) {
-                        printf("error");
-                        //Call fails and continuous
-                        [self performSegueWithIdentifier:identifier sender:self];
+                        segue = NO;
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [[ErrorService instance] showLoginErrorAlertView];
+                        });
                     }];
 				});
 			} failure:^(NSError *error) {
