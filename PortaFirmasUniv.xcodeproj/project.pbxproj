@@ -87,6 +87,10 @@
 		9226966F23C60FAD00F099F0 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9226966E23C60FAD00F099F0 /* NSString+Extension.m */; };
 		92469F1225792B4100494DCF /* UserRolesNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 92469F1125792B4100494DCF /* UserRolesNetwork.m */; };
 		92469F1C257938A900494DCF /* UserRolesService.m in Sources */ = {isa = PBXBuildFile; fileRef = 92469F1B257938A900494DCF /* UserRolesService.m */; };
+		925BE5B725878C7F00B85BFE /* SelectRoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 925BE5B625878C7F00B85BFE /* SelectRoleViewController.m */; };
+		925BE5BB2587937100B85BFE /* SelectRoleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 925BE5BA2587937100B85BFE /* SelectRoleViewController.xib */; };
+		92A648FD2587A3CA00DFFACA /* RoleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92A648FC2587A3CA00DFFACA /* RoleCell.xib */; };
+		92A649012587A3F400DFFACA /* RoleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 92A649002587A3F400DFFACA /* RoleCell.m */; };
 		992987C2AA230FF0604BD234 /* libPods-PortaFirmasUniv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0A9AB702FDB8ACDEBFCF67 /* libPods-PortaFirmasUniv.a */; };
 		B23D243720BDBB0200345E0B /* userDNIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B23D243620BDBB0200345E0B /* userDNIManager.m */; };
 		B240774920AAEE0900A8EE1C /* DetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B240774820AAEE0900A8EE1C /* DetailCell.m */; };
@@ -267,6 +271,12 @@
 		92469F1125792B4100494DCF /* UserRolesNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserRolesNetwork.m; sourceTree = "<group>"; };
 		92469F1B257938A900494DCF /* UserRolesService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = UserRolesService.m; path = Services/UserRolesService.m; sourceTree = "<group>"; };
 		92469F1E257938C700494DCF /* UserRolesService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UserRolesService.h; path = Services/UserRolesService.h; sourceTree = "<group>"; };
+		925BE5B625878C7F00B85BFE /* SelectRoleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectRoleViewController.m; sourceTree = "<group>"; };
+		925BE5B925878C9400B85BFE /* SelectRoleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectRoleViewController.h; sourceTree = "<group>"; };
+		925BE5BA2587937100B85BFE /* SelectRoleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectRoleViewController.xib; sourceTree = "<group>"; };
+		92A648FC2587A3CA00DFFACA /* RoleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoleCell.xib; sourceTree = "<group>"; };
+		92A648FF2587A3DC00DFFACA /* RoleCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoleCell.h; sourceTree = "<group>"; };
+		92A649002587A3F400DFFACA /* RoleCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoleCell.m; sourceTree = "<group>"; };
 		B23D243520BDBB0200345E0B /* userDNIManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = userDNIManager.h; sourceTree = "<group>"; };
 		B23D243620BDBB0200345E0B /* userDNIManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = userDNIManager.m; sourceTree = "<group>"; };
 		B240774720AAEE0900A8EE1C /* DetailCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailCell.h; sourceTree = "<group>"; };
@@ -730,6 +740,7 @@
 		3CA899621AA60E710035012D /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				925BE5B525878B4400B85BFE /* roles */,
 				3C3468B21AB732FA008C6427 /* base */,
 				3C30D3451AB71512007C859D /* settings */,
 				3C68F1021AA8670100B32EF6 /* detail */,
@@ -792,6 +803,19 @@
 				9226966E23C60FAD00F099F0 /* NSString+Extension.m */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		925BE5B525878B4400B85BFE /* roles */ = {
+			isa = PBXGroup;
+			children = (
+				925BE5B925878C9400B85BFE /* SelectRoleViewController.h */,
+				925BE5B625878C7F00B85BFE /* SelectRoleViewController.m */,
+				925BE5BA2587937100B85BFE /* SelectRoleViewController.xib */,
+				92A648FF2587A3DC00DFFACA /* RoleCell.h */,
+				92A649002587A3F400DFFACA /* RoleCell.m */,
+				92A648FC2587A3CA00DFFACA /* RoleCell.xib */,
+			);
+			path = roles;
 			sourceTree = "<group>";
 		};
 		B29014E8215829BE008A9B83 /* UIFont */ = {
@@ -980,6 +1004,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				925BE5BB2587937100B85BFE /* SelectRoleViewController.xib in Resources */,
+				92A648FD2587A3CA00DFFACA /* RoleCell.xib in Resources */,
 				3CA899061AA605C60035012D /* CAMERFIRMA PF Apoderado HW Clave PSC Activo.p12 in Resources */,
 				3CA899101AA606E90035012D /* prueba.xml in Resources */,
 				3CA8990A1AA605C60035012D /* PFActivoFirSHA1.pfx in Resources */,
@@ -1095,6 +1121,7 @@
 				3CC403781AB96D18006F8803 /* LoginViewController.m in Sources */,
 				B29014EF21583802008A9B83 /* UIFont+Styles.m in Sources */,
 				B29014F4215839A2008A9B83 /* UIColor+Styles.m in Sources */,
+				92A649012587A3F400DFFACA /* RoleCell.m in Sources */,
 				3CC4037A1AB96D18006F8803 /* NoCertificatesViewController.m in Sources */,
 				3C00ADA51AB71AD800EF6886 /* AppDelegate.m in Sources */,
 				3CC403671AB96D05006F8803 /* PFBaseTVC.m in Sources */,
@@ -1112,6 +1139,7 @@
 				3C00AD991AB71ACB00EF6886 /* Detail.m in Sources */,
 				3C00ADD51AB71B1700EF6886 /* DetailXMLController.m in Sources */,
 				3CC403791AB96D18006F8803 /* ModalCertificatesController.m in Sources */,
+				925BE5B725878C7F00B85BFE /* SelectRoleViewController.m in Sources */,
 				3CD199A51AC2C952007E9E35 /* UINavigationController+Utils.m in Sources */,
 				3C00AD7B1AB71A7A00EF6886 /* FilterVC.m in Sources */,
 				3C00ADB71AB71B0B00EF6886 /* DateHelper.m in Sources */,

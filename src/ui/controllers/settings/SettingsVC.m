@@ -16,6 +16,7 @@
 #import <WebKit/WebKit.h>
 #import "GlobalConstants.h"
 #import "UserRolesService.h"
+#import "SelectRoleViewController.h"
 
 static const NSInteger kSettingsVCNumberOfSections = 3;
 static const NSInteger kSettingsVCNumberOfRowsPerSection = 1;
@@ -183,22 +184,32 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
                         printf("Success");
                         NSDictionary *responseDict = [content objectForKey:kErrorRqsrcnfg];
                         if (responseDict != NULL) {
-                            // Old system that does not suppor roles maybe show something
+                            // Old system that does not suppor roles maybe show something continue as always
+                            segue = YES;
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self performSegueWithIdentifier:identifier sender:self];
+                            });
                             
                         } else {
                             NSDictionary *responseUserRolesDict = [[content objectForKey:@"rsgtsrcg"] objectForKey:@"rls"];
                             if ([responseUserRolesDict count] == 0) {
                                 //User with no roles
+                                //continue as always
+                                segue = YES;
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    [self performSegueWithIdentifier:identifier sender:self];
+                                });
                             } else {
                                 //User with roles
                                 [[NSUserDefaults standardUserDefaults] setObject:responseUserRolesDict forKey:kPFCertInfoKeyUserRoles];
                                 [[NSUserDefaults standardUserDefaults] synchronize];
+//                                Navegar a la pantalla de selección de rol
+                                SelectRoleViewController *selectRoleViewController = [[SelectRoleViewController alloc] initWithNibName: @"SelectRoleViewController" bundle: nil];
+                                
+                                [self presentViewController:selectRoleViewController animated:YES completion:nil];
                             }
                         }
-                        segue = YES;
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [self performSegueWithIdentifier:identifier sender:self];
-                        });
+
                     } failure:^(NSError *error) {
                         segue = NO;
                         dispatch_async(dispatch_get_main_queue(), ^{
