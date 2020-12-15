@@ -10,5 +10,8 @@
 
 @implementation RoleCell
 
+-(void)setCellIcon:(NSString *)icon tintColor: (UIColor*)color {
+    [self.roleIconImage setImage:[QuartzUtils getImageWithName:icon andTintColor:color]];
+}
 
 @end

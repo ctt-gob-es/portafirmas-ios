@@ -37,7 +37,7 @@ CGFloat const defaultRoleCellHeight = 44;
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self numberOfRoles];
+    return [self numberOfRoles] + 1;
 }
 
 #pragma mark - UITableViewDelegate
@@ -48,6 +48,9 @@ CGFloat const defaultRoleCellHeight = 44;
         [tableView registerNib:[UINib nibWithNibName:kRoleCellNibName bundle:nil] forCellReuseIdentifier:kRoleCell];
         cell = [tableView dequeueReusableCellWithIdentifier:kRoleCell];
     }
+    
+    [cell setCellIcon:@"icn_firma" tintColor: THEME_COLOR];
+   
     return cell;
 }
 
