@@ -25,9 +25,22 @@ CGFloat const defaultRoleCellHeight = 44;
     [super viewDidLoad];
     self.roleTableView.estimatedRowHeight = defaultRoleCellHeight;
     self.roleTableView.rowHeight = UITableViewAutomaticDimension;
-    self.roleTableView.backgroundColor = [UIColor greenColor];
     [self.roleTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    self.roleTableView.scrollEnabled = NO;
+    _rolesDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:kPFCertInfoKeyUserRoles];
 }
+
+- (NSInteger)numberOfRoles {
+    return _rolesDictionary.count;
+}
+
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [self numberOfRoles];
+}
+
+#pragma mark - UITableViewDelegate
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     RoleCell *cell = [tableView dequeueReusableCellWithIdentifier:kRoleCell];
@@ -37,10 +50,5 @@ CGFloat const defaultRoleCellHeight = 44;
     }
     return cell;
 }
-
-- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
-}
-
 
 @end

@@ -205,7 +205,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
                                 [[NSUserDefaults standardUserDefaults] synchronize];
 //                                Navegar a la pantalla de selección de rol
                                 SelectRoleViewController *selectRoleViewController = [[SelectRoleViewController alloc] initWithNibName: @"SelectRoleViewController" bundle: nil];
-                                
+                                [selectRoleViewController setModalPresentationStyle:UIModalPresentationFullScreen];
                                 [self presentViewController:selectRoleViewController animated:YES completion:nil];
                             }
                         }

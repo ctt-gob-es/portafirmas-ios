@@ -13,5 +13,6 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *selectRoleTitleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *roleTableView;
+@property (nonatomic, strong) NSDictionary *rolesDictionary;
 
 @end
