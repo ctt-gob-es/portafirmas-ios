@@ -7,6 +7,7 @@
 //
 
 #import "RoleCell.h"
+#import "UIFont+Styles.h"
 
 @implementation RoleCell
 
@@ -14,4 +15,16 @@
     [self.roleIconImage setImage:[QuartzUtils getImageWithName:icon andTintColor:color]];
 }
 
+-(void)setCellTitle: (NSString *)title {
+    self.roleTitleLabel.text = title;
+}
+
+-(void)setCellSubtitle: (NSString *)subtitle {
+    self.roleSubtitleLabel.text = subtitle;
+    self.roleSubtitleLabel.textColor =[UIColor lightGrayColor];
+}
+
+-(void)hideSubtitle {
+    [self.roleSubtitleLabel setHidden:YES];
+}
 @end

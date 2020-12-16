@@ -10,10 +10,13 @@
 
 @interface RoleCell : UITableViewCell
 
--(void)setCellIcon:(UIImage *)icon tintColor: (UIColor*)color;
+-(void)setCellIcon:(NSString *)icon tintColor: (UIColor*)color;
+-(void)setCellTitle: (NSString *)title;
+-(void)setCellSubtitle: (NSString *)subtitle;
+-(void)hideSubtitle;
 
 @property (weak, nonatomic) IBOutlet UIImageView *roleIconImage;
 @property (weak, nonatomic) IBOutlet UILabel *roleTitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *rolSubTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *roleSubtitleLabel;
 
 @end

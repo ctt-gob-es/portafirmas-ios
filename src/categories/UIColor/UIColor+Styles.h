@@ -12,5 +12,6 @@
 
 +(UIColor *)clearStyleTitleDetailCell;
 +(UIColor *)clearStyleValueDetailCell;
++(UIColor *)userRolesTitleColorRed;
 
 @end
