@@ -9,10 +9,13 @@
 #import <Foundation/Foundation.h>
 #import "SelectRoleViewController.h"
 #import "RoleCell.h"
+#import "UIColor+Styles.h"
 
 static NSString *const kRoleCell = @"roleCell";
 static NSString *const kRoleCellNibName = @"RoleCell";
-CGFloat const defaultRoleCellHeight = 44;
+static NSString *const kContentKey =@"content";
+static NSString *const kUserNameKey = @"userName";
+static NSString *const kRoleNameKey = @"roleName";
 
 @interface SelectRoleViewController()
 
@@ -20,18 +23,16 @@ CGFloat const defaultRoleCellHeight = 44;
 
 @implementation SelectRoleViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    self.roleTableView.estimatedRowHeight = defaultRoleCellHeight;
-    self.roleTableView.rowHeight = UITableViewAutomaticDimension;
+    self.selectRoleTitleLabel.textColor = [UIColor userRolesTitleColorRed];
     [self.roleTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.roleTableView.scrollEnabled = NO;
-    _rolesDictionary = [[NSUserDefaults standardUserDefaults] objectForKey:kPFCertInfoKeyUserRoles];
+    _rolesArray = [[NSUserDefaults standardUserDefaults] objectForKey:kPFCertInfoKeyUserRoles];
 }
 
 - (NSInteger)numberOfRoles {
-    return _rolesDictionary.count;
+    return _rolesArray.count;
 }
 
 #pragma mark - UITableViewDataSource
@@ -48,9 +49,16 @@ CGFloat const defaultRoleCellHeight = 44;
         [tableView registerNib:[UINib nibWithNibName:kRoleCellNibName bundle:nil] forCellReuseIdentifier:kRoleCell];
         cell = [tableView dequeueReusableCellWithIdentifier:kRoleCell];
     }
+    if(indexPath.row == 0) {
+        [cell setCellIcon:@"icn_firma" tintColor: THEME_COLOR];
+        [cell setCellTitle: @"User_Roles_Signer_Cell_Title".localized];
+        [cell hideSubtitle];
+    } else {
+        [cell setCellIcon:@"icn_check" tintColor: [UIColor greenColor]];
+        [cell setCellTitle: [[_rolesArray[indexPath.row - 1] objectForKey:kUserNameKey] objectForKey:kContentKey]];
+        [cell setCellSubtitle:[[_rolesArray[indexPath.row - 1] objectForKey:kRoleNameKey] objectForKey:kContentKey]];
+    }
     
-    [cell setCellIcon:@"icn_firma" tintColor: THEME_COLOR];
-   
     return cell;
 }
 

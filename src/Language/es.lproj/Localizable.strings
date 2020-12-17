@@ -121,3 +121,7 @@
 "FIRe_error_in_some_sign_operation" = "Error en la firma de alguno de los documentos firmados.";
 "FIRe_undetermined_error" = "Error indeterminado con FIRe.";
 "FIRe_problem_with_response" = "Problema con la respuesta del servidor de FIRe.";
+
+//User Roles
+"User_Roles_Message" = "Por favor, seleccione el rol con el que desea acceder.";
+"User_Roles_Signer_Cell_Title" = "Acceder como firmante";

@@ -201,15 +201,13 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
                                 });
                             } else {
                                 //User with roles
-                                [[NSUserDefaults standardUserDefaults] setObject:responseUserRolesDict forKey:kPFCertInfoKeyUserRoles];
-                                [[NSUserDefaults standardUserDefaults] synchronize];
+                            [self setRolesInLocalStorage: responseUserRolesDict];
 //                                Navegar a la pantalla de selección de rol
                                 SelectRoleViewController *selectRoleViewController = [[SelectRoleViewController alloc] initWithNibName: @"SelectRoleViewController" bundle: nil];
                                 [selectRoleViewController setModalPresentationStyle:UIModalPresentationFullScreen];
-                                [self presentViewController:selectRoleViewController animated:YES completion:nil];
+                                [self.navigationController pushViewController:selectRoleViewController animated:YES];
                             }
                         }
-
                     } failure:^(NSError *error) {
                         segue = NO;
                         dispatch_async(dispatch_get_main_queue(), ^{
@@ -263,6 +261,12 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 - (void)prepareForAccessSegue:(UIStoryboardSegue *)segue
 {
     [[AppListXMLController sharedInstance] requestAppsList];
+}
+
+- (void) setRolesInLocalStorage:(NSDictionary*)userRolesDictionary {
+    NSArray * userRolesArray = [userRolesDictionary allValues];
+    [[NSUserDefaults standardUserDefaults] setObject:userRolesArray forKey:kPFCertInfoKeyUserRoles];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark - ServerListTVCDelegate
