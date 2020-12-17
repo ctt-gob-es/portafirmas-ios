@@ -10,12 +10,11 @@
 #import "SelectRoleViewController.h"
 #import "RoleCell.h"
 #import "UIColor+Styles.h"
+#import "PFHelper.h"
+#import "GlobalConstants.h"
 
 static NSString *const kRoleCell = @"roleCell";
 static NSString *const kRoleCellNibName = @"RoleCell";
-static NSString *const kContentKey =@"content";
-static NSString *const kUserNameKey = @"userName";
-static NSString *const kRoleNameKey = @"roleName";
 
 @interface SelectRoleViewController()
 
@@ -28,11 +27,20 @@ static NSString *const kRoleNameKey = @"roleName";
     self.selectRoleTitleLabel.textColor = [UIColor userRolesTitleColorRed];
     [self.roleTableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.roleTableView.scrollEnabled = NO;
-    _rolesArray = [[NSUserDefaults standardUserDefaults] objectForKey:kPFCertInfoKeyUserRoles];
+    _rolesArray = [[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoles];
 }
 
 - (NSInteger)numberOfRoles {
     return _rolesArray.count;
+}
+
+- (void)storeUserRoleSelected: (NSInteger)selectedPosition {
+    NSDictionary *selectedRole = nil;
+    if (selectedPosition != 0){
+        selectedRole = _rolesArray[selectedPosition - 1];
+    }
+    [[NSUserDefaults standardUserDefaults] setObject:selectedRole forKey:kPFUserDefaultsKeyUserRoleSelected];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark - UITableViewDataSource
@@ -55,11 +63,15 @@ static NSString *const kRoleNameKey = @"roleName";
         [cell hideSubtitle];
     } else {
         [cell setCellIcon:@"icn_check" tintColor: [UIColor greenColor]];
-        [cell setCellTitle: [[_rolesArray[indexPath.row - 1] objectForKey:kUserNameKey] objectForKey:kContentKey]];
-        [cell setCellSubtitle:[[_rolesArray[indexPath.row - 1] objectForKey:kRoleNameKey] objectForKey:kContentKey]];
+        [cell setCellTitle: [[_rolesArray[indexPath.row - 1] objectForKey:kUserRoleUserNameKey] objectForKey:kContentKey]];
+        [cell setCellSubtitle:[[_rolesArray[indexPath.row - 1] objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey]];
     }
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self storeUserRoleSelected:indexPath.row];
 }
 
 @end

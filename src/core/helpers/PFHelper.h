@@ -76,6 +76,8 @@ static NSString *const kPFUserDefaultsKeyDNI = @"DNI";
 static NSString *const kPFUserDefaultsKeyServersArray = @"serversArray";
 static NSString *const kPFUserDefaultsKeyRemoteCertificates = @"remoteCertificates";
 static NSString *const kPFUserDefaultsKeyRemoteCertificatesSelection = @"remoteCertificatesSelection";
+static NSString *const kPFUserDefaultsKeyUserRoles = @"userRoles";
+static NSString *const kPFUserDefaultsKeyUserRoleSelected = @"userRoleSelected";
 
 static NSString *const kPFCertInfoKeyIssuer = @"issuer";
 static NSString *const kPFCertInfoKeySubject = @"subject";
@@ -83,7 +85,8 @@ static NSString *const kPFCertInfoKeyStartDate = @"startDate";
 static NSString *const kPFCertInfoKeyEndDate = @"endDate";
 static NSString *const kPFCertInfoKeyPurpose = @"purpose";
 
-static NSString *const kPFCertInfoKeyUserRoles = @"userRoles";
+static NSString *const kUserRoleUserNameKey = @"userName";
+static NSString *const kUserRoleRoleNameKey = @"roleName";
 
 @interface PFHelper : NSObject
 

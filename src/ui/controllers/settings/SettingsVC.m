@@ -265,7 +265,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 - (void) setRolesInLocalStorage:(NSDictionary*)userRolesDictionary {
     NSArray * userRolesArray = [userRolesDictionary allValues];
-    [[NSUserDefaults standardUserDefaults] setObject:userRolesArray forKey:kPFCertInfoKeyUserRoles];
+    [[NSUserDefaults standardUserDefaults] setObject:userRolesArray forKey:kPFUserDefaultsKeyUserRoles];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
