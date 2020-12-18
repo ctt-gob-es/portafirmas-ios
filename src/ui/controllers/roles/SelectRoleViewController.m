@@ -12,6 +12,8 @@
 #import "UIColor+Styles.h"
 #import "PFHelper.h"
 #import "GlobalConstants.h"
+#import "AppListXMLController.h"
+#import "UnassignedRequestTableViewController.h"
 
 static NSString *const kRoleCell = @"roleCell";
 static NSString *const kRoleCellNibName = @"RoleCell";
@@ -41,6 +43,11 @@ static NSString *const kRoleCellNibName = @"RoleCell";
     }
     [[NSUserDefaults standardUserDefaults] setObject:selectedRole forKey:kPFUserDefaultsKeyUserRoleSelected];
     [[NSUserDefaults standardUserDefaults] synchronize];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[AppListXMLController sharedInstance] requestAppsList];
+        [self.delegate rolesSelected];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    });
 }
 
 #pragma mark - UITableViewDataSource

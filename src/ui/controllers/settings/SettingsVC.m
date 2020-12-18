@@ -204,8 +204,9 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
                             [self setRolesInLocalStorage: responseUserRolesDict];
 //                                Navegar a la pantalla de selección de rol
                                 SelectRoleViewController *selectRoleViewController = [[SelectRoleViewController alloc] initWithNibName: @"SelectRoleViewController" bundle: nil];
+                                selectRoleViewController.delegate = self;
                                 [selectRoleViewController setModalPresentationStyle:UIModalPresentationFullScreen];
-                                [self.navigationController pushViewController:selectRoleViewController animated:YES];
+                                [self.navigationController presentViewController:selectRoleViewController animated:YES completion:nil];
                             }
                         }
                     } failure:^(NSError *error) {
@@ -300,6 +301,12 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 		return decisionHandler(WKNavigationActionPolicyCancel);
 	}
     decisionHandler(WKNavigationActionPolicyAllow);
+}
+
+#pragma mark - RoleSelectedDelegate
+
+- (void) rolesSelected{
+    printf("test");
 }
 
 @end
