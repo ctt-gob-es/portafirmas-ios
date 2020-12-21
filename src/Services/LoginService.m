@@ -139,7 +139,7 @@ static NSString *const kSessionId = @"sessionId";
 		self.remoteCertificateLoginOK = NO;
         self.currentSignToken = @"";
         [CookieTools removeJSessionIDCookies];
-//        kPFUserDefaultsKeyUserRoleSelected
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoles];
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoleSelected];
         [[NSUserDefaults standardUserDefaults] synchronize];
         success();
@@ -151,6 +151,7 @@ static NSString *const kSessionId = @"sessionId";
 		self.remoteCertificateLoginOK = NO;
         self.currentSignToken = @"";
         [CookieTools removeJSessionIDCookies];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoles];
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoleSelected];
         [[NSUserDefaults standardUserDefaults] synchronize];
         failure(error);
