@@ -139,6 +139,9 @@ static NSString *const kSessionId = @"sessionId";
 		self.remoteCertificateLoginOK = NO;
         self.currentSignToken = @"";
         [CookieTools removeJSessionIDCookies];
+//        kPFUserDefaultsKeyUserRoleSelected
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoleSelected];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         success();
     } failure:^(NSError *error) {
        dispatch_async(dispatch_get_main_queue(), ^{
@@ -148,6 +151,8 @@ static NSString *const kSessionId = @"sessionId";
 		self.remoteCertificateLoginOK = NO;
         self.currentSignToken = @"";
         [CookieTools removeJSessionIDCookies];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoleSelected];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         failure(error);
     }];
 }
