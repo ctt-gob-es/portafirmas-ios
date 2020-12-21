@@ -45,6 +45,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 @property (nonatomic, strong) IBOutlet UIButton *accessButton;
 @property (strong, nonatomic) IBOutlet UINavigationItem *titleBar;
 @property (strong, nonatomic) WKWebView *webView;
+@property (nonatomic) BOOL roleAlreadySelected;
 
 @end
 
@@ -65,6 +66,15 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
     [self.tableView reloadData];
     [self updateAccessButton];
 	[self disableRemoteCertificatesIfCertificateSelected];
+    if(_roleAlreadySelected){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self performSegueWithIdentifier:kSettingsVCSegueIdentifierAccess sender:self];
+        });
+    }
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    _roleAlreadySelected = NO;
 }
 
 #pragma mark - User Interface
@@ -306,7 +316,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 #pragma mark - RoleSelectedDelegate
 
 - (void) rolesSelected{
-    printf("test");
+    _roleAlreadySelected = YES;
 }
 
 @end
