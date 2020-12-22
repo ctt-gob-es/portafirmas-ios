@@ -15,6 +15,9 @@
 #import "ServerManager.h"
 #import "Server.h"
 #import "PushNotificationService.h"
+#import "SelectRoleViewController.h"
+#import "GlobalConstants.h"
+#import "PFHelper.h"
 
 #define SORT_CRITERIA_ARRAY @[@"Fecha", @"Asunto", @"Aplicación"]
 
@@ -44,6 +47,12 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 @property (nonatomic, strong) IBOutlet UILabel *notificationStateLabel;
 @property (nonatomic, strong) IBOutlet UIView *notificationView;
 @property (nonatomic, strong) IBOutlet UISwitch *notificationSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *roleTitleLabel;
+@property (weak, nonatomic) IBOutlet UIView *roleSeparatorView;
+@property (weak, nonatomic) IBOutlet UILabel *roleLabel;
+@property (weak, nonatomic) IBOutlet UIButton *roleButton;
+@property (weak, nonatomic) IBOutlet UILabel *selectedRoleNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *selectedRoleLabel;
 
 @end
 
@@ -77,13 +86,14 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
     if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
         UIApplication.sharedApplication.statusBarHidden = NO;
-
     }
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self listenNotificationAboutPushNotifications];
+    [self showChangeRoleOptionIfNeeded];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -228,6 +238,31 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         if (_scrollView.contentOffset.y != offsetY) {
             [_scrollView setContentOffset:CGPointMake(0, offsetY > 0 ? offsetY : 0) animated:YES];
         }
+    }
+}
+
+- (void) showChangeRoleOptionIfNeeded {
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoles]) {
+        self.roleTitleLabel.hidden = NO;
+        self.roleSeparatorView.hidden = NO;
+        self.roleLabel.hidden = NO;
+        self.roleButton.hidden = NO;
+        self.selectedRoleNameLabel.hidden = NO;
+        self.selectedRoleLabel.hidden = NO;
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected]) {
+            self.selectedRoleNameLabel.text =[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleUserNameKey] objectForKey:kContentKey];
+            self.selectedRoleLabel.text =[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey];
+        } else {
+            self.selectedRoleNameLabel.hidden = YES;
+            self.selectedRoleLabel.text = @"User_Role_Signer".localized;
+        }
+    } else {
+        self.roleTitleLabel.hidden = YES;
+        self.roleSeparatorView.hidden = YES;
+        self.roleLabel.hidden = YES;
+        self.roleButton.hidden = YES;
+        self.selectedRoleNameLabel.hidden = YES;
+        self.selectedRoleLabel.hidden = YES;
     }
 }
 
@@ -481,6 +516,10 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         [_scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
     }
 }
-
+- (IBAction)tapChangeRole:(id)sender {
+    SelectRoleViewController *selectRoleViewController = [[SelectRoleViewController alloc] initWithNibName: @"SelectRoleViewController" bundle: nil];
+    [selectRoleViewController setModalPresentationStyle:UIModalPresentationFullScreen];
+    [self.navigationController presentViewController:selectRoleViewController animated:YES completion:nil];
+}
 
 @end

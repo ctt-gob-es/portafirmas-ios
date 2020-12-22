@@ -125,3 +125,4 @@
 //User Roles
 "User_Roles_Message" = "Por favor, seleccione el rol con el que desea acceder.";
 "User_Roles_Signer_Cell_Title" = "Acceder como firmante";
+"User_Role_Signer" = "Firmante";

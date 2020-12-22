@@ -10,7 +10,6 @@
 #import "SelectRoleViewController.h"
 #import "RoleCell.h"
 #import "UIColor+Styles.h"
-#import "PFHelper.h"
 #import "GlobalConstants.h"
 #import "AppListXMLController.h"
 #import "UnassignedRequestTableViewController.h"
