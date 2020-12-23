@@ -48,6 +48,7 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *filterButtonItem;
 @property (strong, nonatomic) WKWebView *webView;
+@property (strong, nonatomic) UIView *validateView;
 
 @end
 
@@ -90,6 +91,12 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 											 selector:@selector(didReceiveResponseFromFIReFromDetail:)
 		name:@"didReceiveResponseFromFIRe"
 	  object:nil];
+    
+    UIWindow* mainWindow = [[UIApplication sharedApplication] keyWindow];
+    self.validateView = [[UIView alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 100, [UIScreen mainScreen].bounds.size.width, 50)];
+    self.validateView.backgroundColor=[UIColor blueColor];
+    [mainWindow addSubview: self.validateView];
+    [self.validateView setHidden: YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -368,6 +375,7 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
     if (editing) {
         [_selectButtonItem setTitle:@"Hecho"];
 		[self setEditingBottomBar];
+        [self.validateView setHidden: NO];
         [self.tableView reloadData];
         selectedRows = [@[] mutableCopy];
     }
@@ -375,6 +383,7 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
         
         [_selectButtonItem setTitle:@"Seleccionar"];
         [self setNormalBottomBar];
+        [self.validateView setHidden: YES];
 
         if (!([selectedRows count] > 0)) {
             [_signBarButton setEnabled:NO];
@@ -396,7 +405,7 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 		fullScreen.size.height += self.tabBarController.tabBar.frame.size.height;
         [self.view setFrame:fullScreen];
         [self.tabBarController.tabBar setFrame:TAB_BAR_HIDDEN_FRAME];
-        [self.navigationController setToolbarHidden:NO animated:YES];
+        [self.navigationController setToolbarHidden:NO animated:NO];
 		[self.parentViewController.tabBarController.tabBar setHidden:YES];
     }
 }
