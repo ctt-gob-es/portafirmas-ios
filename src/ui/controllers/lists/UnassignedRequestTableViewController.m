@@ -54,6 +54,9 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 
 @implementation UnassignedRequestTableViewController
 
+static CGFloat const kValidateViewHeight = 50;
+static CGFloat const kValidateViewYOffset = 100;
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
@@ -93,7 +96,7 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 	  object:nil];
     
     UIWindow* mainWindow = [[UIApplication sharedApplication] keyWindow];
-    self.validateView = [[UIView alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height - 100, [UIScreen mainScreen].bounds.size.width, 50)];
+    self.validateView = [[UIView alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height - kValidateViewYOffset, [UIScreen mainScreen].bounds.size.width, kValidateViewHeight)];
     self.validateView.backgroundColor=[UIColor blueColor];
     [mainWindow addSubview: self.validateView];
     [self.validateView setHidden: YES];
