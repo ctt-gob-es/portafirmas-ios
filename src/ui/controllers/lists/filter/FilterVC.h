@@ -10,6 +10,7 @@
 
 @interface FilterVC : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate>
 
--(IBAction)switchChanged:(UISwitch *)sender;
+- (IBAction)switchChanged:(UISwitch *)sender;
+- (IBAction)tapChangeRole:(id)sender;
 
 @end

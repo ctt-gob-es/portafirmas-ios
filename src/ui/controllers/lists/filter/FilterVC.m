@@ -242,6 +242,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 }
 
 - (void) showChangeRoleOptionIfNeeded {
+    self.roleTitleLabel.text = @"User_Roles_Title".localized;
+    self.roleLabel.text = @"User_Roles_Change_Role".localized;
     if ([[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoles]) {
         self.roleTitleLabel.hidden = NO;
         self.roleSeparatorView.hidden = NO;
@@ -519,7 +521,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 - (IBAction)tapChangeRole:(id)sender {
     SelectRoleViewController *selectRoleViewController = [[SelectRoleViewController alloc] initWithNibName: @"SelectRoleViewController" bundle: nil];
     [selectRoleViewController setModalPresentationStyle:UIModalPresentationFullScreen];
-    [self.navigationController presentViewController:selectRoleViewController animated:YES completion:nil];
+    [self presentViewController:selectRoleViewController animated:YES completion:nil];
 }
 
 @end
