@@ -49,6 +49,8 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *filterButtonItem;
 @property (strong, nonatomic) WKWebView *webView;
 @property (strong, nonatomic) UIView *validateView;
+@property (strong, nonatomic) UIButton *validateButton;
+@property (strong, nonatomic) UIButton *cancelValidateButton;
 
 @end
 
@@ -71,6 +73,7 @@ static CGFloat const kValidateViewYOffset = 100;
         // Custom initialization
         [_signBarButton setEnabled:NO];
         [_rejectBarButton setEnabled:NO];
+        [_validateButton setEnabled:NO];
 
         // Sets data in Aplication delegate objet to be shared for the application's tab
         AppDelegate *myDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
@@ -95,11 +98,8 @@ static CGFloat const kValidateViewYOffset = 100;
 		name:@"didReceiveResponseFromFIRe"
 	  object:nil];
     
-    UIWindow* mainWindow = [[UIApplication sharedApplication] keyWindow];
-    self.validateView = [[UIView alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height - kValidateViewYOffset, [UIScreen mainScreen].bounds.size.width, kValidateViewHeight)];
-    self.validateView.backgroundColor=[UIColor blueColor];
-    [mainWindow addSubview: self.validateView];
-    [self.validateView setHidden: YES];
+    [self showValidateButtons];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -109,6 +109,11 @@ static CGFloat const kValidateViewYOffset = 100;
     [self.parentViewController setHidesBottomBarWhenPushed:TRUE];
     [self.navigationController setToolbarHidden:YES];
     [self.parentViewController.tabBarController.tabBar setHidden:NO];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [self.validateView setHidden: YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -216,9 +221,9 @@ static CGFloat const kValidateViewYOffset = 100;
 - (void)updateEditButtons
 {
     BOOL enableButtons = selectedRows.count > 0;
-
     [_signBarButton setEnabled:enableButtons];
     [_rejectBarButton setEnabled:enableButtons];
+    [_validateButton setEnabled: enableButtons];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -226,11 +231,43 @@ static CGFloat const kValidateViewYOffset = 100;
     return YES;
 }
 
+- (void)showValidateButtons {
+ 
+    // Uncomment the "if" when the server works correctly
+//    if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected]objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: @"VALIDADOR"] ){
+    
+        UIWindow* mainWindow = [[UIApplication sharedApplication] keyWindow];
+        _validateView = [[UIView alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height - kValidateViewYOffset, [UIScreen mainScreen].bounds.size.width, kValidateViewHeight)];
+    _validateView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
+        [mainWindow addSubview: _validateView];
+        [_validateView setHidden: YES];
+    
+    _validateButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [_validateButton setTitle:@"Validate" forState:UIControlStateNormal];
+    [_validateButton sizeToFit];
+    [_validateButton setTitleColor:COLOR_FOR_RED_TEXT forState:UIControlStateNormal];
+    [_validateButton setTitleColor:COLOR_FOR_DISABLED forState:UIControlStateDisabled];
+    [_validateButton addTarget:self action:@selector(validateButtonPressed:)
+        forControlEvents:UIControlEventTouchUpInside];
+    _validateButton.frame = CGRectMake(16.0, 0.0, 100.0, 50.0);
+
+    [self.validateView addSubview:_validateButton];
+    
+    _cancelValidateButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        [_cancelValidateButton setTitle:@"Cancel" forState:UIControlStateNormal];
+        [_cancelValidateButton sizeToFit];
+    [_cancelValidateButton setTitleColor: COLOR_FOR_RED_TEXT forState:UIControlStateNormal];
+    [_cancelValidateButton addTarget:self action:@selector(cancelValidateButtonPressed:)
+        forControlEvents:UIControlEventTouchUpInside];
+    _cancelValidateButton.frame = CGRectMake(116.0, 0.0, 100.0, 50.0);
+        [self.validateView addSubview:_cancelValidateButton];
+//    }
+}
+
 #pragma mark - User Interaction
 
 - (IBAction)didTapOnBackButton:(id)sender
 {
-    
     //TODO Launch logout process if server has login support
     if ([LoginService instance].serverSupportLogin){
         
@@ -263,6 +300,14 @@ static CGFloat const kValidateViewYOffset = 100;
 {
     [self separateSignAndApproveRequests];
     [self showSignApproveAlert];
+}
+
+- (void)validateButtonPressed:(UIButton *)button {
+     // Include the logic to validate a request
+}
+
+- (void)cancelValidateButtonPressed:(UIButton *)button {
+    [self cancelEditing];
 }
 
 - (void)separateSignAndApproveRequests
@@ -391,6 +436,7 @@ static CGFloat const kValidateViewYOffset = 100;
         if (!([selectedRows count] > 0)) {
             [_signBarButton setEnabled:NO];
             [_rejectBarButton setEnabled:NO];
+            [_validateButton setEnabled:NO];
         }
 
         [[self tableView] reloadData];
