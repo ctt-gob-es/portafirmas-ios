@@ -329,8 +329,18 @@ CGFloat const largeTitleCellWidth = 200;
                                [self signAction];
                            }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel".localized style:UIAlertActionStyleCancel handler:nil];
-    [alertController addAction:reject];
-    [alertController addAction:sign];
+    UIAlertAction *validate = [UIAlertAction actionWithTitle:@"User_Roles_Validate_Operation_Name".localized
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * action)
+                               {
+                                   [self validateAction];
+                               }];
+    if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected]objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: @"VALIDADOR"] ){
+        [alertController addAction:validate];
+    } else {
+        [alertController addAction:reject];
+        [alertController addAction:sign];
+    }
     [alertController addAction:cancel];
     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
     {
@@ -342,8 +352,6 @@ CGFloat const largeTitleCellWidth = 200;
 }
 
 - (UIAlertController *)obtainAlertController {
-    
-    
     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
     {
         //iPad
@@ -354,8 +362,7 @@ CGFloat const largeTitleCellWidth = 200;
     }
 }
 
-- (void)rejectAction
-{
+- (void)rejectAction {
     // Preguntamos el por qué del rechazo
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Rejection_of_requests".localized message:@"Indicate_Reason_For_Rejection".localized preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel".localized style:UIAlertActionStyleCancel handler:nil];
@@ -371,8 +378,7 @@ CGFloat const largeTitleCellWidth = 200;
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)signAction
-{
+- (void)signAction {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[SVProgressHUD show];
 	});
@@ -381,6 +387,11 @@ CGFloat const largeTitleCellWidth = 200;
     } else {
         [self startApprovalRequest];
     }
+}
+
+- (void)validateAction {
+    //Include logic to validate
+    NSLog(@"VALIDTE TEST");
 }
 
 - (void) rejectActionClickContinueButton: (UIAlertController *)alertController {
