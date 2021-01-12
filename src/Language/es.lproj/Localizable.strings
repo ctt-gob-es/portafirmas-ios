@@ -59,7 +59,7 @@
 "Sign" = "Firmar";
 "Approval" = "Visto Bueno";
 "Reject" = "Rechazar";
-"Cancel" = "Cancel";
+"Cancel" = "Cancelar";
 "Rejection_of_requests" = "Rechazo de peticiones";
 "Indicate_Reason_For_Rejection" = "Indique el motivo del rechazo";
 "Continue" = "Continuar";
@@ -128,3 +128,4 @@
 "User_Role_Signer" = "Firmante";
 "User_Roles_Title" = "Roles";
 "User_Roles_Change_Role" = "Cambiar rol";
+"User_Roles_Validate_Operation_Name" = "Validar";

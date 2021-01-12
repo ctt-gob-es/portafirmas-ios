@@ -243,7 +243,7 @@ static CGFloat const kValidateViewYOffset = 100;
         [_validateView setHidden: YES];
     
     _validateButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [_validateButton setTitle:@"Validate" forState:UIControlStateNormal];
+    [_validateButton setTitle:@"User_Roles_Validate_Operation_Name".localized forState:UIControlStateNormal];
     [_validateButton sizeToFit];
     [_validateButton setTitleColor:COLOR_FOR_RED_TEXT forState:UIControlStateNormal];
     [_validateButton setTitleColor:COLOR_FOR_DISABLED forState:UIControlStateDisabled];
@@ -254,7 +254,7 @@ static CGFloat const kValidateViewYOffset = 100;
     [self.validateView addSubview:_validateButton];
     
     _cancelValidateButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        [_cancelValidateButton setTitle:@"Cancel" forState:UIControlStateNormal];
+        [_cancelValidateButton setTitle:@"Cancel".localized forState:UIControlStateNormal];
         [_cancelValidateButton sizeToFit];
     [_cancelValidateButton setTitleColor: COLOR_FOR_RED_TEXT forState:UIControlStateNormal];
     [_cancelValidateButton addTarget:self action:@selector(cancelValidateButtonPressed:)
