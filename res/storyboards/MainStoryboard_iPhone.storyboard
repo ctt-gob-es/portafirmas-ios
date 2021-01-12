@@ -378,7 +378,7 @@
             <objects>
                 <tableViewController modalTransitionStyle="flipHorizontal" hidesBottomBarWhenPushed="YES" id="LYt-De-Eua" customClass="DetailTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="none" sectionIndexMinimumDisplayRowCount="8" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="1Ek-a1-fwh">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
@@ -755,7 +755,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="ReceiversListView" modalTransitionStyle="flipHorizontal" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Whf-Lg-Wlz" customClass="ReceiversViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="amM-w9-afS">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
@@ -1384,27 +1384,7 @@
                         </connections>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <toolbarItems>
-                        <barButtonItem title="Firmar / Visto Bueno" id="PVg-8e-aIa">
-                            <inset key="imageInsets" minX="0.0" minY="0.0" maxX="0.0" maxY="-1"/>
-                            <color key="tintColor" red="0.59864145517349243" green="0.0" blue="0.091977573931217194" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="signAction:" destination="p5t-hl-A0j" id="NBY-zB-ewg"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem title="Rechazar" id="xTa-qX-4mK">
-                            <color key="tintColor" red="0.59864145517349243" green="0.0" blue="0.091977573931217194" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="rejectAction:" destination="p5t-hl-A0j" id="xDL-T4-xEk"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem title="Cancelar" id="yXL-ri-VPI">
-                            <color key="tintColor" red="0.59864145517349243" green="0.0" blue="0.091977573931217194" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="cancelAction:" destination="p5t-hl-A0j" id="qu2-tX-xp8"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Pendientes" id="Efu-78-U3c">
                         <barButtonItem key="leftBarButtonItem" title="Registro" id="TXb-tP-EBY">
                             <connections>
@@ -1421,9 +1401,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="filterButtonItem" destination="32N-2o-xBM" id="KWe-Sr-Ong"/>
-                        <outlet property="rejectBarButton" destination="xTa-qX-4mK" id="gmv-mQ-VOq"/>
                         <outlet property="selectButtonItem" destination="BA9-Fn-GOB" id="pia-Z8-eNx"/>
-                        <outlet property="signBarButton" destination="PVg-8e-aIa" id="gzo-gX-AO9"/>
                         <outlet property="tableViewFooter" destination="sMH-sR-3u5" id="XQJ-Af-1ph"/>
                     </connections>
                 </viewController>
@@ -1631,7 +1609,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Db8-co-0mj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2782.4000000000001" y="590.10494752623697"/>
+            <point key="canvasLocation" x="-2810" y="913"/>
         </scene>
         <!--Añadir Servidor-->
         <scene sceneID="q9q-cZ-Ytm">
@@ -2014,7 +1992,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="SendersListView" modalTransitionStyle="flipHorizontal" id="rnV-KU-W7J" customClass="SendersViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Ixu-Qt-Eyp">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
@@ -2051,8 +2029,8 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="nx9-6d-emn"/>
-        <segue reference="8G8-nU-8OZ"/>
-        <segue reference="mrf-vS-Wze"/>
+        <segue reference="47P-jN-2H3"/>
+        <segue reference="f7k-Dd-rat"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="ic_calendar" width="15.5" height="15.5"/>

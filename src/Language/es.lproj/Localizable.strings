@@ -122,6 +122,10 @@
 "FIRe_undetermined_error" = "Error indeterminado con FIRe.";
 "FIRe_problem_with_response" = "Problema con la respuesta del servidor de FIRe.";
 
+//Pending request view
+"Pending_Requests_View_Sign_Approval" = "Firmar/Visto bueno";
+"Pending_Requests_View_Reject" = "Rechazar";
+
 //User Roles
 "User_Roles_Message" = "Por favor, seleccione el rol con el que desea acceder.";
 "User_Roles_Signer_Cell_Title" = "Acceder como firmante";

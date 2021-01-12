@@ -18,8 +18,6 @@
     NSDictionary *appConfig;
 }
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *signBarButton;
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *rejectBarButton;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *selectButtonItem;
 
 - (IBAction)rejectAction:(id)sender;

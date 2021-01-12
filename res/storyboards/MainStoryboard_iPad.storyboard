@@ -408,26 +408,7 @@
                         </connections>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <toolbarItems>
-                        <barButtonItem title="Firmar / Visto Bueno" id="VhQ-tA-czN">
-                            <color key="tintColor" red="0.59864145517349243" green="0.0" blue="0.091977573931217194" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="signAction:" destination="67c-Sg-JsV" id="vW4-Ld-6Wa"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem title="Rechazar" id="QOa-zR-XoJ">
-                            <color key="tintColor" red="0.59864145517349243" green="0.0" blue="0.091977573931217194" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="rejectAction:" destination="67c-Sg-JsV" id="4tC-U8-6iZ"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem title="Cancelar" id="Mea-OX-uCi">
-                            <color key="tintColor" red="0.59864145517349243" green="0.0" blue="0.091977573931217194" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <connections>
-                                <action selector="cancelAction:" destination="67c-Sg-JsV" id="gHe-Z9-wDN"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Peticiones pendientes" id="EfY-Xt-YUd">
                         <barButtonItem key="leftBarButtonItem" title="Registro" id="731-NT-5JY">
                             <connections>
@@ -445,9 +426,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="filterButtonItem" destination="eU2-Cq-Dn4" id="HkF-9f-gMg"/>
-                        <outlet property="rejectBarButton" destination="QOa-zR-XoJ" id="zfr-j2-6gI"/>
                         <outlet property="selectButtonItem" destination="4Xb-an-D9P" id="P2k-cE-3cT"/>
-                        <outlet property="signBarButton" destination="VhQ-tA-czN" id="sb8-5w-Vmc"/>
                         <outlet property="tableViewFooter" destination="rnd-6h-EHw" id="qpT-Cd-yQm"/>
                     </connections>
                 </viewController>
