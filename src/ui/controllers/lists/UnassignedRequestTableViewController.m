@@ -25,6 +25,7 @@
 #import "GlobalConstants.h"
 #import "ErrorService.h"
 #import <WebKit/WebKit.h>
+#import "ValidateController.h"
 
 #define TAB_BAR_HIDDEN_FRAME CGRectMake(-10, -10, 0, 0)
 
@@ -40,6 +41,7 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
     CGRect _tabViewFrame;
     NSSet *_selectedRequestsSetToSign;
     NSSet *_selectedRequestSetToApprove;
+    NSSet *_selectedRequestSetToValidate;
     PFWaitingResponseType _waitingResponseType;
     BOOL _didSetUpTabBar, reject;
     NSString *motivoRechazo;
@@ -67,51 +69,48 @@ static CGFloat const kRejectButtonWidth = 100;
 static CGFloat const kValidateButtonWidth = 100;
 static CGFloat const kCancelButtonWidth = 100;
 
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
+- (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
-
+    
     if (self) {
         dispatch_async(dispatch_get_main_queue(), ^{
-			[SVProgressHUD dismiss];
-		});
-
+            [SVProgressHUD dismiss];
+        });
+        
         self.dataStatus = kBaseListVCDataStatusPending;
-
+        
         // Custom initialization
         [_signButton setEnabled:NO];
         [_rejectButton setEnabled:NO];
         [_validateButton setEnabled:NO];
-
+        
         // Sets data in Aplication delegate objet to be shared for the application's tab
         AppDelegate *myDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         appConfig = myDelegate.appConfig;
-
+        
         selectedRows = [@[] mutableCopy];
     }
-
+    
     return self;
 }
 
 #pragma mark - Life Cycle
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     [self.navigationItem setRightBarButtonItems:@[_filterButtonItem, self.navigationItem.rightBarButtonItem] animated:NO];
     [self assignMainTabToAppDelegate];
-	
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(didReceiveResponseFromFIReFromDetail:)
-		name:@"didReceiveResponseFromFIRe"
-	  object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didReceiveResponseFromFIReFromDetail:)
+                                                 name:@"didReceiveResponseFromFIRe"
+                                               object:nil];
     
     [self showButtons];
     
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self setupTabBar];
     [self.parentViewController setHidesBottomBarWhenPushed:TRUE];
@@ -124,29 +123,28 @@ static CGFloat const kCancelButtonWidth = 100;
     [self.buttonsView setHidden: YES];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
 - (void) assignMainTabToAppDelegate {
-	AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-	UINavigationController *nav = (UINavigationController *)self.presentingViewController;
-	if (appDelegate.mainTab == nil) {
-		if (nav != nil && nav.presentedViewController != nil) {
-			UITabBarController *tabBarController = (UITabBarController *)nav.presentedViewController;
-			if (tabBarController != nil) {
-				appDelegate.mainTab = tabBarController;
-			}
-		}
-	}
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    UINavigationController *nav = (UINavigationController *)self.presentingViewController;
+    if (appDelegate.mainTab == nil) {
+        if (nav != nil && nav.presentedViewController != nil) {
+            UITabBarController *tabBarController = (UITabBarController *)nav.presentedViewController;
+            if (tabBarController != nil) {
+                appDelegate.mainTab = tabBarController;
+            }
+        }
+    }
 }
 
 #pragma mark - Network Calls
 
 - (void)loadData {
-	_waitingResponseType = PFWaitingResponseTypeList;
+    _waitingResponseType = PFWaitingResponseTypeList;
     [super loadData];
 }
 
@@ -166,54 +164,63 @@ static CGFloat const kCancelButtonWidth = 100;
     [alert addAction:cancel];
     [alert addAction:conti];
     [self presentViewController:alert animated:YES completion:nil];
-        
+    
 }
 
-- (IBAction)cancelAction:(id)sender
-{
+- (IBAction)cancelAction:(id)sender {
     [self cancelEditing];
 }
 
-- (void)startSendingSignRequests
-{
+- (void)startSendingSignRequests {
     [self enableUserInteraction:false];
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[SVProgressHUD show];
-	});
-	if (!_requestSignerController) {
-		_requestSignerController = [RequestSignerController new];
-	}
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD show];
+    });
+    if (!_requestSignerController) {
+        _requestSignerController = [RequestSignerController new];
+    }
     [_requestSignerController setDelegate:self];
-	if ([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyRemoteCertificatesSelection]) {
-		[_requestSignerController sendSignRequestForFIRe:_selectedRequestsSetToSign.allObjects];
-	} else {
-		[_requestSignerController loadPreSignRequestsWithCurrentCertificate:_selectedRequestsSetToSign.allObjects];
-	}
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyRemoteCertificatesSelection]) {
+        [_requestSignerController sendSignRequestForFIRe:_selectedRequestsSetToSign.allObjects];
+    } else {
+        [_requestSignerController loadPreSignRequestsWithCurrentCertificate:_selectedRequestsSetToSign.allObjects];
+    }
 }
 
-- (void)startSendingApproveRequests
-{
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[SVProgressHUD show];
-	});
+- (void)startSendingApproveRequests {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD show];
+    });
     _waitingResponseType = PFWaitingResponseTypeApproval;
     NSString *requestData = [ApproveXMLController buildRequestWithRequestArray:_selectedRequestSetToApprove.allObjects];
     [self.wsDataController loadPostRequestWithData:requestData code:PFRequestCodeApprove];
     [self.wsDataController startConnection];
 }
 
+- (void)startSendingValidateRequests {
+    [self enableUserInteraction:false];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD show];
+    });
+    _waitingResponseType = PFWaitingResponseTypeValidate;
+    NSString *requestData = [ValidateController buildRequestWithRequestArray:_selectedRequestSetToValidate.allObjects];
+    [self.wsDataController loadPostRequestWithData:requestData code:PFRequestCodeApprove];
+    [self.wsDataController startConnection];
+    
+    
+}
+
 - (void) signPrechargedRequestForFIRe {
-	if (!_requestSignerController) {
-		_requestSignerController = [RequestSignerController new];
-	}
+    if (!_requestSignerController) {
+        _requestSignerController = [RequestSignerController new];
+    }
     [_requestSignerController setDelegate:self];
-	[_requestSignerController signPrechargedRequestInFIRe];
+    [_requestSignerController signPrechargedRequestInFIRe];
 }
 
 #pragma mark - User Interface
 
-- (void)setupTabBar
-{
+- (void)setupTabBar {
     if (!_didSetUpTabBar) {
         [self.navigationController setTabBarItem:[self.tabBarItem initWithTitle:@"Pendientes"
                                                                           image:[[QuartzUtils getImageWithName:@"ic_pendientes" andTintColor:[UIColor lightGrayColor]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
@@ -226,29 +233,27 @@ static CGFloat const kCancelButtonWidth = 100;
     [self.navigationItem setTitle:@"Pendientes"];
 }
 
-- (void)updateEditButtons
-{
+- (void)updateEditButtons {
     BOOL enableButtons = selectedRows.count > 0;
     [_signButton setEnabled:enableButtons];
     [_rejectButton setEnabled:enableButtons];
     [_validateButton setEnabled: enableButtons];
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
 }
 
 - (void)showButtons {
- 
+    
     UIWindow* mainWindow = [[UIApplication sharedApplication] keyWindow];
     _buttonsView = [[UIView alloc] initWithFrame:CGRectMake(0, [UIScreen mainScreen].bounds.size.height - kValidateViewYOffset, [UIScreen mainScreen].bounds.size.width, kValidateViewHeight)];
-_buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
+    _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
     [mainWindow addSubview: _buttonsView];
     [_buttonsView setHidden: YES];
     
     CGFloat cancelXPosition = kZero;
-
+    
     if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected]objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: @"VALIDADOR"] ){
         _validateButton = [UIButton buttonWithType:UIButtonTypeSystem];
         [_validateButton setTitle:@"User_Roles_Validate_Operation_Name".localized forState:UIControlStateNormal];
@@ -267,7 +272,7 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
         [_signButton setTitleColor:COLOR_FOR_RED_TEXT forState:UIControlStateNormal];
         [_signButton setTitleColor:COLOR_FOR_DISABLED forState:UIControlStateDisabled];
         [_signButton addTarget:self action:@selector(signAction:)
-                  forControlEvents:UIControlEventTouchUpInside];
+              forControlEvents:UIControlEventTouchUpInside];
         _signButton.frame = CGRectMake(kLeftButtonMargin, kZero, kSignButtonWidth, kValidateViewHeight);
         [self.buttonsView addSubview:_signButton];
         _rejectButton = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -276,7 +281,7 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
         [_rejectButton setTitleColor:COLOR_FOR_RED_TEXT forState:UIControlStateNormal];
         [_rejectButton setTitleColor:COLOR_FOR_DISABLED forState:UIControlStateDisabled];
         [_rejectButton addTarget:self action:@selector(rejectAction:)
-                  forControlEvents:UIControlEventTouchUpInside];
+                forControlEvents:UIControlEventTouchUpInside];
         _rejectButton.frame = CGRectMake(kLeftButtonMargin + kSignButtonWidth, kZero, kRejectButtonWidth, kValidateViewHeight);
         [self.buttonsView addSubview:_rejectButton];
         cancelXPosition = cancelXPosition + kLeftButtonMargin + kSignButtonWidth + kRejectButtonWidth;
@@ -286,22 +291,21 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
     [_cancelButton sizeToFit];
     [_cancelButton setTitleColor: COLOR_FOR_RED_TEXT forState:UIControlStateNormal];
     [_cancelButton addTarget:self action:@selector(cancelButtonPressed:)
-                    forControlEvents:UIControlEventTouchUpInside];
+            forControlEvents:UIControlEventTouchUpInside];
     _cancelButton.frame = CGRectMake(cancelXPosition, kZero, kCancelButtonWidth, kValidateViewHeight);
     [self.buttonsView addSubview:_cancelButton];
 }
 
 #pragma mark - User Interaction
 
-- (IBAction)didTapOnBackButton:(id)sender
-{
+- (IBAction)didTapOnBackButton:(id)sender {
     //TODO Launch logout process if server has login support
     if ([LoginService instance].serverSupportLogin){
         
         [[LoginService instance] logout:^{
-             [self closeView];
+            [self closeView];
         } failure:^(NSError *error) {
-             [self closeView];
+            [self closeView];
         }];
         
     } else {
@@ -310,49 +314,52 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
 }
 
 
-- (IBAction)editAction:(id)sender
-{
+- (IBAction)editAction:(id)sender {
     if ([self.dataArray count] > 0) {
         [self setEditing: !self.editing animated: !self.editing];
     }
 }
 
 - (void) closeView {
-	dispatch_async(dispatch_get_main_queue(), ^{
-	   [self dismissViewControllerAnimated:YES completion:nil];
-	});
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    });
 }
 
-- (IBAction)signAction:(id)sender
-{
+- (IBAction)signAction:(id)sender {
     [self separateSignAndApproveRequests];
     [self showSignApproveAlert];
 }
 
 - (void)validateButtonPressed:(UIButton *)button {
-     // Include the logic to validate a request
+    // Include the logic to validate a request
+    [self setValidateRequests];
+    [self showSignApproveAlert];
 }
 
 - (void)cancelButtonPressed:(UIButton *)button {
     [self cancelEditing];
 }
 
-- (void)separateSignAndApproveRequests
-{
+- (void)separateSignAndApproveRequests {
     NSSet *selectedRequestsSet = [NSSet setWithArray:selectedRows];
-
+    
     _selectedRequestsSetToSign = [selectedRequestsSet objectsPassingTest:^BOOL (PFRequest *request, BOOL *stop) {
-                                      return request.type == PFRequestTypeSign;
-                                  }];
+        return request.type == PFRequestTypeSign;
+    }];
     _selectedRequestSetToApprove = [selectedRequestsSet objectsPassingTest:^BOOL (PFRequest *request, BOOL *stop) {
-                                        return request.type == PFRequestTypeApprove;
-                                    }];
+        return request.type == PFRequestTypeApprove;
+    }];
 }
 
-- (void)showSignApproveAlert
-{
-    NSString *message;
+- (void)setValidateRequests {
+    //Change this if we know that there are differences between validate, sign and reject requests (or more request types)
+    _selectedRequestSetToValidate = [NSSet setWithArray:selectedRows];
+}
 
+- (void)showSignApproveAlert {
+    NSString *message;
+    
     if (_selectedRequestSetToApprove && _selectedRequestSetToApprove.count > 0 && _selectedRequestsSetToSign && _selectedRequestsSetToSign.count > 0) {
         message = [NSString stringWithFormat: @"Alert_View_Process_Sign_and_Approve".localized, (unsigned long)_selectedRequestsSetToSign.count, (unsigned long)_selectedRequestSetToApprove.count];
     }
@@ -361,8 +368,10 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
     }
     else if (_selectedRequestsSetToSign && _selectedRequestsSetToSign.count > 0) {
         message = [NSString stringWithFormat: @"Alert_View_Process_Sign".localized, (unsigned long)_selectedRequestsSetToSign.count];
+    } else if (_selectedRequestSetToValidate.count > 0) {
+        message = [NSString stringWithFormat: @"Alert_View_Process_Validate".localized, (unsigned long)_selectedRequestSetToValidate.count];
     }
-
+    
     if (message) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle: @"Alert_View_Notice".localized message:message preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Cancel".localized style:UIAlertActionStyleCancel handler:nil];
@@ -380,9 +389,9 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
 }
 
 - (void)continueButtonClicked: (UIAlertController *)alertController {
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[SVProgressHUD show];
-	});
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD show];
+    });
     if (reject) {
         reject = NO;
         if ([alertController.textFields count] != 0) {
@@ -401,26 +410,26 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
     else if (_selectedRequestSetToApprove && _selectedRequestSetToApprove.count > 0) {
         [self startSendingApproveRequests];
     }
+    else if (_selectedRequestSetToValidate.count > 0) {
+        [self startSendingValidateRequests];
+    }
 }
 
 #pragma mark - UITableViewDelegate
 
-- (void)tableView:(UITableView *)theTableView didSelectRowAtIndexPath:(NSIndexPath *)newIndexPath
-{
-	if (![self isEditing]) {
-		[theTableView deselectRowAtIndexPath:newIndexPath animated:true];
-	}
-	
+- (void)tableView:(UITableView *)theTableView didSelectRowAtIndexPath:(NSIndexPath *)newIndexPath {
+    if (![self isEditing]) {
+        [theTableView deselectRowAtIndexPath:newIndexPath animated:true];
+    }
+    
     [self updateSelectionWithIndexPath:newIndexPath selected:YES];
 }
 
-- (void)tableView:(UITableView *)theTableView didDeselectRowAtIndexPath:(NSIndexPath *)newIndexPath
-{
+- (void)tableView:(UITableView *)theTableView didDeselectRowAtIndexPath:(NSIndexPath *)newIndexPath {
     [self updateSelectionWithIndexPath:newIndexPath selected:NO];
 }
 
-- (void)updateSelectionWithIndexPath:(NSIndexPath *)newIndexPath selected:(BOOL)selected
-{
+- (void)updateSelectionWithIndexPath:(NSIndexPath *)newIndexPath selected:(BOOL)selected {
     if ([self isEditing]) {
         selected ? [selectedRows addObject:self.dataArray[newIndexPath.row]] : [selectedRows removeObject:self.dataArray[newIndexPath.row]];
         [self updateEditButtons];
@@ -429,8 +438,7 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
 
 #pragma mark - Navigation Methods
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue identifier] isEqualToString:@"segueDetail"]) {
         
         [self prepareForDetailSegue:segue enablingSigning:YES];
@@ -444,12 +452,11 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
 
 #pragma mark - Edit Methods
 
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated
-{
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing: editing animated:animated];
     if (editing) {
         [_selectButtonItem setTitle:@"Hecho"];
-		[self setEditingBottomBar];
+        [self setEditingBottomBar];
         [self.buttonsView setHidden: NO];
         [self.tableView reloadData];
         selectedRows = [@[] mutableCopy];
@@ -459,37 +466,35 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
         [_selectButtonItem setTitle:@"Seleccionar"];
         [self setNormalBottomBar];
         [self.buttonsView setHidden: YES];
-
+        
         if (!([selectedRows count] > 0)) {
             [_signButton setEnabled:NO];
             [_rejectButton setEnabled:NO];
             [_validateButton setEnabled:NO];
         }
-
+        
         [[self tableView] reloadData];
     }
 }
 
-- (void)setEditingBottomBar
-{
+- (void)setEditingBottomBar {
     if (_tabBarFrame.size.width != self.tabBarController.tabBar.frame.size.width) {
         _tabBarFrame = self.tabBarController.tabBar.frame;
     }
-
+    
     if (!CGRectIsEmpty(self.tabBarController.tabBar.frame)) {
         CGRect fullScreen = self.view.frame;
-		fullScreen.size.height += self.tabBarController.tabBar.frame.size.height;
+        fullScreen.size.height += self.tabBarController.tabBar.frame.size.height;
         [self.view setFrame:fullScreen];
         [self.tabBarController.tabBar setFrame:TAB_BAR_HIDDEN_FRAME];
         [self.navigationController setToolbarHidden:NO animated:NO];
-		[self.parentViewController.tabBarController.tabBar setHidden:YES];
+        [self.parentViewController.tabBarController.tabBar setHidden:YES];
     }
 }
 
-- (void)setNormalBottomBar
-{
-	[self.parentViewController.tabBarController.tabBar setHidden:NO];
-	//  if (_tabBarFrame.size.height > 0 && CGRectIsEmpty(self.tabBarController.tabBar.frame)) {
+- (void)setNormalBottomBar {
+    [self.parentViewController.tabBarController.tabBar setHidden:NO];
+    //  if (_tabBarFrame.size.height > 0 && CGRectIsEmpty(self.tabBarController.tabBar.frame)) {
     if (_tabBarFrame.size.height > 0) {
         [self.navigationController setToolbarHidden:YES animated:YES];
         CGRect tabRect = self.view.frame;
@@ -498,8 +503,7 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
     }
 }
 
-- (void)cancelEditing
-{
+- (void)cancelEditing {
     [super setEditing:NO animated:NO];
     [self setEditing:NO animated:NO];
     [[self tableView] reloadData];
@@ -507,8 +511,7 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
 
 #pragma mark - WSDelegate
 
-- (void)doParse:(NSData *)data
-{
+- (void)doParse:(NSData *)data {
     if (_waitingResponseType == PFWaitingResponseTypeList) {
         [super doParse:data];
     }
@@ -517,25 +520,26 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
     }
     else if (_waitingResponseType == PFWaitingResponseTypeApproval) {
         [self didReceivedApprovalResponse:data];
+    } else if (_waitingResponseType == PFWaitingResponseTypeValidate) {
+        [self didReceivedValidateResponse:data];
     }
-
+    
     [self cancelEditing];
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[self.tableView reloadData];
-	});
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
 }
 
-- (void)didReceivedRejectionResponse:(NSData *)responseData
-{
+- (void)didReceivedRejectionResponse:(NSData *)responseData {
     NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:responseData];
     RejectXMLController *parser = [[RejectXMLController alloc] initXMLParser];
-
+    
     [nsXmlParser setDelegate:parser];
     BOOL success = [nsXmlParser parse];
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
     });
-
+    
     if (success) {
         NSArray *rejectsReq = [parser dataSource];
         [self didReceiveRejectResult:rejectsReq];
@@ -545,17 +549,16 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
     }
 }
 
-- (void)didReceivedApprovalResponse:(NSData *)responseData
-{
+- (void)didReceivedApprovalResponse:(NSData *)responseData {
     NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:responseData];
     ApproveXMLController *parser = [[ApproveXMLController alloc] init];
-
+    
     [nsXmlParser setDelegate:parser];
     BOOL success = [nsXmlParser parse];
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
     });
-
+    
     if (success) {
         NSArray *approvalRequests = [parser dataSource];
         [self handleApprovalRequests:approvalRequests];
@@ -564,16 +567,23 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
     }
 }
 
-- (void)handleApprovalRequests:(NSArray *)approvalRequests
-{
+- (void)didReceivedValidateResponse:(NSData *)responseData {
+    //Include here code to parse validate response
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
+}
+
+- (void)handleApprovalRequests:(NSArray *)approvalRequests {
     NSMutableArray *idsForRequestsWithError = [@[] mutableCopy];
-
+    
     [approvalRequests enumerateObjectsUsingBlock:^(PFRequest *request, NSUInteger idx, BOOL *stop) {
-         if ([request.status isEqualToString:@"KO"]) {
-             [idsForRequestsWithError addObject:request.reqid];
-         }
-     }];
-
+        if ([request.status isEqualToString:@"KO"]) {
+            [idsForRequestsWithError addObject:request.reqid];
+        }
+    }];
+    
     if (idsForRequestsWithError.count == 0) {
         // @" Peticiones firmadas corrrectamente"
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized message: @"Alert_View_Request_Signed_Correctly".localized preferredStyle:UIAlertControllerStyleAlert];
@@ -583,36 +593,35 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
         
     } else {
         NSString *errorMessage;
-
+        
         if (idsForRequestsWithError.count == 1) {
             errorMessage = [NSString stringWithFormat:@"Error al procesar la petición con código:%@", idsForRequestsWithError[0]];
         } else {
             NSMutableString *errorIDSString = [@"" mutableCopy];
             [idsForRequestsWithError enumerateObjectsUsingBlock:^(NSString *requestID, NSUInteger idx, BOOL *stop) {
-                 [errorIDSString appendFormat:@" %@", requestID];
-             }];
-
+                [errorIDSString appendFormat:@" %@", requestID];
+            }];
+            
             errorMessage = [NSString stringWithFormat:@"Error al procesar las peticiones con códigos:%@", errorIDSString];
         }
-
+        
         [self didReceiveError:errorMessage];
     }
-
+    
     [self cancelEditing];
     [self refreshInfo];
 }
 
-- (void)didReceiveSignerRequestResult:(NSArray *)requestsSigned
-{
+- (void)didReceiveSignerRequestResult:(NSArray *)requestsSigned {
     [self enableUserInteraction: true];
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
     });
-
+    
     NSIndexSet *requestsWithError = [requestsSigned indexesOfObjectsPassingTest:^BOOL (PFRequest *request, NSUInteger idx, BOOL *stop) {
-                                         return [request.status isEqualToString:@"KO"];
-                                     }];
-
+        return [request.status isEqualToString:@"KO"];
+    }];
+    
     // Mostramos un mensaje modal con el resultado de la operacion
     if (requestsWithError.count == 0) {
         // Peticiones firmadas corrrectamente
@@ -630,7 +639,7 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
         [alertController addAction:cancel];
         [self presentViewController:alertController animated:YES completion:nil];
     }
-
+    
     if (_selectedRequestSetToApprove && _selectedRequestSetToApprove.count > 0) {
         [self startSendingApproveRequests];
     }
@@ -638,11 +647,10 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
         [self cancelEditing];
         [self refreshInfo];
     }
-	[[self tableView] reloadData];
+    [[self tableView] reloadData];
 }
 
-- (void)didReceiveRejectResult:(NSArray *)requestsSigned
-{
+- (void)didReceiveRejectResult:(NSArray *)requestsSigned {
     BOOL processedOK = TRUE;
     for (PFRequestResult *request in requestsSigned) {
         if ([[request status] isEqualToString:@"KO"]) {
@@ -656,15 +664,15 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
             processedOK = FALSE;
         }
     }
-
+    
     if (processedOK) {
         
         _waitingResponseType = PFWaitingResponseTypeList;
         [super loadData];
         // Peticiones rechazadas corrrectamente
-		UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized
-																				 message: @"Correctly_rejected_requests".localized
-																		  preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized
+                                                                                 message: @"Correctly_rejected_requests".localized
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *actionOk = [UIAlertAction actionWithTitle: @"Ok".localized
                                                            style:UIAlertActionStyleDefault
                                                          handler:nil];
@@ -675,101 +683,101 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
 }
 
 - (void)showFIRMeWebView:(NSURL *) url {
-	 dispatch_async(dispatch_get_main_queue(), ^{
-		 [SVProgressHUD dismiss];
-		 [self enableUserInteraction: true];
-		 [self.navigationController setNavigationBarHidden:YES animated:YES];
-		 [self.navigationController setToolbarHidden:YES animated:NO];
-		 WKWebViewConfiguration *wkWebViewConfiguration = [[WKWebViewConfiguration alloc] init];
-		 self.webView = [[WKWebView alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) configuration: wkWebViewConfiguration];
-		 self.webView.navigationDelegate = self;
-		 NSURLRequest *nsrequest=[NSURLRequest requestWithURL:url];
-         [self.tableView scrollToRowAtIndexPath: [NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-		 [self.webView loadRequest: nsrequest];
-		 [self.view addSubview: self.webView];
-	 });
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+        [self enableUserInteraction: true];
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        [self.navigationController setToolbarHidden:YES animated:NO];
+        WKWebViewConfiguration *wkWebViewConfiguration = [[WKWebViewConfiguration alloc] init];
+        self.webView = [[WKWebView alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) configuration: wkWebViewConfiguration];
+        self.webView.navigationDelegate = self;
+        NSURLRequest *nsrequest=[NSURLRequest requestWithURL:url];
+        [self.tableView scrollToRowAtIndexPath: [NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        [self.webView loadRequest: nsrequest];
+        [self.view addSubview: self.webView];
+    });
 }
 
 -(void) didReceiveCorrectSignResponseFromFIRe {
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[SVProgressHUD dismissWithCompletion:^{
-			UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized message: @"Alert_View_Everything_Signed_Correctly".localized preferredStyle:UIAlertControllerStyleAlert];
-			UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
-			[alertController addAction:cancel];
-			[self presentViewController:alertController animated:YES completion:^{
-				[self refreshInfo];
-			}];
-		}];
-	});
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismissWithCompletion:^{
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized message: @"Alert_View_Everything_Signed_Correctly".localized preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
+            [alertController addAction:cancel];
+            [self presentViewController:alertController animated:YES completion:^{
+                [self refreshInfo];
+            }];
+        }];
+    });
 }
 
 - (void)didReceiveResponseFromFIReFromDetail:(NSNotification *)notification {
-	NSString *stringErrorNumber = [notification.userInfo valueForKey:@"errorNumber"];
-	NSString *correctSign = [notification.userInfo valueForKey:@"correctSign"];
-	if ([stringErrorNumber length] != 0) {
-		NSInteger errorNumber = [stringErrorNumber intValue];
-		if (errorNumber){
-			[self showErrorSignResponseFromFIRe: errorNumber];
-		} else {
-			[self showErrorInFIReRequest: @"FIRe_problem_with_response".localized];
-		}
-	} else if ([correctSign length] != 0) {
-		[self didReceiveCorrectSignResponseFromFIRe];
-	} else {
-		[self showErrorInFIReRequest: @"FIRe_problem_with_response".localized];
-	}
+    NSString *stringErrorNumber = [notification.userInfo valueForKey:@"errorNumber"];
+    NSString *correctSign = [notification.userInfo valueForKey:@"correctSign"];
+    if ([stringErrorNumber length] != 0) {
+        NSInteger errorNumber = [stringErrorNumber intValue];
+        if (errorNumber){
+            [self showErrorSignResponseFromFIRe: errorNumber];
+        } else {
+            [self showErrorInFIReRequest: @"FIRe_problem_with_response".localized];
+        }
+    } else if ([correctSign length] != 0) {
+        [self didReceiveCorrectSignResponseFromFIRe];
+    } else {
+        [self showErrorInFIReRequest: @"FIRe_problem_with_response".localized];
+    }
 }
 
 - (void)didReceiveErrorSignResponseFromFIRe: (NSString *) error {
-	NSInteger errorNumber = [error intValue];
-	[self showErrorSignResponseFromFIRe: errorNumber];
+    NSInteger errorNumber = [error intValue];
+    [self showErrorSignResponseFromFIRe: errorNumber];
 }
 
-- (void)didReceiveErrorInPrechargedFIReRequest:(NSString *)error{
-	[self showErrorInFIReAndDeselectRows: error];
+- (void)didReceiveErrorInPrechargedFIReRequest:(NSString *)error {
+    [self showErrorInFIReAndDeselectRows: error];
 }
 
 - (void)showErrorSignResponseFromFIRe: (NSInteger) errorNumber {
-	if(errorNumber){
-		ErrorNumber error = errorNumber;
-		switch (error) {
-			case error1:
-				[self showErrorInFIReRequest: @"FIRe_error_in_communication".localized];
-				[self cancelEditing];
-				break;
-			case error2:
-				[self showErrorInFIReRequest: @"FIRe_error_in_sign_operation".localized];
-				[self cancelEditing];
-				break;
-			case error3:
-				[self showErrorInFIReAndRefresh: @"FIRe_error_in_some_sign_operation".localized];
-				break;
-			default:
-				[self showErrorInFIReRequest: @"FIRe_undetermined_error".localized];
-				[self cancelEditing];
-				break;
-		}
-	} else {
-		[self showErrorInFIReRequest: @"FIRe_problem_with_response".localized];
-		[self cancelEditing];
-	}
+    if(errorNumber){
+        ErrorNumber error = errorNumber;
+        switch (error) {
+            case error1:
+                [self showErrorInFIReRequest: @"FIRe_error_in_communication".localized];
+                [self cancelEditing];
+                break;
+            case error2:
+                [self showErrorInFIReRequest: @"FIRe_error_in_sign_operation".localized];
+                [self cancelEditing];
+                break;
+            case error3:
+                [self showErrorInFIReAndRefresh: @"FIRe_error_in_some_sign_operation".localized];
+                break;
+            default:
+                [self showErrorInFIReRequest: @"FIRe_undetermined_error".localized];
+                [self cancelEditing];
+                break;
+        }
+    } else {
+        [self showErrorInFIReRequest: @"FIRe_problem_with_response".localized];
+        [self cancelEditing];
+    }
 }
 
 - (void)showErrorInFIReAndRefresh:(NSString *)errorString {
-	[self refreshInfo];
-	[[ErrorService instance] showAlertViewWithTitle: @"Alert_View_Error".localized andMessage: errorString];
+    [self refreshInfo];
+    [[ErrorService instance] showAlertViewWithTitle: @"Alert_View_Error".localized andMessage: errorString];
 }
 
 - (void)showErrorInFIReAndDeselectRows:(NSString *)errorString {
-	[self showErrorInFIReRequest:errorString];
-	[self setEditing:NO animated:NO];
-	[self enableUserInteraction:YES];
+    [self showErrorInFIReRequest:errorString];
+    [self setEditing:NO animated:NO];
+    [self enableUserInteraction:YES];
 }
 
 - (void)showErrorInFIReRequest:(NSString *)errorString {
-	[SVProgressHUD dismissWithCompletion:^{
-		[[ErrorService instance] showAlertViewWithTitle: @"Alert_View_Error".localized andMessage: errorString];
-	}];
+    [SVProgressHUD dismissWithCompletion:^{
+        [[ErrorService instance] showAlertViewWithTitle: @"Alert_View_Error".localized andMessage: errorString];
+    }];
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -783,35 +791,35 @@ _buttonsView.backgroundColor = BACKGROUND_COLOR_FOR_TOOLBAR;
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     NSURLRequest *request = navigationAction.request;
-	NSString *requestString = [[request URL] absoluteString];
-	NSArray *urlComponents = [requestString componentsSeparatedByString: kQuestionMarkString];
-	NSString *urlString = [urlComponents firstObject];
-	NSArray *urlFragments= [urlString componentsSeparatedByString: kStringSlash];
-		if ([[urlFragments lastObject] rangeOfString:kError].location != NSNotFound) {
-		[self.webView removeFromSuperview];
-		[self refreshInfo];
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[SVProgressHUD dismissWithCompletion:^{
-				[self.navigationController setNavigationBarHidden:NO animated:YES];
-				[self.navigationController setToolbarHidden:NO animated:NO];
-				[self enableUserInteraction: true];
-				[[ErrorService instance] showAlertViewWithTitle: @"Alert_View_Error".localized andMessage: @"FIRe_error_message".localized];
-			}];
-		 });
-		return decisionHandler(WKNavigationActionPolicyCancel);
-	}
-	if ([[urlFragments lastObject] rangeOfString:kOk].location != NSNotFound) {
-		[self.webView removeFromSuperview];
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[SVProgressHUD dismissWithCompletion:^{
-				[self signPrechargedRequestForFIRe];
-				[self.navigationController setNavigationBarHidden:NO animated:YES];
-				[self.navigationController setToolbarHidden:NO animated:NO];
-			}];
-		 });
-		return decisionHandler(WKNavigationActionPolicyCancel);
-	}
-	decisionHandler(WKNavigationActionPolicyAllow);
+    NSString *requestString = [[request URL] absoluteString];
+    NSArray *urlComponents = [requestString componentsSeparatedByString: kQuestionMarkString];
+    NSString *urlString = [urlComponents firstObject];
+    NSArray *urlFragments= [urlString componentsSeparatedByString: kStringSlash];
+    if ([[urlFragments lastObject] rangeOfString:kError].location != NSNotFound) {
+        [self.webView removeFromSuperview];
+        [self refreshInfo];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismissWithCompletion:^{
+                [self.navigationController setNavigationBarHidden:NO animated:YES];
+                [self.navigationController setToolbarHidden:NO animated:NO];
+                [self enableUserInteraction: true];
+                [[ErrorService instance] showAlertViewWithTitle: @"Alert_View_Error".localized andMessage: @"FIRe_error_message".localized];
+            }];
+        });
+        return decisionHandler(WKNavigationActionPolicyCancel);
+    }
+    if ([[urlFragments lastObject] rangeOfString:kOk].location != NSNotFound) {
+        [self.webView removeFromSuperview];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismissWithCompletion:^{
+                [self signPrechargedRequestForFIRe];
+                [self.navigationController setNavigationBarHidden:NO animated:YES];
+                [self.navigationController setToolbarHidden:NO animated:NO];
+            }];
+        });
+        return decisionHandler(WKNavigationActionPolicyCancel);
+    }
+    decisionHandler(WKNavigationActionPolicyAllow);
 }
 
 @end

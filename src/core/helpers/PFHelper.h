@@ -38,7 +38,8 @@ typedef NS_ENUM (NSInteger, PFWaitingResponseType)
     PFWaitingResponseTypeRejection,
     PFWaitingResponseTypeApproval,
     PFWaitingResponseTypeSign,
-    PFWaitingResponseTypeDetail
+    PFWaitingResponseTypeDetail,
+    PFWaitingResponseTypeValidate
 };
 
 typedef NS_ENUM (NSInteger, PFSortPickerRow)
