@@ -258,7 +258,7 @@ static CGFloat const kCancelButtonWidth = 100;
     
     CGFloat cancelXPosition = kZero;
     
-//    if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected]objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: @"VALIDADOR"] ){
+    if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected]objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: @"VALIDADOR"] ){
         _validateButton = [UIButton buttonWithType:UIButtonTypeSystem];
         [_validateButton setTitle:@"User_Roles_Validate_Operation_Name".localized forState:UIControlStateNormal];
         [_validateButton sizeToFit];
@@ -269,27 +269,27 @@ static CGFloat const kCancelButtonWidth = 100;
         _validateButton.frame = CGRectMake(kLeftButtonMargin, kZero, kValidateButtonWidth, kValidateViewHeight);
         [self.buttonsView addSubview:_validateButton];
         cancelXPosition = cancelXPosition + kLeftButtonMargin + kValidateButtonWidth;
-//    } else {
-//        _signButton = [UIButton buttonWithType:UIButtonTypeSystem];
-//        [_signButton setTitle:@"Pending_Requests_View_Sign_Approval".localized forState:UIControlStateNormal];
-//        [_signButton sizeToFit];
-//        [_signButton setTitleColor:COLOR_FOR_RED_TEXT forState:UIControlStateNormal];
-//        [_signButton setTitleColor:COLOR_FOR_DISABLED forState:UIControlStateDisabled];
-//        [_signButton addTarget:self action:@selector(signAction:)
-//              forControlEvents:UIControlEventTouchUpInside];
-//        _signButton.frame = CGRectMake(kLeftButtonMargin, kZero, kSignButtonWidth, kValidateViewHeight);
-//        [self.buttonsView addSubview:_signButton];
-//        _rejectButton = [UIButton buttonWithType:UIButtonTypeSystem];
-//        [_rejectButton setTitle:@"Pending_Requests_View_Reject".localized forState:UIControlStateNormal];
-//        [_rejectButton sizeToFit];
-//        [_rejectButton setTitleColor:COLOR_FOR_RED_TEXT forState:UIControlStateNormal];
-//        [_rejectButton setTitleColor:COLOR_FOR_DISABLED forState:UIControlStateDisabled];
-//        [_rejectButton addTarget:self action:@selector(rejectAction:)
-//                forControlEvents:UIControlEventTouchUpInside];
-//        _rejectButton.frame = CGRectMake(kLeftButtonMargin + kSignButtonWidth, kZero, kRejectButtonWidth, kValidateViewHeight);
-//        [self.buttonsView addSubview:_rejectButton];
-//        cancelXPosition = cancelXPosition + kLeftButtonMargin + kSignButtonWidth + kRejectButtonWidth;
-//    }
+    } else {
+        _signButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        [_signButton setTitle:@"Pending_Requests_View_Sign_Approval".localized forState:UIControlStateNormal];
+        [_signButton sizeToFit];
+        [_signButton setTitleColor:COLOR_FOR_RED_TEXT forState:UIControlStateNormal];
+        [_signButton setTitleColor:COLOR_FOR_DISABLED forState:UIControlStateDisabled];
+        [_signButton addTarget:self action:@selector(signAction:)
+              forControlEvents:UIControlEventTouchUpInside];
+        _signButton.frame = CGRectMake(kLeftButtonMargin, kZero, kSignButtonWidth, kValidateViewHeight);
+        [self.buttonsView addSubview:_signButton];
+        _rejectButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        [_rejectButton setTitle:@"Pending_Requests_View_Reject".localized forState:UIControlStateNormal];
+        [_rejectButton sizeToFit];
+        [_rejectButton setTitleColor:COLOR_FOR_RED_TEXT forState:UIControlStateNormal];
+        [_rejectButton setTitleColor:COLOR_FOR_DISABLED forState:UIControlStateDisabled];
+        [_rejectButton addTarget:self action:@selector(rejectAction:)
+                forControlEvents:UIControlEventTouchUpInside];
+        _rejectButton.frame = CGRectMake(kLeftButtonMargin + kSignButtonWidth, kZero, kRejectButtonWidth, kValidateViewHeight);
+        [self.buttonsView addSubview:_rejectButton];
+        cancelXPosition = cancelXPosition + kLeftButtonMargin + kSignButtonWidth + kRejectButtonWidth;
+    }
     _cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [_cancelButton setTitle:@"Cancel".localized forState:UIControlStateNormal];
     [_cancelButton sizeToFit];
