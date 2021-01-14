@@ -21,17 +21,16 @@
 #import "GlobalConstants.h"
 #import "ErrorService.h"
 #import <WebKit/WebKit.h>
+#import "ValidateController.h"
 
 static NSString *const kDetailCell = @"detailCell";
 static NSString *const kDetailCellNibName = @"DetailCell";
-static NSString *const kEmptyString = @"";
 static NSString *const kEndOfLine = @"\r";
 static NSString *const kMainStoryboardIPhoneIdentifier = @"MainStoryboard_iPhone";
 static NSString *const kAttachmentsListViewIdentifier = @"AttachmentsListView";
 static NSString *const kReceiversListViewIdentifier = @"ReceiversListView";
 static NSString *const kRequestDetailURLKeyName = @"requestDetailURL";
 static NSString *const kKOStatusString = @"KO";
-static NSString *const kAppendFormatString = @" %@";
 
 typedef NS_ENUM (NSInteger, PFDocumentAction)
 {
@@ -67,6 +66,11 @@ CGFloat const defaultCellHeight = 44;
 CGFloat const noCellHeight = 0;
 CGFloat const rejectCellTitleCellWidth = 150;
 CGFloat const largeTitleCellWidth = 200;
+
+typedef NS_ENUM(NSUInteger, Operation) {
+    approve = 1,
+    validate
+} ;
 
 @interface DetailTableViewController ()
 {
@@ -390,8 +394,10 @@ CGFloat const largeTitleCellWidth = 200;
 }
 
 - (void)validateAction {
-    //Include logic to validate
-    NSLog(@"VALIDTE TEST");
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD show];
+    });
+    [self startValidateRequest];
 }
 
 - (void) rejectActionClickContinueButton: (UIAlertController *)alertController {
@@ -431,6 +437,13 @@ CGFloat const largeTitleCellWidth = 200;
     NSString *requestData = [ApproveXMLController buildRequestWithRequestArray:@[_dataSource]];
 
     [wsController loadPostRequestWithData:requestData code:PFRequestCodeApprove];
+    [wsController startConnection];
+}
+
+- (void)startValidateRequest {
+    _waitingResponseType = PFWaitingResponseTypeValidate;
+    NSString *requestData = [ValidateController buildRequestWithRequestArray:@[_dataSource]];
+    [wsController loadPostRequestWithData:requestData code:PFRequestCodeValidate];
     [wsController startConnection];
 }
 

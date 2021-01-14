@@ -29,7 +29,8 @@ typedef NS_ENUM (NSInteger, PFRequestCode)
     PFRequestCodeAppList = 6,
     PFRequestCodeApprove = 7,
     PFRequestCodeDocumentPreviewSign = 8,
-    PFRequestCodeDocumentPreviewReport = 9
+    PFRequestCodeDocumentPreviewReport = 9,
+    PFRequestCodeValidate = 20
 };
 
 typedef NS_ENUM (NSInteger, PFWaitingResponseType)
