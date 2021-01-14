@@ -89,6 +89,7 @@
 		92469F1C257938A900494DCF /* UserRolesService.m in Sources */ = {isa = PBXBuildFile; fileRef = 92469F1B257938A900494DCF /* UserRolesService.m */; };
 		925BE5B725878C7F00B85BFE /* SelectRoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 925BE5B625878C7F00B85BFE /* SelectRoleViewController.m */; };
 		925BE5BB2587937100B85BFE /* SelectRoleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 925BE5BA2587937100B85BFE /* SelectRoleViewController.xib */; };
+		9261566125AEEADD004E47F5 /* ValidateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9261566025AEEADD004E47F5 /* ValidateController.m */; };
 		92A648FD2587A3CA00DFFACA /* RoleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92A648FC2587A3CA00DFFACA /* RoleCell.xib */; };
 		92A649012587A3F400DFFACA /* RoleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 92A649002587A3F400DFFACA /* RoleCell.m */; };
 		992987C2AA230FF0604BD234 /* libPods-PortaFirmasUniv.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0A9AB702FDB8ACDEBFCF67 /* libPods-PortaFirmasUniv.a */; };
@@ -274,6 +275,8 @@
 		925BE5B625878C7F00B85BFE /* SelectRoleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectRoleViewController.m; sourceTree = "<group>"; };
 		925BE5B925878C9400B85BFE /* SelectRoleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectRoleViewController.h; sourceTree = "<group>"; };
 		925BE5BA2587937100B85BFE /* SelectRoleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectRoleViewController.xib; sourceTree = "<group>"; };
+		9261566025AEEADD004E47F5 /* ValidateController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ValidateController.m; sourceTree = "<group>"; };
+		9261566325AEEAF5004E47F5 /* ValidateController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ValidateController.h; sourceTree = "<group>"; };
 		92A648FC2587A3CA00DFFACA /* RoleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoleCell.xib; sourceTree = "<group>"; };
 		92A648FF2587A3DC00DFFACA /* RoleCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RoleCell.h; sourceTree = "<group>"; };
 		92A649002587A3F400DFFACA /* RoleCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RoleCell.m; sourceTree = "<group>"; };
@@ -676,6 +679,8 @@
 				3C00ADCF1AB71B1700EF6886 /* WSDataController.m */,
 				3C00ADD01AB71B1700EF6886 /* XMLController.h */,
 				3C00ADD11AB71B1700EF6886 /* XMLController.m */,
+				9261566325AEEAF5004E47F5 /* ValidateController.h */,
+				9261566025AEEADD004E47F5 /* ValidateController.m */,
 			);
 			path = business;
 			sourceTree = "<group>";
@@ -1111,6 +1116,7 @@
 				BCAF65E61FACA96500D30E54 /* NSData+Conversion.m in Sources */,
 				3CC403681AB96D05006F8803 /* PFBaseVC.m in Sources */,
 				BCA133D31FF63DD200818EC7 /* NotificationHandler.m in Sources */,
+				9261566125AEEADD004E47F5 /* ValidateController.m in Sources */,
 				BCE470F51FD70CEF00702306 /* CookieTools.m in Sources */,
 				3CA899611AA60E6C0035012D /* RequestCellNoUI.m in Sources */,
 				3C00AD691AB71A0700EF6886 /* SettingsCell.m in Sources */,
