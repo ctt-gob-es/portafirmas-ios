@@ -87,15 +87,14 @@
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict
 {
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qualifiedName attributes:attributeDict];
-
-    if ([elementName isEqualToString:@"apprv"]) {
-
+    //Check this string to be the correct one
+    if ([elementName isEqualToString:@"verifrp"]) {
         _requestResult = [PFRequestResult new];
         [_requestResult setRejectid:attributeDict[@"id"]];
         [_requestResult setStatus:attributeDict[@"status"]];
     }
-
-    if ([elementName isEqualToString:@"apprvs"]) {
+    //Check this string to be the correct one
+    if ([elementName isEqualToString:@"verifrps"]) {
         _dataSource = [@[] mutableCopy];
     }
 }
@@ -123,12 +122,11 @@
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
     [super parser:parser didEndElement:elementName namespaceURI:namespaceURI qualifiedName:qName];
-
-    if ([elementName isEqualToString:@"apprv"]) {
+    //Check this string to be the correct one
+    if ([elementName isEqualToString:@"verifrp"]) {
         // We reached the end of the XML document
         [_dataSource addObject:_requestResult];
     }
-
     currentElementValue = nil;
 }
 

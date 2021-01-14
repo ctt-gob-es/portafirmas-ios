@@ -35,6 +35,11 @@ typedef NS_ENUM(NSUInteger, ErrorNumber) {
     error3
 } ;
 
+typedef NS_ENUM(NSUInteger, Operation) {
+    approve = 1,
+    validate
+} ;
+
 @interface UnassignedRequestTableViewController() <UIPopoverPresentationControllerDelegate>
 {
     CGRect _tabBarFrame;
@@ -188,6 +193,7 @@ static CGFloat const kCancelButtonWidth = 100;
 }
 
 - (void)startSendingApproveRequests {
+    [self enableUserInteraction:false];
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD show];
     });
@@ -206,8 +212,6 @@ static CGFloat const kCancelButtonWidth = 100;
     NSString *requestData = [ValidateController buildRequestWithRequestArray:_selectedRequestSetToValidate.allObjects];
     [self.wsDataController loadPostRequestWithData:requestData code:PFRequestCodeApprove];
     [self.wsDataController startConnection];
-    
-    
 }
 
 - (void) signPrechargedRequestForFIRe {
@@ -254,7 +258,7 @@ static CGFloat const kCancelButtonWidth = 100;
     
     CGFloat cancelXPosition = kZero;
     
-    if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected]objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: @"VALIDADOR"] ){
+//    if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected]objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: @"VALIDADOR"] ){
         _validateButton = [UIButton buttonWithType:UIButtonTypeSystem];
         [_validateButton setTitle:@"User_Roles_Validate_Operation_Name".localized forState:UIControlStateNormal];
         [_validateButton sizeToFit];
@@ -265,27 +269,27 @@ static CGFloat const kCancelButtonWidth = 100;
         _validateButton.frame = CGRectMake(kLeftButtonMargin, kZero, kValidateButtonWidth, kValidateViewHeight);
         [self.buttonsView addSubview:_validateButton];
         cancelXPosition = cancelXPosition + kLeftButtonMargin + kValidateButtonWidth;
-    } else {
-        _signButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        [_signButton setTitle:@"Pending_Requests_View_Sign_Approval".localized forState:UIControlStateNormal];
-        [_signButton sizeToFit];
-        [_signButton setTitleColor:COLOR_FOR_RED_TEXT forState:UIControlStateNormal];
-        [_signButton setTitleColor:COLOR_FOR_DISABLED forState:UIControlStateDisabled];
-        [_signButton addTarget:self action:@selector(signAction:)
-              forControlEvents:UIControlEventTouchUpInside];
-        _signButton.frame = CGRectMake(kLeftButtonMargin, kZero, kSignButtonWidth, kValidateViewHeight);
-        [self.buttonsView addSubview:_signButton];
-        _rejectButton = [UIButton buttonWithType:UIButtonTypeSystem];
-        [_rejectButton setTitle:@"Pending_Requests_View_Reject".localized forState:UIControlStateNormal];
-        [_rejectButton sizeToFit];
-        [_rejectButton setTitleColor:COLOR_FOR_RED_TEXT forState:UIControlStateNormal];
-        [_rejectButton setTitleColor:COLOR_FOR_DISABLED forState:UIControlStateDisabled];
-        [_rejectButton addTarget:self action:@selector(rejectAction:)
-                forControlEvents:UIControlEventTouchUpInside];
-        _rejectButton.frame = CGRectMake(kLeftButtonMargin + kSignButtonWidth, kZero, kRejectButtonWidth, kValidateViewHeight);
-        [self.buttonsView addSubview:_rejectButton];
-        cancelXPosition = cancelXPosition + kLeftButtonMargin + kSignButtonWidth + kRejectButtonWidth;
-    }
+//    } else {
+//        _signButton = [UIButton buttonWithType:UIButtonTypeSystem];
+//        [_signButton setTitle:@"Pending_Requests_View_Sign_Approval".localized forState:UIControlStateNormal];
+//        [_signButton sizeToFit];
+//        [_signButton setTitleColor:COLOR_FOR_RED_TEXT forState:UIControlStateNormal];
+//        [_signButton setTitleColor:COLOR_FOR_DISABLED forState:UIControlStateDisabled];
+//        [_signButton addTarget:self action:@selector(signAction:)
+//              forControlEvents:UIControlEventTouchUpInside];
+//        _signButton.frame = CGRectMake(kLeftButtonMargin, kZero, kSignButtonWidth, kValidateViewHeight);
+//        [self.buttonsView addSubview:_signButton];
+//        _rejectButton = [UIButton buttonWithType:UIButtonTypeSystem];
+//        [_rejectButton setTitle:@"Pending_Requests_View_Reject".localized forState:UIControlStateNormal];
+//        [_rejectButton sizeToFit];
+//        [_rejectButton setTitleColor:COLOR_FOR_RED_TEXT forState:UIControlStateNormal];
+//        [_rejectButton setTitleColor:COLOR_FOR_DISABLED forState:UIControlStateDisabled];
+//        [_rejectButton addTarget:self action:@selector(rejectAction:)
+//                forControlEvents:UIControlEventTouchUpInside];
+//        _rejectButton.frame = CGRectMake(kLeftButtonMargin + kSignButtonWidth, kZero, kRejectButtonWidth, kValidateViewHeight);
+//        [self.buttonsView addSubview:_rejectButton];
+//        cancelXPosition = cancelXPosition + kLeftButtonMargin + kSignButtonWidth + kRejectButtonWidth;
+//    }
     _cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [_cancelButton setTitle:@"Cancel".localized forState:UIControlStateNormal];
     [_cancelButton sizeToFit];
@@ -332,7 +336,6 @@ static CGFloat const kCancelButtonWidth = 100;
 }
 
 - (void)validateButtonPressed:(UIButton *)button {
-    // Include the logic to validate a request
     [self setValidateRequests];
     [self showSignApproveAlert];
 }
@@ -561,39 +564,61 @@ static CGFloat const kCancelButtonWidth = 100;
     
     if (success) {
         NSArray *approvalRequests = [parser dataSource];
-        [self handleApprovalRequests:approvalRequests];
+        [self handleRequests:approvalRequests forOperation: approve];
     } else {
         [self didReceiveError:@"Se ha producido un error de conexión con el servidor (501)"];
     }
+    [self enableUserInteraction:true];
 }
 
 - (void)didReceivedValidateResponse:(NSData *)responseData {
-    //Include here code to parse validate response
-    
+    NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:responseData];
+    ValidateController *parser = [[ValidateController alloc] init];
+    [nsXmlParser setDelegate:parser];
+    BOOL success = [nsXmlParser parse];
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
     });
+    if (success) {
+        NSArray *validateRequests = [parser dataSource];
+//        ****aqui validateRequest es nil porque no hay request validos en la respuesta
+        if (validateRequests == nil) {
+            [self didReceiveError:[parser err]];
+        } else {
+            [self handleRequests:validateRequests forOperation: validate];
+        }
+    } else {
+        [self didReceiveError:@"Se ha producido un error de conexión con el servidor (501)"];
+    }
+    [self enableUserInteraction:true];
 }
 
-- (void)handleApprovalRequests:(NSArray *)approvalRequests {
+- (void)handleRequests:(NSArray *)requests forOperation: (Operation) operation {
     NSMutableArray *idsForRequestsWithError = [@[] mutableCopy];
-    
-    [approvalRequests enumerateObjectsUsingBlock:^(PFRequest *request, NSUInteger idx, BOOL *stop) {
+    [requests enumerateObjectsUsingBlock:^(PFRequest *request, NSUInteger idx, BOOL *stop) {
         if ([request.status isEqualToString:@"KO"]) {
             [idsForRequestsWithError addObject:request.reqid];
         }
     }];
-    
     if (idsForRequestsWithError.count == 0) {
-        // @" Peticiones firmadas corrrectamente"
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized message: @"Alert_View_Request_Signed_Correctly".localized preferredStyle:UIAlertControllerStyleAlert];
+        NSString *message;
+        switch (operation) {
+            case approve:
+                message = @"Alert_View_Request_Signed_Correctly".localized;
+                break;
+                
+            case validate:
+                message = @"Alert_View_Request_Validated_Correctly".localized;
+                break;
+            default:
+                break;
+        }
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized message: message preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
         [alertController addAction:cancel];
         [self presentViewController:alertController animated:YES completion:nil];
-        
     } else {
         NSString *errorMessage;
-        
         if (idsForRequestsWithError.count == 1) {
             errorMessage = [NSString stringWithFormat:@"Error al procesar la petición con código:%@", idsForRequestsWithError[0]];
         } else {
@@ -604,10 +629,8 @@ static CGFloat const kCancelButtonWidth = 100;
             
             errorMessage = [NSString stringWithFormat:@"Error al procesar las peticiones con códigos:%@", errorIDSString];
         }
-        
         [self didReceiveError:errorMessage];
     }
-    
     [self cancelEditing];
     [self refreshInfo];
 }
