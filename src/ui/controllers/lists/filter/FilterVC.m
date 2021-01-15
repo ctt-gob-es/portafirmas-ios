@@ -32,27 +32,6 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     NSDate *_endDate;
 }
 
-//@property (nonatomic, strong) IBOutlet UIButton *sortButton;
-//@property (nonatomic, strong) IBOutlet UIPickerView *sortPickerView;
-//@property (nonatomic, strong) IBOutlet UITextField *topicTextField;
-//@property (nonatomic, strong) IBOutlet UIButton *appButton;
-//@property (nonatomic, strong) IBOutlet UIPickerView *appPickerView;
-//@property (nonatomic, strong) IBOutlet UITextField *startDateTextField;
-//@property (nonatomic, strong) IBOutlet UITextField *endDateTextField;
-//@property (nonatomic, strong) IBOutlet UIDatePicker *datePicker;
-//@property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
-//@property (nonatomic, strong) IBOutlet UISwitch *enableFiltersSwitch;
-//
-//@property (nonatomic, strong) IBOutlet UILabel *notificationTitleLabel;
-//@property (nonatomic, strong) IBOutlet UILabel *notificationStateLabel;
-//@property (nonatomic, strong) IBOutlet UIView *notificationView;
-//@property (nonatomic, strong) IBOutlet UISwitch *notificationSwitch;
-//@property (weak, nonatomic) IBOutlet UILabel *roleTitleLabel;
-//@property (weak, nonatomic) IBOutlet UIView *roleSeparatorView;
-//@property (weak, nonatomic) IBOutlet UILabel *roleLabel;
-//@property (weak, nonatomic) IBOutlet UIButton *roleButton;
-//@property (weak, nonatomic) IBOutlet UILabel *selectedRoleNameLabel;
-//@property (weak, nonatomic) IBOutlet UILabel *selectedRoleLabel;
 @property (strong, nonatomic) IBOutlet UIView *filterView;
 
 @end

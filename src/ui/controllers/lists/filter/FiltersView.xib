@@ -317,6 +317,28 @@
                 <constraint firstItem="qBo-IR-fwc" firstAttribute="bottom" secondItem="kOK-fh-xWw" secondAttribute="bottom" id="zQl-8G-umy"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="appButton" destination="IFI-00-1N0" id="lQw-7I-Rk0"/>
+                <outlet property="appPickerView" destination="ZRv-Tp-HAg" id="iTr-az-ERk"/>
+                <outlet property="datePicker" destination="jFF-9F-6aV" id="OSc-Ug-o1d"/>
+                <outlet property="enableFiltersSwitch" destination="FAO-4M-9Dp" id="M6o-Bb-bRD"/>
+                <outlet property="endDateTextField" destination="sXB-du-rYh" id="SzO-eS-ov1"/>
+                <outlet property="notificationSeparatorView" destination="eOE-MG-cnh" id="MPi-ec-HkL"/>
+                <outlet property="notificationStateLabel" destination="lNc-th-qHL" id="TVl-9Q-HWM"/>
+                <outlet property="notificationSwitch" destination="5BR-B3-MlQ" id="46D-l4-Ha0"/>
+                <outlet property="notificationTitleLabel" destination="pUd-3y-KwL" id="pdB-aB-1E9"/>
+                <outlet property="roleButton" destination="UtE-Kf-khR" id="ipF-Zs-woq"/>
+                <outlet property="roleLabel" destination="wvu-aO-1Vf" id="vpI-YU-cr4"/>
+                <outlet property="roleSeparatorView" destination="vbW-97-h9u" id="mVl-Dw-SXe"/>
+                <outlet property="roleTitleLabel" destination="ClN-bq-wrk" id="2WC-jR-YID"/>
+                <outlet property="scrollView" destination="kOK-fh-xWw" id="3iI-Mr-Rce"/>
+                <outlet property="selectedRoleLabel" destination="CZO-hy-fhv" id="065-OK-g4a"/>
+                <outlet property="selectedRoleNameLabel" destination="5CB-eG-zIo" id="MRe-DM-Ies"/>
+                <outlet property="sortButton" destination="gcb-Dm-LVM" id="sbA-6k-HqG"/>
+                <outlet property="sortPickerView" destination="x0g-vH-h29" id="IgD-Ee-jvN"/>
+                <outlet property="startDateTextField" destination="6rU-e8-tBh" id="W4S-qa-nM2"/>
+                <outlet property="topicTextField" destination="Hod-UW-h2h" id="Fv0-qu-6Rt"/>
+            </connections>
             <point key="canvasLocation" x="-316" y="-542"/>
         </view>
     </objects>
