@@ -339,12 +339,12 @@ typedef NS_ENUM(NSUInteger, Operation) {
                                {
                                    [self validateAction];
                                }];
-    if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected]objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: @"VALIDADOR"] ){
+//    if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected]objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: @"VALIDADOR"] ){
         [alertController addAction:validate];
-    } else {
-        [alertController addAction:reject];
-        [alertController addAction:sign];
-    }
+//    } else {
+//        [alertController addAction:reject];
+//        [alertController addAction:sign];
+//    }
     [alertController addAction:cancel];
     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
     {
@@ -562,16 +562,29 @@ typedef NS_ENUM(NSUInteger, Operation) {
     NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:data];
     id <NSXMLParserDelegate> parser = [self parserForCurrentRequest];
     [nsXmlParser setDelegate:parser];
-
     if ([nsXmlParser parse]) {
-        
         if (_waitingResponseType == PFWaitingResponseTypeRejection) {
-            [self didReceiveRejectResult:[(RejectXMLController *)parser dataSource]];
-        }
-        else if (_waitingResponseType == PFWaitingResponseTypeApproval) {
-            [self didReceiveApprovalResult:[(ApproveXMLController *)parser dataSource]];
-        }
-        else {
+            NSArray *rejectedRequests = [(RejectXMLController *)parser dataSource];
+            if(rejectedRequests != nil){
+                [self didReceiveRejectResult: rejectedRequests];
+            } else {
+                [self didReceiveError:[(RejectXMLController *)parser err]];
+            }
+        } else if (_waitingResponseType == PFWaitingResponseTypeApproval) {
+            NSArray *approvedRequests = [(ApproveXMLController *)parser dataSource];
+            if (approvedRequests != nil){
+                [self didReceiveRequestResult:approvedRequests forOperation:approve];
+            } else {
+              [self didReceiveError:[(ApproveXMLController *)parser err]];
+            }
+        } else if (_waitingResponseType == PFWaitingResponseTypeValidate) {
+            NSArray *approvedRequests = [(ValidateController *)parser dataSource];
+            if (approvedRequests != nil){
+                [self didReceiveRequestResult:approvedRequests forOperation: validate];
+            } else {
+                [self didReceiveError:[(ValidateController *)parser err]];
+            }
+        } else {
             [self didFinisParsingWithParser:parser];
         }
     }
@@ -588,8 +601,9 @@ typedef NS_ENUM(NSUInteger, Operation) {
         return [[RejectXMLController alloc] initXMLParser];
     } else if (_waitingResponseType == PFWaitingResponseTypeApproval) {
         return [[ApproveXMLController alloc] init];
+    } else if (_waitingResponseType == PFWaitingResponseTypeValidate) {
+        return [[ValidateController alloc] init];
     }
-
     return nil;
 }
 
@@ -624,44 +638,30 @@ typedef NS_ENUM(NSUInteger, Operation) {
 
 }
 
-- (void)didReceivedRejectionResponse:(NSData *)responseData
-{
-    
-    NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:responseData];
-    RejectXMLController *parser = [[RejectXMLController alloc] initXMLParser];
-    
-    [nsXmlParser setDelegate:parser];
-    BOOL success = [nsXmlParser parse];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [SVProgressHUD dismiss];
-    });
-    
-    if (success) {
-        NSArray *rejectsReq = [parser dataSource];
-        [self didReceiveRejectResult:rejectsReq];
-    }
-    else {
-        [self didReceiveError:@"Detail_view_error_server_connection_501".localized];
-    }
-}
-
-- (void)didReceiveApprovalResult:(NSArray *)approvedRequests
-{
+- (void)didReceiveRequestResult:(NSArray *)approvedRequests forOperation: (Operation) operation {
     NSMutableArray *idsForRequestsWithError = [@[] mutableCopy];
-
     [approvedRequests enumerateObjectsUsingBlock:^(PFRequest *request, NSUInteger idx, BOOL *stop) {
          if ([request.status isEqualToString:kKOStatusString]) {
              [idsForRequestsWithError addObject:request.reqid];
          }
      }];
-
     if (idsForRequestsWithError.count == 0) {
-        // @" Peticiones firmadas corrrectamente"
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized message: @"Alert_View_Request_Processed_Correctly".localized preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
+        NSString *message;
+        switch (operation) {
+            case approve:
+                message = @"Alert_View_Request_Signed_Correctly".localized;
+                break;
+            case validate:
+                message = @"Alert_View_Request_Validated_Correctly".localized;
+                break;
+            default:
+                break;
+        }        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized message: message preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [self dismissSelfView];
+        }];
         [alertController addAction:cancel];
         [self presentViewController:alertController animated:YES completion:nil];
-        [self dismissSelfView];
     } else {
         NSString *errorMessage;
         if (idsForRequestsWithError.count == 1) {
@@ -674,13 +674,7 @@ typedef NS_ENUM(NSUInteger, Operation) {
             errorMessage = [NSString stringWithFormat:@"Detail_view_error_processing_multiple_request".localized, errorIDSString];
         }
         [self didReceiveError:errorMessage];
-        [self dismissSelfView];
     }
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-	   [self dismissViewControllerAnimated:YES completion:nil];
-	});
-
 }
 
 - (void)didFinisParsingWithParser:(DetailXMLController *)parser
@@ -764,7 +758,6 @@ typedef NS_ENUM(NSUInteger, Operation) {
    dispatch_async(dispatch_get_main_queue(), ^{
 	   [self dismissViewControllerAnimated:YES completion:nil];
 	});
-	
     [(BaseListTVC *)self.navigationController.previousViewController refreshInfo];
     [self.navigationController popViewControllerAnimated:YES];
 }

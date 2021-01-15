@@ -210,7 +210,7 @@ static CGFloat const kCancelButtonWidth = 100;
     });
     _waitingResponseType = PFWaitingResponseTypeValidate;
     NSString *requestData = [ValidateController buildRequestWithRequestArray:_selectedRequestSetToValidate.allObjects];
-    [self.wsDataController loadPostRequestWithData:requestData code:PFRequestCodeApprove];
+    [self.wsDataController loadPostRequestWithData:requestData code:PFRequestCodeValidate];
     [self.wsDataController startConnection];
 }
 
@@ -332,12 +332,12 @@ static CGFloat const kCancelButtonWidth = 100;
 
 - (IBAction)signAction:(id)sender {
     [self separateSignAndApproveRequests];
-    [self showSignApproveAlert];
+    [self showAlert];
 }
 
 - (void)validateButtonPressed:(UIButton *)button {
     [self setValidateRequests];
-    [self showSignApproveAlert];
+    [self showAlert];
 }
 
 - (void)cancelButtonPressed:(UIButton *)button {
@@ -360,7 +360,7 @@ static CGFloat const kCancelButtonWidth = 100;
     _selectedRequestSetToValidate = [NSSet setWithArray:selectedRows];
 }
 
-- (void)showSignApproveAlert {
+- (void)showAlert {
     NSString *message;
     
     if (_selectedRequestSetToApprove && _selectedRequestSetToApprove.count > 0 && _selectedRequestsSetToSign && _selectedRequestsSetToSign.count > 0) {
@@ -517,16 +517,13 @@ static CGFloat const kCancelButtonWidth = 100;
 - (void)doParse:(NSData *)data {
     if (_waitingResponseType == PFWaitingResponseTypeList) {
         [super doParse:data];
-    }
-    else if (_waitingResponseType == PFWaitingResponseTypeRejection) {
+    } else if (_waitingResponseType == PFWaitingResponseTypeRejection) {
         [self didReceivedRejectionResponse:data];
-    }
-    else if (_waitingResponseType == PFWaitingResponseTypeApproval) {
+    } else if (_waitingResponseType == PFWaitingResponseTypeApproval) {
         [self didReceivedApprovalResponse:data];
     } else if (_waitingResponseType == PFWaitingResponseTypeValidate) {
         [self didReceivedValidateResponse:data];
     }
-    
     [self cancelEditing];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
@@ -555,7 +552,6 @@ static CGFloat const kCancelButtonWidth = 100;
 - (void)didReceivedApprovalResponse:(NSData *)responseData {
     NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:responseData];
     ApproveXMLController *parser = [[ApproveXMLController alloc] init];
-    
     [nsXmlParser setDelegate:parser];
     BOOL success = [nsXmlParser parse];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -564,7 +560,7 @@ static CGFloat const kCancelButtonWidth = 100;
     
     if (success) {
         NSArray *approvalRequests = [parser dataSource];
-        [self handleRequests:approvalRequests forOperation: approve];
+        [self didReceiveRequestResult:approvalRequests forOperation: approve];
     } else {
         [self didReceiveError:@"Se ha producido un error de conexión con el servidor (501)"];
     }
@@ -581,11 +577,10 @@ static CGFloat const kCancelButtonWidth = 100;
     });
     if (success) {
         NSArray *validateRequests = [parser dataSource];
-//        ****aqui validateRequest es nil porque no hay request validos en la respuesta
-        if (validateRequests == nil) {
-            [self didReceiveError:[parser err]];
+        if (validateRequests != nil) {
+            [self didReceiveRequestResult:validateRequests forOperation: validate];
         } else {
-            [self handleRequests:validateRequests forOperation: validate];
+            [self didReceiveError:[parser err]];
         }
     } else {
         [self didReceiveError:@"Se ha producido un error de conexión con el servidor (501)"];
@@ -593,7 +588,7 @@ static CGFloat const kCancelButtonWidth = 100;
     [self enableUserInteraction:true];
 }
 
-- (void)handleRequests:(NSArray *)requests forOperation: (Operation) operation {
+- (void)didReceiveRequestResult:(NSArray *)requests forOperation: (Operation) operation {
     NSMutableArray *idsForRequestsWithError = [@[] mutableCopy];
     [requests enumerateObjectsUsingBlock:^(PFRequest *request, NSUInteger idx, BOOL *stop) {
         if ([request.status isEqualToString:@"KO"]) {
@@ -606,7 +601,6 @@ static CGFloat const kCancelButtonWidth = 100;
             case approve:
                 message = @"Alert_View_Request_Signed_Correctly".localized;
                 break;
-                
             case validate:
                 message = @"Alert_View_Request_Validated_Correctly".localized;
                 break;
@@ -620,14 +614,14 @@ static CGFloat const kCancelButtonWidth = 100;
     } else {
         NSString *errorMessage;
         if (idsForRequestsWithError.count == 1) {
-            errorMessage = [NSString stringWithFormat:@"Error al procesar la petición con código:%@", idsForRequestsWithError[0]];
+            errorMessage = [NSString stringWithFormat:@"Detail_view_error_processing_request".localized, idsForRequestsWithError[0]];
         } else {
-            NSMutableString *errorIDSString = [@"" mutableCopy];
+            NSMutableString *errorIDSString = [kEmptyString mutableCopy];
             [idsForRequestsWithError enumerateObjectsUsingBlock:^(NSString *requestID, NSUInteger idx, BOOL *stop) {
-                [errorIDSString appendFormat:@" %@", requestID];
+                [errorIDSString appendFormat:kAppendFormatString, requestID];
             }];
             
-            errorMessage = [NSString stringWithFormat:@"Error al procesar las peticiones con códigos:%@", errorIDSString];
+            errorMessage = [NSString stringWithFormat:@"Detail_view_error_processing_multiple_request".localized, errorIDSString];
         }
         [self didReceiveError:errorMessage];
     }
