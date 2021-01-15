@@ -88,13 +88,9 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
         UIApplication.sharedApplication.statusBarHidden = NO;
     }
-    
-    NSArray * views =[[NSBundle mainBundle] loadNibNamed:@"FiltersView" owner:nil options:nil];
-
-//    self.filterView = [views lastObject];
-    [self.filterView addSubview:[views lastObject]];
-    
-    
+    UIView * commonFilterView =[[NSBundle mainBundle] loadNibNamed:@"FiltersView" owner:nil options:nil][0];
+    commonFilterView.frame = self.filterView.bounds;
+    [self.filterView addSubview:commonFilterView];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
