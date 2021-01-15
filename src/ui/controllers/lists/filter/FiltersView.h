@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FiltersView : UIView
-
+@interface FiltersView : UIView <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate>
+- (IBAction)switchChanged:(UISwitch *)sender;
 @end

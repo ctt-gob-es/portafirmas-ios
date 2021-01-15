@@ -140,15 +140,6 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 //    }
 //}
 
-//-(IBAction)switchChanged:(UISwitch *)sender {
-//
-//    if([self.notificationSwitch isOn]){
-//        [self initSubscriptionProcess];
-//    } else {
-//        [self showNotificationSectionState];
-//    }
-//}
-
 //- (void) initSubscriptionProcess {
 //
 //    if ([self.notificationSwitch isOn]) {
@@ -500,10 +491,6 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 //        [_scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
 //    }
 //}
-//- (IBAction)tapChangeRole:(id)sender {
-//    SelectRoleViewController *selectRoleViewController = [[SelectRoleViewController alloc] initWithNibName: @"SelectRoleViewController" bundle: nil];
-//    [selectRoleViewController setModalPresentationStyle:UIModalPresentationFullScreen];
-//    [self presentViewController:selectRoleViewController animated:YES completion:nil];
-//}
+
 
 @end

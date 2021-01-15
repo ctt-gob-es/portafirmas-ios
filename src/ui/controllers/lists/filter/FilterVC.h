@@ -8,9 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FilterVC : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate>
-
-//- (IBAction)switchChanged:(UISwitch *)sender;
-//- (IBAction)tapChangeRole:(id)sender;
+@interface FilterVC : UIViewController
 
 @end

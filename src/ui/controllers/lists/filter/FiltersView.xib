@@ -159,6 +159,9 @@
                             <constraints>
                                 <constraint firstAttribute="width" constant="49" id="bF8-Na-Eap"/>
                             </constraints>
+                            <connections>
+                                <action selector="switchChanged:" destination="ORh-ds-0lu" eventType="valueChanged" id="tFJ-4P-Nhb"/>
+                            </connections>
                         </switch>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Roles" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ClN-bq-wrk" userLabel="Roles Title Label">
                             <rect key="frame" x="11.5" y="497" width="391" height="21"/>
@@ -204,6 +207,9 @@
                         </stackView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UtE-Kf-khR" userLabel="RoleButton">
                             <rect key="frame" x="11.5" y="526" width="391" height="51.5"/>
+                            <connections>
+                                <action selector="tapChangeRole:" destination="ORh-ds-0lu" eventType="touchUpInside" id="V8K-Pg-lYU"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

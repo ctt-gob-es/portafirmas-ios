@@ -41,4 +41,26 @@
     self.backgroundColor = [UIColor greenColor];
 }
 
+
+#pragma mark - Notifications Section
+
+-(IBAction)switchChanged:(UISwitch *)sender {
+//
+//    if([self.notificationSwitch isOn]){
+//        [self initSubscriptionProcess];
+//    } else {
+//        [self showNotificationSectionState];
+//    }
+}
+
+//#pragma mark - Keyboard Notifications
+
+#pragma mark - User Role
+
+- (IBAction)tapChangeRole:(id)sender {
+//    SelectRoleViewController *selectRoleViewController = [[SelectRoleViewController alloc] initWithNibName: @"SelectRoleViewController" bundle: nil];
+//    [selectRoleViewController setModalPresentationStyle:UIModalPresentationFullScreen];
+//    [self presentViewController:selectRoleViewController animated:YES completion:nil];
+}
+
 @end
