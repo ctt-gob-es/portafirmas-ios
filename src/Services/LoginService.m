@@ -14,6 +14,7 @@
 #import "CookieTools.h"
 #import "PushNotificationService.h"
 #import "Server.h"
+#import "GlobalConstants.h"
 
 @interface LoginService ()
 @property (nonatomic, strong) NSString *currentSignToken;
@@ -21,7 +22,6 @@
 
 @implementation LoginService
 
-static NSString *const kContentKey = @"content";
 static NSString *const kUrl = @"url";
 static NSString *const kSessionId = @"sessionId";
     

@@ -12,6 +12,7 @@
 #import "RequestCellNoUI.h"
 #import "DetailTableViewController.h"
 #import "ArrayHelper.h"
+#import "GlobalConstants.h"
 
 @interface BaseListTVC ()
 
@@ -31,6 +32,7 @@
         _wsDataController = [[WSDataController alloc] init];
         [_wsDataController setDelegate:self];
         _dataArray = [@[] mutableCopy];
+        _filtersDict = [NSMutableDictionary new];
     }
 
     return self;
@@ -118,7 +120,13 @@
 }
 
 - (void)addDefaultFilters {
-    NSLog(@"TEST");
+    [_filtersDict setObject:@"view_all" forKey:@"tipoFilter"];
+    [_filtersDict setObject:@"all" forKey:@"mesFilter"];
+    NSDictionary *roleSelected = [[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected];
+    if (roleSelected && [[[roleSelected objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: @"VALIDADOR"] ){
+        [_filtersDict setObject: [[roleSelected objectForKey:@"dni"]objectForKey:@"content"] forKey:@"dniValidadorFilter"];
+        [_filtersDict setObject:@"view_no_validate" forKey:@"tipoFilter"];
+    }
 }
 
 #pragma mark - WSDelegate
