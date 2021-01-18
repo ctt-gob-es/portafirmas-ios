@@ -339,12 +339,12 @@ typedef NS_ENUM(NSUInteger, Operation) {
                                {
                                    [self validateAction];
                                }];
-//    if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected]objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: @"VALIDADOR"] ){
+    if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected]objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: @"VALIDADOR"] ){
         [alertController addAction:validate];
-//    } else {
-//        [alertController addAction:reject];
-//        [alertController addAction:sign];
-//    }
+    } else {
+        [alertController addAction:reject];
+        [alertController addAction:sign];
+    }
     [alertController addAction:cancel];
     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
     {
