@@ -80,6 +80,7 @@ static NSString *const kPFUserDefaultsKeyRemoteCertificates = @"remoteCertificat
 static NSString *const kPFUserDefaultsKeyRemoteCertificatesSelection = @"remoteCertificatesSelection";
 static NSString *const kPFUserDefaultsKeyUserRoles = @"userRoles";
 static NSString *const kPFUserDefaultsKeyUserRoleSelected = @"userRoleSelected";
+static NSString *const kPFUserDefaultsKeyUserConfigurationCompatible = @"UserConfigurationCompatible";
 
 static NSString *const kPFCertInfoKeyIssuer = @"issuer";
 static NSString *const kPFCertInfoKeySubject = @"subject";

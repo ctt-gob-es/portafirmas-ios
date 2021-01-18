@@ -192,15 +192,17 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 				dispatch_async(dispatch_get_main_queue(), ^{
                     [[UserRolesService instance] getUserRoles:^(NSDictionary *content) {
                         printf("Success");
-                        NSDictionary *responseDict = [content objectForKey:kErrorRqsrcnfg];
-                        if (responseDict != NULL) {
+                        NSDictionary *responseError = [content objectForKey:kErrorRqsrcnfg];
+                        if (responseError) {
                             // Old system that does not suppor roles maybe show something continue as always
+                            [self setCompatibilityInLocalStorage:NO];
                             segue = YES;
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [self performSegueWithIdentifier:identifier sender:self];
                             });
                             
                         } else {
+                            [self setCompatibilityInLocalStorage:YES];
                             NSDictionary *responseUserRolesDict = [[content objectForKey:@"rsgtsrcg"] objectForKey:@"rls"];
                             if ([responseUserRolesDict count] == 0) {
                                 //User with no roles
@@ -277,6 +279,11 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 - (void) setRolesInLocalStorage:(NSDictionary*)userRolesDictionary {
     NSArray * userRolesArray = [userRolesDictionary allValues];
     [[NSUserDefaults standardUserDefaults] setObject:userRolesArray forKey:kPFUserDefaultsKeyUserRoles];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)setCompatibilityInLocalStorage:(BOOL)isCompatible {
+    [[NSUserDefaults standardUserDefaults] setBool:isCompatible forKey:kPFUserDefaultsKeyUserConfigurationCompatible];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

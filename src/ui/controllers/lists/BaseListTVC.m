@@ -92,7 +92,9 @@
 			[SVProgressHUD show];
 		});
     }
-
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible] == YES) {
+        [self addDefaultFilters];
+    }
     NSString *data = [RequestListXMLController buildDefaultRequestWithState:_dataStatus pageNumber:_currentPage filters:_filtersDict];
     [_wsDataController loadPostRequestWithData:data code:PFRequestCodeList];
     [_wsDataController startConnection];
@@ -113,6 +115,10 @@
     _filtersDict = [filters mutableCopy];
     [self resetLazyLoad];
     [self loadData];
+}
+
+- (void)addDefaultFilters {
+    NSLog(@"TEST");
 }
 
 #pragma mark - WSDelegate
