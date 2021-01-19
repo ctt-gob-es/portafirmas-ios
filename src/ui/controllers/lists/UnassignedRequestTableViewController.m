@@ -258,7 +258,7 @@ static CGFloat const kCancelButtonWidth = 100;
     
     CGFloat cancelXPosition = kZero;
     
-    if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected]objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: @"VALIDADOR"] ){
+    if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected]objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: kUserRoleRoleNameValidator] ){
         _validateButton = [UIButton buttonWithType:UIButtonTypeSystem];
         [_validateButton setTitle:@"User_Roles_Validate_Operation_Name".localized forState:UIControlStateNormal];
         [_validateButton sizeToFit];

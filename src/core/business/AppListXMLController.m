@@ -74,21 +74,6 @@ static AppListXMLController *_sharedInstance = nil;
     if (![[LoginService instance] serverSupportLogin]) {
         [requestString appendString:[self certificateTag]];
     }
-    NSDictionary *roleSelected = [[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected];
-    if (roleSelected) {
-        NSMutableString *fltrs = [[NSMutableString alloc] initWithString:@"<fltrs>"];
-        if ([[[roleSelected objectForKey:@"roleName"]objectForKey:@"content"]  isEqual: @"VALIDADOR"]) {
-            [fltrs appendFormat:@"\n<fltr>\n<key>%@</key>\n<value>%@</value></fltr>\n",
-             @"dniValidadorFilter", [[roleSelected objectForKey:@"dni"]objectForKey:@"content"]];
-            //Required filters
-            [fltrs appendFormat:@"\n<fltr>\n<key>%@</key>\n<value>%@</value></fltr>\n",
-             @"tipoFilter", @"view_no_validate"];
-            [fltrs appendFormat:@"\n<fltr>\n<key>%@</key>\n<value>%@</value></fltr>\n",
-             @"mesFilter", @"view_all"];
-        }
-        [fltrs appendString:@"</fltrs>\n"];
-        [requestString appendString: fltrs];
-    }
     [requestString appendString:@"</rqtconf>"];
     return requestString;
 }

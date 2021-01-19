@@ -12,6 +12,7 @@
 #import "RequestCellNoUI.h"
 #import "DetailTableViewController.h"
 #import "ArrayHelper.h"
+#import "GlobalConstants.h"
 
 @interface BaseListTVC ()
 
@@ -31,6 +32,7 @@
         _wsDataController = [[WSDataController alloc] init];
         [_wsDataController setDelegate:self];
         _dataArray = [@[] mutableCopy];
+        _filtersDict = [NSMutableDictionary new];
     }
 
     return self;
@@ -92,7 +94,9 @@
 			[SVProgressHUD show];
 		});
     }
-
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible] == YES) {
+        [self addDefaultFilters];
+    }
     NSString *data = [RequestListXMLController buildDefaultRequestWithState:_dataStatus pageNumber:_currentPage filters:_filtersDict];
     [_wsDataController loadPostRequestWithData:data code:PFRequestCodeList];
     [_wsDataController startConnection];
@@ -108,11 +112,20 @@
     [self refreshInfoWithFilters:nil];
 }
 
-- (void)refreshInfoWithFilters:(NSDictionary *)filters
-{	
+- (void)refreshInfoWithFilters:(NSDictionary *)filters {
     _filtersDict = [filters mutableCopy];
     [self resetLazyLoad];
     [self loadData];
+}
+
+- (void)addDefaultFilters {
+    [_filtersDict setObject:kFilterTypeViewAll forKey:kFilterTypeKey];
+    [_filtersDict setObject:kFilterMonthAll forKey:kFilterMonthKey];
+    NSDictionary *roleSelected = [[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected];
+    if (roleSelected && [[[roleSelected objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: kUserRoleRoleNameValidator] ){
+        [_filtersDict setObject: [[roleSelected objectForKey:kFilterDNIKey]objectForKey:kContentKey] forKey:kFilterDNIValidator];
+        [_filtersDict setObject:kFilterTypeViewNoValidate forKey:kFilterTypeKey];
+    }
 }
 
 #pragma mark - WSDelegate
