@@ -88,8 +88,19 @@ static NSString *const kPFCertInfoKeyStartDate = @"startDate";
 static NSString *const kPFCertInfoKeyEndDate = @"endDate";
 static NSString *const kPFCertInfoKeyPurpose = @"purpose";
 
+//Roles
 static NSString *const kUserRoleUserNameKey = @"userName";
 static NSString *const kUserRoleRoleNameKey = @"roleName";
+static NSString *const kUserRoleRoleNameValidator = @"VALIDADOR";
+
+//Filters
+static NSString *const kFilterTypeKey =  @"tipoFilter";
+static NSString *const kFilterTypeViewAll =  @"view_all";
+static NSString *const kFilterTypeViewNoValidate =  @"view_no_validate";
+static NSString *const kFilterMonthKey =  @"mesFilter";
+static NSString *const kFilterMonthAll =  @"all";
+static NSString *const kFilterDNIKey =  @"dni";
+static NSString *const kFilterDNIValidator =  @"dniValidadorFilter";
 
 @interface PFHelper : NSObject
 

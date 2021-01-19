@@ -112,20 +112,19 @@
     [self refreshInfoWithFilters:nil];
 }
 
-- (void)refreshInfoWithFilters:(NSDictionary *)filters
-{	
+- (void)refreshInfoWithFilters:(NSDictionary *)filters {
     _filtersDict = [filters mutableCopy];
     [self resetLazyLoad];
     [self loadData];
 }
 
 - (void)addDefaultFilters {
-    [_filtersDict setObject:@"view_all" forKey:@"tipoFilter"];
-    [_filtersDict setObject:@"all" forKey:@"mesFilter"];
+    [_filtersDict setObject:kFilterTypeViewAll forKey:kFilterTypeKey];
+    [_filtersDict setObject:kFilterMonthAll forKey:kFilterMonthKey];
     NSDictionary *roleSelected = [[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected];
-    if (roleSelected && [[[roleSelected objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: @"VALIDADOR"] ){
-        [_filtersDict setObject: [[roleSelected objectForKey:@"dni"]objectForKey:@"content"] forKey:@"dniValidadorFilter"];
-        [_filtersDict setObject:@"view_no_validate" forKey:@"tipoFilter"];
+    if (roleSelected && [[[roleSelected objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: kUserRoleRoleNameValidator] ){
+        [_filtersDict setObject: [[roleSelected objectForKey:kFilterDNIKey]objectForKey:kContentKey] forKey:kFilterDNIValidator];
+        [_filtersDict setObject:kFilterTypeViewNoValidate forKey:kFilterTypeKey];
     }
 }
 
