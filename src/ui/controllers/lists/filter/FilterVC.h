@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "FiltersView.h"
 
-@interface FilterVC : UIViewController<TapChangeRoleDelegate>
+@interface FilterVC : UIViewController<FiltersViewDelegate>
 
 @end

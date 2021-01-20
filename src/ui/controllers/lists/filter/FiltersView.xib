@@ -311,6 +311,9 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7vg-L0-m6t">
                             <rect key="frame" x="342" y="0.0" width="48" height="44"/>
                             <state key="normal" title="Cancel"/>
+                            <connections>
+                                <action selector="didSelectCancelButton:" destination="ORh-ds-0lu" eventType="touchUpInside" id="qxQ-Cp-WnA"/>
+                            </connections>
                         </button>
                     </subviews>
                     <constraints>

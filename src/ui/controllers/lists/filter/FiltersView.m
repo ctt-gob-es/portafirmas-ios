@@ -61,6 +61,11 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [_cancelButton setTitleColor:COLOR_FOR_RED_TEXT forState:normal];
 }
 
+#pragma mark - User Interaction
+
+- (IBAction)didSelectCancelButton:(id)sender {
+    [self.filtersViewDelegate didSelectCancelButton];
+}
 
 #pragma mark - Notifications Section
 
@@ -75,10 +80,13 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 //#pragma mark - Keyboard Notifications
 
+
+
+
 #pragma mark - User Role
 
 - (IBAction)tapChangeRole:(id)sender {
-    [self.tapChangeRoleDelegateDelegate tapChangeRole];
+    [self.filtersViewDelegate tapChangeRole];
 }
 
 @end

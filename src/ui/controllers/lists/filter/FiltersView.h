@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol TapChangeRoleDelegate <NSObject>
+@protocol FiltersViewDelegate <NSObject>
 - (void)tapChangeRole;
+- (void)didSelectCancelButton;
 @end
 
 @interface FiltersView : UIView <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate>
 - (IBAction)switchChanged:(UISwitch *)sender;
 
-@property (nonatomic, weak) id <TapChangeRoleDelegate> tapChangeRoleDelegateDelegate;
+@property (nonatomic, weak) id <FiltersViewDelegate> filtersViewDelegate;
 
 @end

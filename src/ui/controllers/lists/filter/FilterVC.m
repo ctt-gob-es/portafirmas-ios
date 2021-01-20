@@ -71,7 +71,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     }
     FiltersView * commonFilterView =[[NSBundle mainBundle] loadNibNamed:@"FiltersView" owner:nil options:nil][0];
     commonFilterView.frame = self.filterView.bounds;
-    commonFilterView.tapChangeRoleDelegateDelegate = self;
+    commonFilterView.filtersViewDelegate = self;
     [self.filterView addSubview:commonFilterView];
 }
 
@@ -241,12 +241,14 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 #pragma mark - User Interaction
 
-//- (IBAction)didClickCancelButton:(id)sender
-//{
-//   dispatch_async(dispatch_get_main_queue(), ^{
-//	   [self dismissViewControllerAnimated:YES completion:nil];
-//	});
-//}
+- (void)didSelectCancelButton {
+    if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    });
+}
 
 //- (IBAction)didClickAcceptButton:(id)sender
 //{
