@@ -45,6 +45,8 @@
 //Filter View
 "Filter_View_Push_Notification_Pending_Title" = "Activar sistema de notificaciones";
 "Filter_View_Push_Notification_Enabled_Title" = "Sistema de notificaciones activado";
+"Filter_View_Footer_Accept_Button_Title" = "Aceptar";
+"Filter_View_Footer_Cancel_Button_Title" = "Cancelar";
 
 //Attachment View
 "Document_Section" = "Documentos";

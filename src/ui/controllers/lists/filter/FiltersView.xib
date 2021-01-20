@@ -301,34 +301,72 @@
                     <rect key="frame" x="-1" y="645" width="414" height="216"/>
                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </datePicker>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XRX-z7-VyH">
+                    <rect key="frame" x="0.0" y="852" width="414" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2bk-hq-a6y">
+                            <rect key="frame" x="24" y="8" width="49" height="28"/>
+                            <state key="normal" title="Accept"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7vg-L0-m6t">
+                            <rect key="frame" x="342" y="0.0" width="48" height="44"/>
+                            <state key="normal" title="Cancel"/>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="4dS-EA-UaT"/>
+                        <constraint firstItem="2bk-hq-a6y" firstAttribute="top" secondItem="XRX-z7-VyH" secondAttribute="top" constant="8" id="B8E-qJ-3Uv"/>
+                        <constraint firstAttribute="bottom" secondItem="2bk-hq-a6y" secondAttribute="bottom" constant="8" id="Oft-oT-0Cr"/>
+                        <constraint firstItem="7vg-L0-m6t" firstAttribute="top" secondItem="XRX-z7-VyH" secondAttribute="top" id="eJx-vU-XJ3"/>
+                        <constraint firstAttribute="bottom" secondItem="7vg-L0-m6t" secondAttribute="bottom" id="jrq-x1-KfT"/>
+                        <constraint firstItem="2bk-hq-a6y" firstAttribute="leading" secondItem="XRX-z7-VyH" secondAttribute="leading" constant="24" id="pF9-OF-eo1"/>
+                        <constraint firstAttribute="trailing" secondItem="7vg-L0-m6t" secondAttribute="trailing" constant="24" id="qwU-04-ofK"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VHq-ve-gGc">
+                    <rect key="frame" x="0.0" y="852" width="414" height="1"/>
+                    <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="d4s-O0-2KS"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="qBo-IR-fwc"/>
-            <color key="backgroundColor" systemColor="systemGreenColor"/>
             <constraints>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="bottom" secondItem="jFF-9F-6aV" secondAttribute="bottom" constant="1" id="5iH-TG-bpg"/>
+                <constraint firstAttribute="bottom" secondItem="ZRv-Tp-HAg" secondAttribute="bottom" constant="35" id="8jz-mU-kei"/>
+                <constraint firstItem="XRX-z7-VyH" firstAttribute="leading" secondItem="ORh-ds-0lu" secondAttribute="leading" id="8uN-PO-xfc"/>
+                <constraint firstItem="qBo-IR-fwc" firstAttribute="trailing" secondItem="VHq-ve-gGc" secondAttribute="trailing" id="J6m-ho-fcg"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="leading" secondItem="jFF-9F-6aV" secondAttribute="leading" constant="1" id="JR2-Qi-1tG"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="trailing" secondItem="qBo-IR-fwc" secondAttribute="trailing" id="Jnc-9m-8eR"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="leading" secondItem="ORh-ds-0lu" secondAttribute="leading" id="NCn-9v-Ut9"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="trailing" secondItem="x0g-vH-h29" secondAttribute="trailing" constant="1" id="P6i-yP-apj"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="top" secondItem="ORh-ds-0lu" secondAttribute="top" id="QIc-Nq-KGM"/>
+                <constraint firstAttribute="bottom" secondItem="XRX-z7-VyH" secondAttribute="bottom" id="VE3-lg-tRk"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="top" secondItem="ORh-ds-0lu" secondAttribute="top" id="Yfj-Xv-f8O"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="bottom" secondItem="x0g-vH-h29" secondAttribute="bottom" constant="1" id="aAV-uJ-B1n"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="leading" secondItem="ZRv-Tp-HAg" secondAttribute="leading" constant="1" id="dDO-Iq-JPP"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="trailing" secondItem="ZRv-Tp-HAg" secondAttribute="trailing" constant="1" id="dmq-zS-N6d"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="leading" secondItem="qBo-IR-fwc" secondAttribute="leading" id="fuF-ee-nGK"/>
+                <constraint firstItem="VHq-ve-gGc" firstAttribute="leading" secondItem="ORh-ds-0lu" secondAttribute="leading" id="gBe-qT-Vrd"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="trailing" secondItem="jFF-9F-6aV" secondAttribute="trailing" constant="1" id="jb1-qy-1Vt"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="leading" secondItem="x0g-vH-h29" secondAttribute="leading" constant="1" id="kWP-po-cCq"/>
+                <constraint firstItem="VHq-ve-gGc" firstAttribute="top" secondItem="XRX-z7-VyH" secondAttribute="top" id="sYY-g6-pwV"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="bottom" secondItem="ZRv-Tp-HAg" secondAttribute="bottom" constant="1" id="uGt-Ef-9Y3"/>
                 <constraint firstAttribute="trailing" secondItem="kOK-fh-xWw" secondAttribute="trailing" id="wfl-Zg-4c0"/>
+                <constraint firstItem="qBo-IR-fwc" firstAttribute="trailing" secondItem="XRX-z7-VyH" secondAttribute="trailing" id="xsP-02-WSr"/>
                 <constraint firstItem="qBo-IR-fwc" firstAttribute="bottom" secondItem="kOK-fh-xWw" secondAttribute="bottom" id="zQl-8G-umy"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="acceptButton" destination="2bk-hq-a6y" id="0d6-7A-y7i"/>
                 <outlet property="appButton" destination="IFI-00-1N0" id="lQw-7I-Rk0"/>
                 <outlet property="appPickerView" destination="ZRv-Tp-HAg" id="iTr-az-ERk"/>
+                <outlet property="cancelButton" destination="7vg-L0-m6t" id="HY4-6S-qCD"/>
                 <outlet property="datePicker" destination="jFF-9F-6aV" id="OSc-Ug-o1d"/>
                 <outlet property="enableFiltersSwitch" destination="FAO-4M-9Dp" id="M6o-Bb-bRD"/>
                 <outlet property="endDateTextField" destination="sXB-du-rYh" id="SzO-eS-ov1"/>
+                <outlet property="footerView" destination="XRX-z7-VyH" id="ZZV-7m-Ion"/>
                 <outlet property="notificationSeparatorView" destination="eOE-MG-cnh" id="MPi-ec-HkL"/>
                 <outlet property="notificationStateLabel" destination="lNc-th-qHL" id="TVl-9Q-HWM"/>
                 <outlet property="notificationSwitch" destination="5BR-B3-MlQ" id="46D-l4-Ha0"/>
@@ -345,12 +383,12 @@
                 <outlet property="startDateTextField" destination="6rU-e8-tBh" id="W4S-qa-nM2"/>
                 <outlet property="topicTextField" destination="Hod-UW-h2h" id="Fv0-qu-6Rt"/>
             </connections>
-            <point key="canvasLocation" x="-316" y="-542"/>
+            <point key="canvasLocation" x="-317.39130434782612" y="-542.41071428571422"/>
         </view>
     </objects>
     <resources>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

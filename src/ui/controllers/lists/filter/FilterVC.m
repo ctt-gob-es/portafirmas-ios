@@ -173,14 +173,9 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 //    }
 //}
 
-//- (void)addToolbar
-//{
-//    UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - kFilterVCToolBarHeight, self.view.frame.size.width, kFilterVCToolBarHeight)];
-//
-//    [toolbar setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin];
-//    [toolbar setItems:self.toolbarItems];
-//    [self.view addSubview:toolbar];
-//}
+
+
+
 //
 //- (void)hidePickers
 //{

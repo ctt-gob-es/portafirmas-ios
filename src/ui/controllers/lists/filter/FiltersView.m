@@ -9,6 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "FiltersView.h"
 
+#define SORT_CRITERIA_ARRAY @[@"Fecha", @"Asunto", @"Aplicación"]
+
+static const CGFloat kFilterVCPickerHeight = 30.f;
+static const CGFloat kFilterVCToolBarHeight = 44.f;
+static const CGFloat kFilterVCDefaultMargin = 14.f;
+
 @interface FiltersView ()
 
 @property (nonatomic, strong) IBOutlet UIButton *sortButton;
@@ -31,6 +37,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *roleButton;
 @property (weak, nonatomic) IBOutlet UILabel *selectedRoleNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *selectedRoleLabel;
+@property (weak, nonatomic) IBOutlet UIView *footerView;
+@property (weak, nonatomic) IBOutlet UIButton *acceptButton;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 
 @end
 
@@ -39,6 +48,17 @@
     [super awakeFromNib];
     // Initialization code
     self.backgroundColor = [UIColor greenColor];
+    [self setFooterStyle];
+}
+
+#pragma mark - User Interface
+
+-(void)setFooterStyle {
+    [_footerView setBackgroundColor: BACKGROUND_COLOR_GRAY_FOR_TOOLBAR];
+    [_acceptButton setTitle:@"Filter_View_Footer_Accept_Button_Title".localized forState:normal];
+    [_cancelButton setTitle:@"Filter_View_Footer_Cancel_Button_Title".localized forState:normal];
+    [_acceptButton setTitleColor:COLOR_FOR_RED_TEXT forState:normal];
+    [_cancelButton setTitleColor:COLOR_FOR_RED_TEXT forState:normal];
 }
 
 

@@ -16,6 +16,7 @@
 #define COLOR_FOR_RED_TEXT [ColorChart colorFromHexString:@"#990017"]
 #define COLOR_FOR_DISABLED [ColorChart colorFromHexString:@"#aaaaaa"]
 #define BACKGROUND_COLOR_FOR_TOOLBAR [ColorChart colorFromHexString:@"#f9f6fa"]
+#define BACKGROUND_COLOR_GRAY_FOR_TOOLBAR [ColorChart colorFromHexString:@"#f7f7f7"]
 
 #define ThemeColorWithAlpha(alpha) [THEME_COLOR colorWithAlphaComponent : alpha]
 
