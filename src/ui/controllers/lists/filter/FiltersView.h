@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol TapChangeRoleDelegate <NSObject>
+- (void)tapChangeRole;
+@end
+
 @interface FiltersView : UIView <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate>
 - (IBAction)switchChanged:(UISwitch *)sender;
+
+@property (nonatomic, weak) id <TapChangeRoleDelegate> tapChangeRoleDelegateDelegate;
+
 @end

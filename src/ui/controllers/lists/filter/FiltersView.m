@@ -58,9 +58,7 @@
 #pragma mark - User Role
 
 - (IBAction)tapChangeRole:(id)sender {
-//    SelectRoleViewController *selectRoleViewController = [[SelectRoleViewController alloc] initWithNibName: @"SelectRoleViewController" bundle: nil];
-//    [selectRoleViewController setModalPresentationStyle:UIModalPresentationFullScreen];
-//    [self presentViewController:selectRoleViewController animated:YES completion:nil];
+    [self.tapChangeRoleDelegateDelegate tapChangeRole];
 }
 
 @end

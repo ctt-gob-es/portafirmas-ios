@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FiltersView.h"
 
-@interface FilterVC : UIViewController
+@interface FilterVC : UIViewController<TapChangeRoleDelegate>
 
 @end

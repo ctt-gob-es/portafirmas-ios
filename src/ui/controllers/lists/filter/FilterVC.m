@@ -18,6 +18,8 @@
 #import "SelectRoleViewController.h"
 #import "GlobalConstants.h"
 #import "PFHelper.h"
+#import "FiltersView.h"
+
 
 #define SORT_CRITERIA_ARRAY @[@"Fecha", @"Asunto", @"Aplicación"]
 
@@ -67,8 +69,9 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
         UIApplication.sharedApplication.statusBarHidden = NO;
     }
-    UIView * commonFilterView =[[NSBundle mainBundle] loadNibNamed:@"FiltersView" owner:nil options:nil][0];
+    FiltersView * commonFilterView =[[NSBundle mainBundle] loadNibNamed:@"FiltersView" owner:nil options:nil][0];
     commonFilterView.frame = self.filterView.bounds;
+    commonFilterView.tapChangeRoleDelegateDelegate = self;
     [self.filterView addSubview:commonFilterView];
 }
 
@@ -502,5 +505,12 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 //    }
 //}
 
+#pragma mark - TapChangeRoleDelegate
+
+- (void)tapChangeRole {
+    SelectRoleViewController *selectRoleViewController = [[SelectRoleViewController alloc] initWithNibName: @"SelectRoleViewController" bundle: nil];
+    [selectRoleViewController setModalPresentationStyle:UIModalPresentationFullScreen];
+    [self presentViewController:selectRoleViewController animated:YES completion:nil];
+}
 
 @end
