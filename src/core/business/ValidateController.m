@@ -40,15 +40,12 @@
 
 + (NSString *)buildRequestWithRequestArray:(NSArray *)requestsArray
 {
-    NSMutableString *requestString = [@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<verfreq>\n" mutableCopy];
-
+    NSMutableString *requestString = [@"<?xml version=\"1.0\" encoding=\"UTF-8\"?><verfreq>" mutableCopy];
     if (![[LoginService instance] serverSupportLogin]) {
         [requestString appendString:[self certificateTag]];
     }
-    
     [requestString appendString:[self requestsIDTagWithRequests:requestsArray]];
     [requestString appendString:@"</verfreq>"];
-
     return requestString;
 }
 
@@ -56,9 +53,9 @@
 {
     NSString *certificateString = [NSData base64EncodeData:[[CertificateUtils sharedWrapper] publicKeyBits]];
     if (certificateString){
-        NSMutableString *certificateTag = [@"<cert>\n" mutableCopy];
-        [certificateTag appendFormat:@"%@\n", certificateString];
-        [certificateTag appendString:@"</cert>\n"];
+        NSMutableString *certificateTag = [@"<cert>" mutableCopy];
+        [certificateTag appendFormat:@"%@", certificateString];
+        [certificateTag appendString:@"</cert>"];
         return certificateTag;
     } else {
         return @"";
@@ -68,17 +65,15 @@
 + (NSString *)requestsIDTagWithRequests:(NSArray *)requestsArray
 {
     NSMutableString *requestsIDtring = [[NSMutableString alloc] initWithString:@""];
-
-    [requestsIDtring appendFormat:@"<reqs>\n"];
+    [requestsIDtring appendFormat:@"<reqs>"];
     for (int i = 0; i < [requestsArray count]; i++) {
         if ([requestsArray[i] isKindOfClass:[PFRequest class]]) {
-            [requestsIDtring appendFormat:@"<r id=\"%@\"/>\n", [(PFRequest *)requestsArray[i] reqid]];
+            [requestsIDtring appendFormat:@"<r id=\"%@\"/>", [(PFRequest *)requestsArray[i] reqid]];
         } else if ([requestsArray[i] isKindOfClass:[Detail class]]) {
-            [requestsIDtring appendFormat:@"<r id=\"%@\"/>\n", [(Detail *)requestsArray[i] detailid]];
+            [requestsIDtring appendFormat:@"<r id=\"%@\"/>", [(Detail *)requestsArray[i] detailid]];
         }
     }
-    [requestsIDtring appendFormat:@"</reqs>\n"];
-
+    [requestsIDtring appendFormat:@"</reqs>"];
     return requestsIDtring;
 }
 
