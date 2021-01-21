@@ -272,9 +272,13 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (IBAction)didClickCancelButton:(id)sender
 {
-   dispatch_async(dispatch_get_main_queue(), ^{
-	   [self dismissViewControllerAnimated:YES completion:nil];
-	});
+    if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+          [self dismissViewControllerAnimated:YES completion:nil ];
+        });
+    }
 }
 
 - (IBAction)didClickAcceptButton:(id)sender
