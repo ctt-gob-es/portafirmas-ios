@@ -545,7 +545,7 @@ static CGFloat const kCancelButtonWidth = 100;
         [self didReceiveRejectResult:rejectsReq];
     }
     else {
-        [self didReceiveError:@"Se ha producido un error de conexión con el servidor (501)"];
+        [self didReceiveError:@"Detail_view_error_server_connection_501".localized];
     }
 }
 
@@ -562,7 +562,7 @@ static CGFloat const kCancelButtonWidth = 100;
         NSArray *approvalRequests = [parser dataSource];
         [self didReceiveRequestResult:approvalRequests forOperation: approve];
     } else {
-        [self didReceiveError:@"Se ha producido un error de conexión con el servidor (501)"];
+        [self didReceiveError:@"Detail_view_error_server_connection_501".localized];
     }
     [self enableUserInteraction:true];
 }
@@ -583,7 +583,7 @@ static CGFloat const kCancelButtonWidth = 100;
             [self didReceiveError:[parser err]];
         }
     } else {
-        [self didReceiveError:@"Se ha producido un error de conexión con el servidor (501)"];
+        [self didReceiveError:@"Detail_view_error_server_connection_501".localized];
     }
     [self enableUserInteraction:true];
 }
