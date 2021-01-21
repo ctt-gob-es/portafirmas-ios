@@ -151,6 +151,7 @@ static CGFloat const kCancelButtonWidth = 100;
 - (void)loadData {
     _waitingResponseType = PFWaitingResponseTypeList;
     [super loadData];
+    [self showButtons];
 }
 
 - (IBAction)rejectAction:(id)sender {
