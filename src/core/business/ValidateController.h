@@ -8,11 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import "XMLController.h"
+#import "PFRequestResult.h"
 
-@interface ValidateController : XMLController <NSXMLParserDelegate>
-
+@interface ValidateController : XMLController <NSXMLParserDelegate> {
+    PFRequestResult *requestResult;
+    NSMutableArray *_dataSource;
+}
 @property (nonatomic, retain) NSMutableArray *dataSource;
 
+- (ValidateController *)initXMLParser;
 + (NSString *)buildRequestWithRequestArray:(NSArray *)requestsArray;
 
 @end

@@ -110,9 +110,7 @@ static CGFloat const kCancelButtonWidth = 100;
                                              selector:@selector(didReceiveResponseFromFIReFromDetail:)
                                                  name:@"didReceiveResponseFromFIRe"
                                                object:nil];
-    
     [self showButtons];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -570,7 +568,7 @@ static CGFloat const kCancelButtonWidth = 100;
 
 - (void)didReceivedValidateResponse:(NSData *)responseData {
     NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:responseData];
-    ValidateController *parser = [[ValidateController alloc] init];
+    ValidateController *parser = [[ValidateController alloc] initXMLParser];
     [nsXmlParser setDelegate:parser];
     BOOL success = [nsXmlParser parse];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -672,7 +670,7 @@ static CGFloat const kCancelButtonWidth = 100;
     BOOL processedOK = TRUE;
     for (PFRequestResult *request in requestsSigned) {
         if ([[request status] isEqualToString:@"KO"]) {
-            NSString *message = [[NSString alloc] initWithFormat: @"Alert_View_Error_When_Processing_Request".localized, [request rejectid]];
+            NSString *message = [[NSString alloc] initWithFormat: @"Alert_View_Error_When_Processing_Request".localized, [request rejectId]];
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Error".localized
                                                                                      message:message
                                                                               preferredStyle:UIAlertControllerStyleAlert];

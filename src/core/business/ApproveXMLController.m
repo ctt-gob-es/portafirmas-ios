@@ -91,7 +91,7 @@
     if ([elementName isEqualToString:@"apprv"]) {
 
         _requestResult = [PFRequestResult new];
-        [_requestResult setRejectid:attributeDict[@"id"]];
+        [_requestResult setRejectId:attributeDict[@"id"]];
         [_requestResult setStatus:attributeDict[@"status"]];
     }
 

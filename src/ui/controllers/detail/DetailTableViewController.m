@@ -614,7 +614,7 @@ typedef NS_ENUM(NSUInteger, Operation) {
 
     for (PFRequestResult *request in requestsSigned) {
         if ([[request status] isEqualToString:kKOStatusString]) {
-            [self didReceiveError:[[NSString alloc] initWithFormat:@"Detail_view_error_processing_request".localized, [request rejectid]]];
+            [self didReceiveError:[[NSString alloc] initWithFormat:@"Detail_view_error_processing_request".localized, [request rejectId]]];
             processedOK = FALSE;
         }
     }
