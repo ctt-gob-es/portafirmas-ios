@@ -589,9 +589,20 @@ static CGFloat const kCancelButtonWidth = 100;
 
 - (void)didReceiveRequestResult:(NSArray *)requests forOperation: (Operation) operation {
     NSMutableArray *idsForRequestsWithError = [@[] mutableCopy];
-    [requests enumerateObjectsUsingBlock:^(PFRequest *request, NSUInteger idx, BOOL *stop) {
-        if ([request.status isEqualToString:@"KO"]) {
-            [idsForRequestsWithError addObject:request.reqid];
+    [requests enumerateObjectsUsingBlock:^(PFRequestResult *request, NSUInteger idx, BOOL *stop) {
+        switch (operation) {
+            case approve:
+                if ([request.status isEqualToString:@"KO"]) {
+                    [idsForRequestsWithError addObject:request.rejectId];
+                }
+                break;
+            case validate:
+                if (![request.status isEqualToString:@"OK"]) {
+                    [idsForRequestsWithError addObject:request.validateId];
+                }
+                break;
+            default:
+                break;
         }
     }];
     if (idsForRequestsWithError.count == 0) {
