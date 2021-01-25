@@ -109,7 +109,7 @@
 
 - (void)refreshInfo
 {
-    [self refreshInfoWithFilters:nil];
+    [self refreshInfoWithFilters:[NSMutableDictionary new]];
 }
 
 - (void)refreshInfoWithFilters:(NSDictionary *)filters {
