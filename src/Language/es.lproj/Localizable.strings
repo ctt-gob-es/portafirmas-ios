@@ -18,7 +18,8 @@
 "Alert_View_Process_Validate" = "Se van a procesar %lu peticiones de validación.";
 "Alert_View_Request_Processed_Correctly" = "Peticiones procesadas correctamente";
 "Alert_View_Request_Signed_Correctly" = "Peticiones firmadas correctamente.";
-"Alert_View_Request_Validated_Correctly" = "Peticiones validadas correctamente.";
+"Alert_View_Request_Validated_Correctly" = "Petición validada correctamente.";
+"Alert_View_Requests_Validated_Correctly" = "Peticiones validadas correctamente.";
 "Alert_View_Error" = "Error";
 "Alert_View_certificated_removed_correctly" = "Se ha eliminado el certificado correctamente";
 "Alert_View_An_Error_Has_Ocurred" = "Se ha producido un error";

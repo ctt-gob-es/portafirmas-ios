@@ -612,7 +612,7 @@ static CGFloat const kCancelButtonWidth = 100;
                 message = @"Alert_View_Request_Signed_Correctly".localized;
                 break;
             case validate:
-                message = @"Alert_View_Request_Validated_Correctly".localized;
+                message = @"Alert_View_Requests_Validated_Correctly".localized;
                 break;
             default:
                 break;

@@ -593,8 +593,7 @@ typedef NS_ENUM(NSUInteger, Operation) {
     }
 }
 
-- (id <NSXMLParserDelegate> )parserForCurrentRequest
-{
+- (id <NSXMLParserDelegate> )parserForCurrentRequest {
     if (_waitingResponseType == PFWaitingResponseTypeDetail) {
         return [[DetailXMLController alloc] initXMLParser];
     } else if (_waitingResponseType == PFWaitingResponseTypeRejection) {
@@ -602,7 +601,7 @@ typedef NS_ENUM(NSUInteger, Operation) {
     } else if (_waitingResponseType == PFWaitingResponseTypeApproval) {
         return [[ApproveXMLController alloc] init];
     } else if (_waitingResponseType == PFWaitingResponseTypeValidate) {
-        return [[ValidateController alloc] init];
+        return [[ValidateController alloc] initXMLParser];
     }
     return nil;
 }
