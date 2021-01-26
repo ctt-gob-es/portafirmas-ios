@@ -307,6 +307,9 @@
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2bk-hq-a6y">
                             <rect key="frame" x="24" y="8" width="49" height="28"/>
                             <state key="normal" title="Accept"/>
+                            <connections>
+                                <action selector="didSelectAcceptButton:" destination="ORh-ds-0lu" eventType="touchUpInside" id="qoV-Co-URy"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7vg-L0-m6t">
                             <rect key="frame" x="342" y="0.0" width="48" height="44"/>

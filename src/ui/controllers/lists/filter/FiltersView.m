@@ -63,6 +63,10 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 #pragma mark - User Interaction
 
+- (IBAction)didSelectAcceptButton:(id)sender {
+    [self.filtersViewDelegate didSelectAcceptButton];
+}
+
 - (IBAction)didSelectCancelButton:(id)sender {
     [self.filtersViewDelegate didSelectCancelButton];
 }

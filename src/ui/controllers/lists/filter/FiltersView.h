@@ -10,6 +10,7 @@
 
 @protocol FiltersViewDelegate <NSObject>
 - (void)tapChangeRole;
+- (void)didSelectAcceptButton;
 - (void)didSelectCancelButton;
 @end
 

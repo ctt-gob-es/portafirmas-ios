@@ -241,6 +241,18 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 #pragma mark - User Interaction
 
+- (void)didSelectAcceptButton {
+    //include the code to apply filters and refresh in this method
+    if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self dismissViewControllerAnimated:YES completion:^{
+        // [baseTVC refreshInfoWithFilters:filters];
+        }];
+    });
+}
+
 - (void)didSelectCancelButton {
     if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
         [self.navigationController popViewControllerAnimated:YES];
