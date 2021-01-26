@@ -110,9 +110,7 @@ static CGFloat const kCancelButtonWidth = 100;
                                              selector:@selector(didReceiveResponseFromFIReFromDetail:)
                                                  name:@"didReceiveResponseFromFIRe"
                                                object:nil];
-    
     [self showButtons];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -151,6 +149,7 @@ static CGFloat const kCancelButtonWidth = 100;
 - (void)loadData {
     _waitingResponseType = PFWaitingResponseTypeList;
     [super loadData];
+    [self showButtons];
 }
 
 - (IBAction)rejectAction:(id)sender {
@@ -545,7 +544,7 @@ static CGFloat const kCancelButtonWidth = 100;
         [self didReceiveRejectResult:rejectsReq];
     }
     else {
-        [self didReceiveError:@"Se ha producido un error de conexión con el servidor (501)"];
+        [self didReceiveError:@"Detail_view_error_server_connection_501".localized];
     }
 }
 
@@ -562,14 +561,14 @@ static CGFloat const kCancelButtonWidth = 100;
         NSArray *approvalRequests = [parser dataSource];
         [self didReceiveRequestResult:approvalRequests forOperation: approve];
     } else {
-        [self didReceiveError:@"Se ha producido un error de conexión con el servidor (501)"];
+        [self didReceiveError:@"Detail_view_error_server_connection_501".localized];
     }
     [self enableUserInteraction:true];
 }
 
 - (void)didReceivedValidateResponse:(NSData *)responseData {
     NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:responseData];
-    ValidateController *parser = [[ValidateController alloc] init];
+    ValidateController *parser = [[ValidateController alloc] initXMLParser];
     [nsXmlParser setDelegate:parser];
     BOOL success = [nsXmlParser parse];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -583,16 +582,27 @@ static CGFloat const kCancelButtonWidth = 100;
             [self didReceiveError:[parser err]];
         }
     } else {
-        [self didReceiveError:@"Se ha producido un error de conexión con el servidor (501)"];
+        [self didReceiveError:@"Detail_view_error_server_connection_501".localized];
     }
     [self enableUserInteraction:true];
 }
 
 - (void)didReceiveRequestResult:(NSArray *)requests forOperation: (Operation) operation {
     NSMutableArray *idsForRequestsWithError = [@[] mutableCopy];
-    [requests enumerateObjectsUsingBlock:^(PFRequest *request, NSUInteger idx, BOOL *stop) {
-        if ([request.status isEqualToString:@"KO"]) {
-            [idsForRequestsWithError addObject:request.reqid];
+    [requests enumerateObjectsUsingBlock:^(PFRequestResult *request, NSUInteger idx, BOOL *stop) {
+        switch (operation) {
+            case approve:
+                if ([request.status isEqualToString:@"KO"]) {
+                    [idsForRequestsWithError addObject:request.rejectId];
+                }
+                break;
+            case validate:
+                if (![request.status isEqualToString:@"OK"]) {
+                    [idsForRequestsWithError addObject:request.validateId];
+                }
+                break;
+            default:
+                break;
         }
     }];
     if (idsForRequestsWithError.count == 0) {
@@ -602,7 +612,7 @@ static CGFloat const kCancelButtonWidth = 100;
                 message = @"Alert_View_Request_Signed_Correctly".localized;
                 break;
             case validate:
-                message = @"Alert_View_Request_Validated_Correctly".localized;
+                message = @"Alert_View_Requests_Validated_Correctly".localized;
                 break;
             default:
                 break;
@@ -671,7 +681,7 @@ static CGFloat const kCancelButtonWidth = 100;
     BOOL processedOK = TRUE;
     for (PFRequestResult *request in requestsSigned) {
         if ([[request status] isEqualToString:@"KO"]) {
-            NSString *message = [[NSString alloc] initWithFormat: @"Alert_View_Error_When_Processing_Request".localized, [request rejectid]];
+            NSString *message = [[NSString alloc] initWithFormat: @"Alert_View_Error_When_Processing_Request".localized, [request rejectId]];
             UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Error".localized
                                                                                      message:message
                                                                               preferredStyle:UIAlertControllerStyleAlert];

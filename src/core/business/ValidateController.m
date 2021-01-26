@@ -14,103 +14,81 @@
 #import "PFRequestResult.h"
 #import "LoginService.h"
 
-@interface ValidateController ()
-{
-    PFRequestResult *_requestResult;
-}
-
-@end
-
 @implementation ValidateController
+
+@synthesize dataSource = _dataSource;
 
 #pragma mark - Init methods
 
-- (instancetype)init
-{
+- (ValidateController *)initXMLParser {
     self = [super init];
-
-    if (self) {
-        _dataSource = nil;
-    }
-
+    // init array of user objects
+    _dataSource = nil;
+    _dataSource = [[NSMutableArray alloc] init];
     return self;
 }
 
 #pragma mark - Request builder
 
-+ (NSString *)buildRequestWithRequestArray:(NSArray *)requestsArray
-{
-    NSMutableString *requestString = [@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<verfreq>\n" mutableCopy];
-
++ (NSString *)buildRequestWithRequestArray:(NSArray *)requestsArray {
+    NSMutableString *requestString = [@"<?xml version=\"1.0\" encoding=\"UTF-8\"?><verfreq>" mutableCopy];
     if (![[LoginService instance] serverSupportLogin]) {
         [requestString appendString:[self certificateTag]];
     }
-    
     [requestString appendString:[self requestsIDTagWithRequests:requestsArray]];
     [requestString appendString:@"</verfreq>"];
-
     return requestString;
 }
 
-+ (NSString *)certificateTag
-{
++ (NSString *)certificateTag {
     NSString *certificateString = [NSData base64EncodeData:[[CertificateUtils sharedWrapper] publicKeyBits]];
     if (certificateString){
-        NSMutableString *certificateTag = [@"<cert>\n" mutableCopy];
-        [certificateTag appendFormat:@"%@\n", certificateString];
-        [certificateTag appendString:@"</cert>\n"];
+        NSMutableString *certificateTag = [@"<cert>" mutableCopy];
+        [certificateTag appendFormat:@"%@", certificateString];
+        [certificateTag appendString:@"</cert>"];
         return certificateTag;
     } else {
         return @"";
     }
 }
 
-+ (NSString *)requestsIDTagWithRequests:(NSArray *)requestsArray
-{
++ (NSString *)requestsIDTagWithRequests:(NSArray *)requestsArray {
     NSMutableString *requestsIDtring = [[NSMutableString alloc] initWithString:@""];
-
-    [requestsIDtring appendFormat:@"<reqs>\n"];
+    [requestsIDtring appendFormat:@"<reqs>"];
     for (int i = 0; i < [requestsArray count]; i++) {
         if ([requestsArray[i] isKindOfClass:[PFRequest class]]) {
-            [requestsIDtring appendFormat:@"<r id=\"%@\"/>\n", [(PFRequest *)requestsArray[i] reqid]];
+            [requestsIDtring appendFormat:@"<r id=\"%@\"/>", [(PFRequest *)requestsArray[i] reqid]];
         } else if ([requestsArray[i] isKindOfClass:[Detail class]]) {
-            [requestsIDtring appendFormat:@"<r id=\"%@\"/>\n", [(Detail *)requestsArray[i] detailid]];
+            [requestsIDtring appendFormat:@"<r id=\"%@\"/>", [(Detail *)requestsArray[i] detailid]];
         }
     }
-    [requestsIDtring appendFormat:@"</reqs>\n"];
-
+    [requestsIDtring appendFormat:@"</reqs>"];
     return requestsIDtring;
 }
 
 #pragma makr - Parsing methods
 
-- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict
-{
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qualifiedName attributes:(NSDictionary *)attributeDict {
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qualifiedName attributes:attributeDict];
-    //Check this string to be the correct one
-    if ([elementName isEqualToString:@"verifrp"]) {
-        _requestResult = [PFRequestResult new];
-        [_requestResult setRejectid:attributeDict[@"id"]];
-        [_requestResult setStatus:attributeDict[@"status"]];
-    }
-    //Check this string to be the correct one
-    if ([elementName isEqualToString:@"verifrps"]) {
-        _dataSource = [@[] mutableCopy];
+    if ([elementName isEqualToString:@"r"]) {
+        requestResult = [[PFRequestResult alloc] init];
+        requestResult.validateId = [attributeDict objectForKey:@"id"];
+        requestResult.status = [attributeDict objectForKey:@"ok"];
+        [_dataSource addObject:requestResult];
     }
 }
 
-- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
-{
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
     NSString *strNew = [string stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-
+    
     strNew = [strNew stringByReplacingOccurrencesOfString:@"\t" withString:@""];
     strNew = [strNew stringByReplacingOccurrencesOfString:@"&_lt;" withString:@"<"];
     strNew = [strNew stringByReplacingOccurrencesOfString:@"&_gt;" withString:@">"];
-
+    
     if ([strNew isEqualToString:@"\n"]) {
         return;
     }
-
+    
     if (currentElementValue) {
         [currentElementValue appendString:strNew];
     } else {
@@ -119,13 +97,12 @@
 }
 
 // XMLParser.m
-- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
-{
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
     [super parser:parser didEndElement:elementName namespaceURI:namespaceURI qualifiedName:qName];
     //Check this string to be the correct one
     if ([elementName isEqualToString:@"verifrp"]) {
         // We reached the end of the XML document
-        [_dataSource addObject:_requestResult];
+        return;
     }
     currentElementValue = nil;
 }
