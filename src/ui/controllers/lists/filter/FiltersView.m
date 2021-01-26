@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "FiltersView.h"
+#import "GlobalConstants.h"
 
 #define SORT_CRITERIA_ARRAY @[@"Fecha", @"Asunto", @"Aplicación"]
 
@@ -48,10 +49,38 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [super awakeFromNib];
     // Initialization code
     self.backgroundColor = [UIColor greenColor];
+    [self showChangeRoleOptionIfNeeded];
     [self setFooterStyle];
 }
 
 #pragma mark - User Interface
+
+- (void) showChangeRoleOptionIfNeeded {
+    self.roleTitleLabel.text = @"User_Roles_Title".localized;
+    self.roleLabel.text = @"User_Roles_Change_Role".localized;
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoles]) {
+        self.roleTitleLabel.hidden = NO;
+        self.roleSeparatorView.hidden = NO;
+        self.roleLabel.hidden = NO;
+        self.roleButton.hidden = NO;
+        self.selectedRoleNameLabel.hidden = NO;
+        self.selectedRoleLabel.hidden = NO;
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected]) {
+            self.selectedRoleNameLabel.text =[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleUserNameKey] objectForKey:kContentKey];
+            self.selectedRoleLabel.text =[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey];
+        } else {
+            self.selectedRoleNameLabel.hidden = YES;
+            self.selectedRoleLabel.text = @"User_Role_Signer".localized;
+        }
+    } else {
+        self.roleTitleLabel.hidden = YES;
+        self.roleSeparatorView.hidden = YES;
+        self.roleLabel.hidden = YES;
+        self.roleButton.hidden = YES;
+        self.selectedRoleNameLabel.hidden = YES;
+        self.selectedRoleLabel.hidden = YES;
+    }
+}
 
 -(void)setFooterStyle {
     [_footerView setBackgroundColor: BACKGROUND_COLOR_GRAY_FOR_TOOLBAR];
