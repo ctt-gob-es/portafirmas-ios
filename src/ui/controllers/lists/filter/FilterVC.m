@@ -241,74 +241,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 #pragma mark - User Interaction
 
-- (IBAction)didClickCancelButton:(id)sender
-{
-    if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
-        [self.navigationController popViewControllerAnimated:YES];
-    } else {
-        dispatch_async(dispatch_get_main_queue(), ^{
-          [self dismissViewControllerAnimated:YES completion:nil ];
-        });
-    }
-}
-
-- (IBAction)didClickAcceptButton:(id)sender
-{
-    NSMutableDictionary *filters = [@{} mutableCopy];
-
-    if (![_sortButton.titleLabel.text isEqualToString:@"Selecciona un criterio de ordenación"]) {
-        NSString *sortValue = [PFHelper getPFSortCriteriaValueForRow:[_sortPickerView selectedRowInComponent:0]];
-
-        if (sortValue) {
-            filters[kPFFilterKeySortCriteria] = sortValue;
-            filters[kPFFilterKeySort] = kPFFilterValueSortDesc;
-        }
-    }
-
-    if ([_enableFiltersSwitch isOn]) {
-        
-        if (_topicTextField.text && _topicTextField.text.length > 0) {
-            filters[kPFFilterKeySubject] = _topicTextField.text;
-        }
-        if (![_appButton.titleLabel.text isEqualToString:@"Selecciona una aplicación"]) {
-            filters[kPFFilterKeyApp] = [[AppListXMLController sharedInstance] appsArray][[_sortPickerView selectedRowInComponent:0]];
-        }
-        if (_startDateTextField.text && _startDateTextField.text.length > 0) {
-            filters[kPFFilterKeyDateStart] = _startDateTextField.text;
-        }
-        if (_endDateTextField.text && _endDateTextField.text.length > 0) {
-            filters[kPFFilterKeyDateEnd] = _endDateTextField.text;
-        }
-    }
-    
-    UITabBarController *tabController;
-    
-    if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
-        
-        UINavigationController *nav = (UINavigationController *)self.presentingViewController;
-        UIViewController *settingsVC = nav.rootViewController;
-        tabController = (UITabBarController *)settingsVC.presentedViewController;
-
-    }
-    else if ([[UIDevice currentDevice].model isEqualToString:@"iPad"]) {
-        
-        tabController = (UITabBarController *)self.presentingViewController;
-    }
-    
-    UINavigationController *navigation = (UINavigationController *) tabController.selectedViewController;
-    BaseListTVC *baseTVC = (BaseListTVC *)navigation.rootViewController;
-    
-    // Default filters
-    filters[kFilterTypeKey] = kFilterTypeViewAll;
-    filters[kFilterMonthKey] = kFilterMonthAll;
-    NSDictionary *roleSelected = [[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected];
-    if (roleSelected && [[[roleSelected objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: kUserRoleRoleNameValidator] ){
-        filters[kFilterDNIValidator] = [[roleSelected objectForKey:kFilterDNIKey]objectForKey:kContentKey];
-        filters[kFilterTypeKey] = kFilterTypeViewNoValidate;
-    }
-    
-    [baseTVC setFiltersDict:filters.count > 0 ? filters:nil];
-
+- (void)didSelectCancelButton {
     if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
         [self.navigationController popViewControllerAnimated:YES];
     }

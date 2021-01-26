@@ -312,7 +312,7 @@
                             <rect key="frame" x="342" y="0.0" width="48" height="44"/>
                             <state key="normal" title="Cancel"/>
                             <connections>
-                                <action selector="didSelectCancelButton:" destination="ORh-ds-0lu" eventType="touchUpInside" id="qxQ-Cp-WnA"/>
+                                <action selector="didSelectCancelButton:" destination="ORh-ds-0lu" eventType="touchUpInside" id="aNQ-rH-nZl"/>
                             </connections>
                         </button>
                     </subviews>
