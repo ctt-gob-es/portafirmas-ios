@@ -35,14 +35,12 @@
     NSData *postData = [params dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[params length]];
     
-//    NSString *baseURL = [NSString stringWithFormat:@"%@?%@", SERVER_URL, params];
-
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:[NSURL URLWithString:baseURL]];
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody:postData];
-    [request setTimeoutInterval:30.0];
+    [request setTimeoutInterval:kPFRequestTimeoutInterval];
     
     NSDictionary *cookieDict = [CookieTools JSessionID];
     

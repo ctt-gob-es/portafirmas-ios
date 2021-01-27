@@ -51,6 +51,9 @@ typedef NS_ENUM (NSInteger, PFSortPickerRow)
 };
 
 static const NSInteger kPFAlertViewCancelButtonIndex = 0;
+static const NSTimeInterval kPFRequestTimeoutInterval = 30.0;
+
+static NSString *const kPFDeviceModeliPhone = @"iPhone";
 
 static NSString *const kPFTrue = @"true";
 static NSString *const kPFFalse = @"false";

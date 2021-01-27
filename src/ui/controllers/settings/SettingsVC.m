@@ -191,7 +191,6 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 				segue = YES;
 				dispatch_async(dispatch_get_main_queue(), ^{
                     [[UserRolesService instance] getUserRoles:^(NSDictionary *content) {
-                        printf("Success");
                         NSDictionary *responseError = [content objectForKey:kErrorRqsrcnfg];
                         if (responseError) {
                             // Old system that does not suppor roles maybe show something continue as always
@@ -205,16 +204,14 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
                             [self setCompatibilityInLocalStorage:YES];
                             NSDictionary *responseUserRolesDict = [[content objectForKey:@"rsgtsrcg"] objectForKey:@"rls"];
                             if ([responseUserRolesDict count] == 0) {
-                                //User with no roles
-                                //continue as always
+                                //User with no roles continue as always
                                 segue = YES;
                                 dispatch_async(dispatch_get_main_queue(), ^{
                                     [self performSegueWithIdentifier:identifier sender:self];
                                 });
                             } else {
-                                //User with roles
+                                //User with roles navigate to rol selection
                             [self setRolesInLocalStorage: responseUserRolesDict];
-//                                Navegar a la pantalla de selección de rol
                                 SelectRoleViewController *selectRoleViewController = [[SelectRoleViewController alloc] initWithNibName: @"SelectRoleViewController" bundle: nil];
                                 selectRoleViewController.delegate = self;
                                 [selectRoleViewController setModalPresentationStyle:UIModalPresentationFullScreen];

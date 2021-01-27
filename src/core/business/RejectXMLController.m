@@ -57,12 +57,9 @@
     return mesg;
 }
 
-- (RejectXMLController *)initXMLParser
-{
+- (RejectXMLController *)initXMLParser {
     self = [super init];
-    // init array of user objects
     _dataSource = nil;
-
     return self;
 }
 

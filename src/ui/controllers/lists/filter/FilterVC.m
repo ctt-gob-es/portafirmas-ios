@@ -84,7 +84,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [_scrollView setContentSize:CGSizeMake(self.view.frame.size.width, _endDateTextField.frame.origin.y + _endDateTextField.frame.size.height + kFilterVCDefaultMargin)];
     [_enableFiltersSwitch setFrame:CGRectMake(self.view.frame.size.width - _enableFiltersSwitch.frame.size.width - kFilterVCDefaultMargin, _enableFiltersSwitch.frame.origin.y, _enableFiltersSwitch.frame.size.width, _enableFiltersSwitch.frame.size.height)];
 
-    if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
+    if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
         UIApplication.sharedApplication.statusBarHidden = NO;
     }
     
@@ -232,7 +232,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (void)updateContentOffsetForHeight:(CGFloat)height
 {
-    if (height != SCREEN_HEIGHT && [[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
+    if (height != SCREEN_HEIGHT && [[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
         CGFloat offsetY = height - (self.view.frame.size.height - (_currentTextField.frame.size.height + _currentTextField.frame.origin.y) - kFilterVCToolBarHeight - kFilterVCDefaultMargin);
 
         if (_scrollView.contentOffset.y != offsetY) {
@@ -272,7 +272,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (IBAction)didClickCancelButton:(id)sender
 {
-    if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
+    if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
         [self.navigationController popViewControllerAnimated:YES];
     } else {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -312,7 +312,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     
     UITabBarController *tabController;
     
-    if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
+    if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
         
         UINavigationController *nav = (UINavigationController *)self.presentingViewController;
         UIViewController *settingsVC = nav.rootViewController;
@@ -338,7 +338,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     
     [baseTVC setFiltersDict:filters.count > 0 ? filters:nil];
 
-    if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
+    if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
         [self.navigationController popViewControllerAnimated:YES];
     }
     
