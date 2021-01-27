@@ -86,9 +86,7 @@
 - (RequestListXMLController *)initXMLParser
 {
     self = [super init];
-    // init array of user objects
     _dataSource = [[NSMutableArray alloc] init];
-
     return self;
 }
 

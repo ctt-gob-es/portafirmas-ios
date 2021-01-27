@@ -15,6 +15,9 @@
 #import "ServerManager.h"
 #import "Server.h"
 #import "PushNotificationService.h"
+#import "SelectRoleViewController.h"
+#import "GlobalConstants.h"
+#import "PFHelper.h"
 
 #define SORT_CRITERIA_ARRAY @[@"Fecha", @"Asunto", @"Aplicación"]
 
@@ -44,6 +47,12 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 @property (nonatomic, strong) IBOutlet UILabel *notificationStateLabel;
 @property (nonatomic, strong) IBOutlet UIView *notificationView;
 @property (nonatomic, strong) IBOutlet UISwitch *notificationSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *roleTitleLabel;
+@property (weak, nonatomic) IBOutlet UIView *roleSeparatorView;
+@property (weak, nonatomic) IBOutlet UILabel *roleLabel;
+@property (weak, nonatomic) IBOutlet UIButton *roleButton;
+@property (weak, nonatomic) IBOutlet UILabel *selectedRoleNameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *selectedRoleLabel;
 
 @end
 
@@ -75,15 +84,16 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [_scrollView setContentSize:CGSizeMake(self.view.frame.size.width, _endDateTextField.frame.origin.y + _endDateTextField.frame.size.height + kFilterVCDefaultMargin)];
     [_enableFiltersSwitch setFrame:CGRectMake(self.view.frame.size.width - _enableFiltersSwitch.frame.size.width - kFilterVCDefaultMargin, _enableFiltersSwitch.frame.origin.y, _enableFiltersSwitch.frame.size.width, _enableFiltersSwitch.frame.size.height)];
 
-    if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
+    if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
         UIApplication.sharedApplication.statusBarHidden = NO;
-
     }
+    
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self listenNotificationAboutPushNotifications];
+    [self showChangeRoleOptionIfNeeded];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -222,7 +232,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (void)updateContentOffsetForHeight:(CGFloat)height
 {
-    if (height != SCREEN_HEIGHT && [[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
+    if (height != SCREEN_HEIGHT && [[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
         CGFloat offsetY = height - (self.view.frame.size.height - (_currentTextField.frame.size.height + _currentTextField.frame.origin.y) - kFilterVCToolBarHeight - kFilterVCDefaultMargin);
 
         if (_scrollView.contentOffset.y != offsetY) {
@@ -231,13 +241,44 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     }
 }
 
+- (void) showChangeRoleOptionIfNeeded {
+    self.roleTitleLabel.text = @"User_Roles_Title".localized;
+    self.roleLabel.text = @"User_Roles_Change_Role".localized;
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoles]) {
+        self.roleTitleLabel.hidden = NO;
+        self.roleSeparatorView.hidden = NO;
+        self.roleLabel.hidden = NO;
+        self.roleButton.hidden = NO;
+        self.selectedRoleNameLabel.hidden = NO;
+        self.selectedRoleLabel.hidden = NO;
+        if ([[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected]) {
+            self.selectedRoleNameLabel.text =[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleUserNameKey] objectForKey:kContentKey];
+            self.selectedRoleLabel.text =[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey];
+        } else {
+            self.selectedRoleNameLabel.hidden = YES;
+            self.selectedRoleLabel.text = @"User_Role_Signer".localized;
+        }
+    } else {
+        self.roleTitleLabel.hidden = YES;
+        self.roleSeparatorView.hidden = YES;
+        self.roleLabel.hidden = YES;
+        self.roleButton.hidden = YES;
+        self.selectedRoleNameLabel.hidden = YES;
+        self.selectedRoleLabel.hidden = YES;
+    }
+}
+
 #pragma mark - User Interaction
 
 - (IBAction)didClickCancelButton:(id)sender
 {
-   dispatch_async(dispatch_get_main_queue(), ^{
-	   [self dismissViewControllerAnimated:YES completion:nil];
-	});
+    if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+          [self dismissViewControllerAnimated:YES completion:nil ];
+        });
+    }
 }
 
 - (IBAction)didClickAcceptButton:(id)sender
@@ -271,7 +312,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     
     UITabBarController *tabController;
     
-    if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
+    if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
         
         UINavigationController *nav = (UINavigationController *)self.presentingViewController;
         UIViewController *settingsVC = nav.rootViewController;
@@ -285,13 +326,20 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     
     UINavigationController *navigation = (UINavigationController *) tabController.selectedViewController;
     BaseListTVC *baseTVC = (BaseListTVC *)navigation.rootViewController;
-   
+    
+    // Default filters
+    filters[kFilterTypeKey] = kFilterTypeViewAll;
+    filters[kFilterMonthKey] = kFilterMonthAll;
+    NSDictionary *roleSelected = [[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected];
+    if (roleSelected && [[[roleSelected objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: kUserRoleRoleNameValidator] ){
+        filters[kFilterDNIValidator] = [[roleSelected objectForKey:kFilterDNIKey]objectForKey:kContentKey];
+        filters[kFilterTypeKey] = kFilterTypeViewNoValidate;
+    }
+    
     [baseTVC setFiltersDict:filters.count > 0 ? filters:nil];
 
-    if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
-        
+    if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
         [self.navigationController popViewControllerAnimated:YES];
-        [baseTVC refreshInfoWithFilters:filters];
     }
     
 	dispatch_async(dispatch_get_main_queue(), ^{
@@ -481,6 +529,10 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         [_scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
     }
 }
-
+- (IBAction)tapChangeRole:(id)sender {
+    SelectRoleViewController *selectRoleViewController = [[SelectRoleViewController alloc] initWithNibName: @"SelectRoleViewController" bundle: nil];
+    [selectRoleViewController setModalPresentationStyle:UIModalPresentationFullScreen];
+    [self presentViewController:selectRoleViewController animated:YES completion:nil];
+}
 
 @end

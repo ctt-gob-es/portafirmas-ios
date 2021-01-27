@@ -13,6 +13,10 @@
 #define COLOR_PRIORITY_ORANGE [ColorChart colorFromHexString:@"#ff9966"]
 #define COLOR_PRIORITY_YELLOW [ColorChart colorFromHexString:@"#f6d965"]
 #define HIGHLIGHT_COLOR_FOR_NEAR_TO_EXPIRE_CELLS [ColorChart colorFromHexString:@"#ffffe7"]
+#define COLOR_FOR_RED_TEXT [ColorChart colorFromHexString:@"#990017"]
+#define COLOR_FOR_DISABLED [ColorChart colorFromHexString:@"#aaaaaa"]
+#define BACKGROUND_COLOR_FOR_TOOLBAR [ColorChart colorFromHexString:@"#f9f6fa"]
+
 #define ThemeColorWithAlpha(alpha) [THEME_COLOR colorWithAlphaComponent : alpha]
 
 @interface ColorChart : NSObject

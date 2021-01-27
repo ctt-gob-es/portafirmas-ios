@@ -15,8 +15,11 @@
 "Alert_View_Process_Sign_and_Approve" = "Se van a procesar %lu peticiones de firma y %lu de visto bueno.";
 "Alert_View_Process_Approve" = "Se van a procesar %lu peticiones de visto bueno.";
 "Alert_View_Process_Sign" = "Se van a procesar %lu peticiones de firma.";
+"Alert_View_Process_Validate" = "Se van a procesar %lu peticiones de validación.";
 "Alert_View_Request_Processed_Correctly" = "Peticiones procesadas correctamente";
 "Alert_View_Request_Signed_Correctly" = "Peticiones firmadas correctamente.";
+"Alert_View_Request_Validated_Correctly" = "Petición validada correctamente.";
+"Alert_View_Requests_Validated_Correctly" = "Peticiones validadas correctamente.";
 "Alert_View_Error" = "Error";
 "Alert_View_certificated_removed_correctly" = "Se ha eliminado el certificado correctamente";
 "Alert_View_An_Error_Has_Ocurred" = "Se ha producido un error";
@@ -59,7 +62,7 @@
 "Sign" = "Firmar";
 "Approval" = "Visto Bueno";
 "Reject" = "Rechazar";
-"Cancel" = "Cancel";
+"Cancel" = "Cancelar";
 "Rejection_of_requests" = "Rechazo de peticiones";
 "Indicate_Reason_For_Rejection" = "Indique el motivo del rechazo";
 "Continue" = "Continuar";
@@ -121,3 +124,15 @@
 "FIRe_error_in_some_sign_operation" = "Error en la firma de alguno de los documentos firmados.";
 "FIRe_undetermined_error" = "Error indeterminado con FIRe.";
 "FIRe_problem_with_response" = "Problema con la respuesta del servidor de FIRe.";
+
+//Pending request view
+"Pending_Requests_View_Sign_Approval" = "Firmar/Visto bueno";
+"Pending_Requests_View_Reject" = "Rechazar";
+
+//User Roles
+"User_Roles_Message" = "Por favor, seleccione el rol con el que desea acceder.";
+"User_Roles_Signer_Cell_Title" = "Acceder como firmante";
+"User_Role_Signer" = "Firmante";
+"User_Roles_Title" = "Roles";
+"User_Roles_Change_Role" = "Cambiar rol";
+"User_Roles_Validate_Operation_Name" = "Validar";

@@ -17,11 +17,8 @@
 
 @synthesize dataSource = _dataSource;
 
-- (PreviewXMLController *)initXMLParser
-{
+- (PreviewXMLController *)initXMLParser {
     self = [super init];
-    // init array of user objects
-
     return self;
 }
 

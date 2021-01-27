@@ -57,12 +57,9 @@
     return mesg;
 }
 
-- (RejectXMLController *)initXMLParser
-{
+- (RejectXMLController *)initXMLParser {
     self = [super init];
-    // init array of user objects
     _dataSource = nil;
-
     return self;
 }
 
@@ -79,7 +76,7 @@
         reject = [[PFRequestResult alloc] init];
         // We do not have any attributes in the user elements, but if
         // you do, you can extract them here:
-        reject.rejectid = [attributeDict objectForKey:@"id"];
+        reject.rejectId = [attributeDict objectForKey:@"id"];
         reject.status = [attributeDict objectForKey:@"status"];
     }
 

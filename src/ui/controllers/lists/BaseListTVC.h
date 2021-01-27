@@ -34,6 +34,9 @@ static NSString *const kBaseListVCDataStatusPending = @"unresolved";
 - (void)refreshInfo;
 - (void)refreshInfoWithFilters:(NSDictionary *)filters;
 
+#pragma mark - Filters
+- (void)addDefaultFilters;
+
 #pragma mark - Navigation Methods
 - (void)prepareForDetailSegue:(UIStoryboardSegue *)segue enablingSigning:(BOOL)enableSign;
 
