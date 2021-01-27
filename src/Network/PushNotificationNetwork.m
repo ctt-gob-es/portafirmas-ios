@@ -41,8 +41,7 @@
     [request setHTTPMethod:@"POST"];
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody:postData];
-    [request setTimeoutInterval:30.0];
-    
+    [request setTimeoutInterval:kPFRequestTimeoutInterval];
     
     NSDictionary *cookieDict = [CookieTools JSessionID];
     

@@ -67,7 +67,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 //    [_scrollView setContentSize:CGSizeMake(self.view.frame.size.width, _endDateTextField.frame.origin.y + _endDateTextField.frame.size.height + kFilterVCDefaultMargin)];
 //    [_enableFiltersSwitch setFrame:CGRectMake(self.view.frame.size.width - _enableFiltersSwitch.frame.size.width - kFilterVCDefaultMargin, _enableFiltersSwitch.frame.origin.y, _enableFiltersSwitch.frame.size.width, _enableFiltersSwitch.frame.size.height)];
 
-    if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
+    if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
         UIApplication.sharedApplication.statusBarHidden = NO;
     }
     _filterView =[[NSBundle mainBundle] loadNibNamed:@"FiltersView" owner:nil options:nil][0];
@@ -203,11 +203,10 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 //    [self updateContentOffsetForHeight: _datePicker.frame.size.height];
 //}
 //
-//- (void)updateContentOffsetForHeight:(CGFloat)height
-//{
-//    if (height != SCREEN_HEIGHT && [[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
+
+//- (void)updateContentOffsetForHeight:(CGFloat)height {
+//    if (height != SCREEN_HEIGHT && [[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
 //        CGFloat offsetY = height - (self.view.frame.size.height - (_currentTextField.frame.size.height + _currentTextField.frame.origin.y) - kFilterVCToolBarHeight - kFilterVCDefaultMargin);
-//
 //        if (_scrollView.contentOffset.y != offsetY) {
 //            [_scrollView setContentOffset:CGPointMake(0, offsetY > 0 ? offsetY : 0) animated:YES];
 //        }
@@ -222,7 +221,9 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     //include the code to apply filters and refresh in this method
     NSMutableDictionary *filters = [@{} mutableCopy];
     UITabBarController *tabController;
-    if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
+    
+    if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
+        
         UINavigationController *nav = (UINavigationController *)self.presentingViewController;
         UIViewController *settingsVC = nav.rootViewController;
         tabController = (UITabBarController *)settingsVC.presentedViewController;
@@ -241,7 +242,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         filters[kFilterTypeKey] = kFilterTypeViewNoValidate;
     }
     [baseTVC setFiltersDict:filters.count > 0 ? filters:nil];
-    if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
+
+    if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
         [self.navigationController popViewControllerAnimated:YES];
     }
     dispatch_async(dispatch_get_main_queue(), ^{
