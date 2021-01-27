@@ -217,9 +217,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 #pragma mark - User Interaction
 
-- (void)didSelectAcceptButton {
-    //include the code to apply filters and refresh in this method
-    NSMutableDictionary *filters = [@{} mutableCopy];
+- (void)didSelectAcceptButton: (NSMutableDictionary *) selectedFilters {
+    NSMutableDictionary *filters = [selectedFilters mutableCopy];
     UITabBarController *tabController;
     
     if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {

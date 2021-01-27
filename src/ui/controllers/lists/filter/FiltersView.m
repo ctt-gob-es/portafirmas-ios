@@ -93,7 +93,15 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 #pragma mark - User Interaction
 
 - (IBAction)didSelectAcceptButton:(id)sender {
-    [self.filtersViewDelegate didSelectAcceptButton];
+    NSMutableDictionary *filters = [@{} mutableCopy];
+    if (![_sortButton.titleLabel.text isEqualToString:@"Selecciona un criterio de ordenación"]) {
+        NSString *sortValue = [PFHelper getPFSortCriteriaValueForRow:[_sortPickerView selectedRowInComponent:0]];
+        if (sortValue) {
+            filters[kPFFilterKeySortCriteria] = sortValue;
+            filters[kPFFilterKeySort] = kPFFilterValueSortDesc;
+        }
+    }
+    [self.filtersViewDelegate didSelectAcceptButton: filters];
 }
 
 - (IBAction)didSelectCancelButton:(id)sender {
