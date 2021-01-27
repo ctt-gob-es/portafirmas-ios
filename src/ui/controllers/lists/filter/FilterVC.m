@@ -34,7 +34,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     NSDate *_endDate;
 }
 
-@property (strong, nonatomic) IBOutlet UIView *filterView;
+@property (strong, nonatomic) FiltersView* filterView;
+@property (strong, nonatomic) IBOutlet UIView *filterViewContainerView;
 
 @end
 
@@ -69,16 +70,17 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
         UIApplication.sharedApplication.statusBarHidden = NO;
     }
-    FiltersView * commonFilterView =[[NSBundle mainBundle] loadNibNamed:@"FiltersView" owner:nil options:nil][0];
-    commonFilterView.frame = self.filterView.bounds;
-    commonFilterView.filtersViewDelegate = self;
-    [self.filterView addSubview:commonFilterView];
+    _filterView =[[NSBundle mainBundle] loadNibNamed:@"FiltersView" owner:nil options:nil][0];
+    _filterView.frame = self.filterViewContainerView.bounds;
+    _filterView.filtersViewDelegate = self;
+    [self.filterViewContainerView addSubview:_filterView];
 }
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 //    [self listenNotificationAboutPushNotifications];
 //    [self showChangeRoleOptionIfNeeded];
+    [_filterView showChangeRoleOptionIfNeeded];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
@@ -218,12 +220,33 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (void)didSelectAcceptButton {
     //include the code to apply filters and refresh in this method
+    NSMutableDictionary *filters = [@{} mutableCopy];
+    UITabBarController *tabController;
+    if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
+        UINavigationController *nav = (UINavigationController *)self.presentingViewController;
+        UIViewController *settingsVC = nav.rootViewController;
+        tabController = (UITabBarController *)settingsVC.presentedViewController;
+    }
+    else if ([[UIDevice currentDevice].model isEqualToString:@"iPad"]) {
+        tabController = (UITabBarController *)self.presentingViewController;
+    }
+    UINavigationController *navigation = (UINavigationController *) tabController.selectedViewController;
+    BaseListTVC *baseTVC = (BaseListTVC *)navigation.rootViewController;
+    // Default filters
+    filters[kFilterTypeKey] = kFilterTypeViewAll;
+    filters[kFilterMonthKey] = kFilterMonthAll;
+    NSDictionary *roleSelected = [[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected];
+    if (roleSelected && [[[roleSelected objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: kUserRoleRoleNameValidator] ){
+        filters[kFilterDNIValidator] = [[roleSelected objectForKey:kFilterDNIKey]objectForKey:kContentKey];
+        filters[kFilterTypeKey] = kFilterTypeViewNoValidate;
+    }
+    [baseTVC setFiltersDict:filters.count > 0 ? filters:nil];
     if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
         [self.navigationController popViewControllerAnimated:YES];
     }
     dispatch_async(dispatch_get_main_queue(), ^{
         [self dismissViewControllerAnimated:YES completion:^{
-        // [baseTVC refreshInfoWithFilters:filters];
+            [baseTVC refreshInfoWithFilters:filters];
         }];
     });
 }

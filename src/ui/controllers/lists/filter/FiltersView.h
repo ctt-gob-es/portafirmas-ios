@@ -17,6 +17,8 @@
 @interface FiltersView : UIView <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate>
 - (IBAction)switchChanged:(UISwitch *)sender;
 
+- (void) showChangeRoleOptionIfNeeded;
+
 @property (nonatomic, weak) id <FiltersViewDelegate> filtersViewDelegate;
 
 @end
