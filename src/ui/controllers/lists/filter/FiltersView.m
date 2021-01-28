@@ -17,7 +17,9 @@ static const CGFloat kFilterVCPickerHeight = 30.f;
 static const CGFloat kFilterVCToolBarHeight = 44.f;
 static const CGFloat kFilterVCDefaultMargin = 14.f;
 
-@interface FiltersView ()
+@interface FiltersView () {
+    UITextField *_currentTextField;
+}
 
 @property (nonatomic, strong) IBOutlet UIButton *sortButton;
 @property (nonatomic, strong) IBOutlet UIPickerView *sortPickerView;
@@ -114,8 +116,22 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
      }];
 }
 
+- (IBAction)didUpdateValueForFilterSwitch:(id)sender {
+    BOOL enable = [sender isOn];
+    [_topicTextField setEnabled:enable];
+    [_appButton setEnabled:(![[AppListXMLController sharedInstance] appsArray] || [[AppListXMLController sharedInstance] appsArray].count == 0) ? NO:enable];
+    [self hidePickers];
+}
+
 - (IBAction)didSelectAcceptButton:(id)sender {
     NSMutableDictionary *filters = [@{} mutableCopy];
+    
+    if ([_enableFiltersSwitch isOn]) {
+        if (_topicTextField.text && _topicTextField.text.length > 0) {
+            filters[kPFFilterKeySubject] = _topicTextField.text;
+        }
+    }
+    
     if (![_sortButton.titleLabel.text isEqualToString:@"Selecciona un criterio de ordenación"]) {
         NSString *sortValue = [PFHelper getPFSortCriteriaValueForRow:[_sortPickerView selectedRowInComponent:0]];
         if (sortValue) {
@@ -186,6 +202,24 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (IBAction)tapChangeRole:(id)sender {
     [self.filtersViewDelegate tapChangeRole];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    _currentTextField = textField;
+    if ([_currentTextField isEqual:_topicTextField]) {
+        [self hidePickers];
+        [_scrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end

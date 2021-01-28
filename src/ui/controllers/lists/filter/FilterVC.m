@@ -27,8 +27,7 @@ static const CGFloat kFilterVCPickerHeight = 30.f;
 static const CGFloat kFilterVCToolBarHeight = 44.f;
 static const CGFloat kFilterVCDefaultMargin = 14.f;
 
-@interface FilterVC ()
-{
+@interface FilterVC () {
     UITextField *_currentTextField;
     NSDate *_startDate;
     NSDate *_endDate;

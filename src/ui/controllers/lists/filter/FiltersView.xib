@@ -75,6 +75,9 @@
                         </label>
                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="FAO-4M-9Dp">
                             <rect key="frame" x="353.5" y="159" width="51" height="31"/>
+                            <connections>
+                                <action selector="didUpdateValueForFilterSwitch:" destination="ORh-ds-0lu" eventType="touchUpInside" id="Ilk-vW-PFY"/>
+                            </connections>
                         </switch>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Asunto" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hod-UW-h2h">
                             <rect key="frame" x="11.5" y="194" width="391" height="30"/>
@@ -83,6 +86,9 @@
                             </constraints>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                             <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="ORh-ds-0lu" id="LcA-Up-eyd"/>
+                            </connections>
                         </textField>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aplicación" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d5u-Rm-FK9">
                             <rect key="frame" x="11.5" y="232" width="391" height="21"/>
