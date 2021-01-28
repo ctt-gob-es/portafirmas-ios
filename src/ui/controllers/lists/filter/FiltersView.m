@@ -26,8 +26,6 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 @property (nonatomic, strong) IBOutlet UITextField *topicTextField;
 @property (nonatomic, strong) IBOutlet UIButton *appButton;
 @property (nonatomic, strong) IBOutlet UIPickerView *appPickerView;
-@property (nonatomic, strong) IBOutlet UITextField *startDateTextField;
-@property (nonatomic, strong) IBOutlet UITextField *endDateTextField;
 @property (nonatomic, strong) IBOutlet UIDatePicker *datePicker;
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet UISwitch *enableFiltersSwitch;
