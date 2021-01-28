@@ -61,14 +61,12 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (void)hidePickers {
     [_sortPickerView setAlpha:0];
-//    [_appPickerView setAlpha:0];
-//    [_datePicker setAlpha:0];
+    [_appPickerView setAlpha:0];
 }
 
 - (void) setupPickers {
     [QuartzUtils drawShadowInView:_sortPickerView];
-//    [QuartzUtils drawShadowInView:_datePicker];
-//    [QuartzUtils drawShadowInView:_appPickerView];
+    [QuartzUtils drawShadowInView:_appPickerView];
 }
 
 - (void) showChangeRoleOptionIfNeeded {
@@ -116,6 +114,16 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
      }];
 }
 
+- (IBAction)didClickAppButton:(id)sender {
+    if ([[AppListXMLController sharedInstance] appsArray] && [[AppListXMLController sharedInstance] appsArray].count > 0) {
+        [self hidePickers];
+        [self endEditing:YES];
+        [UIView animateWithDuration:0.3 animations:^{
+            [self.appPickerView setAlpha:1];
+         }];
+    }
+}
+
 - (IBAction)didUpdateValueForFilterSwitch:(id)sender {
     BOOL enable = [sender isOn];
     [_topicTextField setEnabled:enable];
@@ -125,19 +133,20 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (IBAction)didSelectAcceptButton:(id)sender {
     NSMutableDictionary *filters = [@{} mutableCopy];
-    
     if ([_enableFiltersSwitch isOn]) {
         if (_topicTextField.text && _topicTextField.text.length > 0) {
             filters[kPFFilterKeySubject] = _topicTextField.text;
         }
     }
-    
     if (![_sortButton.titleLabel.text isEqualToString:@"Selecciona un criterio de ordenación"]) {
         NSString *sortValue = [PFHelper getPFSortCriteriaValueForRow:[_sortPickerView selectedRowInComponent:0]];
         if (sortValue) {
             filters[kPFFilterKeySortCriteria] = sortValue;
             filters[kPFFilterKeySort] = kPFFilterValueSortDesc;
         }
+    }
+    if (![_appButton.titleLabel.text isEqualToString:@"Selecciona una aplicación"]) {
+        filters[kPFFilterKeyApp] = [[AppListXMLController sharedInstance] appsArray][[_appPickerView selectedRowInComponent:0]];
     }
     [self.filtersViewDelegate didSelectAcceptButton: filters];
 }

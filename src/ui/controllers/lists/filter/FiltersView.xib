@@ -106,6 +106,9 @@
                                 <color key="titleColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
+                            <connections>
+                                <action selector="didClickAppButton:" destination="ORh-ds-0lu" eventType="touchUpInside" id="Pf8-1K-tdf"/>
+                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fecha inicio" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Sf-uN-IVD">
                             <rect key="frame" x="11.5" y="276" width="391" height="21"/>
@@ -311,6 +314,9 @@
                 <pickerView alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZRv-Tp-HAg" userLabel="app Picker View">
                     <rect key="frame" x="-1" y="645" width="414" height="216"/>
                     <color key="backgroundColor" red="0.99992364649999999" green="1" blue="0.99988299609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <connections>
+                        <outlet property="delegate" destination="ORh-ds-0lu" id="HxK-bs-tLi"/>
+                    </connections>
                 </pickerView>
                 <datePicker alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="jFF-9F-6aV">
                     <rect key="frame" x="-1" y="645" width="414" height="216"/>
