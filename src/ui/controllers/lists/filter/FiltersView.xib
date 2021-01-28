@@ -47,6 +47,9 @@
                                 <color key="titleColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
+                            <connections>
+                                <action selector="didClickSortCriteriaButton:" destination="ORh-ds-0lu" eventType="touchUpInside" id="Hbe-iW-whY"/>
+                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filtros" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dcL-GJ-85S">
                             <rect key="frame" x="11.5" y="129" width="391" height="21"/>
@@ -290,12 +293,18 @@
                     </constraints>
                 </scrollView>
                 <pickerView alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x0g-vH-h29" userLabel="sort Picker View">
-                    <rect key="frame" x="-1" y="645" width="414" height="216"/>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <rect key="frame" x="0.0" y="646" width="414" height="216"/>
+                    <color key="backgroundColor" red="0.99992364649999999" green="1" blue="0.99988299609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="216" id="xbk-12-ybK"/>
+                    </constraints>
+                    <connections>
+                        <outlet property="delegate" destination="ORh-ds-0lu" id="A2o-nL-fNI"/>
+                    </connections>
                 </pickerView>
                 <pickerView alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZRv-Tp-HAg" userLabel="app Picker View">
                     <rect key="frame" x="-1" y="645" width="414" height="216"/>
-                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.99992364649999999" green="1" blue="0.99988299609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </pickerView>
                 <datePicker alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" translatesAutoresizingMaskIntoConstraints="NO" id="jFF-9F-6aV">
                     <rect key="frame" x="-1" y="645" width="414" height="216"/>
@@ -342,21 +351,21 @@
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="bottom" secondItem="jFF-9F-6aV" secondAttribute="bottom" constant="1" id="5iH-TG-bpg"/>
                 <constraint firstAttribute="bottom" secondItem="ZRv-Tp-HAg" secondAttribute="bottom" constant="35" id="8jz-mU-kei"/>
                 <constraint firstItem="XRX-z7-VyH" firstAttribute="leading" secondItem="ORh-ds-0lu" secondAttribute="leading" id="8uN-PO-xfc"/>
+                <constraint firstItem="qBo-IR-fwc" firstAttribute="trailing" secondItem="x0g-vH-h29" secondAttribute="trailing" id="GLd-rT-d4e"/>
                 <constraint firstItem="qBo-IR-fwc" firstAttribute="trailing" secondItem="VHq-ve-gGc" secondAttribute="trailing" id="J6m-ho-fcg"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="leading" secondItem="jFF-9F-6aV" secondAttribute="leading" constant="1" id="JR2-Qi-1tG"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="trailing" secondItem="qBo-IR-fwc" secondAttribute="trailing" id="Jnc-9m-8eR"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="leading" secondItem="ORh-ds-0lu" secondAttribute="leading" id="NCn-9v-Ut9"/>
-                <constraint firstItem="kOK-fh-xWw" firstAttribute="trailing" secondItem="x0g-vH-h29" secondAttribute="trailing" constant="1" id="P6i-yP-apj"/>
+                <constraint firstItem="qBo-IR-fwc" firstAttribute="bottom" secondItem="x0g-vH-h29" secondAttribute="bottom" id="OZp-ND-dfe"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="top" secondItem="ORh-ds-0lu" secondAttribute="top" id="QIc-Nq-KGM"/>
                 <constraint firstAttribute="bottom" secondItem="XRX-z7-VyH" secondAttribute="bottom" id="VE3-lg-tRk"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="top" secondItem="ORh-ds-0lu" secondAttribute="top" id="Yfj-Xv-f8O"/>
-                <constraint firstItem="kOK-fh-xWw" firstAttribute="bottom" secondItem="x0g-vH-h29" secondAttribute="bottom" constant="1" id="aAV-uJ-B1n"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="leading" secondItem="ZRv-Tp-HAg" secondAttribute="leading" constant="1" id="dDO-Iq-JPP"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="trailing" secondItem="ZRv-Tp-HAg" secondAttribute="trailing" constant="1" id="dmq-zS-N6d"/>
+                <constraint firstItem="x0g-vH-h29" firstAttribute="leading" secondItem="ORh-ds-0lu" secondAttribute="leading" id="f4U-gR-fcY"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="leading" secondItem="qBo-IR-fwc" secondAttribute="leading" id="fuF-ee-nGK"/>
                 <constraint firstItem="VHq-ve-gGc" firstAttribute="leading" secondItem="ORh-ds-0lu" secondAttribute="leading" id="gBe-qT-Vrd"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="trailing" secondItem="jFF-9F-6aV" secondAttribute="trailing" constant="1" id="jb1-qy-1Vt"/>
-                <constraint firstItem="kOK-fh-xWw" firstAttribute="leading" secondItem="x0g-vH-h29" secondAttribute="leading" constant="1" id="kWP-po-cCq"/>
                 <constraint firstItem="VHq-ve-gGc" firstAttribute="top" secondItem="XRX-z7-VyH" secondAttribute="top" id="sYY-g6-pwV"/>
                 <constraint firstItem="kOK-fh-xWw" firstAttribute="bottom" secondItem="ZRv-Tp-HAg" secondAttribute="bottom" constant="1" id="uGt-Ef-9Y3"/>
                 <constraint firstAttribute="trailing" secondItem="kOK-fh-xWw" secondAttribute="trailing" id="wfl-Zg-4c0"/>

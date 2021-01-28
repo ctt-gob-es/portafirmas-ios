@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "FiltersView.h"
 #import "GlobalConstants.h"
+#import "AppListXMLController.h"
 
 #define SORT_CRITERIA_ARRAY @[@"Fecha", @"Asunto", @"Aplicación"]
 
@@ -51,9 +52,22 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     self.backgroundColor = [UIColor greenColor];
     [self showChangeRoleOptionIfNeeded];
     [self setFooterStyle];
+    [self setupPickers];
 }
 
 #pragma mark - User Interface
+
+- (void)hidePickers {
+    [_sortPickerView setAlpha:0];
+//    [_appPickerView setAlpha:0];
+//    [_datePicker setAlpha:0];
+}
+
+- (void) setupPickers {
+    [QuartzUtils drawShadowInView:_sortPickerView];
+//    [QuartzUtils drawShadowInView:_datePicker];
+//    [QuartzUtils drawShadowInView:_appPickerView];
+}
 
 - (void) showChangeRoleOptionIfNeeded {
     self.roleTitleLabel.text = @"User_Roles_Title".localized;
@@ -92,6 +106,14 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 #pragma mark - User Interaction
 
+- (IBAction)didClickSortCriteriaButton:(id)sender {
+    [self hidePickers];
+    [self endEditing:YES];
+    [UIView animateWithDuration:0.3 animations:^{
+         [self.sortPickerView setAlpha:1];
+     }];
+}
+
 - (IBAction)didSelectAcceptButton:(id)sender {
     NSMutableDictionary *filters = [@{} mutableCopy];
     if (![_sortButton.titleLabel.text isEqualToString:@"Selecciona un criterio de ordenación"]) {
@@ -119,10 +141,46 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 //    }
 }
 
-//#pragma mark - Keyboard Notifications
+#pragma mark - UIPickerViewDataSource
 
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
 
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    if ([pickerView isEqual:_sortPickerView]) {
+        return SORT_CRITERIA_ARRAY.count;
+    } else if ([pickerView isEqual:_appPickerView]) {
+        return [[AppListXMLController sharedInstance] appsArray] ? [[AppListXMLController sharedInstance] appsArray].count : 0;
+    }
+    return 0;
+}
 
+#pragma mark - UIPickerViewDelegate
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    if ([pickerView isEqual:_sortPickerView]) {
+        return SORT_CRITERIA_ARRAY[row];
+    } else if ([pickerView isEqual:_appPickerView]) {
+        return [[AppListXMLController sharedInstance] appsArray] ? [[AppListXMLController sharedInstance] appsArray][row] : nil;
+    }
+    return nil;
+}
+
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
+    return kFilterVCPickerHeight;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    if ([pickerView isEqual:_sortPickerView]) {
+        [_sortButton setTitle:SORT_CRITERIA_ARRAY[row] forState:UIControlStateNormal];
+        [_sortButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    } else if ([pickerView isEqual:_appPickerView]) {
+        [_appButton setTitle:[[AppListXMLController sharedInstance] appsArray][row] forState:UIControlStateNormal];
+        [_appButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    }
+    [self performSelector:@selector(hidePickers) withObject:nil afterDelay:0.5];
+}
 
 #pragma mark - User Role
 
