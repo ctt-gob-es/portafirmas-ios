@@ -219,8 +219,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         [_appButton setTitle:[[AppListXMLController sharedInstance] appsArray][row] forState:UIControlStateNormal];
         [_appButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     } else if ([pickerView isEqual:_typePickerView]) {
-        [_sortButton setTitle:TYPE_ARRAY[row] forState:UIControlStateNormal];
-        [_sortButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_typeButton setTitle:TYPE_ARRAY[row] forState:UIControlStateNormal];
+        [_typeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     }
     [self performSelector:@selector(hidePickers) withObject:nil afterDelay:0.5];
 }

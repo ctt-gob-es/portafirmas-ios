@@ -91,7 +91,7 @@
                             </connections>
                         </textField>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jGM-U4-hYL" userLabel="App View">
-                            <rect key="frame" x="11.5" y="232" width="391" height="41"/>
+                            <rect key="frame" x="11.5" y="232" width="391" height="48"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aplicación" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d5u-Rm-FK9" userLabel="Aplication">
                                     <rect key="frame" x="0.0" y="0.0" width="391" height="21"/>
@@ -103,7 +103,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IFI-00-1N0">
-                                    <rect key="frame" x="0.0" y="10" width="391" height="31"/>
+                                    <rect key="frame" x="0.0" y="17" width="391" height="31"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
                                     <state key="normal" title="Selecciona una aplicación">
                                         <color key="titleColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -115,7 +115,7 @@
                                 </button>
                             </subviews>
                             <constraints>
-                                <constraint firstAttribute="height" constant="41" id="0iQ-9q-Jqo"/>
+                                <constraint firstAttribute="height" constant="48" id="0iQ-9q-Jqo"/>
                                 <constraint firstItem="d5u-Rm-FK9" firstAttribute="top" secondItem="jGM-U4-hYL" secondAttribute="top" id="1JO-zl-Nec"/>
                                 <constraint firstAttribute="bottom" secondItem="IFI-00-1N0" secondAttribute="bottom" id="8hB-DV-vgq"/>
                                 <constraint firstAttribute="trailing" secondItem="IFI-00-1N0" secondAttribute="trailing" id="9cg-DB-d3h"/>
@@ -125,7 +125,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hMJ-qZ-60z" userLabel="Type View">
-                            <rect key="frame" x="11.5" y="281" width="391" height="41"/>
+                            <rect key="frame" x="11.5" y="288" width="391" height="48"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tipo de petición" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7gJ-IC-KkT" userLabel="Type of request">
                                     <rect key="frame" x="0.0" y="0.0" width="391" height="21"/>
@@ -137,7 +137,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="chH-x1-dhE">
-                                    <rect key="frame" x="0.0" y="10" width="391" height="31"/>
+                                    <rect key="frame" x="0.0" y="17" width="391" height="31"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
                                     <state key="normal" title="Selecciona un tipo de petición">
                                         <color key="titleColor" red="0.66666666669999997" green="0.66666666669999997" blue="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -152,14 +152,14 @@
                                 <constraint firstAttribute="trailing" secondItem="chH-x1-dhE" secondAttribute="trailing" id="OHd-xo-kyf"/>
                                 <constraint firstItem="chH-x1-dhE" firstAttribute="leading" secondItem="hMJ-qZ-60z" secondAttribute="leading" id="XRh-C0-sl7"/>
                                 <constraint firstAttribute="bottom" secondItem="chH-x1-dhE" secondAttribute="bottom" id="dJO-O9-hId"/>
-                                <constraint firstAttribute="height" constant="41" id="h59-e3-rjI"/>
+                                <constraint firstAttribute="height" constant="48" id="h59-e3-rjI"/>
                                 <constraint firstAttribute="trailing" secondItem="7gJ-IC-KkT" secondAttribute="trailing" id="lVv-hJ-Ftw"/>
                                 <constraint firstItem="7gJ-IC-KkT" firstAttribute="top" secondItem="hMJ-qZ-60z" secondAttribute="top" id="uaU-VU-4vk"/>
                                 <constraint firstItem="7gJ-IC-KkT" firstAttribute="leading" secondItem="hMJ-qZ-60z" secondAttribute="leading" id="vHZ-gK-aPQ"/>
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notificaciones" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pUd-3y-KwL">
-                            <rect key="frame" x="11.5" y="330" width="391" height="21"/>
+                            <rect key="frame" x="11.5" y="344" width="391" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="u9Q-Mi-xgQ"/>
                             </constraints>
@@ -168,20 +168,20 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eOE-MG-cnh">
-                            <rect key="frame" x="11.5" y="355" width="391" height="1"/>
+                            <rect key="frame" x="11.5" y="369" width="391" height="1"/>
                             <color key="backgroundColor" red="0.59864145520000001" green="0.0" blue="0.091977573930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="Nfk-90-1Wn"/>
                             </constraints>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Activar sistema de notificaciones" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lNc-th-qHL">
-                            <rect key="frame" x="11.5" y="370" width="262" height="21"/>
+                            <rect key="frame" x="11.5" y="384" width="262" height="21"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
                             <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="5BR-B3-MlQ">
-                            <rect key="frame" x="353.5" y="365" width="51" height="31"/>
+                            <rect key="frame" x="353.5" y="379" width="51" height="31"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="49" id="bF8-Na-Eap"/>
                             </constraints>
@@ -190,7 +190,7 @@
                             </connections>
                         </switch>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Roles" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ClN-bq-wrk" userLabel="Roles Title Label">
-                            <rect key="frame" x="11.5" y="407" width="391" height="21"/>
+                            <rect key="frame" x="11.5" y="421" width="391" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="gEu-aL-v7L"/>
                             </constraints>
@@ -199,14 +199,14 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vbW-97-h9u" userLabel="RoleView">
-                            <rect key="frame" x="11.5" y="429" width="391" height="1"/>
+                            <rect key="frame" x="11.5" y="443" width="391" height="1"/>
                             <color key="backgroundColor" red="0.59864145520000001" green="0.0" blue="0.091977573930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="lW9-l9-Our"/>
                             </constraints>
                         </view>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="JJk-ge-w4e">
-                            <rect key="frame" x="11.5" y="436" width="391" height="51.5"/>
+                            <rect key="frame" x="11.5" y="450" width="391" height="51.5"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nombre Apellido Apellido" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5CB-eG-zIo" userLabel="Selected Role Name Label">
                                     <rect key="frame" x="0.0" y="0.0" width="391" height="14.5"/>
@@ -232,7 +232,7 @@
                             </constraints>
                         </stackView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UtE-Kf-khR" userLabel="RoleButton">
-                            <rect key="frame" x="11.5" y="436" width="391" height="51.5"/>
+                            <rect key="frame" x="11.5" y="450" width="391" height="51.5"/>
                             <connections>
                                 <action selector="tapChangeRole:" destination="ORh-ds-0lu" eventType="touchUpInside" id="V8K-Pg-lYU"/>
                             </connections>
