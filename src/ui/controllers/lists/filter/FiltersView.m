@@ -12,6 +12,7 @@
 #import "AppListXMLController.h"
 
 #define SORT_CRITERIA_ARRAY @[@"Fecha", @"Asunto", @"Aplicación"]
+#define TYPE_ARRAY @[@"Filter_View_Type_Array_All_Types".localized, @"Filter_View_Type_Array_Sign_Requests".localized, @"Filter_View_Type_Array_Approval_Requests".localized, @"Filter_View_Type_Array_Validated".localized , @"Filter_View_Type_Array_Not_Validated".localized]
 
 static const CGFloat kFilterVCPickerHeight = 30.f;
 static const CGFloat kFilterVCToolBarHeight = 44.f;
@@ -26,7 +27,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 @property (nonatomic, strong) IBOutlet UITextField *topicTextField;
 @property (nonatomic, strong) IBOutlet UIButton *appButton;
 @property (nonatomic, strong) IBOutlet UIPickerView *appPickerView;
-@property (nonatomic, strong) IBOutlet UIDatePicker *datePicker;
+@property (nonatomic, strong) IBOutlet UIButton *typeButton;
+@property (nonatomic, strong) IBOutlet UIPickerView *typePickerView;
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet UISwitch *enableFiltersSwitch;
 @property (nonatomic, strong) IBOutlet UILabel *notificationTitleLabel;
@@ -60,11 +62,13 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 - (void)hidePickers {
     [_sortPickerView setAlpha:0];
     [_appPickerView setAlpha:0];
+    [_typePickerView setAlpha:0];
 }
 
 - (void) setupPickers {
     [QuartzUtils drawShadowInView:_sortPickerView];
     [QuartzUtils drawShadowInView:_appPickerView];
+    [QuartzUtils drawShadowInView:_typePickerView];
 }
 
 - (void) showChangeRoleOptionIfNeeded {
@@ -122,10 +126,19 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     }
 }
 
+- (IBAction)didClickTypeButton:(id)sender {
+    [self hidePickers];
+    [self endEditing:YES];
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.typePickerView setAlpha:1];
+    }];
+}
+
 - (IBAction)didUpdateValueForFilterSwitch:(id)sender {
     BOOL enable = [sender isOn];
     [_topicTextField setEnabled:enable];
     [_appButton setEnabled:(![[AppListXMLController sharedInstance] appsArray] || [[AppListXMLController sharedInstance] appsArray].count == 0) ? NO:enable];
+    [_typeButton setEnabled:enable];
     [self hidePickers];
 }
 
@@ -175,6 +188,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         return SORT_CRITERIA_ARRAY.count;
     } else if ([pickerView isEqual:_appPickerView]) {
         return [[AppListXMLController sharedInstance] appsArray] ? [[AppListXMLController sharedInstance] appsArray].count : 0;
+    } else if ([pickerView isEqual:_typePickerView]) {
+        return TYPE_ARRAY.count;
     }
     return 0;
 }
@@ -186,6 +201,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         return SORT_CRITERIA_ARRAY[row];
     } else if ([pickerView isEqual:_appPickerView]) {
         return [[AppListXMLController sharedInstance] appsArray] ? [[AppListXMLController sharedInstance] appsArray][row] : nil;
+    } else if ([pickerView isEqual:_typePickerView]) {
+        return TYPE_ARRAY[row];
     }
     return nil;
 }
@@ -201,6 +218,9 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     } else if ([pickerView isEqual:_appPickerView]) {
         [_appButton setTitle:[[AppListXMLController sharedInstance] appsArray][row] forState:UIControlStateNormal];
         [_appButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    } else if ([pickerView isEqual:_typePickerView]) {
+        [_sortButton setTitle:TYPE_ARRAY[row] forState:UIControlStateNormal];
+        [_sortButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     }
     [self performSelector:@selector(hidePickers) withObject:nil afterDelay:0.5];
 }

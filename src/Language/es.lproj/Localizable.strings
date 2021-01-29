@@ -48,6 +48,11 @@
 "Filter_View_Push_Notification_Enabled_Title" = "Sistema de notificaciones activado";
 "Filter_View_Footer_Accept_Button_Title" = "Aceptar";
 "Filter_View_Footer_Cancel_Button_Title" = "Cancelar";
+"Filter_View_Type_Array_All_Types" = "Todos los tipos";
+"Filter_View_Type_Array_Sign_Requests" = "Ver peticiones de firma";
+"Filter_View_Type_Array_Approval_Requests" = "Ver peticiones de visto bueno";
+"Filter_View_Type_Array_Validated" = "Ver validadas";
+"Filter_View_Type_Array_Not_Validated" = "Ver no validadas";
 
 //Attachment View
 "Document_Section" = "Documentos";
