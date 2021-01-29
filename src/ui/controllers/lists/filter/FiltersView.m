@@ -11,7 +11,7 @@
 #import "GlobalConstants.h"
 #import "AppListXMLController.h"
 
-#define SORT_CRITERIA_ARRAY @[@"Fecha", @"Asunto", @"Aplicación"]
+#define SORT_CRITERIA_ARRAY @[@"Filter_View_Sort_Criteria_Array_Date".localized, @"Filter_View_Sort_Criteria_Array_Topic".localized, @"Filter_View_Sort_Criteria_Array_Application".localized]
 #define TYPE_ARRAY @[@"Filter_View_Type_Array_All_Types".localized, @"Filter_View_Type_Array_Sign_Requests".localized, @"Filter_View_Type_Array_Approval_Requests".localized, @"Filter_View_Type_Array_Validated".localized , @"Filter_View_Type_Array_Not_Validated".localized]
 
 static const CGFloat kFilterVCPickerHeight = 30.f;
