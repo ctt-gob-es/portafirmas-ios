@@ -12,7 +12,18 @@
 #import "AppListXMLController.h"
 
 #define SORT_CRITERIA_ARRAY @[@"Filter_View_Sort_Criteria_Array_Date".localized, @"Filter_View_Sort_Criteria_Array_Topic".localized, @"Filter_View_Sort_Criteria_Array_Application".localized]
-#define TYPE_ARRAY @[@"Filter_View_Type_Array_All_Types".localized, @"Filter_View_Type_Array_Sign_Requests".localized, @"Filter_View_Type_Array_Approval_Requests".localized, @"Filter_View_Type_Array_Validated".localized , @"Filter_View_Type_Array_Not_Validated".localized]
+
+#define TYPE_TITLE_ARRAY @[@"Filter_View_Type_Title_Array_All_Types".localized, @"Filter_View_Type_Title_Array_Sign_Requests".localized, @"Filter_View_Type_Title_Array_Approval_Requests".localized, @"Filter_View_Type_Title_Array_Validated".localized , @"Filter_View_Type_Title_Array_Not_Validated".localized]
+
+#define TYPE_FILTER_VALUE_ARRAY @[@"view_all", @"view_sign", @"view_pass", @"view_validate" , @"view_no_validate"]
+
+typedef NS_ENUM (NSInteger,RequestTypeTitles) {
+    RequestTypeTitleAll,
+    RequestTypeTitleSign,
+    RequestTypeTitleApproval,
+    RequestTypeTitleValidated,
+    RequestTypeTitleNotValidated
+};
 
 static const CGFloat kFilterVCPickerHeight = 30.f;
 static const CGFloat kFilterVCToolBarHeight = 44.f;
@@ -44,6 +55,9 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 @property (weak, nonatomic) IBOutlet UIView *footerView;
 @property (weak, nonatomic) IBOutlet UIButton *acceptButton;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) NSString *selectedSort;
+@property (weak, nonatomic) NSString *selectedApp;
+@property (weak, nonatomic) NSString *selectedType;
 
 @end
 
@@ -69,6 +83,25 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [QuartzUtils drawShadowInView:_sortPickerView];
     [QuartzUtils drawShadowInView:_appPickerView];
     [QuartzUtils drawShadowInView:_typePickerView];
+    [self initDefaultPickerValues];
+}
+
+-(void) initDefaultPickerValues {
+    _selectedSort = kEmptyString;
+    _selectedApp = kEmptyString;
+    _selectedType = kEmptyString;
+    [_sortButton setTitle:@"Filter_View_Sort_Criteria_Default_Title".localized forState:UIControlStateNormal];
+    [_appButton setTitle:@"Filter_View_Application_Default_Title".localized forState:UIControlStateNormal];
+    if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqualToString:kUserRoleRoleNameValidator]) {
+        [self setTypeTitleAndFilterValue: RequestTypeTitleNotValidated];
+    } else {
+        [self setTypeTitleAndFilterValue: RequestTypeTitleAll];
+    }
+}
+
+-(void) setTypeTitleAndFilterValue: (NSInteger)selection {
+    [_typeButton setTitle:TYPE_TITLE_ARRAY[selection] forState:UIControlStateNormal];
+    _selectedType = TYPE_FILTER_VALUE_ARRAY[selection];
 }
 
 - (void) showChangeRoleOptionIfNeeded {
@@ -144,20 +177,21 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (IBAction)didSelectAcceptButton:(id)sender {
     NSMutableDictionary *filters = [@{} mutableCopy];
+    NSString *sortValue = [PFHelper getPFSortCriteriaValueForRow:[_sortPickerView selectedRowInComponent:0]];
+    if (![_selectedSort isEqualToString: kEmptyString]) {
+        filters[kPFFilterKeySortCriteria] = sortValue;
+        filters[kPFFilterKeySort] = kPFFilterValueSortDesc;
+    }
     if ([_enableFiltersSwitch isOn]) {
         if (_topicTextField.text && _topicTextField.text.length > 0) {
             filters[kPFFilterKeySubject] = _topicTextField.text;
         }
-    }
-    if (![_sortButton.titleLabel.text isEqualToString:@"Selecciona un criterio de ordenación"]) {
-        NSString *sortValue = [PFHelper getPFSortCriteriaValueForRow:[_sortPickerView selectedRowInComponent:0]];
-        if (sortValue) {
-            filters[kPFFilterKeySortCriteria] = sortValue;
-            filters[kPFFilterKeySort] = kPFFilterValueSortDesc;
+        if (![_selectedApp isEqualToString: kEmptyString]) {
+            filters[kPFFilterKeyApp] = _selectedApp;
         }
-    }
-    if (![_appButton.titleLabel.text isEqualToString:@"Selecciona una aplicación"]) {
-        filters[kPFFilterKeyApp] = [[AppListXMLController sharedInstance] appsArray][[_appPickerView selectedRowInComponent:0]];
+        if (![_selectedType isEqualToString: kEmptyString]) {
+            filters[kFilterTypeKey] = _selectedType;
+        }
     }
     [self.filtersViewDelegate didSelectAcceptButton: filters];
 }
@@ -189,7 +223,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     } else if ([pickerView isEqual:_appPickerView]) {
         return [[AppListXMLController sharedInstance] appsArray] ? [[AppListXMLController sharedInstance] appsArray].count : 0;
     } else if ([pickerView isEqual:_typePickerView]) {
-        return TYPE_ARRAY.count;
+        return TYPE_TITLE_ARRAY.count;
     }
     return 0;
 }
@@ -202,7 +236,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     } else if ([pickerView isEqual:_appPickerView]) {
         return [[AppListXMLController sharedInstance] appsArray] ? [[AppListXMLController sharedInstance] appsArray][row] : nil;
     } else if ([pickerView isEqual:_typePickerView]) {
-        return TYPE_ARRAY[row];
+        return TYPE_TITLE_ARRAY[row];
     }
     return nil;
 }
@@ -215,12 +249,15 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     if ([pickerView isEqual:_sortPickerView]) {
         [_sortButton setTitle:SORT_CRITERIA_ARRAY[row] forState:UIControlStateNormal];
         [_sortButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        _selectedSort = SORT_CRITERIA_ARRAY[row] ;
     } else if ([pickerView isEqual:_appPickerView]) {
         [_appButton setTitle:[[AppListXMLController sharedInstance] appsArray][row] forState:UIControlStateNormal];
         [_appButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        _selectedApp = [[AppListXMLController sharedInstance] appsArray][row];
     } else if ([pickerView isEqual:_typePickerView]) {
-        [_typeButton setTitle:TYPE_ARRAY[row] forState:UIControlStateNormal];
+        [_typeButton setTitle:TYPE_TITLE_ARRAY[row] forState:UIControlStateNormal];
         [_typeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        _selectedType = TYPE_FILTER_VALUE_ARRAY[row];
     }
     [self performSelector:@selector(hidePickers) withObject:nil afterDelay:0.5];
 }

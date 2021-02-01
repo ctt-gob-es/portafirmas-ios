@@ -219,7 +219,6 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 - (void)didSelectAcceptButton: (NSMutableDictionary *) selectedFilters {
     NSMutableDictionary *filters = [selectedFilters mutableCopy];
     UITabBarController *tabController;
-    
     if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
         
         UINavigationController *nav = (UINavigationController *)self.presentingViewController;
@@ -231,16 +230,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     }
     UINavigationController *navigation = (UINavigationController *) tabController.selectedViewController;
     BaseListTVC *baseTVC = (BaseListTVC *)navigation.rootViewController;
-    // Default filters
-    filters[kFilterTypeKey] = kFilterTypeViewAll;
-    filters[kFilterMonthKey] = kFilterMonthAll;
-    NSDictionary *roleSelected = [[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected];
-    if (roleSelected && [[[roleSelected objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: kUserRoleRoleNameValidator] ){
-        filters[kFilterDNIValidator] = [[roleSelected objectForKey:kFilterDNIKey]objectForKey:kContentKey];
-        filters[kFilterTypeKey] = kFilterTypeViewNoValidate;
-    }
     [baseTVC setFiltersDict:filters.count > 0 ? filters:nil];
-
     if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
         [self.navigationController popViewControllerAnimated:YES];
     }

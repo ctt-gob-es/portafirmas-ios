@@ -48,14 +48,16 @@
 "Filter_View_Push_Notification_Enabled_Title" = "Sistema de notificaciones activado";
 "Filter_View_Footer_Accept_Button_Title" = "Aceptar";
 "Filter_View_Footer_Cancel_Button_Title" = "Cancelar";
+"Filter_View_Sort_Criteria_Default_Title" = "Selecciona un criterio de ordenación";
 "Filter_View_Sort_Criteria_Array_Date" = "Fecha";
 "Filter_View_Sort_Criteria_Array_Topic" = "Asunto";
 "Filter_View_Sort_Criteria_Array_Application" = "Aplicación";
-"Filter_View_Type_Array_All_Types" = "Todos los tipos";
-"Filter_View_Type_Array_Sign_Requests" = "Ver peticiones de firma";
-"Filter_View_Type_Array_Approval_Requests" = "Ver peticiones de visto bueno";
-"Filter_View_Type_Array_Validated" = "Ver validadas";
-"Filter_View_Type_Array_Not_Validated" = "Ver no validadas";
+"Filter_View_Application_Default_Title" = "Selecciona una aplicación";
+"Filter_View_Type_Title_Array_All_Types" = "Todos los tipos";
+"Filter_View_Type_Title_Array_Sign_Requests" = "Ver peticiones de firma";
+"Filter_View_Type_Title_Array_Approval_Requests" = "Ver peticiones de visto bueno";
+"Filter_View_Type_Title_Array_Validated" = "Ver validadas";
+"Filter_View_Type_Title_Array_Not_Validated" = "Ver no validadas";
 
 //Attachment View
 "Document_Section" = "Documentos";

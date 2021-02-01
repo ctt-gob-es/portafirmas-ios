@@ -8,21 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM (NSInteger, PFRequestType)
-{
+typedef NS_ENUM (NSInteger, PFRequestType) {
     PFRequestTypeSign,
     PFRequestTypeApprove
 };
 
-typedef NS_ENUM (NSInteger, PFRequestStatus)
-{
+typedef NS_ENUM (NSInteger, PFRequestStatus) {
     PFRequestStatusSigned,
     PFRequestStatusRejected,
     PFRequestStatusPending
 };
 
-typedef NS_ENUM (NSInteger, PFRequestCode)
-{
+typedef NS_ENUM (NSInteger, PFRequestCode) {
     PFRequestCodeList = 2,
     PFRequestCodeReject = 3,
     PFRequestCodeDocumentPreview = 5,
@@ -33,8 +30,7 @@ typedef NS_ENUM (NSInteger, PFRequestCode)
     PFRequestCodeValidate = 20
 };
 
-typedef NS_ENUM (NSInteger, PFWaitingResponseType)
-{
+typedef NS_ENUM (NSInteger, PFWaitingResponseType) {
     PFWaitingResponseTypeList,
     PFWaitingResponseTypeRejection,
     PFWaitingResponseTypeApproval,
@@ -43,8 +39,7 @@ typedef NS_ENUM (NSInteger, PFWaitingResponseType)
     PFWaitingResponseTypeValidate
 };
 
-typedef NS_ENUM (NSInteger, PFSortPickerRow)
-{
+typedef NS_ENUM (NSInteger, PFSortPickerRow) {
     PFSortPickerRowDate,
     PFSortPickerRowSubject,
     PFSortPickerRowApp
@@ -70,9 +65,6 @@ static NSString *const kPFFilterValueSortDesc = @"desc";
 
 static NSString *const kPFFilterKeySubject = @"searchFilter";
 static NSString *const kPFFilterKeyApp = @"applicationFilter";
-static NSString *const kPFFilterKeyDateStart = @"initDateFilter";
-static NSString *const kPFFilterKeyDateEnd = @"endDateFilter";
-
 static NSString *const kPFUserDefaultsKeyCurrentServer = @"currentServer";
 static NSString *const kPFUserDefaultsKeyCurrentCertificate = @"currentCertificate";
 static NSString *const kPFUserDefaultsKeyAlias = @"alias";
