@@ -13,9 +13,13 @@
 
 #define SORT_CRITERIA_ARRAY @[@"Filter_View_Sort_Criteria_Array_Date".localized, @"Filter_View_Sort_Criteria_Array_Topic".localized, @"Filter_View_Sort_Criteria_Array_Application".localized]
 
-#define TYPE_TITLE_ARRAY @[@"Filter_View_Type_Title_Array_All_Types".localized, @"Filter_View_Type_Title_Array_Sign_Requests".localized, @"Filter_View_Type_Title_Array_Approval_Requests".localized, @"Filter_View_Type_Title_Array_Validated".localized , @"Filter_View_Type_Title_Array_Not_Validated".localized]
+#define TYPE_TITLE_ARRAY @[@"Filter_View_Type_Title_Array_All_Types".localized, @"Filter_View_Type_Title_Array_Sign_Requests".localized, @"Filter_View_Type_Title_Array_Approval_Requests".localized, @"Filter_View_Type_Title_Array_Validated".localized, @"Filter_View_Type_Title_Array_Not_Validated".localized]
 
 #define TYPE_FILTER_VALUE_ARRAY @[@"view_all", @"view_sign", @"view_pass", @"view_validate" , @"view_no_validate"]
+
+#define TIME_INTERVAL_TITLE_ARRAY @[@"Filter_View_Time_Interval_Title_Array_All".localized, @"Filter_View_Time_Interval_Title_Array_Last_24_Hours".localized, @"Filter_View_Time_Interval_Title_Array_Last_Week".localized, @"Filter_View_Time_Interval_Title_Array_Last_Month".localized, @"Filter_View_Time_Interval_Title_Array_January".localized, @"Filter_View_Time_Interval_Title_Array_February".localized, @"Filter_View_Time_Interval_Title_Array_March".localized, @"Filter_View_Time_Interval_Title_Array_April".localized, @"Filter_View_Time_Interval_Title_Array_May".localized, @"Filter_View_Time_Interval_Title_Array_June".localized, @"Filter_View_Time_Interval_Title_Array_July".localized, @"Filter_View_Time_Interval_Title_Array_August".localized, @"Filter_View_Time_Interval_Title_Array_September".localized, @"Filter_View_Time_Interval_Title_Array_October".localized, @"Filter_View_Time_Interval_Title_Array_November".localized, @"Filter_View_Time_Interval_Title_Array_December".localized ]
+
+#define TIME_INTERVAL_VALUE_ARRAY @[@"all", @"last24Hours", @"lastWeed", @"lastMonth", @"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11", @"12"]
 
 typedef NS_ENUM (NSInteger,RequestTypeTitles) {
     RequestTypeTitleAll,
@@ -40,6 +44,10 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 @property (nonatomic, strong) IBOutlet UIPickerView *appPickerView;
 @property (nonatomic, strong) IBOutlet UIButton *typeButton;
 @property (nonatomic, strong) IBOutlet UIPickerView *typePickerView;
+@property (nonatomic, strong) IBOutlet UIButton *timeIntervalButton;
+@property (nonatomic, strong) IBOutlet UIPickerView *timeIntervalPickerView;
+@property (nonatomic, strong) IBOutlet UIButton *yearButton;
+@property (nonatomic, strong) IBOutlet UIPickerView *yearPickerView;
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet UISwitch *enableFiltersSwitch;
 @property (nonatomic, strong) IBOutlet UILabel *notificationTitleLabel;
@@ -58,6 +66,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 @property (weak, nonatomic) NSString *selectedSort;
 @property (weak, nonatomic) NSString *selectedApp;
 @property (weak, nonatomic) NSString *selectedType;
+@property (weak, nonatomic) NSString *selectedTimeInterval;
+@property (weak, nonatomic) NSString *selectedYear;
 
 @end
 
@@ -77,12 +87,16 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [_sortPickerView setAlpha:0];
     [_appPickerView setAlpha:0];
     [_typePickerView setAlpha:0];
+    [_timeIntervalPickerView setAlpha:0];
+    [_yearPickerView setAlpha:0];
 }
 
 - (void) setupPickers {
     [QuartzUtils drawShadowInView:_sortPickerView];
     [QuartzUtils drawShadowInView:_appPickerView];
     [QuartzUtils drawShadowInView:_typePickerView];
+    [QuartzUtils drawShadowInView:_timeIntervalPickerView];
+    [QuartzUtils drawShadowInView:_yearPickerView];
     [self initDefaultPickerValues];
 }
 
@@ -90,6 +104,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     _selectedSort = kEmptyString;
     _selectedApp = kEmptyString;
     _selectedType = kEmptyString;
+    _selectedTimeInterval = kEmptyString;
+    _selectedYear = kEmptyString;
     [_sortButton setTitle:@"Filter_View_Sort_Criteria_Default_Title".localized forState:UIControlStateNormal];
     [_appButton setTitle:@"Filter_View_Application_Default_Title".localized forState:UIControlStateNormal];
     if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqualToString:kUserRoleRoleNameValidator]) {
@@ -167,11 +183,29 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     }];
 }
 
+- (IBAction)didClickIntervalButton:(id)sender {
+    [self hidePickers];
+    [self endEditing:YES];
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.timeIntervalPickerView setAlpha:1];
+    }];
+}
+
+- (IBAction)didClickYearButton:(id)sender {
+    [self hidePickers];
+    [self endEditing:YES];
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.yearPickerView setAlpha:1];
+    }];
+}
+
 - (IBAction)didUpdateValueForFilterSwitch:(id)sender {
     BOOL enable = [sender isOn];
     [_topicTextField setEnabled:enable];
     [_appButton setEnabled:(![[AppListXMLController sharedInstance] appsArray] || [[AppListXMLController sharedInstance] appsArray].count == 0) ? NO:enable];
     [_typeButton setEnabled:enable];
+    [_timeIntervalButton setEnabled:enable];
+    [_yearButton setEnabled:enable];
     [self hidePickers];
 }
 
@@ -224,6 +258,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         return [[AppListXMLController sharedInstance] appsArray] ? [[AppListXMLController sharedInstance] appsArray].count : 0;
     } else if ([pickerView isEqual:_typePickerView]) {
         return TYPE_TITLE_ARRAY.count;
+    } else if ([pickerView isEqual:_timeIntervalPickerView]) {
+        return TIME_INTERVAL_TITLE_ARRAY.count;
     }
     return 0;
 }
@@ -237,6 +273,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         return [[AppListXMLController sharedInstance] appsArray] ? [[AppListXMLController sharedInstance] appsArray][row] : nil;
     } else if ([pickerView isEqual:_typePickerView]) {
         return TYPE_TITLE_ARRAY[row];
+    } else if ([pickerView isEqual:_timeIntervalPickerView]) {
+        return TIME_INTERVAL_TITLE_ARRAY[row];
     }
     return nil;
 }
@@ -258,6 +296,10 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         [_typeButton setTitle:TYPE_TITLE_ARRAY[row] forState:UIControlStateNormal];
         [_typeButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _selectedType = TYPE_FILTER_VALUE_ARRAY[row];
+    }  else if ([pickerView isEqual:_timeIntervalPickerView]) {
+        [_timeIntervalButton setTitle: TIME_INTERVAL_TITLE_ARRAY[row] forState:UIControlStateNormal];
+        [_timeIntervalButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        _selectedTimeInterval = TIME_INTERVAL_VALUE_ARRAY[row];
     }
     [self performSelector:@selector(hidePickers) withObject:nil afterDelay:0.5];
 }

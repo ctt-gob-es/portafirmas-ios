@@ -58,6 +58,22 @@
 "Filter_View_Type_Title_Array_Approval_Requests" = "Ver peticiones de visto bueno";
 "Filter_View_Type_Title_Array_Validated" = "Ver validadas";
 "Filter_View_Type_Title_Array_Not_Validated" = "Ver no validadas";
+"Filter_View_Time_Interval_Title_Array_All" = "Todas";
+"Filter_View_Time_Interval_Title_Array_Last_24_Hours" = "Últimas 24 horas";
+"Filter_View_Time_Interval_Title_Array_Last_Week" = "Última semana";
+"Filter_View_Time_Interval_Title_Array_Last_Month" = "Último mes";
+"Filter_View_Time_Interval_Title_Array_January" = "Enero";
+"Filter_View_Time_Interval_Title_Array_February" = "Febrero";
+"Filter_View_Time_Interval_Title_Array_March" = "Marzo";
+"Filter_View_Time_Interval_Title_Array_April" = "Abril";
+"Filter_View_Time_Interval_Title_Array_May" = "Mayo";
+"Filter_View_Time_Interval_Title_Array_June" = "Junio";
+"Filter_View_Time_Interval_Title_Array_July" = "Julio";
+"Filter_View_Time_Interval_Title_Array_August" = "Agosto";
+"Filter_View_Time_Interval_Title_Array_September" = "Septiembre";
+"Filter_View_Time_Interval_Title_Array_October" = "Octubre";
+"Filter_View_Time_Interval_Title_Array_November" = "Noviembre";
+"Filter_View_Time_Interval_Title_Array_December" = "Diciembre";
 
 //Attachment View
 "Document_Section" = "Documentos";
