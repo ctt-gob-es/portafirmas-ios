@@ -268,6 +268,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         return TYPE_TITLE_ARRAY.count;
     } else if ([pickerView isEqual:_timeIntervalPickerView]) {
         return TIME_INTERVAL_TITLE_ARRAY.count;
+    } else if ([pickerView isEqual:_yearPickerView]) {
+        return [PFHelper getYearsFrom2010].count;
     }
     return 0;
 }
@@ -283,6 +285,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         return TYPE_TITLE_ARRAY[row];
     } else if ([pickerView isEqual:_timeIntervalPickerView]) {
         return TIME_INTERVAL_TITLE_ARRAY[row];
+    } else if ([pickerView isEqual:_yearPickerView]) {
+        return [PFHelper getYearsFrom2010][row];
     }
     return nil;
 }
@@ -309,6 +313,12 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         [_timeIntervalButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _selectedTimeInterval = TIME_INTERVAL_VALUE_ARRAY[row];
         [self.yearView setHidden:![self showYearViewWithInterval:TIME_INTERVAL_VALUE_ARRAY[row]]];
+        //Reset year value
+    }  else if ([pickerView isEqual:_yearPickerView]) {
+        NSArray *yearArray = [PFHelper getYearsFrom2010];
+        [_yearButton setTitle: [PFHelper getYearsFrom2010][row] forState:UIControlStateNormal];
+        [_yearButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        _selectedYear = [PFHelper getYearsFrom2010][row];
     }
     [self performSelector:@selector(hidePickers) withObject:nil afterDelay:0.5];
 }

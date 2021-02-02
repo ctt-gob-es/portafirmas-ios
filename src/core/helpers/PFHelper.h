@@ -104,5 +104,6 @@ static NSString *const kFilterDNIValidator =  @"dniValidadorFilter";
 + (PFRequestStatus)getPFRequestStatusFromClass:(Class)classObject;
 + (PFRequestCode)getPFRequestCodeForSection:(NSInteger)section;
 + (NSString *)getPFSortCriteriaValueForRow:(PFSortPickerRow)row;
++ (NSArray *)getYearsFrom2010;
 
 @end
