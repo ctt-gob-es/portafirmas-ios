@@ -21,6 +21,8 @@
 
 #define TIME_INTERVAL_VALUE_ARRAY @[@"all", @"last24Hours", @"lastWeed", @"lastMonth", @"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11", @"12"]
 
+#define TIME_INTERVAL_MONTH_VALUES_ARRAY @[@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11", @"12"]
+
 typedef NS_ENUM (NSInteger,RequestTypeTitles) {
     RequestTypeTitleAll,
     RequestTypeTitleSign,
@@ -47,6 +49,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 @property (nonatomic, strong) IBOutlet UIButton *timeIntervalButton;
 @property (nonatomic, strong) IBOutlet UIPickerView *timeIntervalPickerView;
 @property (nonatomic, strong) IBOutlet UIButton *yearButton;
+@property (weak, nonatomic) IBOutlet UIView *yearView;
 @property (nonatomic, strong) IBOutlet UIPickerView *yearPickerView;
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet UISwitch *enableFiltersSwitch;
@@ -78,6 +81,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     self.backgroundColor = [UIColor greenColor];
     [self showChangeRoleOptionIfNeeded];
     [self setFooterStyle];
+    [_yearView setHidden:YES];
     [self setupPickers];
 }
 
@@ -115,9 +119,13 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     }
 }
 
--(void) setTypeTitleAndFilterValue: (NSInteger)selection {
+- (void) setTypeTitleAndFilterValue: (NSInteger)selection {
     [_typeButton setTitle:TYPE_TITLE_ARRAY[selection] forState:UIControlStateNormal];
     _selectedType = TYPE_FILTER_VALUE_ARRAY[selection];
+}
+
+- (BOOL) showYearViewWithInterval: (NSString*)interval {
+    return [TIME_INTERVAL_MONTH_VALUES_ARRAY containsObject: interval];
 }
 
 - (void) showChangeRoleOptionIfNeeded {
@@ -300,6 +308,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         [_timeIntervalButton setTitle: TIME_INTERVAL_TITLE_ARRAY[row] forState:UIControlStateNormal];
         [_timeIntervalButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _selectedTimeInterval = TIME_INTERVAL_VALUE_ARRAY[row];
+        [self.yearView setHidden:![self showYearViewWithInterval:TIME_INTERVAL_VALUE_ARRAY[row]]];
     }
     [self performSelector:@selector(hidePickers) withObject:nil afterDelay:0.5];
 }

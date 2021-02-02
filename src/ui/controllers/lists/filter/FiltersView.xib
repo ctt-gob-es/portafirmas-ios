@@ -509,6 +509,7 @@
                 <outlet property="typePickerView" destination="k1f-nw-Zu4" id="eNp-bj-45b"/>
                 <outlet property="yearButton" destination="adN-KJ-moX" id="zGm-ad-11k"/>
                 <outlet property="yearPickerView" destination="t5m-bB-m8m" id="BhU-u2-pOe"/>
+                <outlet property="yearView" destination="9Cv-Ch-7TK" id="zbz-iM-8FC"/>
             </connections>
             <point key="canvasLocation" x="-317.39130434782612" y="-542.41071428571422"/>
         </view>
