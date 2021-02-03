@@ -46,6 +46,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 @property (nonatomic, strong) IBOutlet UIPickerView *appPickerView;
 @property (nonatomic, strong) IBOutlet UIButton *typeButton;
 @property (nonatomic, strong) IBOutlet UIPickerView *typePickerView;
+@property (weak, nonatomic) IBOutlet UIView *typeView;
 @property (nonatomic, strong) IBOutlet UIButton *timeIntervalButton;
 @property (nonatomic, strong) IBOutlet UIPickerView *timeIntervalPickerView;
 @property (nonatomic, strong) IBOutlet UIButton *yearButton;
@@ -82,6 +83,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [self showChangeRoleOptionIfNeeded];
     [self setFooterStyle];
     [_yearView setHidden:YES];
+    [_typeView setHidden:![[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible]];
     [self setupPickers];
 }
 
