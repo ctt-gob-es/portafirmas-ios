@@ -315,7 +315,6 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         [self.yearView setHidden:![self showYearViewWithInterval:TIME_INTERVAL_VALUE_ARRAY[row]]];
         //Reset year value
     }  else if ([pickerView isEqual:_yearPickerView]) {
-        NSArray *yearArray = [PFHelper getYearsForFilter];
         [_yearButton setTitle: [PFHelper getYearsForFilter][row] forState:UIControlStateNormal];
         [_yearButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _selectedYear = [PFHelper getYearsForFilter][row];
