@@ -46,6 +46,8 @@ typedef NS_ENUM (NSInteger, PFSortPickerRow) {
 };
 
 static const NSInteger kPFAlertViewCancelButtonIndex = 0;
+static const NSInteger kPFInitialYearForFilters = 2010;
+
 static const NSTimeInterval kPFRequestTimeoutInterval = 30.0;
 
 static NSString *const kPFDeviceModeliPhone = @"iPhone";
@@ -104,6 +106,6 @@ static NSString *const kFilterDNIValidator =  @"dniValidadorFilter";
 + (PFRequestStatus)getPFRequestStatusFromClass:(Class)classObject;
 + (PFRequestCode)getPFRequestCodeForSection:(NSInteger)section;
 + (NSString *)getPFSortCriteriaValueForRow:(PFSortPickerRow)row;
-+ (NSArray *)getYearsFrom2010;
++ (NSArray *)getYearsForFilter;
 
 @end

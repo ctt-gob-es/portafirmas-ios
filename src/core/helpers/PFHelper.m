@@ -82,14 +82,14 @@ static NSString *const kPFHelperClassNamePendingList = @"UnassignedRequestTableV
     }
 }
 
-+ (NSMutableArray *)getYearsFrom2010 {
-    NSMutableArray *yearsArray;
++ (NSMutableArray *)getYearsForFilter {
+    NSMutableArray *yearsArray = [NSMutableArray new];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy"];
     NSString *currentYearString = [formatter stringFromDate:[NSDate date]];
     NSInteger currentYear = [currentYearString integerValue];
-    for (int year = 2010; year<currentYear; year++) {
-        [yearsArray addObject:[@(year) stringValue]];
+    for (int year = kPFInitialYearForFilters; year<currentYear; year++) {
+        [yearsArray insertObject:[@(year) stringValue] atIndex:0];
     }
     return yearsArray;
 }
