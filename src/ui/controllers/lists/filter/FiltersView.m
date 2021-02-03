@@ -19,7 +19,7 @@
 
 #define TIME_INTERVAL_TITLE_ARRAY @[@"Filter_View_Time_Interval_Title_Array_All".localized, @"Filter_View_Time_Interval_Title_Array_Last_24_Hours".localized, @"Filter_View_Time_Interval_Title_Array_Last_Week".localized, @"Filter_View_Time_Interval_Title_Array_Last_Month".localized, @"Filter_View_Time_Interval_Title_Array_January".localized, @"Filter_View_Time_Interval_Title_Array_February".localized, @"Filter_View_Time_Interval_Title_Array_March".localized, @"Filter_View_Time_Interval_Title_Array_April".localized, @"Filter_View_Time_Interval_Title_Array_May".localized, @"Filter_View_Time_Interval_Title_Array_June".localized, @"Filter_View_Time_Interval_Title_Array_July".localized, @"Filter_View_Time_Interval_Title_Array_August".localized, @"Filter_View_Time_Interval_Title_Array_September".localized, @"Filter_View_Time_Interval_Title_Array_October".localized, @"Filter_View_Time_Interval_Title_Array_November".localized, @"Filter_View_Time_Interval_Title_Array_December".localized ]
 
-#define TIME_INTERVAL_VALUE_ARRAY @[@"all", @"last24Hours", @"lastWeed", @"lastMonth", @"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11", @"12"]
+#define TIME_INTERVAL_VALUE_ARRAY @[@"all", @"last24Hours", @"lastWeek", @"lastMonth", @"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11", @"12"]
 
 #define TIME_INTERVAL_MONTH_VALUES_ARRAY @[@"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10", @"11", @"12"]
 
