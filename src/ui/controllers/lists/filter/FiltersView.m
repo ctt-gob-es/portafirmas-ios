@@ -234,6 +234,9 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         if (![_selectedType isEqualToString: kEmptyString]) {
             filters[kFilterTypeKey] = _selectedType;
         }
+        if (![_selectedTimeInterval isEqualToString: kEmptyString]) {
+            filters[kFilterMonthKey] = _selectedTimeInterval;
+        }
     }
     [self.filtersViewDelegate didSelectAcceptButton: filters];
 }

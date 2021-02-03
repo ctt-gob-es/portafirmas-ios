@@ -119,13 +119,15 @@
 }
 
 - (void)addDefaultFilters {
-    //Time default filter
-    [_filtersDict setObject:kFilterMonthAll forKey:kFilterMonthKey];
-    //Role selected filter
+    if (![_filtersDict objectForKey:kFilterMonthKey]){
+        [_filtersDict setObject:kFilterMonthAll forKey:kFilterMonthKey];
+    }
     NSDictionary *roleSelected = [[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected];
+    if (roleSelected && [[[roleSelected objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: kUserRoleRoleNameValidator] ){
+            [_filtersDict setObject: [[roleSelected objectForKey:kFilterDNIKey]objectForKey:kContentKey] forKey:kFilterDNIValidator];
+    }
     if (![_filtersDict objectForKey:kFilterTypeKey]){
         if (roleSelected && [[[roleSelected objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: kUserRoleRoleNameValidator] ){
-            [_filtersDict setObject: [[roleSelected objectForKey:kFilterDNIKey]objectForKey:kContentKey] forKey:kFilterDNIValidator];
             [_filtersDict setObject:kFilterTypeViewNoValidate forKey:kFilterTypeKey];
         } else {
             [_filtersDict setObject:kFilterTypeViewAll forKey:kFilterTypeKey];
