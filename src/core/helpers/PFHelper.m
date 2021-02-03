@@ -88,7 +88,7 @@ static NSString *const kPFHelperClassNamePendingList = @"UnassignedRequestTableV
     [formatter setDateFormat:@"yyyy"];
     NSString *currentYearString = [formatter stringFromDate:[NSDate date]];
     NSInteger currentYear = [currentYearString integerValue];
-    for (int year = kPFInitialYearForFilters; year<currentYear; year++) {
+    for (int year = kPFInitialYearForFilters; year<=currentYear; year++) {
         [yearsArray insertObject:[@(year) stringValue] atIndex:0];
     }
     return yearsArray;
