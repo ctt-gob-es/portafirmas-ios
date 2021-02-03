@@ -109,7 +109,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     _selectedApp = kEmptyString;
     _selectedType = kEmptyString;
     _selectedTimeInterval = kEmptyString;
-    _selectedYear = kEmptyString;
+    _selectedYear = [PFHelper getCurrentYear];
     [_sortButton setTitle:@"Filter_View_Sort_Criteria_Default_Title".localized forState:UIControlStateNormal];
     [_appButton setTitle:@"Filter_View_Application_Default_Title".localized forState:UIControlStateNormal];
     if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqualToString:kUserRoleRoleNameValidator]) {
@@ -117,6 +117,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     } else {
         [self setTypeTitleAndFilterValue: RequestTypeTitleAll];
     }
+    [_yearButton setTitle:[PFHelper getCurrentYear] forState:UIControlStateNormal];
 }
 
 - (void) setTypeTitleAndFilterValue: (NSInteger)selection {
@@ -237,6 +238,9 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         if (![_selectedTimeInterval isEqualToString: kEmptyString]) {
             filters[kFilterMonthKey] = _selectedTimeInterval;
         }
+        if (![_selectedYear isEqualToString: kEmptyString] && [self showYearViewWithInterval:_selectedTimeInterval]) {
+            filters[kFilterYearKey] = _selectedYear;
+        }
     }
     [self.filtersViewDelegate didSelectAcceptButton: filters];
 }
@@ -316,7 +320,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         [_timeIntervalButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _selectedTimeInterval = TIME_INTERVAL_VALUE_ARRAY[row];
         [self.yearView setHidden:![self showYearViewWithInterval:TIME_INTERVAL_VALUE_ARRAY[row]]];
-        //Reset year value
+        _selectedYear = [PFHelper getCurrentYear];
     }  else if ([pickerView isEqual:_yearPickerView]) {
         [_yearButton setTitle: [PFHelper getYearsForFilter][row] forState:UIControlStateNormal];
         [_yearButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];

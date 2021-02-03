@@ -95,6 +95,7 @@ static NSString *const kFilterTypeKey =  @"tipoFilter";
 static NSString *const kFilterTypeViewAll =  @"view_all";
 static NSString *const kFilterTypeViewNoValidate =  @"view_no_validate";
 static NSString *const kFilterMonthKey =  @"mesFilter";
+static NSString *const kFilterYearKey =  @"anioFilter";
 static NSString *const kFilterMonthAll =  @"all";
 static NSString *const kFilterDNIKey =  @"dni";
 static NSString *const kFilterDNIValidator =  @"dniValidadorFilter";
@@ -107,5 +108,6 @@ static NSString *const kFilterDNIValidator =  @"dniValidadorFilter";
 + (PFRequestCode)getPFRequestCodeForSection:(NSInteger)section;
 + (NSString *)getPFSortCriteriaValueForRow:(PFSortPickerRow)row;
 + (NSArray *)getYearsForFilter;
++ (NSString *)getCurrentYear;
 
 @end
