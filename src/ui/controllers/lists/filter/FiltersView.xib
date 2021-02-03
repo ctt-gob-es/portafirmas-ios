@@ -286,7 +286,7 @@
                             <color key="textColor" red="0.59864145520000001" green="0.0" blue="0.091977573930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vbW-97-h9u" userLabel="RoleView">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vbW-97-h9u" userLabel="Role Separator View">
                             <rect key="frame" x="11.5" y="499" width="391" height="1"/>
                             <color key="backgroundColor" red="0.59864145520000001" green="0.0" blue="0.091977573930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
@@ -522,6 +522,10 @@
                 <outlet property="yearButton" destination="adN-KJ-moX" id="zGm-ad-11k"/>
                 <outlet property="yearPickerView" destination="t5m-bB-m8m" id="BhU-u2-pOe"/>
                 <outlet property="yearView" destination="9Cv-Ch-7TK" id="zbz-iM-8FC"/>
+                <outletCollection property="roleElements" destination="vbW-97-h9u" id="QaS-d8-7zZ"/>
+                <outletCollection property="roleElements" destination="ClN-bq-wrk" id="7xQ-CZ-7Wo"/>
+                <outletCollection property="roleElements" destination="JJk-ge-w4e" id="Cay-Ff-Irr"/>
+                <outletCollection property="roleElements" destination="UtE-Kf-khR" id="sG9-9e-t0E"/>
             </connections>
             <point key="canvasLocation" x="-317.39130434782612" y="-542.41071428571422"/>
         </view>

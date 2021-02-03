@@ -58,6 +58,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 @property (nonatomic, strong) IBOutlet UILabel *notificationStateLabel;
 @property (nonatomic, strong) IBOutlet UIView *notificationSeparatorView;
 @property (nonatomic, strong) IBOutlet UISwitch *notificationSwitch;
+@property (strong, nonatomic) IBOutletCollection(UIView) NSArray *roleElements;
 @property (weak, nonatomic) IBOutlet UILabel *roleTitleLabel;
 @property (weak, nonatomic) IBOutlet UIView *roleSeparatorView;
 @property (weak, nonatomic) IBOutlet UILabel *roleLabel;
@@ -135,12 +136,9 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     self.roleTitleLabel.text = @"User_Roles_Title".localized;
     self.roleLabel.text = @"User_Roles_Change_Role".localized;
     if ([[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoles]) {
-        self.roleTitleLabel.hidden = NO;
-        self.roleSeparatorView.hidden = NO;
-        self.roleLabel.hidden = NO;
-        self.roleButton.hidden = NO;
-        self.selectedRoleNameLabel.hidden = NO;
-        self.selectedRoleLabel.hidden = NO;
+        for(UIView *element in self.roleElements){
+            element.hidden = NO;
+        }
         if ([[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected]) {
             self.selectedRoleNameLabel.text =[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleUserNameKey] objectForKey:kContentKey];
             self.selectedRoleLabel.text =[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey];
@@ -149,12 +147,9 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
             self.selectedRoleLabel.text = @"User_Role_Signer".localized;
         }
     } else {
-        self.roleTitleLabel.hidden = YES;
-        self.roleSeparatorView.hidden = YES;
-        self.roleLabel.hidden = YES;
-        self.roleButton.hidden = YES;
-        self.selectedRoleNameLabel.hidden = YES;
-        self.selectedRoleLabel.hidden = YES;
+        for(UIView *element in self.roleElements){
+            element.hidden = YES;
+        }
     }
 }
 
