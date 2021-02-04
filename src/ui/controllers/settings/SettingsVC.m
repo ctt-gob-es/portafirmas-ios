@@ -202,6 +202,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
                             
                         } else {
                             [self setCompatibilityInLocalStorage:YES];
+                            [self setNotificationConfigInLocalStorage: [[content objectForKey:@"rsgtsrcg"] objectForKey:@"smcg"]];
                             NSDictionary *responseUserRolesDict = [[content objectForKey:@"rsgtsrcg"] objectForKey:@"rls"];
                             if ([responseUserRolesDict count] == 0) {
                                 //User with no roles continue as always
@@ -282,6 +283,13 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 - (void)setCompatibilityInLocalStorage:(BOOL)isCompatible {
     [[NSUserDefaults standardUserDefaults] setBool:isCompatible forKey:kPFUserDefaultsKeyUserConfigurationCompatible];
     [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void) setNotificationConfigInLocalStorage:(NSDictionary *)notificationDictionary {
+    if (notificationDictionary != nil ) {
+        [[NSUserDefaults standardUserDefaults] setBool:[[notificationDictionary objectForKey:kContentKey]  isEqual: kUserNotificationConfigActivated] forKey:kPFUserDefaultsKeyUserNotificationCompatible];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
 }
 
 #pragma mark - ServerListTVCDelegate

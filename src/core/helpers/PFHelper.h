@@ -78,6 +78,7 @@ static NSString *const kPFUserDefaultsKeyRemoteCertificatesSelection = @"remoteC
 static NSString *const kPFUserDefaultsKeyUserRoles = @"userRoles";
 static NSString *const kPFUserDefaultsKeyUserRoleSelected = @"userRoleSelected";
 static NSString *const kPFUserDefaultsKeyUserConfigurationCompatible = @"UserConfigurationCompatible";
+static NSString *const kPFUserDefaultsKeyUserNotificationCompatible = @"UserNotificationCompatible";
 
 static NSString *const kPFCertInfoKeyIssuer = @"issuer";
 static NSString *const kPFCertInfoKeySubject = @"subject";
@@ -99,6 +100,9 @@ static NSString *const kFilterYearKey =  @"anioFilter";
 static NSString *const kFilterMonthAll =  @"all";
 static NSString *const kFilterDNIKey =  @"dni";
 static NSString *const kFilterDNIValidator =  @"dniValidadorFilter";
+
+//Notifications
+static NSString *const kUserNotificationConfigActivated =  @"S";
 
 @interface PFHelper : NSObject
 

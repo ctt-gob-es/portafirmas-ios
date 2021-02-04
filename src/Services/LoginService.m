@@ -153,6 +153,7 @@ static NSString *const kSessionId = @"sessionId";
         [CookieTools removeJSessionIDCookies];
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoles];
         [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoleSelected];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserNotificationCompatible];
         [[NSUserDefaults standardUserDefaults] synchronize];
         failure(error);
     }];
