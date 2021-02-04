@@ -54,6 +54,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 @property (nonatomic, strong) IBOutlet UIPickerView *yearPickerView;
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 @property (nonatomic, strong) IBOutlet UISwitch *enableFiltersSwitch;
+@property (weak, nonatomic) IBOutlet UIView *notificationContainerView;
 @property (nonatomic, strong) IBOutlet UILabel *notificationTitleLabel;
 @property (nonatomic, strong) IBOutlet UILabel *notificationStateLabel;
 @property (nonatomic, strong) IBOutlet UIView *notificationSeparatorView;
