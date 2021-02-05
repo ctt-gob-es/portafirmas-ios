@@ -61,7 +61,7 @@
                                                     </connections>
                                                 </button>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="systemPurpleColor"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="KGe-dg-51w" firstAttribute="top" secondItem="9cU-eC-hiz" secondAttribute="top" id="3hY-5W-Xxq"/>
                                                 <constraint firstItem="x9z-sz-liP" firstAttribute="top" secondItem="KGe-dg-51w" secondAttribute="bottom" id="5ep-oe-Jp5"/>
@@ -277,7 +277,7 @@
                                                     </subviews>
                                                 </stackView>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="systemRedColor"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="A6K-GV-zh0" firstAttribute="top" secondItem="dcL-GJ-85S" secondAttribute="bottom" id="16P-TI-Jqh"/>
                                                 <constraint firstItem="FAO-4M-9Dp" firstAttribute="top" secondItem="A6K-GV-zh0" secondAttribute="bottom" constant="8" id="1ok-mf-1J7"/>
@@ -342,7 +342,7 @@
                                                     </connections>
                                                 </switch>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="systemYellowColor"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="5BR-B3-MlQ" firstAttribute="top" secondItem="eOE-MG-cnh" secondAttribute="bottom" constant="8" id="31n-F3-bf4"/>
                                                 <constraint firstItem="pUd-3y-KwL" firstAttribute="leading" secondItem="nIf-Ze-smT" secondAttribute="leading" id="43P-S9-Ovo"/>
@@ -410,7 +410,7 @@
                                                     </connections>
                                                 </button>
                                             </subviews>
-                                            <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="vbW-97-h9u" firstAttribute="top" secondItem="ClN-bq-wrk" secondAttribute="bottom" id="09u-C7-s3k"/>
                                                 <constraint firstAttribute="trailing" secondItem="ClN-bq-wrk" secondAttribute="trailing" id="4ZC-2b-hL3"/>
@@ -593,18 +593,6 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemPurpleColor">
-            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemYellowColor">
-            <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
