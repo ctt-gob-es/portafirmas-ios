@@ -82,6 +82,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [super awakeFromNib];
     // Initialization code
     self.backgroundColor = [UIColor greenColor];
+    [self showNotificationStateIfNeeded];
     [self showChangeRoleOptionIfNeeded];
     [self setFooterStyle];
     [_yearView setHidden:YES];
@@ -131,6 +132,14 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (BOOL) showYearViewWithInterval: (NSString*)interval {
     return [TIME_INTERVAL_MONTH_VALUES_ARRAY containsObject: interval];
+}
+
+- (void) showNotificationStateIfNeeded {
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible]) {
+        [_notificationContainerView setHidden:![[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyUserNotificationServerActivated]];
+    } else {
+        [_notificationContainerView setHidden:NO];
+    }
 }
 
 - (void) showChangeRoleOptionIfNeeded {

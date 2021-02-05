@@ -287,7 +287,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 - (void) setNotificationConfigInLocalStorage:(NSDictionary *)notificationDictionary {
     if (notificationDictionary != nil ) {
-        [[NSUserDefaults standardUserDefaults] setBool:[[notificationDictionary objectForKey:kContentKey]  isEqual: kUserNotificationConfigActivated] forKey:kPFUserDefaultsKeyUserNotificationCompatible];
+        [[NSUserDefaults standardUserDefaults] setBool:[[notificationDictionary objectForKey:kContentKey]  isEqual: kUserNotificationConfigActivated] forKey:kPFUserDefaultsKeyUserNotificationServerActivated];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }
