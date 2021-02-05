@@ -78,7 +78,8 @@ static NSString *const kPFUserDefaultsKeyRemoteCertificatesSelection = @"remoteC
 static NSString *const kPFUserDefaultsKeyUserRoles = @"userRoles";
 static NSString *const kPFUserDefaultsKeyUserRoleSelected = @"userRoleSelected";
 static NSString *const kPFUserDefaultsKeyUserConfigurationCompatible = @"UserConfigurationCompatible";
-static NSString *const kPFUserDefaultsKeyUserNotificationServerActivated = @"UserNotificationServerActivated";
+static NSString *const kPFUserDefaultsKeyPortafirmasNotificationsActivated = @"PortafirmasNotificationsActivated";
+static NSString *const kPFUserDefaultsKeyUserNotificationsActivated = @"UserNotificationsActivated";
 
 static NSString *const kPFCertInfoKeyIssuer = @"issuer";
 static NSString *const kPFCertInfoKeySubject = @"subject";
@@ -102,7 +103,8 @@ static NSString *const kFilterDNIKey =  @"dni";
 static NSString *const kFilterDNIValidator =  @"dniValidadorFilter";
 
 //Notifications
-static NSString *const kUserNotificationConfigActivated =  @"S";
+static NSString *const kPortafirmasNotificationsConfigActivated =  @"S";
+static NSString *const kUserNotificationsConfigActivated =  @"S";
 
 @interface PFHelper : NSObject
 

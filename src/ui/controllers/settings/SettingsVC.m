@@ -202,7 +202,8 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
                             
                         } else {
                             [self setCompatibilityInLocalStorage:YES];
-                            [self setNotificationConfigInLocalStorage: [[content objectForKey:@"rsgtsrcg"] objectForKey:@"smcg"]];
+                            [self setPortafirmasNotificationsConfigInLocalStorage: [[content objectForKey:@"rsgtsrcg"] objectForKey:@"smcg"]];
+                            [self setUserNotificationsConfigInLocalStorage: [[content objectForKey:@"rsgtsrcg"] objectForKey:@"srvrf"]];
                             NSDictionary *responseUserRolesDict = [[content objectForKey:@"rsgtsrcg"] objectForKey:@"rls"];
                             if ([responseUserRolesDict count] == 0) {
                                 //User with no roles continue as always
@@ -285,9 +286,16 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (void) setNotificationConfigInLocalStorage:(NSDictionary *)notificationDictionary {
-    if (notificationDictionary != nil ) {
-        [[NSUserDefaults standardUserDefaults] setBool:[[notificationDictionary objectForKey:kContentKey]  isEqual: kUserNotificationConfigActivated] forKey:kPFUserDefaultsKeyUserNotificationServerActivated];
+- (void) setPortafirmasNotificationsConfigInLocalStorage:(NSDictionary *)notificationsDictionary {
+    if (notificationsDictionary != nil ) {
+        [[NSUserDefaults standardUserDefaults] setBool:[[notificationsDictionary objectForKey:kContentKey]  isEqual: kPortafirmasNotificationsConfigActivated] forKey:kPFUserDefaultsKeyPortafirmasNotificationsActivated];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
+}
+
+- (void) setUserNotificationsConfigInLocalStorage:(NSDictionary *)notificationsDictionary {
+    if (notificationsDictionary != nil ) {
+        [[NSUserDefaults standardUserDefaults] setBool:[[notificationsDictionary objectForKey:kContentKey]  isEqual: kUserNotificationsConfigActivated] forKey:kPFUserDefaultsKeyUserNotificationsActivated];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }

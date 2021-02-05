@@ -136,7 +136,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (void) showNotificationStateIfNeeded {
     if ([[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible]) {
-        [_notificationContainerView setHidden:![[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyUserNotificationServerActivated]];
+        [_notificationContainerView setHidden:![[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyPortafirmasNotificationsActivated]];
     } else {
         [_notificationContainerView setHidden:NO];
     }

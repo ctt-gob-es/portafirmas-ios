@@ -179,10 +179,11 @@ static NSString *const kSessionId = @"sessionId";
     self.remoteCertificateLoginOK = NO;
     self.currentSignToken = @"";
     [CookieTools removeJSessionIDCookies];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserConfigurationCompatible];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyPortafirmasNotificationsActivated];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserNotificationsActivated];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoles];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoleSelected];
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserNotificationServerActivated];
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserConfigurationCompatible];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
