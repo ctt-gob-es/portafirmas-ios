@@ -290,7 +290,7 @@
                                                 <constraint firstItem="2ON-xY-AJZ" firstAttribute="leading" secondItem="7lP-Et-ZbY" secondAttribute="leading" id="UEV-6n-zpa"/>
                                                 <constraint firstItem="2ON-xY-AJZ" firstAttribute="top" secondItem="Hod-UW-h2h" secondAttribute="bottom" constant="8" id="ZdP-yR-7VM"/>
                                                 <constraint firstItem="A6K-GV-zh0" firstAttribute="leading" secondItem="7lP-Et-ZbY" secondAttribute="leading" id="mLN-u6-2RB"/>
-                                                <constraint firstItem="dcL-GJ-85S" firstAttribute="top" secondItem="7lP-Et-ZbY" secondAttribute="top" id="mWG-Ka-9JR"/>
+                                                <constraint firstItem="dcL-GJ-85S" firstAttribute="top" secondItem="7lP-Et-ZbY" secondAttribute="top" id="nFT-6b-7xJ"/>
                                                 <constraint firstItem="4Tu-E7-slj" firstAttribute="leading" secondItem="7lP-Et-ZbY" secondAttribute="leading" id="st4-1r-zxO"/>
                                                 <constraint firstAttribute="trailing" secondItem="dcL-GJ-85S" secondAttribute="trailing" id="vA9-1f-MRg"/>
                                                 <constraint firstItem="Hod-UW-h2h" firstAttribute="leading" secondItem="7lP-Et-ZbY" secondAttribute="leading" id="x2b-ji-Rw6"/>
@@ -305,7 +305,6 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notificaciones" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pUd-3y-KwL">
                                                     <rect key="frame" x="0.0" y="0.0" width="390" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="ZIL-dI-EwJ"/>
                                                         <constraint firstAttribute="height" constant="21" id="u9Q-Mi-xgQ"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
@@ -353,7 +352,7 @@
                                                 <constraint firstItem="lNc-th-qHL" firstAttribute="leading" secondItem="nIf-Ze-smT" secondAttribute="leading" id="aIl-sQ-fMq"/>
                                                 <constraint firstAttribute="trailing" secondItem="pUd-3y-KwL" secondAttribute="trailing" id="gNF-C9-BTt"/>
                                                 <constraint firstItem="eOE-MG-cnh" firstAttribute="top" secondItem="pUd-3y-KwL" secondAttribute="bottom" id="qSF-rI-LAu"/>
-                                                <constraint firstItem="pUd-3y-KwL" firstAttribute="top" secondItem="nIf-Ze-smT" secondAttribute="top" id="wAY-hI-Rm8"/>
+                                                <constraint firstItem="pUd-3y-KwL" firstAttribute="top" secondItem="nIf-Ze-smT" secondAttribute="top" id="uIn-7E-T8w"/>
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T4k-pF-Ow4" userLabel="Role Container View">
