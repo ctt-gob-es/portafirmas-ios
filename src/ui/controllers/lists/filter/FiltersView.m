@@ -6,10 +6,12 @@
 //  Copyright © 2021 Solid Gear Projects S.L. All rights reserved.
 //
 
+#import "AppListXMLController.h"
 #import <Foundation/Foundation.h>
 #import "FiltersView.h"
 #import "GlobalConstants.h"
-#import "AppListXMLController.h"
+#import "LoginService.h"
+#import "PushNotificationService.h"
 
 #define SORT_CRITERIA_ARRAY @[@"Filter_View_Sort_Criteria_Array_Date".localized, @"Filter_View_Sort_Criteria_Array_Topic".localized, @"Filter_View_Sort_Criteria_Array_Application".localized]
 
@@ -82,7 +84,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [super awakeFromNib];
     // Initialization code
     self.backgroundColor = [UIColor greenColor];
-    [self showNotificationStateIfNeeded];
+    [self showNotificationSectionIfNeeded];
+    [self showNotificationSectionState];
     [self showChangeRoleOptionIfNeeded];
     [self setFooterStyle];
     [_yearView setHidden:YES];
@@ -134,7 +137,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     return [TIME_INTERVAL_MONTH_VALUES_ARRAY containsObject: interval];
 }
 
-- (void) showNotificationStateIfNeeded {
+- (void) showNotificationSectionIfNeeded {
     if ([[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible]) {
         [_notificationContainerView setHidden:![[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyPortafirmasNotificationsActivated]];
     } else {
@@ -254,15 +257,28 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 #pragma mark - Notifications Section
 
--(IBAction)switchChanged:(UISwitch *)sender {
-//
-//    if([self.notificationSwitch isOn]){
-//        [self initSubscriptionProcess];
-//    } else {
-//        [self showNotificationSectionState];
-//    }
+- (void) showNotificationSectionState {
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible]) {
+        self.notificationStateLabel.text = [[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserNotificationsActivated] ? @"Filter_View_Push_Notification_Enabled_Title".localized : @"Filter_View_Push_Notification_Pending_Title".localized;
+        [self.notificationSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserNotificationsActivated]];
+    } else {
+        self.notificationStateLabel.text = [PushNotificationService instance].currentServer.userNotificationPermisionState ? @"Filter_View_Push_Notification_Enabled_Title".localized : @"Filter_View_Push_Notification_Pending_Title".localized;
+        [self.notificationSwitch setOn:[PushNotificationService instance].currentServer.userNotificationPermisionState];
+    }
 }
 
+-(IBAction)switchChanged:(UISwitch *)sender {
+    self.notificationStateLabel.text = [self.notificationSwitch isOn] ? @"Filter_View_Push_Notification_Enabled_Title".localized : @"Filter_View_Push_Notification_Pending_Title".localized;
+    if([self.notificationSwitch isOn]){
+        [self initSubscriptionProcess];
+    } else {
+        //TO DO
+    }
+}
+
+- (void) initSubscriptionProcess {
+    [[PushNotificationService instance] initializePushNotificationsService:true];
+}
 #pragma mark - UIPickerViewDataSource
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
