@@ -82,7 +82,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 @implementation FiltersView
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    [self listenNotificationAboutPushNotifications];
     self.backgroundColor = [UIColor greenColor];
     [self showNotificationSectionIfNeeded];
     [self showNotificationSectionState];
@@ -279,6 +279,25 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 - (void) initSubscriptionProcess {
     [[PushNotificationService instance] initializePushNotificationsService:true];
 }
+
+- (void) listenNotificationAboutPushNotifications {
+    [self removeNotificationAboutPushNotifications];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(finishSubscriptionProcess)
+                                                 name:@"FinishSubscriptionProcessNotification"
+                                               object:nil];
+}
+
+- (void) removeNotificationAboutPushNotifications {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"FinishSubscriptionProcessNotification" object:nil];
+}
+
+- (void) finishSubscriptionProcess {
+    [self showNotificationSectionState];
+    // actualizar el estado local de las notificaciones?
+    NSLog(@"TEST");
+}
+
 #pragma mark - UIPickerViewDataSource
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
