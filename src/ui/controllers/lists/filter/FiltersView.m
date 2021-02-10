@@ -258,13 +258,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 #pragma mark - Notifications Section
 
 - (void) showNotificationSectionState {
-    if ([[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible]) {
-        self.notificationStateLabel.text = [[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserNotificationsActivated] ? @"Filter_View_Push_Notification_Enabled_Title".localized : @"Filter_View_Push_Notification_Pending_Title".localized;
-        [self.notificationSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserNotificationsActivated]];
-    } else {
-        self.notificationStateLabel.text = [PushNotificationService instance].currentServer.userNotificationPermisionState ? @"Filter_View_Push_Notification_Enabled_Title".localized : @"Filter_View_Push_Notification_Pending_Title".localized;
-        [self.notificationSwitch setOn:[PushNotificationService instance].currentServer.userNotificationPermisionState];
-    }
+    self.notificationStateLabel.text = [[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserNotificationsActivated] ? @"Filter_View_Push_Notification_Enabled_Title".localized : @"Filter_View_Push_Notification_Pending_Title".localized;
+    [self.notificationSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserNotificationsActivated]];
 }
 
 -(IBAction)switchChanged:(UISwitch *)sender {
