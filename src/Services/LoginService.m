@@ -184,6 +184,7 @@ static NSString *const kSessionId = @"sessionId";
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserNotificationsActivated];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoles];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoleSelected];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyPushNotificationsServiceToken];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
