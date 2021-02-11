@@ -8,8 +8,6 @@
 // Alert view messages
 
 "Alert_View_Login_Failure_Message" = "No ha sido posible completar el proceso de identificación";
-"Alert_View_Disable_Notifications_Title" = "Las notificaciones estan deshabilitadas";
-"Alert_View_Disable_Notifications_Message" = "Has de ir a ajustes en tu dispositivo y luego a Notificaciones buscar PortaFirmas y permitir notificaciones";
 "Alert_View_Ok_Option" = "OK";
 "Alert_View_Notice" = "Aviso";
 "Alert_View_Process_Sign_and_Approve" = "Se van a procesar %lu peticiones de firma y %lu de visto bueno.";
@@ -164,3 +162,8 @@
 "User_Roles_Title" = "Roles";
 "User_Roles_Change_Role" = "Cambiar rol";
 "User_Roles_Validate_Operation_Name" = "Validar";
+
+//Notifications
+"Alert_View_Disable_Notifications_Title" = "Las notificaciones estan deshabilitadas";
+"Alert_View_Disable_Notifications_Message" = "Has de ir a ajustes en tu dispositivo y luego a Notificaciones buscar PortaFirmas y permitir notificaciones.";
+"Alert_View_Can_Not_Subscribe_Notifications_Title" = "No se han activado las notificaciones";
