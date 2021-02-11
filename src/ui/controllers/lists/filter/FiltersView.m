@@ -289,8 +289,6 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (void) finishSubscriptionProcess {
     [self showNotificationSectionState];
-    // actualizar el estado local de las notificaciones?
-    NSLog(@"TEST");
 }
 
 #pragma mark - UIPickerViewDataSource
