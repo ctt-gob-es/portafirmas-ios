@@ -12,7 +12,6 @@
 
 + (void) subscribeDevice:(NSString *)deviceID withToken: (NSString*)token success: (void(^)(void))success failure:(void(^)(NSError *error))failure;
 
-//Used only for test propouses
-//+ (void)subscribeToken:(NSString *)deviceToken success:(void(^)())success failure:(void(^)(NSError *))failure;
++ (void) unSubscribeDeviceSuccess: (void(^)(void))success failure:(void(^)(NSError *error))failure;
 
 @end

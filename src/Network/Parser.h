@@ -14,6 +14,7 @@
 - (void) parseAuthWithRemoteCertificates: (NSData *)data success: (void(^)(NSDictionary *content))success failure:(void(^)(NSError *))failure;
 - (void) parseValidateData: (NSData *)data success: (void(^)(BOOL isValid))success failure:(void(^)(NSError *))failure;
 - (void) parseValidateSubscription: (NSData *)data success: (void(^)(BOOL isValid))success failure:(void(^)(NSError *))failure;
+- (void) parseValidateUnsubscription: (NSData *)data success: (void(^)(BOOL isValid))success failure:(void(^)(NSError *))failure;
 - (void) parseFIRMeResponse: (NSData *)data success: (void(^)(NSDictionary *content))success failure:(void(^)(NSError *))failure;
 -(void) parseUserRoles: (NSData *)data success: (void(^)(NSDictionary *content))success failure:(void(^)(NSError *))failure;
 @end

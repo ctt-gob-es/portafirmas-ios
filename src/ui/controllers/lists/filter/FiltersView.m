@@ -267,12 +267,18 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     if([self.notificationSwitch isOn]){
         [self initSubscriptionProcess];
     } else {
-        //TO DO
+        if([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible]){
+            [self initUnsubscriptionProcess];
+        }
     }
 }
 
 - (void) initSubscriptionProcess {
     [[PushNotificationService instance] initializePushNotificationsService:true];
+}
+
+- (void) initUnsubscriptionProcess {
+    [[PushNotificationService instance] unsubscribe];
 }
 
 - (void) listenNotificationAboutPushNotifications {
