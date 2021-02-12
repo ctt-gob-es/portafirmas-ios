@@ -73,7 +73,6 @@ static NSString *const kSessionId = @"sessionId";
 			dispatch_async(dispatch_get_main_queue(), ^{
 				[SVProgressHUD dismiss];
 			});
-            [[PushNotificationService instance] initializePushNotificationsService:false];
 			success();
 		} failure:^(NSError *error) {
 			dispatch_async(dispatch_get_main_queue(), ^{
