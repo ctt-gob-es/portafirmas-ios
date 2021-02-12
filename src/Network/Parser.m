@@ -26,6 +26,9 @@ NSString *logValidateDNI = @"dni";
 
 NSString *subscriptionKey = @"reg";
 NSString *subscriptionValidateOkKey = @"ok";
+NSString *changePushNotificationsStateResponseKey = @"pdtpshsttsrs";
+NSString *changePushNotificationsStateResponseOK = @"OK";
+NSString *changePushNotificationsStateResponseKO = @"KO";
 
 - (void) parseAuthData: (NSData *)data success: (void(^)(NSString *token))success failure:(void(^)(NSError *))failure {
     XMLParser *parser = [[XMLParser alloc] init];
@@ -137,12 +140,7 @@ NSString *subscriptionValidateOkKey = @"ok";
             NSDictionary *validationDict = [parsedDataDict objectForKey:subscriptionKey];
             NSDictionary *errorDict = [parsedDataDict objectForKey:errorKey];
             if (validationDict != nil) {
-                NSString *validation = [validationDict objectForKey:subscriptionValidateOkKey];
-                BOOL isValid = false;
-                if ([validation isEqualToString:@"true"]) {
-                    isValid = true;
-                }
-                success(isValid);
+                success([[validationDict objectForKey:subscriptionValidateOkKey] isEqualToString:@"true"]);
                 return;
             } else if (errorDict != nil) {
                 NSMutableString *errorCodeString = [errorDict objectForKey:cdKey];
@@ -165,16 +163,10 @@ NSString *subscriptionValidateOkKey = @"ok";
     [parser parseData:data success:^(id parsedData) {
         if (parsedData != nil) {
             NSDictionary *parsedDataDict = (NSDictionary *)parsedData;
-            NSDictionary *validationDict = [parsedDataDict objectForKey:subscriptionKey];
+            NSDictionary *validationDict = [parsedDataDict objectForKey:changePushNotificationsStateResponseKey];
             NSDictionary *errorDict = [parsedDataDict objectForKey:errorKey];
-            //Change validationDict key fo the correct one in documentation
             if (validationDict != nil) {
-                NSString *validation = [validationDict objectForKey:subscriptionValidateOkKey];
-                BOOL isValid = false;
-                if ([validation isEqualToString:@"true"]) {
-                    isValid = true;
-                }
-                success(isValid);
+                success([[validationDict objectForKey:contentKey] isEqualToString:changePushNotificationsStateResponseOK]);
                 return;
             } else if (errorDict != nil) {
                 NSMutableString *errorCodeString = [errorDict objectForKey:cdKey];
