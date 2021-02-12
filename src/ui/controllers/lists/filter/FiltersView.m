@@ -267,7 +267,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     if([self.notificationSwitch isOn]){
         [self initSubscriptionProcess];
     } else {
-        if([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible]){
+        if([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible] && [[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyPortafirmasNotificationsActivated]){
             [self initUnsubscriptionProcess];
         }
     }
