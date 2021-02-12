@@ -16,6 +16,7 @@
 #import <WebKit/WebKit.h>
 #import "GlobalConstants.h"
 #import "UserRolesService.h"
+#import "PushNotificationService.h"
 #import "SelectRoleViewController.h"
 
 static const NSInteger kSettingsVCNumberOfSections = 3;
@@ -195,6 +196,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
                         if (responseError) {
                             // Old system that does not suppor roles maybe show something continue as always
                             [self setCompatibilityInLocalStorage:NO];
+                            [[PushNotificationService instance] initializePushNotificationsService:false];
                             segue = YES;
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [self performSegueWithIdentifier:identifier sender:self];
@@ -204,6 +206,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
                             [self setCompatibilityInLocalStorage:YES];
                             [self setPortafirmasNotificationsConfigInLocalStorage: [[content objectForKey:@"rsgtsrcg"] objectForKey:@"smcg"]];
                             [self setUserNotificationsConfigInLocalStorage: [[content objectForKey:@"rsgtsrcg"] objectForKey:@"srvrf"]];
+                            [self initializePushNotificationServiceIfActivated];
                             NSDictionary *responseUserRolesDict = [[content objectForKey:@"rsgtsrcg"] objectForKey:@"rls"];
                             if ([responseUserRolesDict count] == 0) {
                                 //User with no roles continue as always
@@ -273,6 +276,12 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 - (void)prepareForAccessSegue:(UIStoryboardSegue *)segue
 {
     [[AppListXMLController sharedInstance] requestAppsList];
+}
+
+-(void) initializePushNotificationServiceIfActivated {
+    if([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyPortafirmasNotificationsActivated]) {
+        [[PushNotificationService instance] initializePushNotificationsService:false];
+    }
 }
 
 - (void) setRolesInLocalStorage:(NSDictionary*)userRolesDictionary {
