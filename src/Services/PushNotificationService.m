@@ -124,9 +124,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];
 		});
-        [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyPushNotificationsServiceToken];
-        [[NSUserDefaults standardUserDefaults] setBool: NO forKey:kPFUserDefaultsKeyUserNotificationsActivated];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self restoreUserPushNotificationsSettingsToDefault];
         [[ErrorService instance] showAlertViewWithTitle:@"Alert_View_Can_Not_Subscribe_Notifications_Title".localized andMessage:[error localizedDescription]];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
     }];
@@ -141,20 +139,22 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [SVProgressHUD dismiss];
         });
-        [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyPushNotificationsServiceToken];
-        [[NSUserDefaults standardUserDefaults] setBool:YES  forKey:kPFUserDefaultsKeyUserNotificationsActivated];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self restoreUserPushNotificationsSettingsToDefault];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
     } failure:^(NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [SVProgressHUD dismiss];
         });
-        [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyPushNotificationsServiceToken];
-        [[NSUserDefaults standardUserDefaults] setBool: NO forKey:kPFUserDefaultsKeyUserNotificationsActivated];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self restoreUserPushNotificationsSettingsToDefault];
         [[ErrorService instance] showAlertViewWithTitle:@"Alert_View_Can_Not_Subscribe_Notifications_Title".localized andMessage:[error localizedDescription]];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
     }];
+}
+
+- (void) restoreUserPushNotificationsSettingsToDefault {
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyPushNotificationsServiceToken];
+    [[NSUserDefaults standardUserDefaults] setBool: NO forKey:kPFUserDefaultsKeyUserNotificationsActivated];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark - Utils
