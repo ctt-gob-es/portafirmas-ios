@@ -196,7 +196,10 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
                         if (responseError) {
                             // Old system that does not suppor roles maybe show something continue as always
                             [self setCompatibilityInLocalStorage:NO];
-                            [[PushNotificationService instance] initializePushNotificationsService:false];
+                            if ([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserNotificationsActivated]
+                                ) {
+                                [[PushNotificationService instance] initializePushNotificationsService:false];
+                            }
                             segue = YES;
                             dispatch_async(dispatch_get_main_queue(), ^{
                                 [self performSegueWithIdentifier:identifier sender:self];
