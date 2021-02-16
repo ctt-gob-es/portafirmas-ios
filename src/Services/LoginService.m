@@ -14,6 +14,7 @@
 #import "CookieTools.h"
 #import "PushNotificationService.h"
 #import "Server.h"
+#import "GlobalConstants.h"
 
 @interface LoginService ()
 @property (nonatomic, strong) NSString *currentSignToken;
@@ -21,7 +22,6 @@
 
 @implementation LoginService
 
-static NSString *const kContentKey = @"content";
 static NSString *const kUrl = @"url";
 static NSString *const kSessionId = @"sessionId";
     
@@ -139,6 +139,9 @@ static NSString *const kSessionId = @"sessionId";
 		self.remoteCertificateLoginOK = NO;
         self.currentSignToken = @"";
         [CookieTools removeJSessionIDCookies];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoles];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoleSelected];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         success();
     } failure:^(NSError *error) {
        dispatch_async(dispatch_get_main_queue(), ^{
@@ -148,6 +151,9 @@ static NSString *const kSessionId = @"sessionId";
 		self.remoteCertificateLoginOK = NO;
         self.currentSignToken = @"";
         [CookieTools removeJSessionIDCookies];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoles];
+        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoleSelected];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         failure(error);
     }];
 }

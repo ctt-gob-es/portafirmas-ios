@@ -75,7 +75,6 @@ static AppListXMLController *_sharedInstance = nil;
         [requestString appendString:[self certificateTag]];
     }
     [requestString appendString:@"</rqtconf>"];
-
     return requestString;
 }
 

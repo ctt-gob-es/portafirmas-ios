@@ -21,17 +21,16 @@
 #import "GlobalConstants.h"
 #import "ErrorService.h"
 #import <WebKit/WebKit.h>
+#import "ValidateController.h"
 
 static NSString *const kDetailCell = @"detailCell";
 static NSString *const kDetailCellNibName = @"DetailCell";
-static NSString *const kEmptyString = @"";
 static NSString *const kEndOfLine = @"\r";
 static NSString *const kMainStoryboardIPhoneIdentifier = @"MainStoryboard_iPhone";
 static NSString *const kAttachmentsListViewIdentifier = @"AttachmentsListView";
 static NSString *const kReceiversListViewIdentifier = @"ReceiversListView";
 static NSString *const kRequestDetailURLKeyName = @"requestDetailURL";
 static NSString *const kKOStatusString = @"KO";
-static NSString *const kAppendFormatString = @" %@";
 
 typedef NS_ENUM (NSInteger, PFDocumentAction)
 {
@@ -67,6 +66,11 @@ CGFloat const defaultCellHeight = 44;
 CGFloat const noCellHeight = 0;
 CGFloat const rejectCellTitleCellWidth = 150;
 CGFloat const largeTitleCellWidth = 200;
+
+typedef NS_ENUM(NSUInteger, Operation) {
+    approve = 1,
+    validate
+} ;
 
 @interface DetailTableViewController ()
 {
@@ -329,8 +333,18 @@ CGFloat const largeTitleCellWidth = 200;
                                [self signAction];
                            }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel".localized style:UIAlertActionStyleCancel handler:nil];
-    [alertController addAction:reject];
-    [alertController addAction:sign];
+    UIAlertAction *validate = [UIAlertAction actionWithTitle:@"User_Roles_Validate_Operation_Name".localized
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction * action)
+                               {
+                                   [self validateAction];
+                               }];
+    if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected]objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: kUserRoleRoleNameValidator] ){
+        [alertController addAction:validate];
+    } else {
+        [alertController addAction:reject];
+        [alertController addAction:sign];
+    }
     [alertController addAction:cancel];
     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
     {
@@ -342,8 +356,6 @@ CGFloat const largeTitleCellWidth = 200;
 }
 
 - (UIAlertController *)obtainAlertController {
-    
-    
     if ( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad )
     {
         //iPad
@@ -354,8 +366,7 @@ CGFloat const largeTitleCellWidth = 200;
     }
 }
 
-- (void)rejectAction
-{
+- (void)rejectAction {
     // Preguntamos el por qué del rechazo
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Rejection_of_requests".localized message:@"Indicate_Reason_For_Rejection".localized preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel".localized style:UIAlertActionStyleCancel handler:nil];
@@ -371,8 +382,7 @@ CGFloat const largeTitleCellWidth = 200;
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)signAction
-{
+- (void)signAction {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[SVProgressHUD show];
 	});
@@ -381,6 +391,13 @@ CGFloat const largeTitleCellWidth = 200;
     } else {
         [self startApprovalRequest];
     }
+}
+
+- (void)validateAction {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD show];
+    });
+    [self startValidateRequest];
 }
 
 - (void) rejectActionClickContinueButton: (UIAlertController *)alertController {
@@ -420,6 +437,13 @@ CGFloat const largeTitleCellWidth = 200;
     NSString *requestData = [ApproveXMLController buildRequestWithRequestArray:@[_dataSource]];
 
     [wsController loadPostRequestWithData:requestData code:PFRequestCodeApprove];
+    [wsController startConnection];
+}
+
+- (void)startValidateRequest {
+    _waitingResponseType = PFWaitingResponseTypeValidate;
+    NSString *requestData = [ValidateController buildRequestWithRequestArray:@[_dataSource]];
+    [wsController loadPostRequestWithData:requestData code:PFRequestCodeValidate];
     [wsController startConnection];
 }
 
@@ -538,16 +562,29 @@ CGFloat const largeTitleCellWidth = 200;
     NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:data];
     id <NSXMLParserDelegate> parser = [self parserForCurrentRequest];
     [nsXmlParser setDelegate:parser];
-
     if ([nsXmlParser parse]) {
-        
         if (_waitingResponseType == PFWaitingResponseTypeRejection) {
-            [self didReceiveRejectResult:[(RejectXMLController *)parser dataSource]];
-        }
-        else if (_waitingResponseType == PFWaitingResponseTypeApproval) {
-            [self didReceiveApprovalResult:[(ApproveXMLController *)parser dataSource]];
-        }
-        else {
+            NSArray *rejectedRequests = [(RejectXMLController *)parser dataSource];
+            if(rejectedRequests != nil){
+                [self didReceiveRejectResult: rejectedRequests];
+            } else {
+                [self didReceiveError:[(RejectXMLController *)parser err]];
+            }
+        } else if (_waitingResponseType == PFWaitingResponseTypeApproval) {
+            NSArray *approvedRequests = [(ApproveXMLController *)parser dataSource];
+            if (approvedRequests != nil){
+                [self didReceiveRequestResult:approvedRequests forOperation:approve];
+            } else {
+              [self didReceiveError:[(ApproveXMLController *)parser err]];
+            }
+        } else if (_waitingResponseType == PFWaitingResponseTypeValidate) {
+            NSArray *approvedRequests = [(ValidateController *)parser dataSource];
+            if (approvedRequests != nil){
+                [self didReceiveRequestResult:approvedRequests forOperation: validate];
+            } else {
+                [self didReceiveError:[(ValidateController *)parser err]];
+            }
+        } else {
             [self didFinisParsingWithParser:parser];
         }
     }
@@ -556,16 +593,16 @@ CGFloat const largeTitleCellWidth = 200;
     }
 }
 
-- (id <NSXMLParserDelegate> )parserForCurrentRequest
-{
+- (id <NSXMLParserDelegate> )parserForCurrentRequest {
     if (_waitingResponseType == PFWaitingResponseTypeDetail) {
         return [[DetailXMLController alloc] initXMLParser];
     } else if (_waitingResponseType == PFWaitingResponseTypeRejection) {
         return [[RejectXMLController alloc] initXMLParser];
     } else if (_waitingResponseType == PFWaitingResponseTypeApproval) {
         return [[ApproveXMLController alloc] init];
+    } else if (_waitingResponseType == PFWaitingResponseTypeValidate) {
+        return [[ValidateController alloc] initXMLParser];
     }
-
     return nil;
 }
 
@@ -576,7 +613,7 @@ CGFloat const largeTitleCellWidth = 200;
 
     for (PFRequestResult *request in requestsSigned) {
         if ([[request status] isEqualToString:kKOStatusString]) {
-            [self didReceiveError:[[NSString alloc] initWithFormat:@"Detail_view_error_processing_request".localized, [request rejectid]]];
+            [self didReceiveError:[[NSString alloc] initWithFormat:@"Detail_view_error_processing_request".localized, [request rejectId]]];
             processedOK = FALSE;
         }
     }
@@ -600,44 +637,30 @@ CGFloat const largeTitleCellWidth = 200;
 
 }
 
-- (void)didReceivedRejectionResponse:(NSData *)responseData
-{
-    
-    NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:responseData];
-    RejectXMLController *parser = [[RejectXMLController alloc] initXMLParser];
-    
-    [nsXmlParser setDelegate:parser];
-    BOOL success = [nsXmlParser parse];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [SVProgressHUD dismiss];
-    });
-    
-    if (success) {
-        NSArray *rejectsReq = [parser dataSource];
-        [self didReceiveRejectResult:rejectsReq];
-    }
-    else {
-        [self didReceiveError:@"Detail_view_error_server_connection_501".localized];
-    }
-}
-
-- (void)didReceiveApprovalResult:(NSArray *)approvedRequests
-{
+- (void)didReceiveRequestResult:(NSArray *)approvedRequests forOperation: (Operation) operation {
     NSMutableArray *idsForRequestsWithError = [@[] mutableCopy];
-
     [approvedRequests enumerateObjectsUsingBlock:^(PFRequest *request, NSUInteger idx, BOOL *stop) {
          if ([request.status isEqualToString:kKOStatusString]) {
              [idsForRequestsWithError addObject:request.reqid];
          }
      }];
-
     if (idsForRequestsWithError.count == 0) {
-        // @" Peticiones firmadas corrrectamente"
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized message: @"Alert_View_Request_Processed_Correctly".localized preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
+        NSString *message;
+        switch (operation) {
+            case approve:
+                message = @"Alert_View_Request_Signed_Correctly".localized;
+                break;
+            case validate:
+                message = @"Alert_View_Request_Validated_Correctly".localized;
+                break;
+            default:
+                break;
+        }        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized message: message preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [self dismissSelfView];
+        }];
         [alertController addAction:cancel];
         [self presentViewController:alertController animated:YES completion:nil];
-        [self dismissSelfView];
     } else {
         NSString *errorMessage;
         if (idsForRequestsWithError.count == 1) {
@@ -650,13 +673,7 @@ CGFloat const largeTitleCellWidth = 200;
             errorMessage = [NSString stringWithFormat:@"Detail_view_error_processing_multiple_request".localized, errorIDSString];
         }
         [self didReceiveError:errorMessage];
-        [self dismissSelfView];
     }
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-	   [self dismissViewControllerAnimated:YES completion:nil];
-	});
-
 }
 
 - (void)didFinisParsingWithParser:(DetailXMLController *)parser
@@ -740,7 +757,6 @@ CGFloat const largeTitleCellWidth = 200;
    dispatch_async(dispatch_get_main_queue(), ^{
 	   [self dismissViewControllerAnimated:YES completion:nil];
 	});
-	
     [(BaseListTVC *)self.navigationController.previousViewController refreshInfo];
     [self.navigationController popViewControllerAnimated:YES];
 }

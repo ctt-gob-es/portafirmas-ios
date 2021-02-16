@@ -113,7 +113,7 @@ struct {
 		[request setValue:postLength forHTTPHeaderField:@"Content-Length"];
 		[request setHTTPBody:postData];
 		[request setHTTPShouldHandleCookies:YES];
-		[request setTimeoutInterval:30.0];
+		[request setTimeoutInterval:kPFRequestTimeoutInterval];
 		NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
 		[[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
 			if (error) {

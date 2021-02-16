@@ -7,9 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FiltersView.h"
 
-@interface FilterVC : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate>
-
--(IBAction)switchChanged:(UISwitch *)sender;
+@interface FilterVC : UIViewController<FiltersViewDelegate>
 
 @end

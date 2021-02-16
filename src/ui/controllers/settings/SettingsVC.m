@@ -15,6 +15,8 @@
 #import "ErrorService.h"
 #import <WebKit/WebKit.h>
 #import "GlobalConstants.h"
+#import "UserRolesService.h"
+#import "SelectRoleViewController.h"
 
 static const NSInteger kSettingsVCNumberOfSections = 3;
 static const NSInteger kSettingsVCNumberOfRowsPerSection = 1;
@@ -43,6 +45,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 @property (nonatomic, strong) IBOutlet UIButton *accessButton;
 @property (strong, nonatomic) IBOutlet UINavigationItem *titleBar;
 @property (strong, nonatomic) WKWebView *webView;
+@property (nonatomic) BOOL roleAlreadySelected;
 
 @end
 
@@ -63,6 +66,15 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
     [self.tableView reloadData];
     [self updateAccessButton];
 	[self disableRemoteCertificatesIfCertificateSelected];
+    if(_roleAlreadySelected){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self performSegueWithIdentifier:kSettingsVCSegueIdentifierAccess sender:self];
+        });
+    }
+}
+
+- (void) viewWillDisappear:(BOOL)animated {
+    _roleAlreadySelected = NO;
 }
 
 #pragma mark - User Interface
@@ -167,7 +179,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 	if ([identifier isEqualToString:kSettingsVCSegueIdentifierAccess]) {
 		if ([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyRemoteCertificatesSelection]) {
 			[[LoginService instance] loginWithRemoteCertificates:^{
-				[self showLoginWebView];
+                [self showLoginWebView];
 			} failure:^(NSError *error) {
 				segue = NO;
 				dispatch_async(dispatch_get_main_queue(), ^{
@@ -178,7 +190,40 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 			[[LoginService instance] loginWithCertificate:^{
 				segue = YES;
 				dispatch_async(dispatch_get_main_queue(), ^{
-					[self performSegueWithIdentifier:identifier sender:self];
+                    [[UserRolesService instance] getUserRoles:^(NSDictionary *content) {
+                        NSDictionary *responseError = [content objectForKey:kErrorRqsrcnfg];
+                        if (responseError) {
+                            // Old system that does not suppor roles maybe show something continue as always
+                            [self setCompatibilityInLocalStorage:NO];
+                            segue = YES;
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                [self performSegueWithIdentifier:identifier sender:self];
+                            });
+                            
+                        } else {
+                            [self setCompatibilityInLocalStorage:YES];
+                            NSDictionary *responseUserRolesDict = [[content objectForKey:@"rsgtsrcg"] objectForKey:@"rls"];
+                            if ([responseUserRolesDict count] == 0) {
+                                //User with no roles continue as always
+                                segue = YES;
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    [self performSegueWithIdentifier:identifier sender:self];
+                                });
+                            } else {
+                                //User with roles navigate to rol selection
+                            [self setRolesInLocalStorage: responseUserRolesDict];
+                                SelectRoleViewController *selectRoleViewController = [[SelectRoleViewController alloc] initWithNibName: @"SelectRoleViewController" bundle: nil];
+                                selectRoleViewController.delegate = self;
+                                [selectRoleViewController setModalPresentationStyle:UIModalPresentationFullScreen];
+                                [self.navigationController presentViewController:selectRoleViewController animated:YES completion:nil];
+                            }
+                        }
+                    } failure:^(NSError *error) {
+                        segue = NO;
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [[ErrorService instance] showLoginErrorAlertView];
+                        });
+                    }];
 				});
 			} failure:^(NSError *error) {
 				if (error != nil && error.code == PFLoginNotSupported) {
@@ -228,6 +273,17 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
     [[AppListXMLController sharedInstance] requestAppsList];
 }
 
+- (void) setRolesInLocalStorage:(NSDictionary*)userRolesDictionary {
+    NSArray * userRolesArray = [userRolesDictionary allValues];
+    [[NSUserDefaults standardUserDefaults] setObject:userRolesArray forKey:kPFUserDefaultsKeyUserRoles];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void)setCompatibilityInLocalStorage:(BOOL)isCompatible {
+    [[NSUserDefaults standardUserDefaults] setBool:isCompatible forKey:kPFUserDefaultsKeyUserConfigurationCompatible];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 #pragma mark - ServerListTVCDelegate
 
 - (void)serverListDidSelectServer:(NSDictionary *)serverInfo
@@ -259,6 +315,12 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 		return decisionHandler(WKNavigationActionPolicyCancel);
 	}
     decisionHandler(WKNavigationActionPolicyAllow);
+}
+
+#pragma mark - RoleSelectedDelegate
+
+- (void) rolesSelected{
+    _roleAlreadySelected = YES;
 }
 
 @end

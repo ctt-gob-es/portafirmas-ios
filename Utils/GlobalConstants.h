@@ -22,6 +22,9 @@ FOUNDATION_EXPORT NSString *const kFalse;
 FOUNDATION_EXPORT NSString *const kContentKey;
 FOUNDATION_EXPORT NSString *const kErrorFIReKey;
 FOUNDATION_EXPORT NSString *const kQuestionMarkString;
+FOUNDATION_EXPORT NSString *const kErrorRqsrcnfg;
+FOUNDATION_EXPORT NSString *const kUserRolesRqsrcnfg;
+FOUNDATION_EXPORT NSString *const kAppendFormatString;
+FOUNDATION_EXPORT NSString *const kEmptyString;
 
 @end
-
