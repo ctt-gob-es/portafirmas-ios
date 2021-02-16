@@ -302,9 +302,7 @@ static CGFloat const kCancelButtonWidth = 100;
 #pragma mark - User Interaction
 
 - (IBAction)didTapOnBackButton:(id)sender {
-    //TODO Launch logout process if server has login support
     if ([LoginService instance].serverSupportLogin){
-        
         [[LoginService instance] logout:^{
             [self closeView];
         } failure:^(NSError *error) {

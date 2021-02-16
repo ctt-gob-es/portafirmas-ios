@@ -281,6 +281,48 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
     [[AppListXMLController sharedInstance] requestAppsList];
 }
 
+#pragma mark - User Configuration Methods
+
+- (void) userConfigurationRequest {
+    [[UserRolesService instance] getUserRoles:^(NSDictionary *content) {
+        NSDictionary *responseError = [content objectForKey:kErrorRqsrcnfg];
+        if (responseError) {
+            // Old system that does not suppor roles maybe show something continue as always
+            [self setCompatibilityInLocalStorage:NO];
+            if ([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserNotificationsActivated]
+                ) {
+                [[PushNotificationService instance] initializePushNotificationsService:false];
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self performSegueWithIdentifier:kSettingsVCSegueIdentifierAccess sender:self];
+            });
+        } else {
+            [self setCompatibilityInLocalStorage:YES];
+            [self setPortafirmasNotificationsConfigInLocalStorage: [[content objectForKey:@"rsgtsrcg"] objectForKey:@"smcg"]];
+            [self setUserNotificationsConfigInLocalStorage: [[content objectForKey:@"rsgtsrcg"] objectForKey:@"srvrf"]];
+            [self initializePushNotificationServiceIfActivated];
+            NSDictionary *responseUserRolesDict = [[content objectForKey:@"rsgtsrcg"] objectForKey:@"rls"];
+            if ([responseUserRolesDict count] == 0) {
+                //User with no roles continue as always
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self performSegueWithIdentifier:kSettingsVCSegueIdentifierAccess sender:self];
+                });
+            } else {
+                //User with roles navigate to rol selection
+                [self setRolesInLocalStorage: responseUserRolesDict];
+                SelectRoleViewController *selectRoleViewController = [[SelectRoleViewController alloc] initWithNibName: @"SelectRoleViewController" bundle: nil];
+                selectRoleViewController.delegate = self;
+                [selectRoleViewController setModalPresentationStyle:UIModalPresentationFullScreen];
+                [self.navigationController presentViewController:selectRoleViewController animated:YES completion:nil];
+            }
+        }
+    } failure:^(NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[ErrorService instance] showLoginErrorAlertView];
+        });
+    }];
+}
+
 -(void) initializePushNotificationServiceIfActivated {
     if([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyPortafirmasNotificationsActivated]) {
         [[PushNotificationService instance] initializePushNotificationsService:false];
@@ -337,9 +379,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 	}
 	if ([[urlFragments lastObject] rangeOfString:kOk].location != NSNotFound) {
 		[self.webView removeFromSuperview];
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[self performSegueWithIdentifier:kSettingsVCSegueIdentifierAccess sender:self];
-		});
+        [self userConfigurationRequest];
 		return decisionHandler(WKNavigationActionPolicyCancel);
 	}
     decisionHandler(WKNavigationActionPolicyAllow);
