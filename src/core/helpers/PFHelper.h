@@ -91,6 +91,7 @@ static NSString *const kPFCertInfoKeyPurpose = @"purpose";
 //Roles
 static NSString *const kUserRoleUserNameKey = @"userName";
 static NSString *const kUserRoleRoleNameKey = @"roleName";
+static NSString *const kUserRoleUserDNIKey = @"dni";
 static NSString *const kUserRoleRoleNameValidator = @"VALIDADOR";
 
 //Filters
