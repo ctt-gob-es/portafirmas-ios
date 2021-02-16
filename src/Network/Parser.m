@@ -26,6 +26,9 @@ NSString *logValidateDNI = @"dni";
 
 NSString *subscriptionKey = @"reg";
 NSString *subscriptionValidateOkKey = @"ok";
+NSString *changePushNotificationsStateResponseKey = @"pdtpshsttsrs";
+NSString *changePushNotificationsStateResponseOK = @"OK";
+NSString *changePushNotificationsStateResponseKO = @"KO";
 
 - (void) parseAuthData: (NSData *)data success: (void(^)(NSString *token))success failure:(void(^)(NSError *))failure {
     XMLParser *parser = [[XMLParser alloc] init];
@@ -58,15 +61,15 @@ NSString *subscriptionValidateOkKey = @"ok";
 }
 
 - (void) parseAuthWithRemoteCertificates: (NSData *)data success: (void(^)(NSDictionary *content))success failure:(void(^)(NSError *))failure {
-	XMLParser *parser = [[XMLParser alloc] init];
+    XMLParser *parser = [[XMLParser alloc] init];
     __block NSString *pfUnivErrorDomain = PFUnivErrorDomain;
-	[parser parseData:data success:^(id parsedData) {
+    [parser parseData:data success:^(id parsedData) {
         if (parsedData != nil) {
             NSDictionary *parsedDataDict = (NSDictionary *)parsedData;
             NSDictionary *loginDict = [parsedDataDict objectForKey:loginKey];
             if (loginDict != nil) {
-				success(loginDict);
-				return;
+                success(loginDict);
+                return;
             }
             NSDictionary *errorDict = [parsedDataDict objectForKey:errorKey];
             if (errorDict != nil) {
@@ -85,11 +88,11 @@ NSString *subscriptionValidateOkKey = @"ok";
 }
 
 - (void) parseFIRMeResponse: (NSData *)data success: (void(^)(NSDictionary *content))success failure:(void(^)(NSError *))failure {
-	XMLParser *parser = [[XMLParser alloc] init];
-	[parser parseData:data success:^(id parsedData) {
+    XMLParser *parser = [[XMLParser alloc] init];
+    [parser parseData:data success:^(id parsedData) {
         if (parsedData != nil) {
             NSDictionary *parsedDataDict = (NSDictionary *)parsedData;
-			success(parsedDataDict);
+            success(parsedDataDict);
         }
     } failure:^(NSError *error) {
         failure(error);
@@ -135,23 +138,45 @@ NSString *subscriptionValidateOkKey = @"ok";
         if (parsedData != nil) {
             NSDictionary *parsedDataDict = (NSDictionary *)parsedData;
             NSDictionary *validationDict = [parsedDataDict objectForKey:subscriptionKey];
-            
+            NSDictionary *errorDict = [parsedDataDict objectForKey:errorKey];
             if (validationDict != nil) {
-                NSString *validation = [validationDict objectForKey:subscriptionValidateOkKey];
-                
-                BOOL isValid = false;
-                
-                if ([validation isEqualToString:@"true"]) {
-                    isValid = true;
-                }
-                
-                success(isValid);
+                success([[validationDict objectForKey:subscriptionValidateOkKey] isEqualToString:@"true"]);
+                return;
+            } else if (errorDict != nil) {
+                NSMutableString *errorCodeString = [errorDict objectForKey:cdKey];
+                NSInteger errorCode = [errorCodeString substringFromIndex:[errorCodeString length] - 1].intValue;
+                NSError *error = [NSError errorWithDomain:[errorDict objectForKey:contentKey] code:errorCode userInfo:errorDict];
+                failure(error);
                 return;
             }
         }
-        
         failure(nil);
-        
+    } failure:^(NSError *error) {
+        failure(error);
+    }];
+}
+
+- (void) parseValidateUnsubscription: (NSData *)data success: (void(^)(BOOL isValid))success failure:(void(^)(NSError *))failure {
+    
+    XMLParser *parser = [[XMLParser alloc] init];
+    
+    [parser parseData:data success:^(id parsedData) {
+        if (parsedData != nil) {
+            NSDictionary *parsedDataDict = (NSDictionary *)parsedData;
+            NSDictionary *validationDict = [parsedDataDict objectForKey:changePushNotificationsStateResponseKey];
+            NSDictionary *errorDict = [parsedDataDict objectForKey:errorKey];
+            if (validationDict != nil) {
+                success([[validationDict objectForKey:contentKey] isEqualToString:changePushNotificationsStateResponseOK]);
+                return;
+            } else if (errorDict != nil) {
+                NSMutableString *errorCodeString = [errorDict objectForKey:cdKey];
+                NSInteger errorCode = [errorCodeString substringFromIndex:[errorCodeString length] - 1].intValue;
+                NSError *error = [NSError errorWithDomain:[errorDict objectForKey:contentKey] code:errorCode userInfo:errorDict];
+                failure(error);
+                return;
+            }
+        }
+        failure(nil);
     } failure:^(NSError *error) {
         failure(error);
     }];

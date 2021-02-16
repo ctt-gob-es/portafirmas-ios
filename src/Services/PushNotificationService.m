@@ -46,65 +46,29 @@
 }
 
 - (void) initializePushNotificationsService: (BOOL) optionTappedByUser {
-    
     self.isNotificationRequired = true;
-    
-    if (IOS_NEWER_OR_EQUAL_TO_10) {
-        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-        
-        [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
-            switch (settings.authorizationStatus) {
-                case UNAuthorizationStatusNotDetermined:
-                    [self registerForRemoteNotificationsSinceiOS10];
-                    break;
-                case UNAuthorizationStatusDenied: {
-                    [self createServerWithEmptyToken];
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
-                    });
-                    
-                    if (optionTappedByUser) {
-                         [[ErrorService instance] showNotAllowNotifications];
-                    }
-                    
-                    self.isNotificationRequired = false;
-                    break;
-                }
-                    
-                default:
-                    [self registerForRemoteNotificationsSinceiOS10];
-                    break;
-            }
-        }];
-        
-    } else {
-        
-        if ([self isFirstInitWithPushNotificationPopUpAnswered]) {
-            
-            [self registerForRemoteNotificationsUntiliOS10];
-            
-            [self createServerWithEmptyToken];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
-            });
-            
-        } else {
-            if ([self isNotificationEnabledOnSystem]) {
-                [self registerForRemoteNotificationsUntiliOS10];
-            } else {
-                
-                if (optionTappedByUser) {
-                   [[ErrorService instance] showNotAllowNotifications];
-                }
-                
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+        switch (settings.authorizationStatus) {
+            case UNAuthorizationStatusNotDetermined:
+                [self registerForRemoteNotificationsSinceiOS10];
+                break;
+            case UNAuthorizationStatusDenied: {
                 dispatch_async(dispatch_get_main_queue(), ^{
+                    if (optionTappedByUser) {
+                        [[ErrorService instance] showNotAllowNotifications];
+                    }
+                    [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyPushNotificationsServiceToken];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
                 });
+                break;
             }
+            default:
+                [self registerForRemoteNotificationsSinceiOS10];
+                break;
         }
-    }
+    }];
 }
 
 - (void) createServerWithEmptyToken {
@@ -128,27 +92,22 @@
                 [[UIApplication sharedApplication] registerForRemoteNotifications];
             });
         } else {
-            [self createServerWithEmptyToken];
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
             });
-            self.isNotificationRequired = false;
         }
     }];
 }
 
 - (void) updateTokenOfPushNotificationsService: (NSString *) deviceToken {
-    
-    if (![self.currentServer.token isEqualToString:deviceToken] && self.isNotificationRequired) {
-        [self updateToken:deviceToken];
+    if (![[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyPushNotificationsServiceToken] isEqualToString: deviceToken]) {
+        [self updateTokenAndSubscribe:deviceToken];
     } else {
-        self.isNotificationRequired = false;
         [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
     }
 }
 
-- (void) updateToken: (NSString *) token {
-    
+- (void) updateTokenAndSubscribe: (NSString *) token {
     NSString *IDVendor = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[SVProgressHUD show];
@@ -157,24 +116,48 @@
         dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];
 		});
-        self.isNotificationRequired = false;
-        NSString *certificate = [[LoginService instance] certificateInBase64];
-        [[ServerManager instance] addServer:SERVER_URL withToken:token withCertificate:certificate andUserNotificationPermisionState:true];
+        [[NSUserDefaults standardUserDefaults] setObject:token forKey: kPFUserDefaultsKeyPushNotificationsServiceToken];
+        [[NSUserDefaults standardUserDefaults] setBool:YES  forKey:kPFUserDefaultsKeyUserNotificationsActivated];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
     } failure:^(NSError *error) {
-        self.isNotificationRequired = false;
         dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];
 		});
+        [self restoreUserPushNotificationsSettingsToDefault];
+        [[ErrorService instance] showAlertViewWithTitle:@"Alert_View_Can_Not_Subscribe_Notifications_Title".localized andMessage:[error localizedDescription]];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
     }];
 }
 
-#pragma mark - Utils
-
-- (void) resetNotificationRequired {
-    self.isNotificationRequired = false;
+- (void) unsubscribe {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD show];
+    });
+    //Check store the correct user defaults when success and error
+    [PushNotificationNetwork unSubscribeDeviceSuccess:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+        });
+        [self restoreUserPushNotificationsSettingsToDefault];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
+    } failure:^(NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+        });
+        [self restoreUserPushNotificationsSettingsToDefault];
+        [[ErrorService instance] showAlertViewWithTitle:@"Alert_View_Can_Not_Subscribe_Notifications_Title".localized andMessage:[error localizedDescription]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
+    }];
 }
+
+- (void) restoreUserPushNotificationsSettingsToDefault {
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyPushNotificationsServiceToken];
+    [[NSUserDefaults standardUserDefaults] setBool: NO forKey:kPFUserDefaultsKeyUserNotificationsActivated];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+#pragma mark - Utils
 
 - (BOOL) isNotificationEnabledOnSystem {
     return [UIApplication.sharedApplication isRegisteredForRemoteNotifications];

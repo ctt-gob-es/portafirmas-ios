@@ -73,9 +73,6 @@ static NSString *const kSessionId = @"sessionId";
 			dispatch_async(dispatch_get_main_queue(), ^{
 				[SVProgressHUD dismiss];
 			});
-			if ([PushNotificationService instance].currentServer.userNotificationPermisionState) {
-				[[PushNotificationService instance] initializePushNotificationsService:false];
-			}
 			success();
 		} failure:^(NSError *error) {
 			dispatch_async(dispatch_get_main_queue(), ^{
@@ -135,25 +132,13 @@ static NSString *const kSessionId = @"sessionId";
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];
 		});
-        self.serverSupportLogin = NO;
-		self.remoteCertificateLoginOK = NO;
-        self.currentSignToken = @"";
-        [CookieTools removeJSessionIDCookies];
-        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoles];
-        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoleSelected];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self resetValuesAfterLogout];
         success();
     } failure:^(NSError *error) {
        dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];
 		});
-        self.serverSupportLogin = NO;
-		self.remoteCertificateLoginOK = NO;
-        self.currentSignToken = @"";
-        [CookieTools removeJSessionIDCookies];
-        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoles];
-        [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoleSelected];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        [self resetValuesAfterLogout];
         failure(error);
     }];
 }
@@ -177,13 +162,27 @@ static NSString *const kSessionId = @"sessionId";
 	return [certificateData base64EncodedString];
 }
 
--(void) setRemoteCertificatesParameters: (NSDictionary *) content {
+- (void) setRemoteCertificatesParameters: (NSDictionary *) content {
 	if([content objectForKey:kUrl]){
 		self.urlForRemoteCertificates = [[content objectForKey:kUrl] objectForKey: kContentKey];
 	}
 	if([content objectForKey:kSessionId]){
 		self.sessionId = [[content objectForKey:kSessionId] objectForKey: kContentKey];
 	}
+}
+
+- (void) resetValuesAfterLogout {
+    self.serverSupportLogin = NO;
+    self.remoteCertificateLoginOK = NO;
+    self.currentSignToken = @"";
+    [CookieTools removeJSessionIDCookies];
+    [[NSUserDefaults standardUserDefaults] setBool: NO forKey:kPFUserDefaultsKeyUserConfigurationCompatible];
+    [[NSUserDefaults standardUserDefaults] setBool: NO forKey:kPFUserDefaultsKeyPortafirmasNotificationsActivated];
+    [[NSUserDefaults standardUserDefaults] setBool: NO  forKey:kPFUserDefaultsKeyUserNotificationsActivated];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoles];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoleSelected];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyPushNotificationsServiceToken];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 @end

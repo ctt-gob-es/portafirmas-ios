@@ -8,8 +8,6 @@
 // Alert view messages
 
 "Alert_View_Login_Failure_Message" = "No ha sido posible completar el proceso de identificación";
-"Alert_View_Disable_Notifications_Title" = "Las notificaciones estan deshabilitadas";
-"Alert_View_Disable_Notifications_Message" = "Has de ir a ajustes en tu dispositivo y luego a Notificaciones buscar PortaFirmas y permitir notificaciones";
 "Alert_View_Ok_Option" = "OK";
 "Alert_View_Notice" = "Aviso";
 "Alert_View_Process_Sign_and_Approve" = "Se van a procesar %lu peticiones de firma y %lu de visto bueno.";
@@ -46,6 +44,34 @@
 //Filter View
 "Filter_View_Push_Notification_Pending_Title" = "Activar sistema de notificaciones";
 "Filter_View_Push_Notification_Enabled_Title" = "Sistema de notificaciones activado";
+"Filter_View_Footer_Accept_Button_Title" = "Aceptar";
+"Filter_View_Footer_Cancel_Button_Title" = "Cancelar";
+"Filter_View_Sort_Criteria_Default_Title" = "Selecciona un criterio de ordenación";
+"Filter_View_Sort_Criteria_Array_Date" = "Fecha";
+"Filter_View_Sort_Criteria_Array_Topic" = "Asunto";
+"Filter_View_Sort_Criteria_Array_Application" = "Aplicación";
+"Filter_View_Application_Default_Title" = "Selecciona una aplicación";
+"Filter_View_Type_Title_Array_All_Types" = "Todos los tipos";
+"Filter_View_Type_Title_Array_Sign_Requests" = "Ver peticiones de firma";
+"Filter_View_Type_Title_Array_Approval_Requests" = "Ver peticiones de visto bueno";
+"Filter_View_Type_Title_Array_Validated" = "Ver validadas";
+"Filter_View_Type_Title_Array_Not_Validated" = "Ver no validadas";
+"Filter_View_Time_Interval_Title_Array_All" = "Todas";
+"Filter_View_Time_Interval_Title_Array_Last_24_Hours" = "Últimas 24 horas";
+"Filter_View_Time_Interval_Title_Array_Last_Week" = "Última semana";
+"Filter_View_Time_Interval_Title_Array_Last_Month" = "Último mes";
+"Filter_View_Time_Interval_Title_Array_January" = "Enero";
+"Filter_View_Time_Interval_Title_Array_February" = "Febrero";
+"Filter_View_Time_Interval_Title_Array_March" = "Marzo";
+"Filter_View_Time_Interval_Title_Array_April" = "Abril";
+"Filter_View_Time_Interval_Title_Array_May" = "Mayo";
+"Filter_View_Time_Interval_Title_Array_June" = "Junio";
+"Filter_View_Time_Interval_Title_Array_July" = "Julio";
+"Filter_View_Time_Interval_Title_Array_August" = "Agosto";
+"Filter_View_Time_Interval_Title_Array_September" = "Septiembre";
+"Filter_View_Time_Interval_Title_Array_October" = "Octubre";
+"Filter_View_Time_Interval_Title_Array_November" = "Noviembre";
+"Filter_View_Time_Interval_Title_Array_December" = "Diciembre";
 
 //Attachment View
 "Document_Section" = "Documentos";
@@ -136,3 +162,8 @@
 "User_Roles_Title" = "Roles";
 "User_Roles_Change_Role" = "Cambiar rol";
 "User_Roles_Validate_Operation_Name" = "Validar";
+
+//Notifications
+"Alert_View_Disable_Notifications_Title" = "Las notificaciones estan deshabilitadas";
+"Alert_View_Disable_Notifications_Message" = "Has de ir a ajustes en tu dispositivo y luego a Notificaciones buscar PortaFirmas y permitir notificaciones.";
+"Alert_View_Can_Not_Subscribe_Notifications_Title" = "No se han activado las notificaciones";

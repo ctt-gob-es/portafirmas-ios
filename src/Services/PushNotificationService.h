@@ -17,6 +17,7 @@
 
 - (void) initializePushNotificationsService: (BOOL) optionTappedByUser;
 - (void) updateTokenOfPushNotificationsService: (NSString *) deviceToken;
+- (void) unsubscribe;
 - (BOOL) isNotificationEnabledOnSystem;
 - (BOOL) hasUserAllowNotifications;
 - (void) resetNotificationRequired ;

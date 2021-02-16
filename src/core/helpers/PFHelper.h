@@ -8,21 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM (NSInteger, PFRequestType)
-{
+typedef NS_ENUM (NSInteger, PFRequestType) {
     PFRequestTypeSign,
     PFRequestTypeApprove
 };
 
-typedef NS_ENUM (NSInteger, PFRequestStatus)
-{
+typedef NS_ENUM (NSInteger, PFRequestStatus) {
     PFRequestStatusSigned,
     PFRequestStatusRejected,
     PFRequestStatusPending
 };
 
-typedef NS_ENUM (NSInteger, PFRequestCode)
-{
+typedef NS_ENUM (NSInteger, PFRequestCode) {
     PFRequestCodeList = 2,
     PFRequestCodeReject = 3,
     PFRequestCodeDocumentPreview = 5,
@@ -33,8 +30,7 @@ typedef NS_ENUM (NSInteger, PFRequestCode)
     PFRequestCodeValidate = 20
 };
 
-typedef NS_ENUM (NSInteger, PFWaitingResponseType)
-{
+typedef NS_ENUM (NSInteger, PFWaitingResponseType) {
     PFWaitingResponseTypeList,
     PFWaitingResponseTypeRejection,
     PFWaitingResponseTypeApproval,
@@ -43,14 +39,15 @@ typedef NS_ENUM (NSInteger, PFWaitingResponseType)
     PFWaitingResponseTypeValidate
 };
 
-typedef NS_ENUM (NSInteger, PFSortPickerRow)
-{
+typedef NS_ENUM (NSInteger, PFSortPickerRow) {
     PFSortPickerRowDate,
     PFSortPickerRowSubject,
     PFSortPickerRowApp
 };
 
 static const NSInteger kPFAlertViewCancelButtonIndex = 0;
+static const NSInteger kPFInitialYearForFilters = 2010;
+
 static const NSTimeInterval kPFRequestTimeoutInterval = 30.0;
 
 static NSString *const kPFDeviceModeliPhone = @"iPhone";
@@ -70,9 +67,6 @@ static NSString *const kPFFilterValueSortDesc = @"desc";
 
 static NSString *const kPFFilterKeySubject = @"searchFilter";
 static NSString *const kPFFilterKeyApp = @"applicationFilter";
-static NSString *const kPFFilterKeyDateStart = @"initDateFilter";
-static NSString *const kPFFilterKeyDateEnd = @"endDateFilter";
-
 static NSString *const kPFUserDefaultsKeyCurrentServer = @"currentServer";
 static NSString *const kPFUserDefaultsKeyCurrentCertificate = @"currentCertificate";
 static NSString *const kPFUserDefaultsKeyAlias = @"alias";
@@ -84,6 +78,9 @@ static NSString *const kPFUserDefaultsKeyRemoteCertificatesSelection = @"remoteC
 static NSString *const kPFUserDefaultsKeyUserRoles = @"userRoles";
 static NSString *const kPFUserDefaultsKeyUserRoleSelected = @"userRoleSelected";
 static NSString *const kPFUserDefaultsKeyUserConfigurationCompatible = @"UserConfigurationCompatible";
+static NSString *const kPFUserDefaultsKeyPortafirmasNotificationsActivated = @"PortafirmasNotificationsActivated";
+static NSString *const kPFUserDefaultsKeyUserNotificationsActivated = @"UserNotificationsActivated";
+static NSString *const kPFUserDefaultsKeyPushNotificationsServiceToken = @"PushNotificationsServiceToken";
 
 static NSString *const kPFCertInfoKeyIssuer = @"issuer";
 static NSString *const kPFCertInfoKeySubject = @"subject";
@@ -101,9 +98,14 @@ static NSString *const kFilterTypeKey =  @"tipoFilter";
 static NSString *const kFilterTypeViewAll =  @"view_all";
 static NSString *const kFilterTypeViewNoValidate =  @"view_no_validate";
 static NSString *const kFilterMonthKey =  @"mesFilter";
+static NSString *const kFilterYearKey =  @"anioFilter";
 static NSString *const kFilterMonthAll =  @"all";
 static NSString *const kFilterDNIKey =  @"dni";
 static NSString *const kFilterDNIValidator =  @"dniValidadorFilter";
+
+//Notifications
+static NSString *const kPortafirmasNotificationsConfigActivated =  @"S";
+static NSString *const kUserNotificationsConfigActivated =  @"S";
 
 @interface PFHelper : NSObject
 
@@ -112,5 +114,7 @@ static NSString *const kFilterDNIValidator =  @"dniValidadorFilter";
 + (PFRequestStatus)getPFRequestStatusFromClass:(Class)classObject;
 + (PFRequestCode)getPFRequestCodeForSection:(NSInteger)section;
 + (NSString *)getPFSortCriteriaValueForRow:(PFSortPickerRow)row;
++ (NSArray *)getYearsForFilter;
++ (NSString *)getCurrentYear;
 
 @end

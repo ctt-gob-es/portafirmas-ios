@@ -89,6 +89,8 @@
 		92469F1C257938A900494DCF /* UserRolesService.m in Sources */ = {isa = PBXBuildFile; fileRef = 92469F1B257938A900494DCF /* UserRolesService.m */; };
 		925BE5B725878C7F00B85BFE /* SelectRoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 925BE5B625878C7F00B85BFE /* SelectRoleViewController.m */; };
 		925BE5BB2587937100B85BFE /* SelectRoleViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 925BE5BA2587937100B85BFE /* SelectRoleViewController.xib */; };
+		925FC27125B1A0C900D5632A /* FiltersView.m in Sources */ = {isa = PBXBuildFile; fileRef = 925FC27025B1A0C900D5632A /* FiltersView.m */; };
+		925FC27A25B1AD8E00D5632A /* FiltersView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 925FC27925B1AD8E00D5632A /* FiltersView.xib */; };
 		9261566125AEEADD004E47F5 /* ValidateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9261566025AEEADD004E47F5 /* ValidateController.m */; };
 		92A648FD2587A3CA00DFFACA /* RoleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92A648FC2587A3CA00DFFACA /* RoleCell.xib */; };
 		92A649012587A3F400DFFACA /* RoleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 92A649002587A3F400DFFACA /* RoleCell.m */; };
@@ -275,6 +277,9 @@
 		925BE5B625878C7F00B85BFE /* SelectRoleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelectRoleViewController.m; sourceTree = "<group>"; };
 		925BE5B925878C9400B85BFE /* SelectRoleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelectRoleViewController.h; sourceTree = "<group>"; };
 		925BE5BA2587937100B85BFE /* SelectRoleViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectRoleViewController.xib; sourceTree = "<group>"; };
+		925FC27025B1A0C900D5632A /* FiltersView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FiltersView.m; sourceTree = "<group>"; };
+		925FC27325B1A0DC00D5632A /* FiltersView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FiltersView.h; sourceTree = "<group>"; };
+		925FC27925B1AD8E00D5632A /* FiltersView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FiltersView.xib; sourceTree = "<group>"; };
 		9261566025AEEADD004E47F5 /* ValidateController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ValidateController.m; sourceTree = "<group>"; };
 		9261566325AEEAF5004E47F5 /* ValidateController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ValidateController.h; sourceTree = "<group>"; };
 		92A648FC2587A3CA00DFFACA /* RoleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoleCell.xib; sourceTree = "<group>"; };
@@ -770,6 +775,9 @@
 			children = (
 				3C00AD791AB71A7A00EF6886 /* FilterVC.h */,
 				3C00AD7A1AB71A7A00EF6886 /* FilterVC.m */,
+				925FC27325B1A0DC00D5632A /* FiltersView.h */,
+				925FC27025B1A0C900D5632A /* FiltersView.m */,
+				925FC27925B1AD8E00D5632A /* FiltersView.xib */,
 			);
 			path = filter;
 			sourceTree = "<group>";
@@ -1017,6 +1025,7 @@
 				3CA898F31AA5BD210035012D /* MainStoryboard_iPad.storyboard in Resources */,
 				BC65EFFC1FEA7ECA003AF04F /* Localizable.strings in Resources */,
 				3CA898FC1AA605B70035012D /* PortaFirmasUniv.entitlements in Resources */,
+				925FC27A25B1AD8E00D5632A /* FiltersView.xib in Resources */,
 				3CA898F61AA5BEA80035012D /* main_assets.xcassets in Resources */,
 				3CA899151AA607840035012D /* configPRE in Resources */,
 				3CA898F41AA5BD210035012D /* MainStoryboard_iPhone.storyboard in Resources */,
@@ -1121,6 +1130,7 @@
 				3CA899611AA60E6C0035012D /* RequestCellNoUI.m in Sources */,
 				3C00AD691AB71A0700EF6886 /* SettingsCell.m in Sources */,
 				3C00AD9F1AB71ACB00EF6886 /* SignLine.m in Sources */,
+				925FC27125B1A0C900D5632A /* FiltersView.m in Sources */,
 				3C00ADDC1AB71B1700EF6886 /* WSDataController.m in Sources */,
 				3C00ADB91AB71B0B00EF6886 /* QuartzUtils.m in Sources */,
 				3C00AD851AB71A8700EF6886 /* ProcessedRequestViewController.m in Sources */,

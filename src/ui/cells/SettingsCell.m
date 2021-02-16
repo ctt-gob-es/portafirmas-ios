@@ -11,7 +11,7 @@
 #define KEYS_ARRAY @[kPFUserDefaultsKeyCurrentServer, kPFUserDefaultsKeyCurrentCertificate, kPFUserDefaultsKeyRemoteCertificates]
 
 static NSString *const kSettingsCellUndefinedTitle = @"Sin especificar";
-CGFloat const kLeftmarginForSwitch = 25;
+CGFloat const kRightMarginForSwitch = 65;
 CGFloat const kHalfHeightForSwitch = 16;
 
 @interface SettingsCell ()
@@ -57,7 +57,7 @@ CGFloat const kHalfHeightForSwitch = 16;
 
 -(void) createSwitchInCell
 {
-	CGRect switchFrame = CGRectMake(_titleLabel.frame.size.width - kLeftmarginForSwitch, self.frame.size.height/2 - kHalfHeightForSwitch, self.remoteCertificatesSwitch.frame.size.width, self.remoteCertificatesSwitch.frame.size.height);
+	CGRect switchFrame = CGRectMake([[UIScreen mainScreen] bounds].size.width - kRightMarginForSwitch, self.frame.size.height/2 - kHalfHeightForSwitch, self.remoteCertificatesSwitch.frame.size.width, self.remoteCertificatesSwitch.frame.size.height);
 	self.remoteCertificatesSwitch = [[UISwitch alloc] initWithFrame:switchFrame];
 	[self setRemotesCertificatesSwitchState];
 	[self.remoteCertificatesSwitch addTarget:self
