@@ -15,6 +15,8 @@
 #import "CertificateUtils.h"
 #import "NSData+Base64.h"
 #import "LoginService.h"
+#import "GlobalConstants.h"
+#import "PFHelper.h"
 
 @implementation DetailXMLController
 
@@ -24,9 +26,12 @@
 + (NSString *)buildRequestWithId:(NSString * )rqdtlid
 {
     NSMutableString *mesg = [[NSMutableString alloc] initWithString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"];
-
-    [mesg appendFormat:@"<rqtdtl id=\"%@\">\n", rqdtlid];
-    
+    [mesg appendFormat:@"<rqtdtl id=\"%@\"", rqdtlid];
+    if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected]objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: kUserRoleRoleNameValidator] ){
+        NSString *ownerId = [[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected]objectForKey:kUserRoleUserDNIKey]objectForKey:kContentKey];
+        [mesg appendFormat:@" ownerId=\"%@\"", ownerId];
+    }
+    [mesg appendFormat:@">\n"];
     if (![[LoginService instance] serverSupportLogin]) {
         // CERTIFICADO
         CertificateUtils *cert = [CertificateUtils sharedWrapper];
@@ -39,9 +44,7 @@
 			[mesg appendString:certlabel];
 		}
     }
-    
     [mesg appendFormat:@"</rqtdtl>\n"];
-
     return mesg;
 }
 
