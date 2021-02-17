@@ -24,11 +24,4 @@
                     alpha:1.0f];
 }
 
-+(UIColor *)userRolesTitleColorRed{
-    return [UIColor colorWithRed:153.0f/255.0f
-                    green:0.0f/255.0f
-                     blue:24.0f/255.0f
-                    alpha:1.0f];
-}
-
 @end

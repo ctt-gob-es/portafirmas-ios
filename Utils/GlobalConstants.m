@@ -22,9 +22,5 @@ NSString *const kFalse = @"false";
 NSString *const kContentKey = @"content";
 NSString *const kErrorFIReKey = @"er";
 NSString *const kQuestionMarkString = @"?";
-NSString *const kErrorRqsrcnfg = @"err";
-NSString *const kUserRolesRqsrcnfg = @"role";
-NSString *const kAppendFormatString =  @" %@";
-NSString *const kEmptyString = @"";
 
 @end
