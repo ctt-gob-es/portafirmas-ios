@@ -87,6 +87,7 @@
     self = [super init];
 
     if (self) {
+        // init array of user objects
         _dataSource = [[NSMutableArray alloc] init];
     }
 

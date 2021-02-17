@@ -157,16 +157,4 @@ NSString *subscriptionValidateOkKey = @"ok";
     }];
 }
 
--(void) parseUserRoles: (NSData *)data success: (void(^)(NSDictionary *content))success failure:(void(^)(NSError *))failure {
-    XMLParser *parser = [[XMLParser alloc] init];
-    [parser parseData:data success:^(id parsedData) {
-        if (parsedData != nil) {
-            NSDictionary *parsedDataDict = (NSDictionary *)parsedData;
-            success(parsedDataDict);
-        }
-    } failure:^(NSError *error) {
-        failure(error);
-    }];
-}
-
 @end

@@ -42,7 +42,7 @@
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody:postData];
     [request setHTTPShouldHandleCookies:YES];
-    [request setTimeoutInterval:kPFRequestTimeoutInterval];
+    [request setTimeoutInterval:30.0];
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -81,7 +81,7 @@
 	[request setValue:postLength forHTTPHeaderField:@"Content-Length"];
 	[request setHTTPBody:postData];
 	[request setHTTPShouldHandleCookies:YES];
-	[request setTimeoutInterval:kPFRequestTimeoutInterval];
+	[request setTimeoutInterval:30.0];
 	
 	NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
 	[[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -128,7 +128,7 @@
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody:postData];
     [request setHTTPShouldHandleCookies:YES];
-    [request setTimeoutInterval:kPFRequestTimeoutInterval];
+    [request setTimeoutInterval:30.0];
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -174,7 +174,7 @@
     [request setValue:postLength forHTTPHeaderField:@"Content-Length"];
     [request setHTTPBody:postData];
     [request setHTTPShouldHandleCookies:YES];
-    [request setTimeoutInterval:kPFRequestTimeoutInterval];
+    [request setTimeoutInterval:30.0];
     
     NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {

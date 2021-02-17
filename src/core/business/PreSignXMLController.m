@@ -97,9 +97,12 @@
 - (PreSignXMLController *)initXMLParser
 {
     self = [super init];
+
+    // init array of user objects
     if (self) {
         _dataSource = [[NSMutableArray alloc] init];
     }
+
     return self;
 }
 

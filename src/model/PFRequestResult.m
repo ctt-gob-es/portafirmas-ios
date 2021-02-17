@@ -9,6 +9,6 @@
 #import "PFRequestResult.h"
 
 @implementation PFRequestResult
-@synthesize rejectId, status, validateId, errorCode, errorMsg;
+@synthesize rejectid, status, errorCode, errorMsg;
 
 @end

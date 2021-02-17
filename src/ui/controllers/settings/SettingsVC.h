@@ -10,8 +10,7 @@
 #import "ServerListTVC.h"
 #import "SettingsCell.h"
 #import <WebKit/WebKit.h>
-#import "SelectRoleViewController.h"
 
-@interface SettingsVC : PFBaseTVC <ServerListTVCDelegate, SettingsCellDelegate, UIWebViewDelegate, WKNavigationDelegate, RoleSelectedDelegate>
+@interface SettingsVC : PFBaseTVC <ServerListTVCDelegate, SettingsCellDelegate, UIWebViewDelegate, WKNavigationDelegate>
 
 @end
