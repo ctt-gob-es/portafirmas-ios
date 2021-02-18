@@ -67,6 +67,8 @@ static NSString *const kPFUserDefaultsKeyRemoteCertificates = @"remoteCertificat
 static NSString *const kPFUserDefaultsKeyRemoteCertificatesSelection = @"remoteCertificatesSelection";
 static NSString *const kPFUserDefaultsKeyUserSelectionFilterSubject
  = @"userSelectionFilterSubject";
+static NSString *const kPFUserDefaultsKeyUserSelectionFilterApp
+ = @"userSelectionFilterApplication";
 static NSString *const kPFUserDefaultsKeyUserRoles = @"userRoles";
 static NSString *const kPFUserDefaultsKeyUserRoleSelected = @"userRoleSelected";
 static NSString *const kPFUserDefaultsKeyUserConfigurationCompatible = @"UserConfigurationCompatible";

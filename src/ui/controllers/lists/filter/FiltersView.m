@@ -122,7 +122,11 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     _selectedTimeInterval = kEmptyString;
     _selectedYear = [PFHelper getCurrentYear];
     [_sortButton setTitle:@"Filter_View_Sort_Criteria_Default_Title".localized forState:UIControlStateNormal];
-    [_appButton setTitle:@"Filter_View_Application_Default_Title".localized forState:UIControlStateNormal];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp]){
+        [_appButton setTitle:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp] forState:UIControlStateNormal];
+    } else {
+        [_appButton setTitle:@"Filter_View_Application_Default_Title".localized forState:UIControlStateNormal];
+    }
     if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqualToString:kUserRoleRoleNameValidator]) {
         [self setTypeTitleAndFilterValue: RequestTypeTitleNotValidated];
     } else {
@@ -132,9 +136,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 }
 
 - (void)setPreviousSelectedFiltersByUser {
-    if( [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSubject]){
         _topicTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSubject];
-    }
+        _selectedApp = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp];
 }
 
 - (void) setTypeTitleAndFilterValue: (NSInteger)selection {
@@ -256,6 +259,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         if (![_selectedApp isEqualToString: kEmptyString]) {
             filters[kPFFilterKeyApp] = _selectedApp;
         }
+        [[NSUserDefaults standardUserDefaults] setObject:_selectedApp forKey: kPFUserDefaultsKeyUserSelectionFilterApp];
         if (![_selectedType isEqualToString: kEmptyString]) {
             filters[kFilterTypeKey] = _selectedType;
         }
