@@ -49,6 +49,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 @property (nonatomic, strong) IBOutlet UIButton *typeButton;
 @property (nonatomic, strong) IBOutlet UIPickerView *typePickerView;
 @property (weak, nonatomic) IBOutlet UIView *typeView;
+@property (weak, nonatomic) IBOutlet UIView *timeFilterView;
 @property (nonatomic, strong) IBOutlet UIButton *timeIntervalButton;
 @property (nonatomic, strong) IBOutlet UIPickerView *timeIntervalPickerView;
 @property (nonatomic, strong) IBOutlet UIButton *yearButton;
@@ -84,6 +85,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [super awakeFromNib];
     [self listenNotificationAboutPushNotifications];
     self.backgroundColor = [UIColor greenColor];
+    [self showTimeFiltersIfNeeded];
     [self showNotificationSectionIfNeeded];
     [self showNotificationSectionState];
     [self showChangeRoleOptionIfNeeded];
@@ -135,6 +137,14 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (BOOL) showYearViewWithInterval: (NSString*)interval {
     return [TIME_INTERVAL_MONTH_VALUES_ARRAY containsObject: interval];
+}
+
+-(void)showTimeFiltersIfNeeded {
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible]) {
+        [_timeFilterView setHidden: NO];
+    } else {
+        [_timeFilterView setHidden: YES];
+    }
 }
 
 - (void) showNotificationSectionIfNeeded {
@@ -356,7 +366,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         [_timeIntervalButton setTitle: TIME_INTERVAL_TITLE_ARRAY[row] forState:UIControlStateNormal];
         [_timeIntervalButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _selectedTimeInterval = TIME_INTERVAL_VALUE_ARRAY[row];
-        [self.yearView setHidden:![self showYearViewWithInterval:TIME_INTERVAL_VALUE_ARRAY[row]]];
+        [_yearView setHidden:![self showYearViewWithInterval:TIME_INTERVAL_VALUE_ARRAY[row]]];
         _selectedYear = [PFHelper getCurrentYear];
     }  else if ([pickerView isEqual:_yearPickerView]) {
         [_yearButton setTitle: [PFHelper getYearsForFilter][row] forState:UIControlStateNormal];
