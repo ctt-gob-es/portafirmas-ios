@@ -56,17 +56,7 @@ static NSString *const kPFTrue = @"true";
 static NSString *const kPFFalse = @"false";
 static NSString *const kPFDefaultDateFormat = @"dd/MM/yyyy";
 
-static NSString *const kPFFilterKeySortCriteria = @"orderAttribute";
-static NSString *const kPFFilterValueSortCriteriaDate = @"fmodified";
-static NSString *const kPFFilterValueSortCriteriaSubject = @"dsubject";
-static NSString *const kPFFilterValueSortCriteriaApp = @"application";
-
-static NSString *const kPFFilterKeySort = @"orderAscDesc";
-static NSString *const kPFFilterValueSortAsc = @"asc";
-static NSString *const kPFFilterValueSortDesc = @"desc";
-
-static NSString *const kPFFilterKeySubject = @"searchFilter";
-static NSString *const kPFFilterKeyApp = @"applicationFilter";
+// User Defaults
 static NSString *const kPFUserDefaultsKeyCurrentServer = @"currentServer";
 static NSString *const kPFUserDefaultsKeyCurrentCertificate = @"currentCertificate";
 static NSString *const kPFUserDefaultsKeyAlias = @"alias";
@@ -75,6 +65,8 @@ static NSString *const kPFUserDefaultsKeyDNI = @"DNI";
 static NSString *const kPFUserDefaultsKeyServersArray = @"serversArray";
 static NSString *const kPFUserDefaultsKeyRemoteCertificates = @"remoteCertificates";
 static NSString *const kPFUserDefaultsKeyRemoteCertificatesSelection = @"remoteCertificatesSelection";
+static NSString *const kPFUserDefaultsKeyUserSelectionFilterSubject
+ = @"userSelectionFilterSubject";
 static NSString *const kPFUserDefaultsKeyUserRoles = @"userRoles";
 static NSString *const kPFUserDefaultsKeyUserRoleSelected = @"userRoleSelected";
 static NSString *const kPFUserDefaultsKeyUserConfigurationCompatible = @"UserConfigurationCompatible";
@@ -82,6 +74,7 @@ static NSString *const kPFUserDefaultsKeyPortafirmasNotificationsActivated = @"P
 static NSString *const kPFUserDefaultsKeyUserNotificationsActivated = @"UserNotificationsActivated";
 static NSString *const kPFUserDefaultsKeyPushNotificationsServiceToken = @"PushNotificationsServiceToken";
 
+//Certificate
 static NSString *const kPFCertInfoKeyIssuer = @"issuer";
 static NSString *const kPFCertInfoKeySubject = @"subject";
 static NSString *const kPFCertInfoKeyStartDate = @"startDate";
@@ -103,6 +96,15 @@ static NSString *const kFilterYearKey =  @"anioFilter";
 static NSString *const kFilterMonthAll =  @"all";
 static NSString *const kFilterDNIKey =  @"dni";
 static NSString *const kFilterDNIValidator =  @"dniValidadorFilter";
+static NSString *const kPFFilterKeySort = @"orderAscDesc";
+static NSString *const kPFFilterValueSortAsc = @"asc";
+static NSString *const kPFFilterValueSortDesc = @"desc";
+static NSString *const kPFFilterKeySubject = @"searchFilter";
+static NSString *const kPFFilterKeySortCriteria = @"orderAttribute";
+static NSString *const kPFFilterValueSortCriteriaDate = @"fmodified";
+static NSString *const kPFFilterValueSortCriteriaSubject = @"dsubject";
+static NSString *const kPFFilterValueSortCriteriaApp = @"application";
+static NSString *const kPFFilterKeyApp = @"applicationFilter";
 
 //Notifications
 static NSString *const kPortafirmasNotificationsConfigActivated =  @"S";

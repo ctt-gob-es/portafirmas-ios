@@ -85,6 +85,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [super awakeFromNib];
     [self listenNotificationAboutPushNotifications];
     self.backgroundColor = [UIColor greenColor];
+    [self setPreviousSelectedFiltersByUser];
     [self showTimeFiltersIfNeeded];
     [self showNotificationSectionIfNeeded];
     [self showNotificationSectionState];
@@ -128,6 +129,12 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         [self setTypeTitleAndFilterValue: RequestTypeTitleAll];
     }
     [_yearButton setTitle:[PFHelper getCurrentYear] forState:UIControlStateNormal];
+}
+
+- (void)setPreviousSelectedFiltersByUser {
+    if( [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSubject]){
+        _topicTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSubject];
+    }
 }
 
 - (void) setTypeTitleAndFilterValue: (NSInteger)selection {
@@ -244,6 +251,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     if ([_enableFiltersSwitch isOn]) {
         if (_topicTextField.text && _topicTextField.text.length > 0) {
             filters[kPFFilterKeySubject] = _topicTextField.text;
+            [[NSUserDefaults standardUserDefaults] setObject:_topicTextField.text forKey: kPFUserDefaultsKeyUserSelectionFilterSubject];
         }
         if (![_selectedApp isEqualToString: kEmptyString]) {
             filters[kPFFilterKeyApp] = _selectedApp;
