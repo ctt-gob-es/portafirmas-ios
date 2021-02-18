@@ -251,8 +251,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     if ([_enableFiltersSwitch isOn]) {
         if (_topicTextField.text && _topicTextField.text.length > 0) {
             filters[kPFFilterKeySubject] = _topicTextField.text;
-            [[NSUserDefaults standardUserDefaults] setObject:_topicTextField.text forKey: kPFUserDefaultsKeyUserSelectionFilterSubject];
         }
+        [[NSUserDefaults standardUserDefaults] setObject:_topicTextField.text forKey: kPFUserDefaultsKeyUserSelectionFilterSubject];
         if (![_selectedApp isEqualToString: kEmptyString]) {
             filters[kPFFilterKeyApp] = _selectedApp;
         }

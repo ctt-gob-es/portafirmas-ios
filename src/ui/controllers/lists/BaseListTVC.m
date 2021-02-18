@@ -95,7 +95,7 @@
 		});
     }
     if ([[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible]) {
-        [self addDefaultFilters];
+        [self addPreselectedFilters];
     }
     NSString *data = [RequestListXMLController buildDefaultRequestWithState:_dataStatus pageNumber:_currentPage filters:_filtersDict];
     [_wsDataController loadPostRequestWithData:data code:PFRequestCodeList];
@@ -118,7 +118,8 @@
     [self loadData];
 }
 
-- (void)addDefaultFilters {
+- (void)addPreselectedFilters {
+    //Default
     if (![_filtersDict objectForKey:kFilterMonthKey]){
         [_filtersDict setObject:kFilterMonthAll forKey:kFilterMonthKey];
     }
@@ -133,6 +134,12 @@
             [_filtersDict setObject:kFilterTypeViewAll forKey:kFilterTypeKey];
         }
     }
+    
+    //Preselected by user
+    if (![_filtersDict objectForKey:kPFFilterKeySubject] && [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSubject]){
+        [_filtersDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSubject] forKey:kPFFilterKeySubject];
+    }
+    
 }
 
 #pragma mark - WSDelegate
