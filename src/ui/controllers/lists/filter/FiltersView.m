@@ -122,10 +122,14 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     _selectedTimeInterval = kEmptyString;
     _selectedYear = [PFHelper getCurrentYear];
     [_sortButton setTitle:@"Filter_View_Sort_Criteria_Default_Title".localized forState:UIControlStateNormal];
-    if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp]){
+    if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp]) {
         [_appButton setTitle:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp] forState:UIControlStateNormal];
     } else {
         [_appButton setTitle:@"Filter_View_Application_Default_Title".localized forState:UIControlStateNormal];
+    }
+    if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval]) {
+         NSUInteger timeIntervalArrayPosition = [TIME_INTERVAL_VALUE_ARRAY indexOfObject:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval]];
+        [_timeIntervalButton setTitle: [TIME_INTERVAL_TITLE_ARRAY objectAtIndex:timeIntervalArrayPosition] forState:UIControlStateNormal];
     }
     if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType]) {       
         [self setTypeTitleAndFilterValue: [TYPE_FILTER_VALUE_ARRAY indexOfObject: [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType]]];
@@ -268,10 +272,11 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         }
         [[NSUserDefaults standardUserDefaults] setObject:_selectedType forKey: kPFUserDefaultsKeyUserSelectionFilterType];
         if (![_selectedTimeInterval isEqualToString: kEmptyString]) {
-            filters[kFilterMonthKey] = _selectedTimeInterval;
+            filters[kFilterKeyMonth] = _selectedTimeInterval;
         }
+        [[NSUserDefaults standardUserDefaults] setObject:_selectedTimeInterval forKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval];
         if (![_selectedYear isEqualToString: kEmptyString] && [self showYearViewWithInterval:_selectedTimeInterval]) {
-            filters[kFilterYearKey] = _selectedYear;
+            filters[kFilterKeyYear] = _selectedYear;
         }
     }
     [self.filtersViewDelegate didSelectAcceptButton: filters];
