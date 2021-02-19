@@ -69,6 +69,8 @@ static NSString *const kPFUserDefaultsKeyUserSelectionFilterSubject
  = @"userSelectionFilterSubject";
 static NSString *const kPFUserDefaultsKeyUserSelectionFilterApp
  = @"userSelectionFilterApplication";
+static NSString *const kPFUserDefaultsKeyUserSelectionFilterType
+ = @"userSelectionFilterType";
 static NSString *const kPFUserDefaultsKeyUserRoles = @"userRoles";
 static NSString *const kPFUserDefaultsKeyUserRoleSelected = @"userRoleSelected";
 static NSString *const kPFUserDefaultsKeyUserConfigurationCompatible = @"UserConfigurationCompatible";
@@ -90,9 +92,9 @@ static NSString *const kUserRoleUserDNIKey = @"dni";
 static NSString *const kUserRoleRoleNameValidator = @"VALIDADOR";
 
 //Filters
-static NSString *const kFilterTypeKey =  @"tipoFilter";
-static NSString *const kFilterTypeViewAll =  @"view_all";
-static NSString *const kFilterTypeViewNoValidate =  @"view_no_validate";
+static NSString *const kPFFilterKeyType =  @"tipoFilter";
+static NSString *const kPFFilterValueTypeViewAll =  @"view_all";
+static NSString *const kPFFilterValueTypeViewNoValidate =  @"view_no_validate";
 static NSString *const kFilterMonthKey =  @"mesFilter";
 static NSString *const kFilterYearKey =  @"anioFilter";
 static NSString *const kFilterMonthAll =  @"all";

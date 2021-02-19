@@ -127,7 +127,9 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     } else {
         [_appButton setTitle:@"Filter_View_Application_Default_Title".localized forState:UIControlStateNormal];
     }
-    if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqualToString:kUserRoleRoleNameValidator]) {
+    if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType]) {       
+        [self setTypeTitleAndFilterValue: [TYPE_FILTER_VALUE_ARRAY indexOfObject: [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType]]];
+    } else if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqualToString:kUserRoleRoleNameValidator]) {
         [self setTypeTitleAndFilterValue: RequestTypeTitleNotValidated];
     } else {
         [self setTypeTitleAndFilterValue: RequestTypeTitleAll];
@@ -136,8 +138,9 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 }
 
 - (void)setPreviousSelectedFiltersByUser {
-        _topicTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSubject];
-        _selectedApp = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp];
+    _topicTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSubject];
+    _selectedApp = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp];
+    _selectedType = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType];
 }
 
 - (void) setTypeTitleAndFilterValue: (NSInteger)selection {
@@ -261,8 +264,9 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         }
         [[NSUserDefaults standardUserDefaults] setObject:_selectedApp forKey: kPFUserDefaultsKeyUserSelectionFilterApp];
         if (![_selectedType isEqualToString: kEmptyString]) {
-            filters[kFilterTypeKey] = _selectedType;
+            filters[kPFFilterKeyType] = _selectedType;
         }
+        [[NSUserDefaults standardUserDefaults] setObject:_selectedType forKey: kPFUserDefaultsKeyUserSelectionFilterType];
         if (![_selectedTimeInterval isEqualToString: kEmptyString]) {
             filters[kFilterMonthKey] = _selectedTimeInterval;
         }
