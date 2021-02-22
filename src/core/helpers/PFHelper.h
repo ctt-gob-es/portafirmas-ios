@@ -65,6 +65,8 @@ static NSString *const kPFUserDefaultsKeyDNI = @"DNI";
 static NSString *const kPFUserDefaultsKeyServersArray = @"serversArray";
 static NSString *const kPFUserDefaultsKeyRemoteCertificates = @"remoteCertificates";
 static NSString *const kPFUserDefaultsKeyRemoteCertificatesSelection = @"remoteCertificatesSelection";
+static NSString *const kPFUserDefaultsKeyUserSelectionFilterSortCriteria
+ = @"userSelectionFilterSortCriteria";
 static NSString *const kPFUserDefaultsKeyUserSelectionFilterSubject
  = @"userSelectionFilterSubject";
 static NSString *const kPFUserDefaultsKeyUserSelectionFilterApp
@@ -124,7 +126,6 @@ static NSString *const kUserNotificationsConfigActivated =  @"S";
 + (PFRequestStatus)getPFRequestStatusFromString:(NSString *)string;
 + (PFRequestStatus)getPFRequestStatusFromClass:(Class)classObject;
 + (PFRequestCode)getPFRequestCodeForSection:(NSInteger)section;
-+ (NSString *)getPFSortCriteriaValueForRow:(PFSortPickerRow)row;
 + (NSArray *)getYearsForFilter;
 + (NSString *)getCurrentYear;
 

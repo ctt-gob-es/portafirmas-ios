@@ -20,9 +20,6 @@
 #import "PFHelper.h"
 #import "FiltersView.h"
 
-
-#define SORT_CRITERIA_ARRAY @[@"Fecha", @"Asunto", @"Aplicación"]
-
 static const CGFloat kFilterVCPickerHeight = 30.f;
 static const CGFloat kFilterVCToolBarHeight = 44.f;
 static const CGFloat kFilterVCDefaultMargin = 14.f;

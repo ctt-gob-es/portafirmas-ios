@@ -13,7 +13,9 @@
 #import "LoginService.h"
 #import "PushNotificationService.h"
 
-#define SORT_CRITERIA_ARRAY @[@"Filter_View_Sort_Criteria_Array_Date".localized, @"Filter_View_Sort_Criteria_Array_Topic".localized, @"Filter_View_Sort_Criteria_Array_Application".localized]
+#define SORT_CRITERIA_TITLE_ARRAY @[@"Filter_View_Sort_Criteria_Array_Date".localized, @"Filter_View_Sort_Criteria_Array_Topic".localized, @"Filter_View_Sort_Criteria_Array_Application".localized]
+
+#define SORT_CRITERIA_VALUE_ARRAY @[@"fmodified", @"dsubject", @"application"]
 
 #define TYPE_TITLE_ARRAY @[@"Filter_View_Type_Title_Array_All_Types".localized, @"Filter_View_Type_Title_Array_Sign_Requests".localized, @"Filter_View_Type_Title_Array_Approval_Requests".localized, @"Filter_View_Type_Title_Array_Validated".localized, @"Filter_View_Type_Title_Array_Not_Validated".localized]
 
@@ -116,8 +118,14 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 }
 
 -(void) initDefaultPickerValues {
-    _selectedSort = kEmptyString;
-    [_sortButton setTitle:@"Filter_View_Sort_Criteria_Default_Title".localized forState:UIControlStateNormal];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSortCriteria]) {
+        NSInteger sortCriteriaArrayPosition = [SORT_CRITERIA_VALUE_ARRAY indexOfObject: [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSortCriteria]];
+        [_sortButton setTitle:SORT_CRITERIA_TITLE_ARRAY[sortCriteriaArrayPosition] forState:UIControlStateNormal];
+        _selectedSort = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSortCriteria];
+    } else {
+        [_sortButton setTitle:@"Filter_View_Sort_Criteria_Default_Title".localized forState:UIControlStateNormal];
+        _selectedSort = kEmptyString;
+    }
     if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp]) {
         [_appButton setTitle:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp] forState:UIControlStateNormal];
         _selectedApp = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp];
@@ -260,11 +268,11 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 }
 
 - (IBAction)didSelectAcceptButton:(id)sender {
-    NSMutableDictionary *filters = [@{} mutableCopy];
-    NSString *sortValue = [PFHelper getPFSortCriteriaValueForRow:[_sortPickerView selectedRowInComponent:0]];
+    NSMutableDictionary *filters = [@{} mutableCopy];    
     if (![_selectedSort isEqualToString: kEmptyString]) {
-        filters[kPFFilterKeySortCriteria] = sortValue;
+        filters[kPFFilterKeySortCriteria] = _selectedSort;
         filters[kPFFilterKeySort] = kPFFilterValueSortDesc;
+        [[NSUserDefaults standardUserDefaults] setObject:_selectedSort forKey: kPFUserDefaultsKeyUserSelectionFilterSortCriteria];
     }
     if ([_enableFiltersSwitch isOn]) {
         if (_topicTextField.text && _topicTextField.text.length > 0) {
@@ -349,7 +357,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     if ([pickerView isEqual:_sortPickerView]) {
-        return SORT_CRITERIA_ARRAY.count;
+        return SORT_CRITERIA_TITLE_ARRAY.count;
     } else if ([pickerView isEqual:_appPickerView]) {
         return [[AppListXMLController sharedInstance] appsArray] ? [[AppListXMLController sharedInstance] appsArray].count : 0;
     } else if ([pickerView isEqual:_typePickerView]) {
@@ -366,7 +374,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     if ([pickerView isEqual:_sortPickerView]) {
-        return SORT_CRITERIA_ARRAY[row];
+        return SORT_CRITERIA_TITLE_ARRAY[row];
     } else if ([pickerView isEqual:_appPickerView]) {
         return [[AppListXMLController sharedInstance] appsArray] ? [[AppListXMLController sharedInstance] appsArray][row] : nil;
     } else if ([pickerView isEqual:_typePickerView]) {
@@ -385,9 +393,9 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     if ([pickerView isEqual:_sortPickerView]) {
-        [_sortButton setTitle:SORT_CRITERIA_ARRAY[row] forState:UIControlStateNormal];
+        [_sortButton setTitle:SORT_CRITERIA_TITLE_ARRAY[row] forState:UIControlStateNormal];
         [_sortButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        _selectedSort = SORT_CRITERIA_ARRAY[row] ;
+        _selectedSort = SORT_CRITERIA_VALUE_ARRAY[row] ;
     } else if ([pickerView isEqual:_appPickerView]) {
         [_appButton setTitle:[[AppListXMLController sharedInstance] appsArray][row] forState:UIControlStateNormal];
         [_appButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
