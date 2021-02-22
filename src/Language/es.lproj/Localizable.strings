@@ -51,6 +51,7 @@
 "Filter_View_Sort_Criteria_Array_Topic" = "Asunto";
 "Filter_View_Sort_Criteria_Array_Application" = "Aplicación";
 "Filter_View_Application_Default_Title" = "Selecciona una aplicación";
+"Filter_View_Application_Default_All_Title" = "Todas";
 "Filter_View_Type_Title_Array_All_Types" = "Todos los tipos";
 "Filter_View_Type_Title_Array_Sign_Requests" = "Ver peticiones de firma";
 "Filter_View_Type_Title_Array_Approval_Requests" = "Ver peticiones de visto bueno";

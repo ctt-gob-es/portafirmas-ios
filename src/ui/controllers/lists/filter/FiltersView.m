@@ -279,10 +279,12 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
             filters[kPFFilterKeySubject] = _topicTextField.text;
         }
         [[NSUserDefaults standardUserDefaults] setObject:_topicTextField.text forKey: kPFUserDefaultsKeyUserSelectionFilterSubject];
-        if (![_selectedApp isEqualToString: kEmptyString]) {
+        if (![_selectedApp isEqualToString: kEmptyString] && ![_selectedApp isEqualToString: @"Filter_View_Application_Default_All_Title".localized]) {
             filters[kPFFilterKeyApp] = _selectedApp;
+            [[NSUserDefaults standardUserDefaults] setObject:_selectedApp forKey: kPFUserDefaultsKeyUserSelectionFilterApp];
+        } else {
+            [[NSUserDefaults standardUserDefaults] setObject: nil forKey: kPFUserDefaultsKeyUserSelectionFilterApp];
         }
-        [[NSUserDefaults standardUserDefaults] setObject:_selectedApp forKey: kPFUserDefaultsKeyUserSelectionFilterApp];
         if (![_selectedType isEqualToString: kEmptyString]) {
             filters[kPFFilterKeyType] = _selectedType;
         }
