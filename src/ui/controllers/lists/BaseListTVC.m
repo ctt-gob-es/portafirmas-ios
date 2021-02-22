@@ -124,6 +124,12 @@
     if (roleSelected && [[[roleSelected objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: kUserRoleRoleNameValidator] ){
             [_filtersDict setObject: [[roleSelected objectForKey:kFilterDNIKey]objectForKey:kContentKey] forKey:kFilterDNIValidator];
     }
+    if (![_filtersDict objectForKey:kPFFilterKeySubject] && [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSubject]){
+        [_filtersDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSubject] forKey:kPFFilterKeySubject];
+    }
+    if (![_filtersDict objectForKey:kPFFilterKeyApp] && [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp]){
+        [_filtersDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp] forKey:kPFFilterKeyApp];
+    }
     if (![_filtersDict objectForKey:kPFFilterKeyType]){
         if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType]) {
             [_filtersDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType] forKey:kPFFilterKeyType];
@@ -132,13 +138,6 @@
         } else {
             [_filtersDict setObject:kPFFilterValueTypeViewAll forKey:kPFFilterKeyType];
         }
-    }
-    //Preselected by user
-    if (![_filtersDict objectForKey:kPFFilterKeySubject] && [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSubject]){
-        [_filtersDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSubject] forKey:kPFFilterKeySubject];
-    }
-    if (![_filtersDict objectForKey:kPFFilterKeyApp] && [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp]){
-        [_filtersDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp] forKey:kPFFilterKeyApp];
     }
     if (![_filtersDict objectForKey:kPFFilterKeyType] && [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType]){
         [_filtersDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType] forKey:kPFFilterKeyType];
