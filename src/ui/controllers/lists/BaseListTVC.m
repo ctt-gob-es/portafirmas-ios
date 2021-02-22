@@ -150,6 +150,11 @@
             [_filtersDict setObject:kFilterMonthAll forKey:kFilterKeyMonth];
         }
     }
+    if (![_filtersDict objectForKey:kFilterKeyYear]){
+        if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterYear]){
+            [_filtersDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterYear] forKey:kFilterKeyYear];
+        }
+    }
 }
 
 #pragma mark - WSDelegate

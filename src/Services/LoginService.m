@@ -186,6 +186,7 @@ static NSString *const kSessionId = @"sessionId";
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyUserSelectionFilterApp];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyUserSelectionFilterType];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyUserSelectionFilterYear];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

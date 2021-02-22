@@ -73,6 +73,8 @@ static NSString *const kPFUserDefaultsKeyUserSelectionFilterType
  = @"userSelectionFilterType";
 static NSString *const kPFUserDefaultsKeyUserSelectionFilterTimeInterval
  = @"userSelectionFilterTimeInterval";
+static NSString *const kPFUserDefaultsKeyUserSelectionFilterYear
+ = @"userSelectionFilterYear";
 static NSString *const kPFUserDefaultsKeyUserRoles = @"userRoles";
 static NSString *const kPFUserDefaultsKeyUserRoleSelected = @"userRoleSelected";
 static NSString *const kPFUserDefaultsKeyUserConfigurationCompatible = @"UserConfigurationCompatible";
