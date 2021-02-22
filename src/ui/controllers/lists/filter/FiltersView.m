@@ -125,6 +125,13 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         [_appButton setTitle:@"Filter_View_Application_Default_Title".localized forState:UIControlStateNormal];
         _selectedApp = kEmptyString;
     }
+    if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType]) {
+        [self setTypeTitleAndFilterValue: [TYPE_FILTER_VALUE_ARRAY indexOfObject: [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType]]];
+    } else if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqualToString:kUserRoleRoleNameValidator]) {
+        [self setTypeTitleAndFilterValue: RequestTypeTitleNotValidated];
+    } else {
+        [self setTypeTitleAndFilterValue: RequestTypeTitleAll];
+    }
     if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval]) {
         NSInteger timeIntervalArrayPosition = [TIME_INTERVAL_VALUE_ARRAY indexOfObject: [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval]];
         [_timeIntervalButton setTitle: [TIME_INTERVAL_TITLE_ARRAY objectAtIndex:timeIntervalArrayPosition] forState:UIControlStateNormal];
@@ -139,13 +146,6 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     } else {
         [_yearButton setTitle:[PFHelper getCurrentYear] forState:UIControlStateNormal];
         _selectedYear = [PFHelper getCurrentYear];
-    }
-    if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType]) {
-        [self setTypeTitleAndFilterValue: [TYPE_FILTER_VALUE_ARRAY indexOfObject: [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType]]];
-    } else if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqualToString:kUserRoleRoleNameValidator]) {
-        [self setTypeTitleAndFilterValue: RequestTypeTitleNotValidated];
-    } else {
-        [self setTypeTitleAndFilterValue: RequestTypeTitleAll];
     }
 }
 
