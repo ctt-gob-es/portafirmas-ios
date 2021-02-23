@@ -137,6 +137,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         [self setTypeTitleAndFilterValue: [TYPE_FILTER_VALUE_ARRAY indexOfObject: [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType]]];
     } else if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqualToString:kUserRoleRoleNameValidator]) {
         [self setTypeTitleAndFilterValue: RequestTypeTitleNotValidated];
+    } else if ([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserHasValidator]) {
+        [self setTypeTitleAndFilterValue: RequestTypeTitleValidated];
     } else {
         [self setTypeTitleAndFilterValue: RequestTypeTitleAll];
     }

@@ -80,6 +80,7 @@ static NSString *const kPFUserDefaultsKeyUserSelectionFilterYear
 static NSString *const kPFUserDefaultsKeyUserRoles = @"userRoles";
 static NSString *const kPFUserDefaultsKeyUserRoleSelected = @"userRoleSelected";
 static NSString *const kPFUserDefaultsKeyUserConfigurationCompatible = @"UserConfigurationCompatible";
+static NSString *const kPFUserDefaultsKeyUserHasValidator = @"UserHasValidator";
 static NSString *const kPFUserDefaultsKeyPortafirmasNotificationsActivated = @"PortafirmasNotificationsActivated";
 static NSString *const kPFUserDefaultsKeyUserNotificationsActivated = @"UserNotificationsActivated";
 static NSString *const kPFUserDefaultsKeyPushNotificationsServiceToken = @"PushNotificationsServiceToken";
@@ -96,10 +97,12 @@ static NSString *const kUserRoleUserNameKey = @"userName";
 static NSString *const kUserRoleRoleNameKey = @"roleName";
 static NSString *const kUserRoleUserDNIKey = @"dni";
 static NSString *const kUserRoleRoleNameValidator = @"VALIDADOR";
+static NSString *const kUserRoleUserHasValidator = @"S";
 
 //Filters
 static NSString *const kPFFilterKeyType =  @"tipoFilter";
 static NSString *const kPFFilterValueTypeViewAll =  @"view_all";
+static NSString *const kPFFilterValueTypeViewValidate =  @"view_validate";
 static NSString *const kPFFilterValueTypeViewNoValidate =  @"view_no_validate";
 static NSString *const kFilterKeyMonth =  @"mesFilter";
 static NSString *const kFilterKeyYear =  @"anioFilter";

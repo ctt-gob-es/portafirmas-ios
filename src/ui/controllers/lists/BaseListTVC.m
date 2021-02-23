@@ -139,12 +139,11 @@
             [_filtersDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType] forKey:kPFFilterKeyType];
         } else if (roleSelected && [[[roleSelected objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: kUserRoleRoleNameValidator] ){
             [_filtersDict setObject:kPFFilterValueTypeViewNoValidate forKey:kPFFilterKeyType];
-        } else {
+        } else if ([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserHasValidator]) {
             [_filtersDict setObject:kPFFilterValueTypeViewAll forKey:kPFFilterKeyType];
+        } else {
+            [_filtersDict setObject:kPFFilterValueTypeViewValidate forKey:kPFFilterKeyType];
         }
-    }
-    if (![_filtersDict objectForKey:kPFFilterKeyType] && [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType]){
-        [_filtersDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType] forKey:kPFFilterKeyType];
     }
     if (![_filtersDict objectForKey:kFilterKeyMonth]){
         if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval]){
