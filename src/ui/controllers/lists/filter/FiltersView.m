@@ -96,6 +96,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [_yearView setHidden:YES];
     [_typeView setHidden:![[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible]];
     [self setupPickers];
+    [self setFiltersSwitch];
 }
 
 #pragma mark - User Interface
@@ -207,7 +208,25 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     }
 }
 
--(void)setFooterStyle {
+- (void)setFiltersSwitch {
+    [_enableFiltersSwitch setOn:NO];
+    if (([[NSUserDefaults standardUserDefaults]objectForKey:kPFUserDefaultsKeyUserSelectionFilterSubject] != nil &&
+         ![[[NSUserDefaults standardUserDefaults]objectForKey:kPFUserDefaultsKeyUserSelectionFilterSubject] isEqualToString:kEmptyString]) ||
+        ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp] != nil &&
+         ![[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp] isEqualToString:kEmptyString]) ||
+        [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType] != nil ||
+        [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval] != nil ||
+        [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterYear]
+        ) {
+        [_enableFiltersSwitch setOn:YES];
+        [self enableFiltersButtons: YES];
+    } else {
+        [_enableFiltersSwitch setOn:NO];
+        [self enableFiltersButtons: NO];
+    }
+}
+
+- (void)setFooterStyle {
     [_footerView setBackgroundColor: BACKGROUND_COLOR_GRAY_FOR_TOOLBAR];
     [_acceptButton setTitle:@"Filter_View_Footer_Accept_Button_Title".localized forState:normal];
     [_cancelButton setTitle:@"Filter_View_Footer_Cancel_Button_Title".localized forState:normal];
@@ -260,7 +279,10 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 }
 
 - (IBAction)didUpdateValueForFilterSwitch:(id)sender {
-    BOOL enable = [sender isOn];
+    [self enableFiltersButtons:[sender isOn]];
+}
+
+- (void) enableFiltersButtons:(BOOL)enable {
     [_topicTextField setEnabled:enable];
     [_appButton setEnabled:(![[AppListXMLController sharedInstance] appsArray] || [[AppListXMLController sharedInstance] appsArray].count == 0) ? NO:enable];
     [_typeButton setEnabled:enable];
