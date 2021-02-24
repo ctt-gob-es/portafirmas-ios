@@ -40,7 +40,7 @@
 }
 
 + (NSString *)certificateTag {
-    NSString *certificateString = [NSData base64EncodeData:[[CertificateUtils sharedWrapper] publicKeyBits]];
+    NSString *certificateString = [[[CertificateUtils sharedWrapper] publicKeyBits] base64EncodedString];
     if (certificateString){
         NSMutableString *certificateTag = [@"<cert>" mutableCopy];
         [certificateTag appendFormat:@"%@", certificateString];
