@@ -172,9 +172,7 @@ struct {
 
 - (void)doParse:(NSData *)data
 {
-    if(data.length != 0) {
-        [_delegate doParse: data];
-    }
+    [_delegate doParse: data];
 }
 
 - (void)cancelConnection
