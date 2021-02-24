@@ -211,6 +211,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
                             [self setUserNotificationsConfigInLocalStorage: [[content objectForKey:@"rsgtsrcg"] objectForKey:@"srvrf"]];
                             [self initializePushNotificationServiceIfActivated];
                             NSDictionary *responseUserRolesDict = [[content objectForKey:@"rsgtsrcg"] objectForKey:@"rls"];
+                            [self setUserHasValidator:[[content objectForKey:@"rsgtsrcg"] objectForKey:@"ntpsh"]];
                             if ([responseUserRolesDict count] == 0) {
                                 //User with no roles continue as always
                                 segue = YES;
@@ -302,6 +303,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
             [self setUserNotificationsConfigInLocalStorage: [[content objectForKey:@"rsgtsrcg"] objectForKey:@"srvrf"]];
             [self initializePushNotificationServiceIfActivated];
             NSDictionary *responseUserRolesDict = [[content objectForKey:@"rsgtsrcg"] objectForKey:@"rls"];
+            [self setUserHasValidator:[[content objectForKey:@"rsgtsrcg"] objectForKey:@"ntpsh"]];
             if ([responseUserRolesDict count] == 0) {
                 //User with no roles continue as always
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -323,10 +325,15 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
     }];
 }
 
--(void) initializePushNotificationServiceIfActivated {
+- (void) initializePushNotificationServiceIfActivated {
     if([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyPortafirmasNotificationsActivated]) {
         [[PushNotificationService instance] initializePushNotificationsService:false];
     }
+}
+
+- (void) setUserHasValidator:(NSDictionary*)userHasValidator {
+    [[NSUserDefaults standardUserDefaults] setBool:[[userHasValidator objectForKey:kContentKey]  isEqual: kUserRoleUserHasValidator] forKey:kPFUserDefaultsKeyUserHasValidator];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (void) setRolesInLocalStorage:(NSDictionary*)userRolesDictionary {

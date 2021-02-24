@@ -64,24 +64,6 @@ static NSString *const kPFHelperClassNamePendingList = @"UnassignedRequestTableV
 	return PFRequestCodeDocumentPreview;
 }
 
-+ (NSString *)getPFSortCriteriaValueForRow:(PFSortPickerRow)row
-{
-    switch (row) {
-        case PFSortPickerRowDate:
-
-            return kPFFilterValueSortCriteriaDate;
-        case PFSortPickerRowSubject:
-
-            return kPFFilterValueSortCriteriaSubject;
-        case PFSortPickerRowApp:
-
-            return kPFFilterValueSortCriteriaApp;
-        default:
-
-            return nil;
-    }
-}
-
 + (NSString *)getCurrentYear {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"yyyy"];

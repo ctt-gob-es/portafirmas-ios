@@ -129,6 +129,7 @@ static AppListXMLController *_sharedInstance = nil;
 
     if ([elementName isEqualToString:@"appConf"]) {
         _appsArray = [@[] mutableCopy];
+        [_appsArray addObject:@"Filter_View_Application_Default_All_Title".localized];
     }
 
     if ([elementName isEqualToString:@"app"]) {

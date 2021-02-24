@@ -99,6 +99,7 @@ static NSString *const kSessionId = @"sessionId";
 
 - (void) loginWithRemoteCertificates:(void(^)(void))success failure:(void(^)(NSError *error))failure {
 	LoginNetwork *loginNetwork = [LoginNetwork new];
+    [self resetUserValues];
 	[loginNetwork loginWithRemoteCertificates:^(NSDictionary *content) {
 		[self setRemoteCertificatesParameters: content];
 		self.remoteCertificateLoginOK = YES;
@@ -118,6 +119,7 @@ static NSString *const kSessionId = @"sessionId";
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[SVProgressHUD show];
 	});
+    [self resetUserValues];
 	[self extracted:failure success:success];
 }
 
@@ -127,18 +129,17 @@ static NSString *const kSessionId = @"sessionId";
 	});
 
 	LoginNetwork *loginNetwork = [LoginNetwork new];
+    [self resetUserValues];
 
 	[loginNetwork logout:^{
 		dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];
 		});
-        [self resetValuesAfterLogout];
         success();
     } failure:^(NSError *error) {
        dispatch_async(dispatch_get_main_queue(), ^{
 			[SVProgressHUD dismiss];
 		});
-        [self resetValuesAfterLogout];
         failure(error);
     }];
 }
@@ -171,7 +172,7 @@ static NSString *const kSessionId = @"sessionId";
 	}
 }
 
-- (void) resetValuesAfterLogout {
+- (void) resetUserValues {
     self.serverSupportLogin = NO;
     self.remoteCertificateLoginOK = NO;
     self.currentSignToken = @"";
@@ -182,6 +183,13 @@ static NSString *const kSessionId = @"sessionId";
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoles];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoleSelected];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyPushNotificationsServiceToken];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyUserSelectionFilterSubject];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyUserSelectionFilterApp];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyUserSelectionFilterType];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyUserSelectionFilterYear];
+    [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyUserSelectionFilterSortCriteria];
+    [[NSUserDefaults standardUserDefaults] setBool: NO forKey: kPFUserDefaultsKeyUserHasValidator];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

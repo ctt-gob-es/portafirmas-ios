@@ -13,7 +13,9 @@
 #import "LoginService.h"
 #import "PushNotificationService.h"
 
-#define SORT_CRITERIA_ARRAY @[@"Filter_View_Sort_Criteria_Array_Date".localized, @"Filter_View_Sort_Criteria_Array_Topic".localized, @"Filter_View_Sort_Criteria_Array_Application".localized]
+#define SORT_CRITERIA_TITLE_ARRAY @[@"Filter_View_Sort_Criteria_Array_Date".localized, @"Filter_View_Sort_Criteria_Array_Topic".localized, @"Filter_View_Sort_Criteria_Array_Application".localized]
+
+#define SORT_CRITERIA_VALUE_ARRAY @[@"fmodified", @"dsubject", @"application"]
 
 #define TYPE_TITLE_ARRAY @[@"Filter_View_Type_Title_Array_All_Types".localized, @"Filter_View_Type_Title_Array_Sign_Requests".localized, @"Filter_View_Type_Title_Array_Approval_Requests".localized, @"Filter_View_Type_Title_Array_Validated".localized, @"Filter_View_Type_Title_Array_Not_Validated".localized]
 
@@ -49,6 +51,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 @property (nonatomic, strong) IBOutlet UIButton *typeButton;
 @property (nonatomic, strong) IBOutlet UIPickerView *typePickerView;
 @property (weak, nonatomic) IBOutlet UIView *typeView;
+@property (weak, nonatomic) IBOutlet UIView *timeFilterView;
 @property (nonatomic, strong) IBOutlet UIButton *timeIntervalButton;
 @property (nonatomic, strong) IBOutlet UIPickerView *timeIntervalPickerView;
 @property (nonatomic, strong) IBOutlet UIButton *yearButton;
@@ -84,6 +87,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [super awakeFromNib];
     [self listenNotificationAboutPushNotifications];
     self.backgroundColor = [UIColor greenColor];
+    [self setPreviousSelectedFiltersByUser];
+    [self showTimeFiltersIfNeeded];
     [self showNotificationSectionIfNeeded];
     [self showNotificationSectionState];
     [self showChangeRoleOptionIfNeeded];
@@ -91,6 +96,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [_yearView setHidden:YES];
     [_typeView setHidden:![[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible]];
     [self setupPickers];
+    [self setFiltersSwitch];
 }
 
 #pragma mark - User Interface
@@ -113,19 +119,51 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 }
 
 -(void) initDefaultPickerValues {
-    _selectedSort = kEmptyString;
-    _selectedApp = kEmptyString;
-    _selectedType = kEmptyString;
-    _selectedTimeInterval = kEmptyString;
-    _selectedYear = [PFHelper getCurrentYear];
-    [_sortButton setTitle:@"Filter_View_Sort_Criteria_Default_Title".localized forState:UIControlStateNormal];
-    [_appButton setTitle:@"Filter_View_Application_Default_Title".localized forState:UIControlStateNormal];
-    if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqualToString:kUserRoleRoleNameValidator]) {
+    if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSortCriteria]) {
+        NSInteger sortCriteriaArrayPosition = [SORT_CRITERIA_VALUE_ARRAY indexOfObject: [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSortCriteria]];
+        [_sortButton setTitle:SORT_CRITERIA_TITLE_ARRAY[sortCriteriaArrayPosition] forState:UIControlStateNormal];
+        _selectedSort = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSortCriteria];
+    } else {
+        [_sortButton setTitle:@"Filter_View_Sort_Criteria_Default_Title".localized forState:UIControlStateNormal];
+        _selectedSort = kEmptyString;
+    }
+    if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp]) {
+        [_appButton setTitle:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp] forState:UIControlStateNormal];
+        _selectedApp = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp];
+    } else {
+        [_appButton setTitle:@"Filter_View_Application_Default_Title".localized forState:UIControlStateNormal];
+        _selectedApp = kEmptyString;
+    }
+    if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType]) {
+        [self setTypeTitleAndFilterValue: [TYPE_FILTER_VALUE_ARRAY indexOfObject: [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType]]];
+    } else if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqualToString:kUserRoleRoleNameValidator]) {
         [self setTypeTitleAndFilterValue: RequestTypeTitleNotValidated];
+    } else if ([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserHasValidator]) {
+        [self setTypeTitleAndFilterValue: RequestTypeTitleValidated];
     } else {
         [self setTypeTitleAndFilterValue: RequestTypeTitleAll];
     }
-    [_yearButton setTitle:[PFHelper getCurrentYear] forState:UIControlStateNormal];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval]) {
+        NSInteger timeIntervalArrayPosition = [TIME_INTERVAL_VALUE_ARRAY indexOfObject: [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval]];
+        [_timeIntervalButton setTitle: [TIME_INTERVAL_TITLE_ARRAY objectAtIndex:timeIntervalArrayPosition] forState:UIControlStateNormal];
+        _selectedTimeInterval = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval];
+    } else {
+        _selectedTimeInterval = kEmptyString;
+    }
+    if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterYear]) {
+        [_yearButton setTitle:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterYear] forState:UIControlStateNormal];
+        [_yearView setHidden:![self showYearViewWithInterval:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval]]];
+        _selectedYear = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterYear];
+    } else {
+        [_yearButton setTitle:[PFHelper getCurrentYear] forState:UIControlStateNormal];
+        _selectedYear = [PFHelper getCurrentYear];
+    }
+}
+
+- (void)setPreviousSelectedFiltersByUser {
+    _topicTextField.text = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSubject];
+    _selectedApp = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp];
+    _selectedType = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType];
 }
 
 - (void) setTypeTitleAndFilterValue: (NSInteger)selection {
@@ -135,6 +173,14 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (BOOL) showYearViewWithInterval: (NSString*)interval {
     return [TIME_INTERVAL_MONTH_VALUES_ARRAY containsObject: interval];
+}
+
+-(void)showTimeFiltersIfNeeded {
+    if ([[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible]) {
+        [_timeFilterView setHidden: NO];
+    } else {
+        [_timeFilterView setHidden: YES];
+    }
 }
 
 - (void) showNotificationSectionIfNeeded {
@@ -162,7 +208,25 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     }
 }
 
--(void)setFooterStyle {
+- (void)setFiltersSwitch {
+    [_enableFiltersSwitch setOn:NO];
+    if (([[NSUserDefaults standardUserDefaults]objectForKey:kPFUserDefaultsKeyUserSelectionFilterSubject] != nil &&
+         ![[[NSUserDefaults standardUserDefaults]objectForKey:kPFUserDefaultsKeyUserSelectionFilterSubject] isEqualToString:kEmptyString]) ||
+        ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp] != nil &&
+         ![[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp] isEqualToString:kEmptyString]) ||
+        [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType] != nil ||
+        [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval] != nil ||
+        [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterYear]
+        ) {
+        [_enableFiltersSwitch setOn:YES];
+        [self enableFiltersButtons: YES];
+    } else {
+        [_enableFiltersSwitch setOn:NO];
+        [self enableFiltersButtons: NO];
+    }
+}
+
+- (void)setFooterStyle {
     [_footerView setBackgroundColor: BACKGROUND_COLOR_GRAY_FOR_TOOLBAR];
     [_acceptButton setTitle:@"Filter_View_Footer_Accept_Button_Title".localized forState:normal];
     [_cancelButton setTitle:@"Filter_View_Footer_Cancel_Button_Title".localized forState:normal];
@@ -215,7 +279,10 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 }
 
 - (IBAction)didUpdateValueForFilterSwitch:(id)sender {
-    BOOL enable = [sender isOn];
+    [self enableFiltersButtons:[sender isOn]];
+}
+
+- (void) enableFiltersButtons:(BOOL)enable {
     [_topicTextField setEnabled:enable];
     [_appButton setEnabled:(![[AppListXMLController sharedInstance] appsArray] || [[AppListXMLController sharedInstance] appsArray].count == 0) ? NO:enable];
     [_typeButton setEnabled:enable];
@@ -225,27 +292,38 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 }
 
 - (IBAction)didSelectAcceptButton:(id)sender {
-    NSMutableDictionary *filters = [@{} mutableCopy];
-    NSString *sortValue = [PFHelper getPFSortCriteriaValueForRow:[_sortPickerView selectedRowInComponent:0]];
+    NSMutableDictionary *filters = [@{} mutableCopy];    
     if (![_selectedSort isEqualToString: kEmptyString]) {
-        filters[kPFFilterKeySortCriteria] = sortValue;
+        filters[kPFFilterKeySortCriteria] = _selectedSort;
         filters[kPFFilterKeySort] = kPFFilterValueSortDesc;
+        [[NSUserDefaults standardUserDefaults] setObject:_selectedSort forKey: kPFUserDefaultsKeyUserSelectionFilterSortCriteria];
     }
     if ([_enableFiltersSwitch isOn]) {
         if (_topicTextField.text && _topicTextField.text.length > 0) {
             filters[kPFFilterKeySubject] = _topicTextField.text;
         }
-        if (![_selectedApp isEqualToString: kEmptyString]) {
+        [[NSUserDefaults standardUserDefaults] setObject:_topicTextField.text forKey: kPFUserDefaultsKeyUserSelectionFilterSubject];
+        if (![_selectedApp isEqualToString: kEmptyString] && ![_selectedApp isEqualToString: @"Filter_View_Application_Default_All_Title".localized]) {
             filters[kPFFilterKeyApp] = _selectedApp;
+            [[NSUserDefaults standardUserDefaults] setObject:_selectedApp forKey: kPFUserDefaultsKeyUserSelectionFilterApp];
+        } else {
+            [[NSUserDefaults standardUserDefaults] setObject: nil forKey: kPFUserDefaultsKeyUserSelectionFilterApp];
         }
         if (![_selectedType isEqualToString: kEmptyString]) {
-            filters[kFilterTypeKey] = _selectedType;
+            filters[kPFFilterKeyType] = _selectedType;
         }
+        [[NSUserDefaults standardUserDefaults] setObject:_selectedType forKey: kPFUserDefaultsKeyUserSelectionFilterType];
         if (![_selectedTimeInterval isEqualToString: kEmptyString]) {
-            filters[kFilterMonthKey] = _selectedTimeInterval;
+            filters[kFilterKeyMonth] = _selectedTimeInterval;
+            [[NSUserDefaults standardUserDefaults] setObject:_selectedTimeInterval forKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval];
+        } else {
+            [[NSUserDefaults standardUserDefaults] setObject: nil forKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval];
         }
         if (![_selectedYear isEqualToString: kEmptyString] && [self showYearViewWithInterval:_selectedTimeInterval]) {
-            filters[kFilterYearKey] = _selectedYear;
+            filters[kFilterKeyYear] = _selectedYear;
+            [[NSUserDefaults standardUserDefaults] setObject:_selectedYear forKey: kPFUserDefaultsKeyUserSelectionFilterYear];
+        } else {
+            [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyUserSelectionFilterYear];
         }
     }
     [self.filtersViewDelegate didSelectAcceptButton: filters];
@@ -305,7 +383,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
     if ([pickerView isEqual:_sortPickerView]) {
-        return SORT_CRITERIA_ARRAY.count;
+        return SORT_CRITERIA_TITLE_ARRAY.count;
     } else if ([pickerView isEqual:_appPickerView]) {
         return [[AppListXMLController sharedInstance] appsArray] ? [[AppListXMLController sharedInstance] appsArray].count : 0;
     } else if ([pickerView isEqual:_typePickerView]) {
@@ -322,7 +400,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
     if ([pickerView isEqual:_sortPickerView]) {
-        return SORT_CRITERIA_ARRAY[row];
+        return SORT_CRITERIA_TITLE_ARRAY[row];
     } else if ([pickerView isEqual:_appPickerView]) {
         return [[AppListXMLController sharedInstance] appsArray] ? [[AppListXMLController sharedInstance] appsArray][row] : nil;
     } else if ([pickerView isEqual:_typePickerView]) {
@@ -341,9 +419,9 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
     if ([pickerView isEqual:_sortPickerView]) {
-        [_sortButton setTitle:SORT_CRITERIA_ARRAY[row] forState:UIControlStateNormal];
+        [_sortButton setTitle:SORT_CRITERIA_TITLE_ARRAY[row] forState:UIControlStateNormal];
         [_sortButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        _selectedSort = SORT_CRITERIA_ARRAY[row] ;
+        _selectedSort = SORT_CRITERIA_VALUE_ARRAY[row] ;
     } else if ([pickerView isEqual:_appPickerView]) {
         [_appButton setTitle:[[AppListXMLController sharedInstance] appsArray][row] forState:UIControlStateNormal];
         [_appButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -356,7 +434,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         [_timeIntervalButton setTitle: TIME_INTERVAL_TITLE_ARRAY[row] forState:UIControlStateNormal];
         [_timeIntervalButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _selectedTimeInterval = TIME_INTERVAL_VALUE_ARRAY[row];
-        [self.yearView setHidden:![self showYearViewWithInterval:TIME_INTERVAL_VALUE_ARRAY[row]]];
+        [_yearView setHidden:![self showYearViewWithInterval:TIME_INTERVAL_VALUE_ARRAY[row]]];
         _selectedYear = [PFHelper getCurrentYear];
     }  else if ([pickerView isEqual:_yearPickerView]) {
         [_yearButton setTitle: [PFHelper getYearsForFilter][row] forState:UIControlStateNormal];

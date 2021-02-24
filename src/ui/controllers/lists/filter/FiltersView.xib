@@ -570,6 +570,7 @@
                 <outlet property="selectedRoleNameLabel" destination="5CB-eG-zIo" id="MRe-DM-Ies"/>
                 <outlet property="sortButton" destination="gcb-Dm-LVM" id="sbA-6k-HqG"/>
                 <outlet property="sortPickerView" destination="x0g-vH-h29" id="IgD-Ee-jvN"/>
+                <outlet property="timeFilterView" destination="8sh-oL-51G" id="FYd-Bc-XaZ"/>
                 <outlet property="timeIntervalButton" destination="PcI-7q-OeX" id="s6S-ip-319"/>
                 <outlet property="timeIntervalPickerView" destination="scM-7d-tnG" id="oqV-zd-4lV"/>
                 <outlet property="topicTextField" destination="Hod-UW-h2h" id="Fv0-qu-6Rt"/>

@@ -95,7 +95,7 @@
 		});
     }
     if ([[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible]) {
-        [self addDefaultFilters];
+        [self addPreselectedFilters];
     }
     NSString *data = [RequestListXMLController buildDefaultRequestWithState:_dataStatus pageNumber:_currentPage filters:_filtersDict];
     [_wsDataController loadPostRequestWithData:data code:PFRequestCodeList];
@@ -118,19 +118,43 @@
     [self loadData];
 }
 
-- (void)addDefaultFilters {
-    if (![_filtersDict objectForKey:kFilterMonthKey]){
-        [_filtersDict setObject:kFilterMonthAll forKey:kFilterMonthKey];
-    }
+- (void)addPreselectedFilters {
+    //Default
     NSDictionary *roleSelected = [[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected];
     if (roleSelected && [[[roleSelected objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: kUserRoleRoleNameValidator] ){
             [_filtersDict setObject: [[roleSelected objectForKey:kFilterDNIKey]objectForKey:kContentKey] forKey:kFilterDNIValidator];
     }
-    if (![_filtersDict objectForKey:kFilterTypeKey]){
-        if (roleSelected && [[[roleSelected objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: kUserRoleRoleNameValidator] ){
-            [_filtersDict setObject:kFilterTypeViewNoValidate forKey:kFilterTypeKey];
+    if (![_filtersDict objectForKey:kPFFilterKeySortCriteria] && [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSortCriteria]){
+        [_filtersDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSortCriteria] forKey:kPFFilterKeySortCriteria];
+        [_filtersDict setObject:kPFFilterValueSortDesc forKey: kPFFilterKeySort];
+    }
+    if (![_filtersDict objectForKey:kPFFilterKeySubject] && [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSubject]){
+        [_filtersDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSubject] forKey:kPFFilterKeySubject];
+    }
+    if (![_filtersDict objectForKey:kPFFilterKeyApp] && [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp]){
+        [_filtersDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp] forKey:kPFFilterKeyApp];
+    }
+    if (![_filtersDict objectForKey:kPFFilterKeyType]){
+        if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType]) {
+            [_filtersDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterType] forKey:kPFFilterKeyType];
+        } else if (roleSelected && [[[roleSelected objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: kUserRoleRoleNameValidator] ){
+            [_filtersDict setObject:kPFFilterValueTypeViewNoValidate forKey:kPFFilterKeyType];
+        } else if ([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserHasValidator]) {
+            [_filtersDict setObject:kPFFilterValueTypeViewAll forKey:kPFFilterKeyType];
         } else {
-            [_filtersDict setObject:kFilterTypeViewAll forKey:kFilterTypeKey];
+            [_filtersDict setObject:kPFFilterValueTypeViewValidate forKey:kPFFilterKeyType];
+        }
+    }
+    if (![_filtersDict objectForKey:kFilterKeyMonth]){
+        if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval]){
+            [_filtersDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval] forKey:kFilterKeyMonth];
+        } else {
+            [_filtersDict setObject:kFilterMonthAll forKey:kFilterKeyMonth];
+        }
+    }
+    if (![_filtersDict objectForKey:kFilterKeyYear]){
+        if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterYear]){
+            [_filtersDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterYear] forKey:kFilterKeyYear];
         }
     }
 }
