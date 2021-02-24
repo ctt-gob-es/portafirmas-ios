@@ -39,7 +39,6 @@ char *NewBase64Encode(
 + (NSData *)dataFromBase64String:(NSString *)aString;
 - (NSString *)base64EncodedString;
 
-+ (NSString *) base64EncodeString: (NSString *) strData;
 + (NSData *) base64DecodeString: (NSString *) strBase64;
 
 @end

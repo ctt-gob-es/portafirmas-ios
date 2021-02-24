@@ -334,11 +334,6 @@ static const short _base64DecodingTable[256] = {
 	-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2
 };
 
-
-+ (NSString *) base64EncodeString: (NSString *) strData {
-	return [self base64EncodeData: [strData dataUsingEncoding: NSUTF8StringEncoding] ];
-}
-
 + (NSData *) base64DecodeString: (NSString *) strBase64 {
 	const char * objPointer = [strBase64 cStringUsingEncoding:NSASCIIStringEncoding];
 	long intLength = strlen(objPointer);
