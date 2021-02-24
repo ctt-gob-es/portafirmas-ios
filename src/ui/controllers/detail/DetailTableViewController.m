@@ -617,24 +617,14 @@ typedef NS_ENUM(NSUInteger, Operation) {
             processedOK = FALSE;
         }
     }
-
     if (processedOK) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized
-                                                                                 message: @"Correctly_rejected_requests".localized
-                                                                          preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *actionOk = [UIAlertAction actionWithTitle: @"Ok".localized
-                                                           style:UIAlertActionStyleDefault
-                                                         handler:^(UIAlertAction * _Nonnull action) {
-                                                             [self dismissSelfView];
-                                                         }];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized message: @"Correctly_rejected_requests".localized preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *actionOk = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [self dismissSelfView];
+        }];
         [alertController addAction:actionOk];
         [self presentViewController:alertController animated:YES completion:nil];
     }
-	
-   dispatch_async(dispatch_get_main_queue(), ^{
-	   [self dismissViewControllerAnimated:YES completion:nil];
-	});
-
 }
 
 - (void)didReceiveRequestResult:(NSArray *)approvedRequests forOperation: (Operation) operation {
