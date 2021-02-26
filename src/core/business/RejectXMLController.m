@@ -24,8 +24,7 @@
     
     if (![[LoginService instance] serverSupportLogin]) {
         CertificateUtils *cert = [CertificateUtils sharedWrapper];
-        NSString *certificado = [NSData base64EncodeData:[cert publicKeyBits]];
-        
+        NSString *certificado = [[cert publicKeyBits] base64EncodedStringWithOptions: NSDataBase64Encoding76CharacterLineLength];
         // Formats lists message
 		if (certificado) {
 			NSMutableString *certlabel = [[NSMutableString alloc] initWithString:@"<cert>\n"];
