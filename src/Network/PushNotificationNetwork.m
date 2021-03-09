@@ -70,12 +70,15 @@
     }] resume];
 }
 
-+ (void) unSubscribeDeviceSuccess: (void(^)(void))success failure:(void(^)(NSError *error))failure {
++ (void) subscribeDevice:(BOOL)subscribe success: (void(^)(void))success failure:(void(^)(NSError *error))failure {
     NSString *opParameter = @"op";
     NSString *datParameter = @"dat";
     NSString *baseURL = SERVER_URL;
     NSInteger operation = 23;
-    NSString *dataString = [NSString stringWithFormat:@"%@", @"<pdtpshsttsrq>false</pdtpshsttsrq>"];
+    NSString *dataStringOne = @"<pdtpshsttsrq>";
+    NSString *dataStringTwo = subscribe? @"true":@"false" ;
+    NSString *dataStringThree = @"</pdtpshsttsrq>";
+    NSString *dataString = [NSString stringWithFormat:@"%@%@%@",dataStringOne, dataStringTwo, dataStringThree];
     
     NSData *data = [dataString  dataUsingEncoding:NSUTF8StringEncoding];
     NSString *params = [NSString stringWithFormat: @"%@=%lu&%@=%@", opParameter,

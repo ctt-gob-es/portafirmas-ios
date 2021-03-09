@@ -208,10 +208,10 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
                         } else {
                             [self setCompatibilityInLocalStorage:YES];
                             [self setPortafirmasNotificationsConfigInLocalStorage: [[content objectForKey:@"rsgtsrcg"] objectForKey:@"smcg"]];
-                            [self setUserNotificationsConfigInLocalStorage: [[content objectForKey:@"rsgtsrcg"] objectForKey:@"srvrf"]];
+                            [self setUserNotificationsConfigInLocalStorage: [[content objectForKey:@"rsgtsrcg"] objectForKey:@"ntpsh"]];
                             [self initializePushNotificationServiceIfActivated];
                             NSDictionary *responseUserRolesDict = [[content objectForKey:@"rsgtsrcg"] objectForKey:@"rls"];
-                            [self setUserHasValidator:[[content objectForKey:@"rsgtsrcg"] objectForKey:@"ntpsh"]];
+                            [self setUserHasValidator:[[content objectForKey:@"rsgtsrcg"] objectForKey:@"srvrf"]];
                             if ([responseUserRolesDict count] == 0) {
                                 //User with no roles continue as always
                                 segue = YES;
@@ -300,10 +300,10 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
         } else {
             [self setCompatibilityInLocalStorage:YES];
             [self setPortafirmasNotificationsConfigInLocalStorage: [[content objectForKey:@"rsgtsrcg"] objectForKey:@"smcg"]];
-            [self setUserNotificationsConfigInLocalStorage: [[content objectForKey:@"rsgtsrcg"] objectForKey:@"srvrf"]];
+            [self setUserNotificationsConfigInLocalStorage: [[content objectForKey:@"rsgtsrcg"] objectForKey:@"ntpsh"]];
             [self initializePushNotificationServiceIfActivated];
             NSDictionary *responseUserRolesDict = [[content objectForKey:@"rsgtsrcg"] objectForKey:@"rls"];
-            [self setUserHasValidator:[[content objectForKey:@"rsgtsrcg"] objectForKey:@"ntpsh"]];
+            [self setUserHasValidator:[[content objectForKey:@"rsgtsrcg"] objectForKey:@"srvrf"]];
             if ([responseUserRolesDict count] == 0) {
                 //User with no roles continue as always
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -326,7 +326,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 }
 
 - (void) initializePushNotificationServiceIfActivated {
-    if([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyPortafirmasNotificationsActivated]) {
+    if([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyPortafirmasNotificationsActivated] && [[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserNotificationsActivated]) {
         [[PushNotificationService instance] initializePushNotificationsService:false];
     }
 }
@@ -356,7 +356,11 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 - (void) setUserNotificationsConfigInLocalStorage:(NSDictionary *)notificationsDictionary {
     if (notificationsDictionary != nil ) {
-        [[NSUserDefaults standardUserDefaults] setBool:[[notificationsDictionary objectForKey:kContentKey]  isEqual: kUserNotificationsConfigActivated] forKey:kPFUserDefaultsKeyUserNotificationsActivated];
+        if ([[notificationsDictionary objectForKey:kContentKey]  isEqualToString: kUserNotificationsConfigActivated]) {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:kPFUserDefaultsKeyUserNotificationsActivated];
+        } else {
+            [[NSUserDefaults standardUserDefaults] setBool:NO forKey:kPFUserDefaultsKeyUserNotificationsActivated];
+        }
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }

@@ -182,7 +182,6 @@ static NSString *const kSessionId = @"sessionId";
     [[NSUserDefaults standardUserDefaults] setBool: NO  forKey:kPFUserDefaultsKeyUserNotificationsActivated];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoles];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyUserRoleSelected];
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyPushNotificationsServiceToken];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyUserSelectionFilterSubject];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyUserSelectionFilterApp];
     [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyUserSelectionFilterType];
