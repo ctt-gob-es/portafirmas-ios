@@ -58,8 +58,6 @@
                     if (optionTappedByUser) {
                         [[ErrorService instance] showNotAllowNotifications];
                     }
-                    [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyPushNotificationsServiceToken];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
                 });
                 break;
@@ -103,7 +101,7 @@
     if (![[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyPushNotificationsServiceToken] isEqualToString: deviceToken]) {
         [self updateTokenAndSubscribe:deviceToken];
     } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
+        [self subscribe];
     }
 }
 
@@ -130,17 +128,36 @@
     }];
 }
 
+- (void) subscribe {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD show];
+    });
+    [PushNotificationNetwork subscribeDevice:true success:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+        });
+        [self storeUserPushNotificationsToEnabled];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
+    } failure:^(NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD dismiss];
+        });
+        [self storeUserPushNotificationsToEnabled];
+        [[ErrorService instance] showAlertViewWithTitle:@"Alert_View_Can_Not_Subscribe_Notifications_Title".localized andMessage:[error localizedDescription]];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
+    }];
+}
+
 - (void) unsubscribe {
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD show];
     });
-    //Check store the correct user defaults when success and error
-    [PushNotificationNetwork unSubscribeDeviceSuccess:^{
+    [PushNotificationNetwork subscribeDevice:false success:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             [SVProgressHUD dismiss];
         });
         [self restoreUserPushNotificationsSettingsToDefault];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
+       [[NSNotificationCenter defaultCenter] postNotificationName:@"FinishSubscriptionProcessNotification" object:self];
     } failure:^(NSError *error) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [SVProgressHUD dismiss];
@@ -152,8 +169,12 @@
 }
 
 - (void) restoreUserPushNotificationsSettingsToDefault {
-    [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyPushNotificationsServiceToken];
     [[NSUserDefaults standardUserDefaults] setBool: NO forKey:kPFUserDefaultsKeyUserNotificationsActivated];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (void) storeUserPushNotificationsToEnabled {
+    [[NSUserDefaults standardUserDefaults] setBool: YES forKey:kPFUserDefaultsKeyUserNotificationsActivated];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

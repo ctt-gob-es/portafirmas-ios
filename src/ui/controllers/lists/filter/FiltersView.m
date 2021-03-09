@@ -337,7 +337,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (void) showNotificationSectionState {
     self.notificationStateLabel.text = [[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserNotificationsActivated] ? @"Filter_View_Push_Notification_Enabled_Title".localized : @"Filter_View_Push_Notification_Pending_Title".localized;
-    [self.notificationSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserNotificationsActivated]];
+    [self.notificationSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserNotificationsActivated]? YES : NO];
 }
 
 -(IBAction)switchChanged:(UISwitch *)sender {
