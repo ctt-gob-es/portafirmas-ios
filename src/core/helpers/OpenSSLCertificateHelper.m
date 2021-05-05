@@ -91,7 +91,7 @@
         PFCertificateInfo *certificateInfo = [PFCertificateInfo new];
         [certificateInfo setCertificateRef:certificateRef];
         [certificateInfo setIssuer:[self getIssuerNameForCertificate:certificateX509]];
-        [certificateInfo setSubject:[self getSubjectNameForCertificate:certificateX509]];
+        [certificateInfo setSubject:[[NSString alloc]initWithString:(__bridge NSString *)SecCertificateCopySubjectSummary(certificateRef)]];
         [certificateInfo setCreationDate:[self getCreationDateFromCertificate:certificateX509]];
         [certificateInfo setExpirationDate:[self getExpiryDateFromCertificate:certificateX509]];
         [certificateInfo setPurpose:[self getPurposeFromCertificate:certificateX509]];
