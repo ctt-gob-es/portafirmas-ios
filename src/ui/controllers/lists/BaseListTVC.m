@@ -140,9 +140,9 @@
         } else if (roleSelected && [[[roleSelected objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: kUserRoleRoleNameValidator] ){
             [_filtersDict setObject:kPFFilterValueTypeViewNoValidate forKey:kPFFilterKeyType];
         } else if ([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserHasValidator]) {
-            [_filtersDict setObject:kPFFilterValueTypeViewAll forKey:kPFFilterKeyType];
-        } else {
             [_filtersDict setObject:kPFFilterValueTypeViewValidate forKey:kPFFilterKeyType];
+        } else {
+            [_filtersDict setObject:kPFFilterValueTypeViewAll forKey:kPFFilterKeyType];
         }
     }
     if (![_filtersDict objectForKey:kFilterKeyMonth]){
