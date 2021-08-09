@@ -128,9 +128,7 @@ void uncaughtExceptionHandler(NSException *exception)
         [[PushNotificationService instance] resetNotificationRequired];
     }*/
     
-    if ([LoginService instance].serverSupportLogin) {
-       [[PushNotificationService instance] updateTokenOfPushNotificationsService: [tokenHex uppercaseString]];
-    }
+    [[PushNotificationService instance] updateTokenOfPushNotificationsService: [tokenHex uppercaseString]];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(nonnull NSError *)error {
