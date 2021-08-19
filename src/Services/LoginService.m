@@ -119,6 +119,7 @@ static NSString *const kSessionId = @"sessionId";
 	dispatch_async(dispatch_get_main_queue(), ^{
 		[SVProgressHUD show];
 	});
+    _sessionId = nil;
     [self resetUserValues];
 	[self extracted:failure success:success];
 }
@@ -130,6 +131,7 @@ static NSString *const kSessionId = @"sessionId";
 
 	LoginNetwork *loginNetwork = [LoginNetwork new];
     [self resetUserValues];
+    _sessionId = nil;
 
 	[loginNetwork logout:^{
 		dispatch_async(dispatch_get_main_queue(), ^{
