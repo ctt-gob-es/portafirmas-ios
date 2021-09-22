@@ -31,6 +31,7 @@
 
     if (self) {
         _dataSource = nil;
+        _dataSource = [[NSMutableArray alloc] init];
     }
 
     return self;
