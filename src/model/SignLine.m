@@ -10,6 +10,13 @@
 
 @implementation SignLine
 
-@synthesize receivers,errorCode,errorMsg;
+@synthesize receivers,type,errorCode,errorMsg;
+
+@end
+
+
+@implementation Receiver
+
+@synthesize name, isSign;
 
 @end

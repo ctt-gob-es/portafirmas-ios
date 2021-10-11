@@ -75,16 +75,20 @@
         waitingForSenders = YES;
         senders = [[NSMutableArray alloc ]init];
     }
-
     if ([elementName isEqualToString:@"sgnlines"]) {
         signlines = [[NSMutableArray alloc ]init];
     }
 
     if ([elementName isEqualToString:@"sgnline"]) {
         waitingForSignline = YES;
-        signline = [[SignLine alloc ]init];
+        signline = [[SignLine alloc] init];
 
         signline.receivers = [[NSMutableArray alloc] init];
+        receiver = [[Receiver alloc] init];
+
+        if (!attributeDict.count) {
+            receiver.isSign = true;
+        }
     }
 
     if ([elementName isEqualToString:@"docs"]) {
@@ -98,7 +102,7 @@
         document.docid = [attributeDict objectForKey:@"docid"];
     }
     
-    if ([elementName isEqualToString:@"attachedList"]){
+    if ([elementName isEqualToString:@"attachedList"]) {
         attachedDocs = [NSMutableArray new];
     }
     
@@ -143,7 +147,7 @@
         return;
     }
 
-    if ([elementName isEqualToString:@"snders"] ) {
+    if ([elementName isEqualToString:@"snders"]) {
         // We reached the end of the XML document
         _detail.senders = senders;
         senders = nil;
@@ -167,7 +171,7 @@
         return;
     }
 
-    if ([elementName isEqualToString:@"sgnlines"] ) {
+    if ([elementName isEqualToString:@"sgnlines"]) {
         // We reached the end of the XML document
         _detail.signlines = signlines;
         signlines = nil;
@@ -175,7 +179,7 @@
         return;
     }
 
-    if ([elementName isEqualToString:@"sgnline"] ) {
+    if ([elementName isEqualToString:@"sgnline"]) {
         // We reached the end of the XML document
         waitingForSignline = NO;
         [signlines addObject:signline];
@@ -202,6 +206,10 @@
         return;
     }
 
+    if ([currentElementValue isEqualToString:@"PARALELO"] || [currentElementValue isEqualToString:@"CASCADA"]) {
+        type = currentElementValue;
+    }
+
     // The parser hit one of the element values.
     // This syntax is possible because User object
     // property names match the XML user element names
@@ -212,13 +220,15 @@
         [attachedDoc setValue:currentElementValue forKey:elementName];
         
     } else if (waitingForSignline) {
-        [signline.receivers addObject:currentElementValue];
+        receiver.name = currentElementValue;
+        signline.type = type;
+        [signline.receivers addObject:receiver];
 
     } else if (waitingForSenders) {
         [senders addObject:currentElementValue];
 
 	} else {
-		if ([self propertyExistsInDetailModel: elementName]){
+		if ([self propertyExistsInDetailModel: elementName]) {
 			[_detail setValue:currentElementValue forKey:elementName];
 		}
 	}
