@@ -13,6 +13,7 @@
 #import "XMLController.h"
 #import "AttachedDoc.h"
 #import "Document.h"
+#import <PDFKit/PDFKit.h>
 
 @interface PreviewViewController ()
 {
@@ -117,14 +118,21 @@
         mmtp = _attachedDataSource.mmtp;
     }
 
-    [_webView loadData:data
-              MIMEType:mmtp
-              textEncodingName:@"UTF-8"
-              baseURL: [NSURL URLWithString:@"http://"]
-     ];
-    [_webView setScalesPageToFit:YES];
-    [_webView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-
+    if ([mmtp isEqualToString: @"application/pdf"]) {
+        PDFView *pdfView = [[PDFView alloc]initWithFrame:self.view.frame];
+        pdfView.document = [[PDFDocument alloc]initWithData:data];
+        pdfView.displayMode = kPDFDisplaySinglePageContinuous;
+        pdfView.autoScales = true;
+        [self.parentViewController.view addSubview:pdfView];
+    } else {
+        [_webView loadData:data
+                  MIMEType:mmtp
+          textEncodingName:@"UTF-8"
+                   baseURL: [NSURL URLWithString:@"http://"]
+        ];
+        [_webView setScalesPageToFit:YES];
+        [_webView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
