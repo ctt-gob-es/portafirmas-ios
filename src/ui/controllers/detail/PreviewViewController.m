@@ -119,11 +119,13 @@
     }
 
     if ([mmtp isEqualToString: @"application/pdf"]) {
-        PDFView *pdfView = [[PDFView alloc]initWithFrame:self.view.frame];
+        PDFView *pdfView = [[PDFView alloc]initWithFrame:_webView.frame];
         pdfView.document = [[PDFDocument alloc]initWithData:data];
         pdfView.displayMode = kPDFDisplaySinglePageContinuous;
         pdfView.autoScales = true;
-        [self.parentViewController.view addSubview:pdfView];
+        [pdfView setValue:@"true" forKey:@"forcesTopAlignment"];
+        [_webView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+        [_webView addSubview:pdfView];
     } else {
         [_webView loadData:data
                   MIMEType:mmtp
