@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -83,6 +83,8 @@
 		3CC403831AB9BB12006F8803 /* PFCertificateInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC403821AB9BB12006F8803 /* PFCertificateInfo.m */; };
 		3CC403861AB9EDBA006F8803 /* CertificateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC403851AB9EDBA006F8803 /* CertificateCell.m */; };
 		3CD199A51AC2C952007E9E35 /* UINavigationController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */; };
+		4809540C2705CCB2004BF96A /* OpenSSL.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A74AFCD326AECEB900470B9D /* OpenSSL.xcframework */; };
+		4809540D2705CCB2004BF96A /* OpenSSL.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A74AFCD326AECEB900470B9D /* OpenSSL.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		482BB9F72716CF6D0044C956 /* PDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 482BB9F62716CF6D0044C956 /* PDFKit.framework */; };
 		921EAE2F22AFB631005D6D5B /* GlobalConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EAE2E22AFB631005D6D5B /* GlobalConstants.m */; };
 		9226966F23C60FAD00F099F0 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9226966E23C60FAD00F099F0 /* NSString+Extension.m */; };
@@ -128,6 +130,20 @@
 		BCF619A41FC42DC2009C5B50 /* LoginService.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF619A31FC42DC2009C5B50 /* LoginService.m */; };
 		BCF619A71FC4379D009C5B50 /* LoginNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF619A61FC4379D009C5B50 /* LoginNetwork.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4809540E2705CCB2004BF96A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4809540D2705CCB2004BF96A /* OpenSSL.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1C9F200F163E93C3007A170B /* Port@firmas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Port@firmas.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -363,6 +379,7 @@
 				1C9F2016163E93C3007A170B /* Foundation.framework in Frameworks */,
 				1C9F2018163E93C3007A170B /* CoreGraphics.framework in Frameworks */,
 				482BB9F72716CF6D0044C956 /* PDFKit.framework in Frameworks */,
+				4809540C2705CCB2004BF96A /* OpenSSL.xcframework in Frameworks */,
 				992987C2AA230FF0604BD234 /* libPods-PortaFirmasUniv.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -963,12 +980,13 @@
 			buildConfigurationList = 1C9F2036163E93C3007A170B /* Build configuration list for PBXNativeTarget "PortaFirmasUniv" */;
 			buildPhases = (
 				E3D4D6D6C009A3B3E13001A6 /* [CP] Check Pods Manifest.lock */,
-				2B0C312739AE18412F7EC488 /* [CP] Prepare Artifacts */,
+				BBB70BA0CE5FECC9271CA0BF /* [CP] Prepare Artifacts */,
 				1C9F200B163E93C3007A170B /* Sources */,
 				1C9F200C163E93C3007A170B /* Frameworks */,
 				1C9F200D163E93C3007A170B /* Resources */,
 				2E8453FF896F4595D50AC2A2 /* [CP] Copy Pods Resources */,
 				C17CEF1E1F82ED5589E5DBBD /* [CP] Embed Pods Frameworks */,
+				4809540E2705CCB2004BF96A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1051,40 +1069,38 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2B0C312739AE18412F7EC488 /* [CP] Prepare Artifacts */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-artifacts.sh",
-				"${PODS_ROOT}/OpenSSL-Universal/Frameworks/OpenSSL.xcframework",
-			);
-			name = "[CP] Prepare Artifacts";
-			outputPaths = (
-				"${BUILT_PRODUCTS_DIR}/cocoapods-artifacts-${CONFIGURATION}.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-artifacts.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		2E8453FF896F4595D50AC2A2 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-resources.sh",
-				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BBB70BA0CE5FECC9271CA0BF /* [CP] Prepare Artifacts */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-artifacts-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Prepare Artifacts";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-artifacts-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-artifacts.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C17CEF1E1F82ED5589E5DBBD /* [CP] Embed Pods Frameworks */ = {
@@ -1092,12 +1108,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/cocoapods-artifacts-${CONFIGURATION}.txt",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1358,7 +1374,10 @@
 				GCC_PREFIX_HEADER = "src/main/PortaFirmasUniv-Prefix.pch";
 				INFOPLIST_FILE = "src/main/PortaFirmasUniv-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.6.1;
 				PRODUCT_BUNDLE_IDENTIFIER = es.gob.afirma.Portafirmas;
 				PRODUCT_NAME = "Port@firmas";
@@ -1386,7 +1405,10 @@
 				GCC_PREFIX_HEADER = "src/main/PortaFirmasUniv-Prefix.pch";
 				INFOPLIST_FILE = "src/main/PortaFirmasUniv-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.6.1;
 				PRODUCT_BUNDLE_IDENTIFIER = es.gob.afirma.Portafirmas;
 				PRODUCT_NAME = "Port@firmas";
