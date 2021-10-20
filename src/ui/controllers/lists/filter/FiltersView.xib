@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -22,7 +22,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="852"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="PVZ-No-pD5">
-                                    <rect key="frame" x="12" y="16" width="390" height="534"/>
+                                    <rect key="frame" x="12" y="16" width="390" height="594"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9cU-eC-hiz" userLabel="Order Container View">
                                             <rect key="frame" x="0.0" y="0.0" width="390" height="93"/>
@@ -46,7 +46,7 @@
                                                         <constraint firstAttribute="height" constant="21" id="6EW-G4-nOg"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                                    <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" red="0.33332985640000001" green="0.33333098890000001" blue="0.33333343269999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gcb-Dm-LVM">
@@ -353,8 +353,59 @@
                                                 <constraint firstItem="pUd-3y-KwL" firstAttribute="top" secondItem="nIf-Ze-smT" secondAttribute="top" id="uIn-7E-T8w"/>
                                             </constraints>
                                         </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uuD-bZ-4tL" userLabel="Configuration View">
+                                            <rect key="frame" x="0.0" y="444" width="390" height="60"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Configuración" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NVI-Om-VeM">
+                                                    <rect key="frame" x="0.0" y="0.0" width="95.5" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="Fg1-Hk-Flz"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
+                                                    <color key="textColor" red="0.59864145520000001" green="0.0" blue="0.091977573930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pfO-UR-AoU" userLabel="Configuration Separator">
+                                                    <rect key="frame" x="0.0" y="21" width="390" height="1"/>
+                                                    <color key="backgroundColor" red="0.59864145520000001" green="0.0" blue="0.091977573930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="997-pm-v2Z"/>
+                                                    </constraints>
+                                                </view>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ObC-As-TTb">
+                                                    <rect key="frame" x="0.0" y="26" width="390" height="26"/>
+                                                    <inset key="titleEdgeInsets" minX="-1" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="Button">
+                                                        <attributedString key="attributedTitle">
+                                                            <fragment content="Gestión de Autorizaciones y Validadores">
+                                                                <attributes>
+                                                                    <color key="NSColor" red="0.40783902999999999" green="0.40784037109999999" blue="0.40784329180000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                    <font key="NSFont" size="12" name="HelveticaNeue-Light"/>
+                                                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                </attributes>
+                                                            </fragment>
+                                                        </attributedString>
+                                                    </state>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="ObC-As-TTb" secondAttribute="trailing" id="4Qp-Qg-laX"/>
+                                                <constraint firstAttribute="trailing" secondItem="pfO-UR-AoU" secondAttribute="trailing" id="HNr-tu-ZRb"/>
+                                                <constraint firstItem="NVI-Om-VeM" firstAttribute="top" secondItem="uuD-bZ-4tL" secondAttribute="top" id="Jf5-Ri-mL3"/>
+                                                <constraint firstItem="pfO-UR-AoU" firstAttribute="top" secondItem="NVI-Om-VeM" secondAttribute="bottom" id="Kec-vQ-LcF"/>
+                                                <constraint firstItem="ObC-As-TTb" firstAttribute="top" secondItem="pfO-UR-AoU" secondAttribute="bottom" constant="4" id="SHe-Zj-vhY"/>
+                                                <constraint firstItem="NVI-Om-VeM" firstAttribute="top" secondItem="uuD-bZ-4tL" secondAttribute="top" id="UpG-dR-dmR"/>
+                                                <constraint firstItem="NVI-Om-VeM" firstAttribute="leading" secondItem="uuD-bZ-4tL" secondAttribute="leading" id="Utv-4b-duL"/>
+                                                <constraint firstItem="ObC-As-TTb" firstAttribute="leading" secondItem="uuD-bZ-4tL" secondAttribute="leading" id="WGg-Rd-6Nk"/>
+                                                <constraint firstItem="ObC-As-TTb" firstAttribute="leading" secondItem="uuD-bZ-4tL" secondAttribute="leading" id="ex6-Pg-c9W"/>
+                                                <constraint firstItem="pfO-UR-AoU" firstAttribute="leading" secondItem="uuD-bZ-4tL" secondAttribute="leading" id="nc6-Xx-E8l"/>
+                                                <constraint firstAttribute="height" constant="60" id="ps8-R3-8vo"/>
+                                            </constraints>
+                                        </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T4k-pF-Ow4" userLabel="Role Container View">
-                                            <rect key="frame" x="0.0" y="444" width="390" height="90"/>
+                                            <rect key="frame" x="0.0" y="504" width="390" height="90"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Roles" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ClN-bq-wrk" userLabel="Roles Title Label">
                                                     <rect key="frame" x="0.0" y="0.0" width="390" height="21"/>
@@ -476,13 +527,6 @@
                         <outlet property="delegate" destination="ORh-ds-0lu" id="cYc-Z2-Udj"/>
                     </connections>
                 </pickerView>
-                <pickerView alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t5m-bB-m8m" userLabel="Year Picker View">
-                    <rect key="frame" x="0.0" y="635" width="414" height="216"/>
-                    <color key="backgroundColor" red="0.99992364649999999" green="1" blue="0.99988299609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <connections>
-                        <outlet property="delegate" destination="ORh-ds-0lu" id="fDM-bA-cah"/>
-                    </connections>
-                </pickerView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XRX-z7-VyH">
                     <rect key="frame" x="0.0" y="852" width="414" height="44"/>
                     <subviews>
@@ -523,10 +567,8 @@
             <constraints>
                 <constraint firstItem="7d4-q7-BSG" firstAttribute="top" secondItem="ORh-ds-0lu" secondAttribute="top" id="2og-Ia-NLa"/>
                 <constraint firstItem="7d4-q7-BSG" firstAttribute="leading" secondItem="ORh-ds-0lu" secondAttribute="leading" id="4It-Pt-QRu"/>
-                <constraint firstItem="t5m-bB-m8m" firstAttribute="leading" secondItem="ORh-ds-0lu" secondAttribute="leading" id="4yg-Nn-Mqn"/>
                 <constraint firstAttribute="trailing" secondItem="ZRv-Tp-HAg" secondAttribute="trailing" id="Awu-Kq-x7c"/>
                 <constraint firstAttribute="trailing" secondItem="k1f-nw-Zu4" secondAttribute="trailing" id="CHq-lc-VG7"/>
-                <constraint firstAttribute="trailing" secondItem="t5m-bB-m8m" secondAttribute="trailing" id="DoY-KX-aCO"/>
                 <constraint firstItem="k1f-nw-Zu4" firstAttribute="leading" secondItem="ORh-ds-0lu" secondAttribute="leading" id="Gpc-0O-fwe"/>
                 <constraint firstAttribute="trailing" secondItem="x0g-vH-h29" secondAttribute="trailing" id="Gto-QD-qnB"/>
                 <constraint firstAttribute="trailing" secondItem="VHq-ve-gGc" secondAttribute="trailing" id="IVg-d5-mJN"/>
@@ -544,7 +586,6 @@
                 <constraint firstItem="XRX-z7-VyH" firstAttribute="top" secondItem="7d4-q7-BSG" secondAttribute="bottom" id="oZ2-u5-kYw"/>
                 <constraint firstItem="VHq-ve-gGc" firstAttribute="top" secondItem="XRX-z7-VyH" secondAttribute="top" id="sYY-g6-pwV"/>
                 <constraint firstItem="x0g-vH-h29" firstAttribute="leading" secondItem="ORh-ds-0lu" secondAttribute="leading" id="uvq-Pg-rna"/>
-                <constraint firstAttribute="bottom" secondItem="t5m-bB-m8m" secondAttribute="bottom" constant="45" id="vtX-p6-kSa"/>
                 <constraint firstItem="scM-7d-tnG" firstAttribute="leading" secondItem="ORh-ds-0lu" secondAttribute="leading" id="zV3-w0-4oJ"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -553,6 +594,7 @@
                 <outlet property="appButton" destination="IFI-00-1N0" id="lQw-7I-Rk0"/>
                 <outlet property="appPickerView" destination="ZRv-Tp-HAg" id="iTr-az-ERk"/>
                 <outlet property="cancelButton" destination="7vg-L0-m6t" id="HY4-6S-qCD"/>
+                <outlet property="configurationButton" destination="ObC-As-TTb" id="BDK-8k-LJ4"/>
                 <outlet property="enableFiltersSwitch" destination="FAO-4M-9Dp" id="M6o-Bb-bRD"/>
                 <outlet property="footerView" destination="XRX-z7-VyH" id="ZZV-7m-Ion"/>
                 <outlet property="notificationContainerView" destination="nIf-Ze-smT" id="uvu-tA-tY6"/>
@@ -578,7 +620,6 @@
                 <outlet property="typePickerView" destination="k1f-nw-Zu4" id="eNp-bj-45b"/>
                 <outlet property="typeView" destination="hMJ-qZ-60z" id="2zr-te-RWN"/>
                 <outlet property="yearButton" destination="adN-KJ-moX" id="zGm-ad-11k"/>
-                <outlet property="yearPickerView" destination="t5m-bB-m8m" id="BhU-u2-pOe"/>
                 <outlet property="yearView" destination="9Cv-Ch-7TK" id="zbz-iM-8FC"/>
             </connections>
             <point key="canvasLocation" x="-317.39130434782612" y="-542.41071428571422"/>

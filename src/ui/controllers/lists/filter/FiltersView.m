@@ -79,6 +79,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 @property (weak, nonatomic) NSString *selectedType;
 @property (weak, nonatomic) NSString *selectedTimeInterval;
 @property (weak, nonatomic) NSString *selectedYear;
+@property (weak, nonatomic) IBOutlet UIButton *configurationButton;
 
 @end
 
