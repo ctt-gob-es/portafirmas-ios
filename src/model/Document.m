@@ -9,10 +9,11 @@
 #import "Document.h"
 
 static NSString *const kDocumentExtensionPades = @"pdf";
-static NSString *const kDocumentExtensionCades = @"cades";
-static NSString *const kDocumentExtensionXades = @"xades";
-static NSString *const kDocumentSignatureFormatPades = @"PAdES";
-static NSString *const kDocumentSignatureFormatXades = @"XAdES";
+static NSString *const kDocumentExtensionCades = @"csig";
+static NSString *const kDocumentExtensionXades = @"xsig";
+static NSString *const kDocumentSignatureFormatPades = @"pdf";
+static NSString *const kDocumentSignatureFormatXades = @"xades";
+static NSString *const kDocumentSignatureFormatCades = @"cades";
 static NSString *const kDocumentMimeTypePDF = @"application/pdf";
 
 @implementation Document
@@ -23,8 +24,7 @@ static NSString *const kDocumentMimeTypePDF = @"application/pdf";
 
     if ([[_sigfrmt lowercaseString] isEqualToString:[kDocumentSignatureFormatPades lowercaseString]]) {
         extension = kDocumentExtensionPades;
-    }
-    else if ([[_sigfrmt lowercaseString] isEqualToString:[kDocumentSignatureFormatXades lowercaseString]]) {
+    } else if ([[_sigfrmt lowercaseString] containsString:[kDocumentSignatureFormatXades lowercaseString]]) {
         extension = kDocumentExtensionXades;
     }
 
