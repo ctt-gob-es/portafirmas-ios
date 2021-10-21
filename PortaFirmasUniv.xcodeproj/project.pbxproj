@@ -85,6 +85,7 @@
 		3CD199A51AC2C952007E9E35 /* UINavigationController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */; };
 		4809540C2705CCB2004BF96A /* OpenSSL.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A74AFCD326AECEB900470B9D /* OpenSSL.xcframework */; };
 		4809540D2705CCB2004BF96A /* OpenSSL.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A74AFCD326AECEB900470B9D /* OpenSSL.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		482BB9F72716CF6D0044C956 /* PDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 482BB9F62716CF6D0044C956 /* PDFKit.framework */; };
 		921EAE2F22AFB631005D6D5B /* GlobalConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EAE2E22AFB631005D6D5B /* GlobalConstants.m */; };
 		9226966F23C60FAD00F099F0 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9226966E23C60FAD00F099F0 /* NSString+Extension.m */; };
 		92469F1225792B4100494DCF /* UserRolesNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 92469F1125792B4100494DCF /* UserRolesNetwork.m */; };
@@ -281,6 +282,7 @@
 		3CC403851AB9EDBA006F8803 /* CertificateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertificateCell.m; sourceTree = "<group>"; };
 		3CD199A31AC2C952007E9E35 /* UINavigationController+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationController+Utils.h"; path = "UINavigationController/UINavigationController+Utils.h"; sourceTree = "<group>"; };
 		3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+Utils.m"; path = "UINavigationController/UINavigationController+Utils.m"; sourceTree = "<group>"; };
+		482BB9F62716CF6D0044C956 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
 		862DBE2D1FC5F494A173087E /* Pods-PortaFirmasUniv.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortaFirmasUniv.release.xcconfig"; path = "Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv.release.xcconfig"; sourceTree = "<group>"; };
 		921EAE2E22AFB631005D6D5B /* GlobalConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalConstants.m; sourceTree = "<group>"; };
 		921EAE3022AFB672005D6D5B /* GlobalConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalConstants.h; sourceTree = "<group>"; };
@@ -376,6 +378,7 @@
 				1C9F2014163E93C3007A170B /* UIKit.framework in Frameworks */,
 				1C9F2016163E93C3007A170B /* Foundation.framework in Frameworks */,
 				1C9F2018163E93C3007A170B /* CoreGraphics.framework in Frameworks */,
+				482BB9F72716CF6D0044C956 /* PDFKit.framework in Frameworks */,
 				4809540C2705CCB2004BF96A /* OpenSSL.xcframework in Frameworks */,
 				992987C2AA230FF0604BD234 /* libPods-PortaFirmasUniv.a in Frameworks */,
 			);
@@ -409,6 +412,7 @@
 		1C9F2012163E93C3007A170B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				482BB9F62716CF6D0044C956 /* PDFKit.framework */,
 				A74AFCD326AECEB900470B9D /* OpenSSL.xcframework */,
 				BC5BF9DF1FDFCF1100B1CF0C /* WebKit.framework */,
 				BCAF65E21FAC9E0700D30E54 /* UserNotifications.framework */,
@@ -1070,13 +1074,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-resources.sh",
-				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1088,13 +1091,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-artifacts.sh",
-				"${PODS_ROOT}/OpenSSL-Universal/Frameworks/OpenSSL.xcframework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-artifacts-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Prepare Artifacts";
-			outputPaths = (
-				"${BUILT_PRODUCTS_DIR}/cocoapods-artifacts-${CONFIGURATION}.txt",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-artifacts-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1106,12 +1108,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/cocoapods-artifacts-${CONFIGURATION}.txt",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
