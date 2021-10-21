@@ -28,6 +28,8 @@
 {
     [super viewDidLoad];
     [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
+    SignLine *signLine = [_dataSource objectAtIndex:0];
+    self.listTitle.text = [NSString stringWithFormat:@"Firma en %@", signLine.type];
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,15 +67,20 @@
     SignLine *signLine = [_dataSource objectAtIndex:[indexPath section]];
 
     // Configure the cell...
-    cell.textLabel.text = [signLine.receivers objectAtIndex:[indexPath row]];
+    cell.textLabel.text = [signLine.receivers[indexPath.row] name];
 
     return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
+    SignLine *signLine = [_dataSource objectAtIndex:section];
 
-    return [[NSString alloc] initWithFormat:@"Linea de firma %ld", (long)section];
+    if ([signLine.receivers[0] isSign]) {
+        return [[NSString alloc] initWithFormat:@"Linea %ld de firma", (long)section];
+    } else {
+        return [[NSString alloc] initWithFormat:@"Linea %ld de visto bueno", (long)section];
+    }
 }
 
 #pragma mark - Table view delegate

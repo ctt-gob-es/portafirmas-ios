@@ -3,16 +3,18 @@
 //  PortaFirmas_@Firma
 //
 //  Created by Antonio Fiñana Sánchez on 19/10/12.
-//  Copyright (c) 2012 Luis                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           Lopez. All rights reserved.
+//  Copyright (c) 2012 Luis Lopez. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "Detail.h"
 
-@interface ReceiversViewController : UITableViewController{
-    
+@interface ReceiversViewController: UITableViewController {
     NSMutableArray *_dataSource;
 }
-@property (strong, nonatomic) NSMutableArray * dataSource;
+
+@property (strong, nonatomic) NSMutableArray *dataSource;
+@property (weak, nonatomic) IBOutlet UILabel *listTitle;
+@property (weak, nonatomic) IBOutlet UIView *labelView;
 
 @end
