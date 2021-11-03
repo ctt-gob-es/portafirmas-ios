@@ -387,6 +387,9 @@
                                                             </fragment>
                                                         </attributedString>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="didSelectConfirmationButton:" destination="ORh-ds-0lu" eventType="touchUpInside" id="712-EG-LL0"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>

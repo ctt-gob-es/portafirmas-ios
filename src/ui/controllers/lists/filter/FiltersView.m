@@ -13,6 +13,8 @@
 #import "LoginService.h"
 #import "PushNotificationService.h"
 
+#import "Port_firmas-Swift.h"
+
 #define SORT_CRITERIA_TITLE_ARRAY @[@"Filter_View_Sort_Criteria_Array_Date".localized, @"Filter_View_Sort_Criteria_Array_Topic".localized, @"Filter_View_Sort_Criteria_Array_Application".localized]
 
 #define SORT_CRITERIA_VALUE_ARRAY @[@"fmodified", @"dsubject", @"application"]
@@ -332,6 +334,23 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (IBAction)didSelectCancelButton:(id)sender {
     [self.filtersViewDelegate didSelectCancelButton];
+}
+
+- (IBAction)didSelectConfirmationButton:(id)sender {
+    ConfigurationViewController *vc = [[ConfigurationViewController alloc] initWithNibName:@"ConfigurationView" bundle:nil];
+    ConfigurationViewModel *viewModel = [[ConfigurationViewModel alloc] init];
+    [vc injectViewModelWithViewModel:viewModel];
+    UIViewController *currentTopVC = [self currentTopViewController];
+    vc.modalPresentationStyle = UIModalPresentationFullScreen;
+    [currentTopVC presentViewController:vc animated:NO completion:nil];
+}
+
+- (UIViewController *)currentTopViewController {
+    UIViewController *topVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    while (topVC.presentedViewController) {
+        topVC = topVC.presentedViewController;
+    }
+    return topVC;
 }
 
 #pragma mark - Notifications Section

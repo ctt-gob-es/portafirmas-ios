@@ -85,6 +85,15 @@
 		3CD199A51AC2C952007E9E35 /* UINavigationController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */; };
 		4809540C2705CCB2004BF96A /* OpenSSL.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A74AFCD326AECEB900470B9D /* OpenSSL.xcframework */; };
 		4809540D2705CCB2004BF96A /* OpenSSL.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A74AFCD326AECEB900470B9D /* OpenSSL.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4861B6EA27214C1E00446EB8 /* ConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B6E927214C1E00446EB8 /* ConfigurationViewController.swift */; };
+		4861B6EC27214C4B00446EB8 /* ConfigurationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4861B6EB27214C4B00446EB8 /* ConfigurationView.xib */; };
+		4861B6EE2722DA2700446EB8 /* AuthorizationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4861B6ED2722DA2700446EB8 /* AuthorizationCell.xib */; };
+		4861B6F02722DBF300446EB8 /* AuthorizationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B6EF2722DBF300446EB8 /* AuthorizationCell.swift */; };
+		4861B74A2726EC9000446EB8 /* ConfigurationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B7492726EC8F00446EB8 /* ConfigurationViewModel.swift */; };
+		4861B7562729314000446EB8 /* AuthorizationXMLController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B7552729314000446EB8 /* AuthorizationXMLController.swift */; };
+		4861B758272BCC4500446EB8 /* Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B757272BCC4500446EB8 /* Authorization.swift */; };
+		4861B76927327B0300446EB8 /* ValidatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B76727327B0300446EB8 /* ValidatorCell.swift */; };
+		4861B76A27327B0300446EB8 /* ValidatorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4861B76827327B0300446EB8 /* ValidatorCell.xib */; };
 		921EAE2F22AFB631005D6D5B /* GlobalConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EAE2E22AFB631005D6D5B /* GlobalConstants.m */; };
 		9226966F23C60FAD00F099F0 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9226966E23C60FAD00F099F0 /* NSString+Extension.m */; };
 		92469F1225792B4100494DCF /* UserRolesNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 92469F1125792B4100494DCF /* UserRolesNetwork.m */; };
@@ -281,6 +290,16 @@
 		3CC403851AB9EDBA006F8803 /* CertificateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertificateCell.m; sourceTree = "<group>"; };
 		3CD199A31AC2C952007E9E35 /* UINavigationController+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationController+Utils.h"; path = "UINavigationController/UINavigationController+Utils.h"; sourceTree = "<group>"; };
 		3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+Utils.m"; path = "UINavigationController/UINavigationController+Utils.m"; sourceTree = "<group>"; };
+		4861B6E827214C1E00446EB8 /* PortaFirmasUniv-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PortaFirmasUniv-Bridging-Header.h"; sourceTree = "<group>"; };
+		4861B6E927214C1E00446EB8 /* ConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationViewController.swift; sourceTree = "<group>"; };
+		4861B6EB27214C4B00446EB8 /* ConfigurationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConfigurationView.xib; sourceTree = "<group>"; };
+		4861B6ED2722DA2700446EB8 /* AuthorizationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthorizationCell.xib; sourceTree = "<group>"; };
+		4861B6EF2722DBF300446EB8 /* AuthorizationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationCell.swift; sourceTree = "<group>"; };
+		4861B7492726EC8F00446EB8 /* ConfigurationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationViewModel.swift; sourceTree = "<group>"; };
+		4861B7552729314000446EB8 /* AuthorizationXMLController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationXMLController.swift; sourceTree = "<group>"; };
+		4861B757272BCC4500446EB8 /* Authorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authorization.swift; sourceTree = "<group>"; };
+		4861B76727327B0300446EB8 /* ValidatorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatorCell.swift; sourceTree = "<group>"; };
+		4861B76827327B0300446EB8 /* ValidatorCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ValidatorCell.xib; sourceTree = "<group>"; };
 		862DBE2D1FC5F494A173087E /* Pods-PortaFirmasUniv.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortaFirmasUniv.release.xcconfig"; path = "Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv.release.xcconfig"; sourceTree = "<group>"; };
 		921EAE2E22AFB631005D6D5B /* GlobalConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalConstants.m; sourceTree = "<group>"; };
 		921EAE3022AFB672005D6D5B /* GlobalConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalConstants.h; sourceTree = "<group>"; };
@@ -465,6 +484,7 @@
 		3C68F0F81AA866B700B32EF6 /* lists */ = {
 			isa = PBXGroup;
 			children = (
+				4861B6E72720674B00446EB8 /* configuration */,
 				3CBD304B1AB0948C00EE9839 /* filter */,
 				3C00AD7C1AB71A8700EF6886 /* BaseListTVC.h */,
 				3C00AD7D1AB71A8700EF6886 /* BaseListTVC.m */,
@@ -810,6 +830,23 @@
 			name = UINavigationController;
 			sourceTree = "<group>";
 		};
+		4861B6E72720674B00446EB8 /* configuration */ = {
+			isa = PBXGroup;
+			children = (
+				4861B6E827214C1E00446EB8 /* PortaFirmasUniv-Bridging-Header.h */,
+				4861B6E927214C1E00446EB8 /* ConfigurationViewController.swift */,
+				4861B6EB27214C4B00446EB8 /* ConfigurationView.xib */,
+				4861B7492726EC8F00446EB8 /* ConfigurationViewModel.swift */,
+				4861B6ED2722DA2700446EB8 /* AuthorizationCell.xib */,
+				4861B6EF2722DBF300446EB8 /* AuthorizationCell.swift */,
+				4861B76727327B0300446EB8 /* ValidatorCell.swift */,
+				4861B76827327B0300446EB8 /* ValidatorCell.xib */,
+				4861B7552729314000446EB8 /* AuthorizationXMLController.swift */,
+				4861B757272BCC4500446EB8 /* Authorization.swift */,
+			);
+			path = configuration;
+			sourceTree = "<group>";
+		};
 		80952EC13E6D309528B46AE2 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1004,6 +1041,7 @@
 				TargetAttributes = {
 					1C9F200E163E93C3007A170B = {
 						DevelopmentTeam = 2H36E8KFN2;
+						LastSwiftMigration = 1300;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -1042,6 +1080,7 @@
 				925BE5BB2587937100B85BFE /* SelectRoleViewController.xib in Resources */,
 				92A648FD2587A3CA00DFFACA /* RoleCell.xib in Resources */,
 				3CA899061AA605C60035012D /* CAMERFIRMA PF Apoderado HW Clave PSC Activo.p12 in Resources */,
+				4861B6EE2722DA2700446EB8 /* AuthorizationCell.xib in Resources */,
 				3CA899101AA606E90035012D /* prueba.xml in Resources */,
 				3CA8990A1AA605C60035012D /* PFActivoFirSHA1.pfx in Resources */,
 				3CA898F31AA5BD210035012D /* MainStoryboard_iPad.storyboard in Resources */,
@@ -1049,6 +1088,7 @@
 				3CA898FC1AA605B70035012D /* PortaFirmasUniv.entitlements in Resources */,
 				925FC27A25B1AD8E00D5632A /* FiltersView.xib in Resources */,
 				3CA898F61AA5BEA80035012D /* main_assets.xcassets in Resources */,
+				4861B6EC27214C4B00446EB8 /* ConfigurationView.xib in Resources */,
 				3CA899151AA607840035012D /* configPRE in Resources */,
 				3CA898F41AA5BD210035012D /* MainStoryboard_iPhone.storyboard in Resources */,
 				3CA899091AA605C60035012D /* Certificado-pruebas - ANF-Activo.p12 in Resources */,
@@ -1056,6 +1096,7 @@
 				3CA898FB1AA605B70035012D /* config.plist in Resources */,
 				3CA899171AA607840035012D /* iTunesArtwork@2x in Resources */,
 				3CA899051AA605C60035012D /* ANF_PF_Activo.pfx in Resources */,
+				4861B76A27327B0300446EB8 /* ValidatorCell.xib in Resources */,
 				3CA899081AA605C60035012D /* CATCERT GENCAT SAFP PF Identidad y Firma Reconocida de Clase 1 Activo.p12 in Resources */,
 				3CA899161AA607840035012D /* iTunesArtwork in Resources */,
 				B28B24E520AB907B00DC9C81 /* DetailCell.xib in Resources */,
@@ -1070,13 +1111,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-resources.sh",
-				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1088,13 +1128,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-artifacts.sh",
-				"${PODS_ROOT}/OpenSSL-Universal/Frameworks/OpenSSL.xcframework",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-artifacts-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Prepare Artifacts";
-			outputPaths = (
-				"${BUILT_PRODUCTS_DIR}/cocoapods-artifacts-${CONFIGURATION}.txt",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-artifacts-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1106,12 +1145,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/cocoapods-artifacts-${CONFIGURATION}.txt",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1160,6 +1199,7 @@
 				BCEF37B51FB338E500374541 /* PushNotificationNetwork.m in Sources */,
 				3C00ADDA1AB71B1700EF6886 /* RequestListXMLController.m in Sources */,
 				BC46A0E91FD6CBEB004D0C33 /* PFError.m in Sources */,
+				4861B6EA27214C1E00446EB8 /* ConfigurationViewController.swift in Sources */,
 				BCF083621FC72E3100450FE7 /* NSString+XMLSafe.m in Sources */,
 				92469F1C257938A900494DCF /* UserRolesService.m in Sources */,
 				3C00AD751AB71A6300EF6886 /* DetailTableViewController.m in Sources */,
@@ -1180,7 +1220,9 @@
 				3C00ADD21AB71B1700EF6886 /* AppListXMLController.m in Sources */,
 				B289830B20AC8BA600B7544A /* SendersViewController.m in Sources */,
 				BCAF65E61FACA96500D30E54 /* NSData+Conversion.m in Sources */,
+				4861B76927327B0300446EB8 /* ValidatorCell.swift in Sources */,
 				3CC403681AB96D05006F8803 /* PFBaseVC.m in Sources */,
+				4861B758272BCC4500446EB8 /* Authorization.swift in Sources */,
 				BCA133D31FF63DD200818EC7 /* NotificationHandler.m in Sources */,
 				9261566125AEEADD004E47F5 /* ValidateController.m in Sources */,
 				BCE470F51FD70CEF00702306 /* CookieTools.m in Sources */,
@@ -1205,8 +1247,10 @@
 				3C00ADDB1AB71B1700EF6886 /* RequestSignerController.m in Sources */,
 				BCA133D71FF63EB500818EC7 /* Notification.m in Sources */,
 				3C00AD761AB71A6300EF6886 /* PreviewViewController.m in Sources */,
+				4861B6F02722DBF300446EB8 /* AuthorizationCell.swift in Sources */,
 				3C00ADD41AB71B1700EF6886 /* BaseXMLController.m in Sources */,
 				BCF083321FC45A0900450FE7 /* Stack.m in Sources */,
+				4861B7562729314000446EB8 /* AuthorizationXMLController.swift in Sources */,
 				BC71EE3A1FDEB51C0040F8A2 /* DefaultServersData.m in Sources */,
 				3C00ADB81AB71B0B00EF6886 /* PFHelper.m in Sources */,
 				3C00AD991AB71ACB00EF6886 /* Detail.m in Sources */,
@@ -1234,6 +1278,7 @@
 				3C00AD9B1AB71ACB00EF6886 /* Param.m in Sources */,
 				3C00AD861AB71A8700EF6886 /* RejectedRequestViewController.m in Sources */,
 				3CC403831AB9BB12006F8803 /* PFCertificateInfo.m in Sources */,
+				4861B74A2726EC9000446EB8 /* ConfigurationViewModel.swift in Sources */,
 				3C00ADD81AB71B1700EF6886 /* PreviewXMLController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1361,6 +1406,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = res/conf/PortaFirmasUniv.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1381,6 +1427,9 @@
 				PRODUCT_NAME = "Port@firmas";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "src/ui/controllers/lists/configuration/PortaFirmasUniv-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1392,6 +1441,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = res/conf/PortaFirmasUniv.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
@@ -1412,6 +1462,8 @@
 				PRODUCT_NAME = "Port@firmas";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "Portafirmas Afirma Movil - App Store";
+				SWIFT_OBJC_BRIDGING_HEADER = "src/ui/controllers/lists/configuration/PortaFirmasUniv-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
