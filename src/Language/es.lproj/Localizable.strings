@@ -168,3 +168,19 @@
 "Alert_View_Disable_Notifications_Title" = "Las notificaciones estan deshabilitadas";
 "Alert_View_Disable_Notifications_Message" = "Has de ir a ajustes en tu dispositivo y luego a Notificaciones buscar PortaFirmas y permitir notificaciones.";
 "Alert_View_Can_Not_Subscribe_Notifications_Title" = "No se han activado las notificaciones";
+
+// Authorization detail
+"Authorization_Detail_Name" = "Nombre";
+"Authorization_Detail_State" = "Estado";
+"Authorization_Detail_Sended_Received" = "Enviada/Recibida";
+"Authorization_Detail_Type" = "Tipo";
+"Authorization_Detail_Initial_Date" = "Fecha inicio";
+"Authorization_Detail_End_Date" = "Fecha fin";
+"Authorization_Detail_Observations" = "Observaciones";
+"Authorization_Detail_Sended" = "Enviada";
+"Authorization_Detail_Received" = "Recibida";
+"Authorization_Detail_State_Pending" = "Pendiente de validación";
+"Authorization_Detail_State_Accepted" = "Aceptada";
+"Authorization_Detail_State_Revoked" = "Rechazada";
+"Authorization_Detail_Accept" = "Aceptar";
+"Authorization_Detail_Revoke" = "Rechazar";

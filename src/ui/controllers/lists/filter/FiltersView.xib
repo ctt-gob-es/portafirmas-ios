@@ -380,7 +380,7 @@
                                                         <attributedString key="attributedTitle">
                                                             <fragment content="Gestión de Autorizaciones y Validadores">
                                                                 <attributes>
-                                                                    <color key="NSColor" red="0.40783902999999999" green="0.40784037109999999" blue="0.40784329180000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                    <color key="NSColor" red="0.59999999999999998" green="0.0" blue="0.090196078431372548" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                     <font key="NSFont" size="12" name="HelveticaNeue-Light"/>
                                                                     <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                                 </attributes>
@@ -417,7 +417,7 @@
                                                         <constraint firstAttribute="height" constant="21" id="gEu-aL-v7L"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
-                                                    <color key="textColor" red="0.59864145520000001" green="0.0" blue="0.091977573930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="textColor" red="0.59999999999999998" green="0.0" blue="0.090196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vbW-97-h9u" userLabel="Role Separator View">

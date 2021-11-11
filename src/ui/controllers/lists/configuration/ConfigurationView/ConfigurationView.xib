@@ -11,8 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ConfigurationViewController" customModule="Port_firmas" customModuleProvider="target">
             <connections>
-                <outlet property="segmentedControl" destination="V1H-Mo-HIw" id="f8w-eq-aDm"/>
-                <outlet property="tableView" destination="s59-yr-Vja" id="U7Z-t8-QTe"/>
+                <outlet property="segmentedControl" destination="V1H-Mo-HIw" id="ojw-An-MIN"/>
+                <outlet property="tableView" destination="s59-yr-Vja" id="O9K-8I-jcP"/>
                 <outlet property="view" destination="YRE-7Z-cCY" id="Lrt-Wf-HjU"/>
             </connections>
         </placeholder>
@@ -79,9 +79,10 @@
                         <constraint firstAttribute="trailing" secondItem="yRY-qV-v9f" secondAttribute="trailing" id="bZg-pU-YRs"/>
                     </constraints>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="s59-yr-Vja">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="s59-yr-Vja">
                     <rect key="frame" x="0.0" y="127" width="414" height="735"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="JDG-qU-sTD"/>
                         <outlet property="delegate" destination="-1" id="HDw-jQ-X8D"/>
@@ -96,7 +97,7 @@
                     </segments>
                     <color key="selectedSegmentTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <connections>
-                        <action selector="segmented:" destination="-1" eventType="valueChanged" id="ZS9-gj-3ql"/>
+                        <action selector="segmentedControlTapped:" destination="-1" eventType="valueChanged" id="X3L-fv-BSG"/>
                     </connections>
                 </segmentedControl>
             </subviews>

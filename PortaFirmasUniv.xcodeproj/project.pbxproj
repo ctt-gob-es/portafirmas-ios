@@ -94,6 +94,18 @@
 		4861B758272BCC4500446EB8 /* Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B757272BCC4500446EB8 /* Authorization.swift */; };
 		4861B76927327B0300446EB8 /* ValidatorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B76727327B0300446EB8 /* ValidatorCell.swift */; };
 		4861B76A27327B0300446EB8 /* ValidatorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4861B76827327B0300446EB8 /* ValidatorCell.xib */; };
+		4861B76C27328B0A00446EB8 /* ValidatorXMLController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B76B27328B0A00446EB8 /* ValidatorXMLController.swift */; };
+		4861B76F2733DCCD00446EB8 /* AuthorizationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B76D2733DCCD00446EB8 /* AuthorizationDetailViewController.swift */; };
+		4861B7702733DCCD00446EB8 /* AuthorizationDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4861B76E2733DCCD00446EB8 /* AuthorizationDetailView.xib */; };
+		4861B7732733ED4B00446EB8 /* AuthorizationDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B7712733ED4B00446EB8 /* AuthorizationDetailCell.swift */; };
+		4861B7742733ED4B00446EB8 /* AuthorizationDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4861B7722733ED4B00446EB8 /* AuthorizationDetailCell.xib */; };
+		4861B7782735695700446EB8 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B7772735695700446EB8 /* StringExtension.swift */; };
+		4861B77A27356CCE00446EB8 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B77927356CCE00446EB8 /* DateExtension.swift */; };
+		4861B77C273BA51100446EB8 /* DefaultNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B77B273BA51000446EB8 /* DefaultNavigationViewController.swift */; };
+		4861B77F273BE36800446EB8 /* AuthorizationDetailButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B77D273BE36800446EB8 /* AuthorizationDetailButtonCell.swift */; };
+		4861B780273BE36800446EB8 /* AuthorizationDetailButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4861B77E273BE36800446EB8 /* AuthorizationDetailButtonCell.xib */; };
+		4861B782273CFB0D00446EB8 /* AuthorizationDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B781273CFB0D00446EB8 /* AuthorizationDetailViewModel.swift */; };
+		4861B786273CFC1B00446EB8 /* StateAuthorizationXMLController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B785273CFC1B00446EB8 /* StateAuthorizationXMLController.swift */; };
 		921EAE2F22AFB631005D6D5B /* GlobalConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EAE2E22AFB631005D6D5B /* GlobalConstants.m */; };
 		9226966F23C60FAD00F099F0 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9226966E23C60FAD00F099F0 /* NSString+Extension.m */; };
 		92469F1225792B4100494DCF /* UserRolesNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 92469F1125792B4100494DCF /* UserRolesNetwork.m */; };
@@ -300,6 +312,18 @@
 		4861B757272BCC4500446EB8 /* Authorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authorization.swift; sourceTree = "<group>"; };
 		4861B76727327B0300446EB8 /* ValidatorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatorCell.swift; sourceTree = "<group>"; };
 		4861B76827327B0300446EB8 /* ValidatorCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ValidatorCell.xib; sourceTree = "<group>"; };
+		4861B76B27328B0A00446EB8 /* ValidatorXMLController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatorXMLController.swift; sourceTree = "<group>"; };
+		4861B76D2733DCCD00446EB8 /* AuthorizationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationDetailViewController.swift; sourceTree = "<group>"; };
+		4861B76E2733DCCD00446EB8 /* AuthorizationDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthorizationDetailView.xib; sourceTree = "<group>"; };
+		4861B7712733ED4B00446EB8 /* AuthorizationDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationDetailCell.swift; sourceTree = "<group>"; };
+		4861B7722733ED4B00446EB8 /* AuthorizationDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthorizationDetailCell.xib; sourceTree = "<group>"; };
+		4861B7772735695700446EB8 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		4861B77927356CCE00446EB8 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		4861B77B273BA51000446EB8 /* DefaultNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNavigationViewController.swift; sourceTree = "<group>"; };
+		4861B77D273BE36800446EB8 /* AuthorizationDetailButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationDetailButtonCell.swift; sourceTree = "<group>"; };
+		4861B77E273BE36800446EB8 /* AuthorizationDetailButtonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthorizationDetailButtonCell.xib; sourceTree = "<group>"; };
+		4861B781273CFB0D00446EB8 /* AuthorizationDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationDetailViewModel.swift; sourceTree = "<group>"; };
+		4861B785273CFC1B00446EB8 /* StateAuthorizationXMLController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateAuthorizationXMLController.swift; sourceTree = "<group>"; };
 		862DBE2D1FC5F494A173087E /* Pods-PortaFirmasUniv.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortaFirmasUniv.release.xcconfig"; path = "Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv.release.xcconfig"; sourceTree = "<group>"; };
 		921EAE2E22AFB631005D6D5B /* GlobalConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalConstants.m; sourceTree = "<group>"; };
 		921EAE3022AFB672005D6D5B /* GlobalConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalConstants.h; sourceTree = "<group>"; };
@@ -752,6 +776,7 @@
 				3C00AD981AB71ACB00EF6886 /* SignLine.m */,
 				3CC403811AB9BB12006F8803 /* PFCertificateInfo.h */,
 				3CC403821AB9BB12006F8803 /* PFCertificateInfo.m */,
+				4861B757272BCC4500446EB8 /* Authorization.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -834,17 +859,42 @@
 			isa = PBXGroup;
 			children = (
 				4861B6E827214C1E00446EB8 /* PortaFirmasUniv-Bridging-Header.h */,
+				4861B77B273BA51000446EB8 /* DefaultNavigationViewController.swift */,
+				4861B783273CFB5000446EB8 /* ConfigurationView */,
+				4861B784273CFB6200446EB8 /* ConfigurationDetailView */,
+			);
+			path = configuration;
+			sourceTree = "<group>";
+		};
+		4861B783273CFB5000446EB8 /* ConfigurationView */ = {
+			isa = PBXGroup;
+			children = (
+				4861B7492726EC8F00446EB8 /* ConfigurationViewModel.swift */,
 				4861B6E927214C1E00446EB8 /* ConfigurationViewController.swift */,
 				4861B6EB27214C4B00446EB8 /* ConfigurationView.xib */,
-				4861B7492726EC8F00446EB8 /* ConfigurationViewModel.swift */,
-				4861B6ED2722DA2700446EB8 /* AuthorizationCell.xib */,
 				4861B6EF2722DBF300446EB8 /* AuthorizationCell.swift */,
+				4861B6ED2722DA2700446EB8 /* AuthorizationCell.xib */,
 				4861B76727327B0300446EB8 /* ValidatorCell.swift */,
 				4861B76827327B0300446EB8 /* ValidatorCell.xib */,
 				4861B7552729314000446EB8 /* AuthorizationXMLController.swift */,
-				4861B757272BCC4500446EB8 /* Authorization.swift */,
+				4861B76B27328B0A00446EB8 /* ValidatorXMLController.swift */,
 			);
-			path = configuration;
+			path = ConfigurationView;
+			sourceTree = "<group>";
+		};
+		4861B784273CFB6200446EB8 /* ConfigurationDetailView */ = {
+			isa = PBXGroup;
+			children = (
+				4861B781273CFB0D00446EB8 /* AuthorizationDetailViewModel.swift */,
+				4861B76D2733DCCD00446EB8 /* AuthorizationDetailViewController.swift */,
+				4861B76E2733DCCD00446EB8 /* AuthorizationDetailView.xib */,
+				4861B7712733ED4B00446EB8 /* AuthorizationDetailCell.swift */,
+				4861B7722733ED4B00446EB8 /* AuthorizationDetailCell.xib */,
+				4861B77D273BE36800446EB8 /* AuthorizationDetailButtonCell.swift */,
+				4861B77E273BE36800446EB8 /* AuthorizationDetailButtonCell.xib */,
+				4861B785273CFC1B00446EB8 /* StateAuthorizationXMLController.swift */,
+			);
+			path = ConfigurationDetailView;
 			sourceTree = "<group>";
 		};
 		80952EC13E6D309528B46AE2 /* Pods */ = {
@@ -870,6 +920,8 @@
 			children = (
 				9226966D23C60F3F00F099F0 /* NSString+Extension.h */,
 				9226966E23C60FAD00F099F0 /* NSString+Extension.m */,
+				4861B77927356CCE00446EB8 /* DateExtension.swift */,
+				4861B7772735695700446EB8 /* StringExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1078,11 +1130,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				925BE5BB2587937100B85BFE /* SelectRoleViewController.xib in Resources */,
+				4861B7702733DCCD00446EB8 /* AuthorizationDetailView.xib in Resources */,
 				92A648FD2587A3CA00DFFACA /* RoleCell.xib in Resources */,
 				3CA899061AA605C60035012D /* CAMERFIRMA PF Apoderado HW Clave PSC Activo.p12 in Resources */,
+				4861B7742733ED4B00446EB8 /* AuthorizationDetailCell.xib in Resources */,
 				4861B6EE2722DA2700446EB8 /* AuthorizationCell.xib in Resources */,
 				3CA899101AA606E90035012D /* prueba.xml in Resources */,
 				3CA8990A1AA605C60035012D /* PFActivoFirSHA1.pfx in Resources */,
+				4861B780273BE36800446EB8 /* AuthorizationDetailButtonCell.xib in Resources */,
 				3CA898F31AA5BD210035012D /* MainStoryboard_iPad.storyboard in Resources */,
 				BC65EFFC1FEA7ECA003AF04F /* Localizable.strings in Resources */,
 				3CA898FC1AA605B70035012D /* PortaFirmasUniv.entitlements in Resources */,
@@ -1183,6 +1238,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				BCEF37A51FB2196E00374541 /* StoredData.m in Sources */,
+				4861B77F273BE36800446EB8 /* AuthorizationDetailButtonCell.swift in Sources */,
+				4861B7782735695700446EB8 /* StringExtension.swift in Sources */,
 				921EAE2F22AFB631005D6D5B /* GlobalConstants.m in Sources */,
 				3C00ADD91AB71B1700EF6886 /* RejectXMLController.m in Sources */,
 				3CC4037D1AB96D29006F8803 /* SettingsVC.m in Sources */,
@@ -1197,6 +1254,7 @@
 				BCF083361FC46A8B00450FE7 /* Parser.m in Sources */,
 				3CA899601AA60E6C0035012D /* RequestCell.m in Sources */,
 				BCEF37B51FB338E500374541 /* PushNotificationNetwork.m in Sources */,
+				4861B76C27328B0A00446EB8 /* ValidatorXMLController.swift in Sources */,
 				3C00ADDA1AB71B1700EF6886 /* RequestListXMLController.m in Sources */,
 				BC46A0E91FD6CBEB004D0C33 /* PFError.m in Sources */,
 				4861B6EA27214C1E00446EB8 /* ConfigurationViewController.swift in Sources */,
@@ -1212,6 +1270,7 @@
 				BC0D3E1A2004C3A900CB73BB /* AttachedDoc.m in Sources */,
 				3C00ADB51AB71B0B00EF6886 /* CertificateUtils.m in Sources */,
 				B23D243720BDBB0200345E0B /* userDNIManager.m in Sources */,
+				4861B77A27356CCE00446EB8 /* DateExtension.swift in Sources */,
 				BCF083331FC45A0900450FE7 /* XMLParser.m in Sources */,
 				3CC403861AB9EDBA006F8803 /* CertificateCell.m in Sources */,
 				3C00AD741AB71A6300EF6886 /* AttachmentViewController.m in Sources */,
@@ -1222,6 +1281,7 @@
 				BCAF65E61FACA96500D30E54 /* NSData+Conversion.m in Sources */,
 				4861B76927327B0300446EB8 /* ValidatorCell.swift in Sources */,
 				3CC403681AB96D05006F8803 /* PFBaseVC.m in Sources */,
+				4861B76F2733DCCD00446EB8 /* AuthorizationDetailViewController.swift in Sources */,
 				4861B758272BCC4500446EB8 /* Authorization.swift in Sources */,
 				BCA133D31FF63DD200818EC7 /* NotificationHandler.m in Sources */,
 				9261566125AEEADD004E47F5 /* ValidateController.m in Sources */,
@@ -1269,14 +1329,18 @@
 				BC33AAA0200518FF00B33CBB /* Source.m in Sources */,
 				3C00ADD31AB71B1700EF6886 /* ApproveXMLController.m in Sources */,
 				3CC4036E1AB96D0F006F8803 /* ServerListTVC.m in Sources */,
+				4861B786273CFC1B00446EB8 /* StateAuthorizationXMLController.swift in Sources */,
 				B2E4AEBE20599935000DD0C3 /* ArrayHelper.m in Sources */,
+				4861B7732733ED4B00446EB8 /* AuthorizationDetailCell.swift in Sources */,
 				BCAF65E11FAC9BCC00D30E54 /* PushNotificationService.m in Sources */,
+				4861B782273CFB0D00446EB8 /* AuthorizationDetailViewModel.swift in Sources */,
 				3C00ADD71AB71B1700EF6886 /* PreSignXMLController.m in Sources */,
 				3C00ADD61AB71B1700EF6886 /* PostSignXMLController.m in Sources */,
 				3CC403801AB979FE006F8803 /* OpenSSLCertificateHelper.m in Sources */,
 				BCF619A71FC4379D009C5B50 /* LoginNetwork.m in Sources */,
 				3C00AD9B1AB71ACB00EF6886 /* Param.m in Sources */,
 				3C00AD861AB71A8700EF6886 /* RejectedRequestViewController.m in Sources */,
+				4861B77C273BA51100446EB8 /* DefaultNavigationViewController.swift in Sources */,
 				3CC403831AB9BB12006F8803 /* PFCertificateInfo.m in Sources */,
 				4861B74A2726EC9000446EB8 /* ConfigurationViewModel.swift in Sources */,
 				3C00ADD81AB71B1700EF6886 /* PreviewXMLController.m in Sources */,

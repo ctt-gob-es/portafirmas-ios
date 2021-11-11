@@ -13,15 +13,14 @@ class AuthorizationXMLController: NSObject {
     var currentElementValue: String = ""
     var dataSource: [Authorization] = []
     var auxAuthorization = Authorization()
-    var hasParsed: Bool = false
 
     func parse(data: Data) -> [Authorization] {
+        dataSource = []
         self.parser = XMLParser(data: data)
         self.parser?.delegate = self
-        self.hasParsed = ((parser?.parse()) != nil)
+        self.parser?.parse()
         return dataSource
     }
-
 
     func buildRequest() -> String {
         var mesg: String = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
@@ -35,6 +34,24 @@ extension AuthorizationXMLController: XMLParserDelegate {
         func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
             if elementName == "auth" {
                 auxAuthorization = Authorization()
+                if let id = attributeDict["id"] {
+                    auxAuthorization.id = id
+                }
+                if let type = attributeDict["type"] {
+                    auxAuthorization.type = type
+                }
+                if let state = attributeDict["state"] {
+                    auxAuthorization.state = state
+                }
+                if let revDate = attributeDict["revdate"] {
+                    auxAuthorization.endDate = revDate.toDate().toString()
+                }
+                if let sended = attributeDict["sended"] {
+                    auxAuthorization.sended = sended.stringToBool()
+                }
+                if let startDate = attributeDict["startdate"] {
+                    auxAuthorization.initialDate = startDate.toDate().toString()
+                }
             }
         }
 
@@ -44,30 +61,15 @@ extension AuthorizationXMLController: XMLParserDelegate {
         newStr = newStr.replacingOccurrences(of: "\t", with: "")
         newStr = newStr.replacingOccurrences(of: "&_lt", with: "<")
         newStr = newStr.replacingOccurrences(of: "&_gt", with: ">")
-
         if newStr == "\n" { return }
 
-        if currentElementValue.isEmpty {
-            currentElementValue = newStr
-        } else {
-            currentElementValue.append(contentsOf: newStr)
-        }
+        currentElementValue = newStr
     }
 
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         switch elementName {
         case "user":
             auxAuthorization.name = currentElementValue
-        case "type":
-            auxAuthorization.type = currentElementValue
-        case "state":
-            auxAuthorization.state = currentElementValue
-        case "startDate":
-            auxAuthorization.initialDate = currentElementValue
-        case "revDate":
-            auxAuthorization.endDate = currentElementValue
-        case "sended":
-            auxAuthorization.sended = stringToBool(element: currentElementValue)
         case "observations":
             auxAuthorization.observations = currentElementValue
         case "auth":
@@ -75,9 +77,5 @@ extension AuthorizationXMLController: XMLParserDelegate {
         default:
             return
         }
-    }
-
-    private func stringToBool(element: String) -> Bool {
-        return element == "true" ? true : false
     }
 }

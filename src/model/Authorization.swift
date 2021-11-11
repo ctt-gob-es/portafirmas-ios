@@ -8,9 +8,10 @@
 import Foundation
 
 struct Authorization {
+    var id: String
     var name: String
     var state: String
-    var sended: Bool?
+    var sended: Bool
     var type: String
     var initialDate: String
     var endDate: String
@@ -19,8 +20,10 @@ struct Authorization {
 
 extension Authorization {
     init() {
+        id = ""
         name = ""
         state = ""
+        sended = false
         type = ""
         initialDate = ""
         endDate = ""

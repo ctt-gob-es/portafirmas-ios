@@ -337,12 +337,14 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 }
 
 - (IBAction)didSelectConfirmationButton:(id)sender {
+    DefaultNavigationViewController *nvc = [[DefaultNavigationViewController alloc] init];
     ConfigurationViewController *vc = [[ConfigurationViewController alloc] initWithNibName:@"ConfigurationView" bundle:nil];
     ConfigurationViewModel *viewModel = [[ConfigurationViewModel alloc] init];
     [vc injectViewModelWithViewModel:viewModel];
+    [nvc initWithRootViewController:vc];
     UIViewController *currentTopVC = [self currentTopViewController];
-    vc.modalPresentationStyle = UIModalPresentationFullScreen;
-    [currentTopVC presentViewController:vc animated:NO completion:nil];
+    nvc.modalPresentationStyle = UIModalPresentationFullScreen;
+    [currentTopVC presentViewController:nvc animated:YES completion:nil];
 }
 
 - (UIViewController *)currentTopViewController {
