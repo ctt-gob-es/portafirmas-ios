@@ -1,5 +1,5 @@
 //
-//  ValidatorCell.swift
+//  UserNameCell.swift
 //  PortaFirmasUniv
 //
 //  Created by Héctor Rogel on 3/11/21.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ValidatorCell: UITableViewCell {
+class UserNameCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
 

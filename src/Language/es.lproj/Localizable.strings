@@ -184,3 +184,7 @@
 "Authorization_Detail_State_Revoked" = "Rechazada";
 "Authorization_Detail_Accept" = "Aceptar";
 "Authorization_Detail_Revoke" = "Rechazar";
+
+// Create item
+"Search_User_Title_Authorization" = "Crear nueva autorización";
+"Search_User_Title_Validator" = "Crear nuevo validador";

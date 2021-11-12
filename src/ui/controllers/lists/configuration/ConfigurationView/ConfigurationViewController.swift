@@ -8,11 +8,16 @@
 import Foundation
 import UIKit
 
+enum SearchType {
+    case authorization
+    case validator
+}
+
 class ConfigurationViewController: UIViewController {
     // MARK: - Properties
     private var viewModel: ConfigurationViewModel?
     private let authorizationCellIdentifier = "AuthorizationCell"
-    private let validatorCellIdentifier = "ValidatorCell"
+    private let validatorCellIdentifier = "UserNameCell"
     private let authorizationCellHeight: CGFloat = 60.0
     private let validatorCellHeight: CGFloat = 40.0
     private var showAuthorizations: Bool = true
@@ -28,10 +33,7 @@ class ConfigurationViewController: UIViewController {
         showLoading()
         bind()
         configureSegmentedControl()
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UINib(nibName: authorizationCellIdentifier, bundle: nil), forCellReuseIdentifier: authorizationCellIdentifier)
-        tableView.register(UINib(nibName: validatorCellIdentifier, bundle: nil), forCellReuseIdentifier: validatorCellIdentifier)
+        configuraTableView()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -45,6 +47,13 @@ class ConfigurationViewController: UIViewController {
         segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .normal)
         segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
         segmentedControl.addTarget(self, action: #selector(segmentedControlTapped(_:)), for: .valueChanged)
+    }
+
+    private func configuraTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(UINib(nibName: authorizationCellIdentifier, bundle: nil), forCellReuseIdentifier: authorizationCellIdentifier)
+        tableView.register(UINib(nibName: validatorCellIdentifier, bundle: nil), forCellReuseIdentifier: validatorCellIdentifier)
     }
 
     // MARK: - Binding
@@ -85,7 +94,19 @@ class ConfigurationViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
 
-    @IBAction func addNewAuthorizationButtonTapped(_ sender: Any) {
+    @IBAction func addNewItemButtonTapped(_ sender: Any) {
+        switch showAuthorizations {
+        case true:
+            navigate(type: .authorization)
+        case false:
+            navigate(type: .validator)
+        }
+    }
+
+    private func navigate(type: SearchType) {
+        let searchUserViewController = SearchUserViewController(type: type)
+        searchUserViewController.modalPresentationStyle = .fullScreen
+        self.navigationController?.pushViewController(searchUserViewController, animated: true)
     }
 
     private func showLoading() {
@@ -138,7 +159,7 @@ extension ConfigurationViewController: UITableViewDataSource {
             cell.configureCell(for: authorizations[indexPath.row])
             return cell
         case false:
-            let cell = tableView.dequeueReusableCell(withIdentifier: validatorCellIdentifier, for: indexPath) as! ValidatorCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: validatorCellIdentifier, for: indexPath) as! UserNameCell
             cell.configureCell(for: validators[indexPath.row])
             return cell
         }
