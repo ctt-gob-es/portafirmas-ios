@@ -3,6 +3,7 @@
 //  PortaFirmasUniv
 //
 //  Created by Héctor Rogel on 10/11/21.
+//  Copyright © 2021 Izertis All rights reserved.
 //
 
 import Foundation

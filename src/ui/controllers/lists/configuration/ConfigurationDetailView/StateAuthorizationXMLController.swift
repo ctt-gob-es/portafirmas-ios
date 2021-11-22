@@ -3,6 +3,7 @@
 //  PortaFirmasUniv
 //
 //  Created by Héctor Rogel on 11/11/21.
+//  Copyright © 2021 Izertis All rights reserved.
 //
 
 import Foundation
@@ -24,8 +25,15 @@ class StateAuthorizationXMLController: NSObject {
     }
 
     func buildRequest(id: String) -> String {
-        let mesg: String = "<rquserauth id=\"" + id + "\"/>"
-        return mesg
+        "<rquserauth id=\"" + id + "\"/>"
+    }
+
+    func buildCreateAuthorizationRequest(user: User, authorization: Authorization) -> String {
+        "<rqsaveauth type=\"\(authorization.type?.rawValue ?? "")\"><authuser id=\"\(user.id)\" dni=\"012340000\">\(authorization.name)</authuser> <startdate>\(authorization.initialDate)</startdate> <expdate>\(authorization.endDate)</expdate><observations>\(authorization.observations)</observations></rqsaveauth>"
+    }
+
+    func buildCreateValidatorRequest(user: User) -> String {
+        "<rqsavevalid><validator id=\"\(user.id)\" dni=\"\(user.dni)\">\(user.name)</validator></rqsavevalid>"
     }
 }
 
@@ -44,7 +52,11 @@ extension StateAuthorizationXMLController: XMLParserDelegate {
         newStr = newStr.replacingOccurrences(of: "&_gt", with: ">")
         if newStr == "\n" { return }
 
-        currentElementValue = newStr
+        if !currentElementValue.isEmpty {
+            currentElementValue.append(newStr)
+        } else {
+            currentElementValue = newStr
+        }
     }
 
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
@@ -58,5 +70,7 @@ extension StateAuthorizationXMLController: XMLParserDelegate {
         if elementName == "errorMsg" {
             dataSource = [auxResult.stringToBool() : currentElementValue]
         }
+
+        currentElementValue = ""
     }
 }

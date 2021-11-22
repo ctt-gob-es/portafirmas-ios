@@ -3,7 +3,7 @@
 //  PortaFirmasUniv
 //
 //  Created by Héctor Rogel on 4/11/21.
-//  Copyright © 2021 Solid Gear Projects S.L. All rights reserved.
+//  Copyright © 2021 Izertis All rights reserved.
 //
 
 import UIKit
@@ -40,7 +40,7 @@ class AuthorizationDetailCell: UITableViewCell {
             iconImageView.image = authorization.sended ? UIImage(named: "ic_authorized_out") : UIImage(named: "ic_authorized_in")
         case 3:
             titleLabel.text = "Authorization_Detail_Type".localized()
-            contentLabel.text = authorization.type.capitalized
+            contentLabel.text = authorization.type?.rawValue.capitalized
         case 4:
             titleLabel.text = "Authorization_Detail_Initial_Date".localized()
             contentLabel.text = authorization.initialDate

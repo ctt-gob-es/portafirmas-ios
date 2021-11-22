@@ -9,5 +9,6 @@ import Foundation
 
 struct User {
     var id: String = ""
+    var dni: String = ""
     var name: String = ""
 }

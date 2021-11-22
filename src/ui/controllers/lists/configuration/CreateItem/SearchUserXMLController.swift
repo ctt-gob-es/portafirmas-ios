@@ -43,6 +43,9 @@ extension SearchUserXMLController: XMLParserDelegate {
             if let id = attributeDict["id"] {
                 auxUser.id = id
             }
+            if let dni = attributeDict["dni"] {
+                auxUser.dni = dni
+            }
         }
     }
 

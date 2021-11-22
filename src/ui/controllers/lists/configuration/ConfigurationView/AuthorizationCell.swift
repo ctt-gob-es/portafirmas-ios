@@ -3,6 +3,7 @@
 //  PortaFirmasUniv
 //
 //  Created by Héctor Rogel on 22/10/21.
+//  Copyright © 2021 Izertis All rights reserved.
 //
 
 import Foundation
@@ -17,7 +18,7 @@ class AuthorizationCell: UITableViewCell {
 
     func configureCell(for authorization: Authorization) {
         name.text = authorization.name
-        date.text = authorization.initialDate
+        date.text = authorization.endDate.toDate()?.toString() ?? "-"
         switch authorization.state {
         case "pending":
             state.image = UIImage(named: "ic_waiting")

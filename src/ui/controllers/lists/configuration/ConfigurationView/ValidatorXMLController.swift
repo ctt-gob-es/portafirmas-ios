@@ -3,6 +3,7 @@
 //  PortaFirmasUniv
 //
 //  Created by Héctor Rogel on 3/11/21.
+//  Copyright © 2021 Izertis All rights reserved.
 //
 
 import Foundation
@@ -48,11 +49,5 @@ extension ValidatorXMLController: XMLParserDelegate {
         if elementName == "user" {
             dataSource.append(currentElementValue)
         }
-//        switch currentElementValue {
-//        case "user":
-//            dataSource.append(currentElementValue)
-//        default:
-//            return
-//        }
     }
 }

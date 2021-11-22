@@ -3,7 +3,7 @@
 //  PortaFirmasUniv
 //
 //  Created by Héctor Rogel on 3/11/21.
-//  Copyright © 2021 Solid Gear Projects S.L. All rights reserved.
+//  Copyright © 2021 Izertis All rights reserved.
 //
 
 import UIKit

@@ -61,16 +61,6 @@ extension ConfigurationViewModel: WSDelegate {
         }
     }
 
-//    private func didFinishParsingWithParser(parser: AuthorizationXMLController) {
-////        let finishOK = !parser.finishWithError
-////        if !finishOK {
-////            let errorCode = parser.errorCode == nil ? kEmptyString : parser.errorCode
-////            let err = parser.err == nil ? kEmptyString : parser.err
-////            self.didReceiveError(errorString: String(format: "Detail_view_error_messages_from_server".localized(), [err, errorCode]))
-////        } else {
-////            dataSource = parser.dataSource
-////        }
-
     private func didReceiveError(errorString: String) {
         SVProgressHUD.dismiss {
             ErrorService().showAlertView(withTitle: "Alert_View_Error".localized(), andMessage: errorString)

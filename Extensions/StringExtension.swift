@@ -9,10 +9,10 @@ import Foundation
 
 extension String {
 
-    func toDate() -> Date {
+    func toDate() -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
-        return dateFormatter.date(from: self) ?? Date()
+        return dateFormatter.date(from: self) ?? nil
     }
 
     func stringToBool() -> Bool {

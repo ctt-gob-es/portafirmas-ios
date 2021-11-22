@@ -3,6 +3,7 @@
 //  PortaFirmasUniv
 //
 //  Created by Héctor Rogel on 4/11/21.
+//  Copyright © 2021 Izertis All rights reserved.
 //
 
 import UIKit
@@ -71,7 +72,11 @@ class AuthorizationDetailViewController: UIViewController {
 
     private func didReceiveError(errorString: String) {
         SVProgressHUD.dismiss {
-            ErrorService().showAlertView(withTitle: "Alert_View_Error".localized(), andMessage: errorString)
+            let alert = UIAlertController(title: "Alert_View_Error".localized(), message: errorString, preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Alert_View_Ok_Option".localized(), style: UIAlertAction.Style.default, handler: { _ in
+                self.navigationController?.popViewController(animated: true)
+            }))
+            self.present(alert, animated: true, completion: nil)
         }
     }
 
@@ -108,19 +113,17 @@ extension AuthorizationDetailViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: authorizationDetailButtonCellIdentifier, for: indexPath) as! AuthorizationDetailButtonCell
             cell.configureCell(for: "Authorization_Detail_Accept".localized())
             cell.button.addTarget(self, action: #selector(acceptButtonTapped(sender:)), for: .touchUpInside)
-            if authorization.state != "pending" {
-                cell.button.isUserInteractionEnabled = false
-                cell.button.alpha = 0.5
-                cell.isUserInteractionEnabled = false
-            }
-
-            if authorization.state == "revoked" {
+            if authorization.state != "pending" || authorization.sended {
                 cell.button.isHidden = true
             }
             return cell
         case 8:
             let cell = tableView.dequeueReusableCell(withIdentifier: authorizationDetailButtonCellIdentifier, for: indexPath) as! AuthorizationDetailButtonCell
-            cell.configureCell(for: "Authorization_Detail_Revoke".localized())
+            if authorization.state == "accepted" {
+                cell.configureCell(for: "Authorization_Detail_Cancel".localized())
+            } else {
+                cell.configureCell(for: "Authorization_Detail_Revoke".localized())
+            }
             cell.button.addTarget(self, action: #selector(rejectButtonTapped(sender:)), for: .touchUpInside)
             if authorization.state == "revoked" {
                 cell.button.isHidden = true

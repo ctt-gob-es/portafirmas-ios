@@ -3,6 +3,7 @@
 //  PortaFirmasUniv
 //
 //  Created by Héctor Rogel on 27/10/21.
+//  Copyright © 2021 Izertis All rights reserved.
 //
 
 import Foundation
@@ -38,19 +39,19 @@ extension AuthorizationXMLController: XMLParserDelegate {
                     auxAuthorization.id = id
                 }
                 if let type = attributeDict["type"] {
-                    auxAuthorization.type = type
+                    auxAuthorization.type = AuthorizationType(rawValue: type)
                 }
                 if let state = attributeDict["state"] {
                     auxAuthorization.state = state
                 }
                 if let revDate = attributeDict["revdate"] {
-                    auxAuthorization.endDate = revDate.toDate().toString()
+                    auxAuthorization.endDate = revDate.toDate()?.toString(withFormat: "dd/MM/yyyy HH:mm") ?? "-"
                 }
                 if let sended = attributeDict["sended"] {
                     auxAuthorization.sended = sended.stringToBool()
                 }
                 if let startDate = attributeDict["startdate"] {
-                    auxAuthorization.initialDate = startDate.toDate().toString()
+                    auxAuthorization.initialDate = startDate.toDate()?.toString(withFormat: "dd/MM/yyyy HH:mm") ?? "-"
                 }
             }
         }

@@ -12,7 +12,7 @@ class SearchUserViewController: UIViewController {
     // MARK: - Properties
     private let userNameCellIdentifier = "UserNameCell"
     private var type: SearchType
-    private var viewModel: CreateItemViewModel?
+    private var viewModel: CreateItemViewModel
     private var users: [User] = []
 
     @IBOutlet weak var viewTitle: UILabel!
@@ -22,8 +22,8 @@ class SearchUserViewController: UIViewController {
     // MARK: - Init
     init(type: SearchType) {
         self.type = type
-        super.init(nibName: "SearchUserView", bundle: nil)
         viewModel = CreateItemViewModel(type: type)
+        super.init(nibName: "SearchUserView", bundle: nil)
     }
 
     required init?(coder: NSCoder) {
@@ -57,7 +57,7 @@ class SearchUserViewController: UIViewController {
 
     // MARK: - Binding
     private func bind() {
-        viewModel?.usersUpdated = { users in
+        viewModel.usersUpdated = { users in
             self.users = users
             self.tableView.reloadData()
         }
@@ -74,7 +74,18 @@ class SearchUserViewController: UIViewController {
 
 extension SearchUserViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        switch type {
+        case .authorization:
+        let createItemViewController = CreateItemViewController(type: type, user: users[indexPath.row], viewModel: viewModel)
+        self.navigationController?.pushViewController(createItemViewController, animated: true)
+        case .validator:
+            let alert = UIAlertController(title: "Create_validator_Alert_Title".localized(), message: "Create_Validator_Alert_Message".localized().replacingOccurrences(of: "%@", with: users[indexPath.row].name), preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Create_Validator_Alert_Accept".localized(), style: UIAlertAction.Style.default, handler: { _ in
+                self.viewModel.createValidator(user: self.users[indexPath.row])
+            }))
+            alert.addAction(UIAlertAction(title: "Create_Validator_Alert_Cancel".localized(), style: UIAlertAction.Style.cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }
 
@@ -94,7 +105,7 @@ extension SearchUserViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.count > 2 {
-            viewModel?.searchUser(string: searchText)
+            viewModel.searchUser(string: searchText)
         } else {
             users = []
             tableView.reloadData()
@@ -106,7 +117,7 @@ extension SearchUserViewController: UISearchBarDelegate {
             return
         }
         if text.count <= 3 {
-            viewModel?.searchUser(string: text)
+            viewModel.searchUser(string: text)
         }
         let resign = #selector(UIResponder.resignFirstResponder)
         UIApplication.shared.sendAction(resign, to: nil, from: nil, for: nil)
