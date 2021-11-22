@@ -12,9 +12,10 @@ class ValidatorXMLController: NSObject {
 
     var parser: XMLParser?
     var currentElementValue: String = ""
-    var dataSource: [String] = []
+    var auxUser: User = User()
+    var dataSource: [User] = []
 
-    func parse(data: Data) -> [String] {
+    func parse(data: Data) -> [User] {
         dataSource = []
         self.parser = XMLParser(data: data)
         self.parser?.delegate = self
@@ -32,7 +33,12 @@ class ValidatorXMLController: NSObject {
 
 extension ValidatorXMLController: XMLParserDelegate {
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
-
+        if elementName == "user" {
+            auxUser = User()
+            if let id = attributeDict["id"] {
+                auxUser.id = id
+            }
+        }
     }
     func parser(_ parser: XMLParser, foundCharacters string: String) {
         var newStr = string.replacingOccurrences(of: "\n", with: "")
@@ -47,7 +53,8 @@ extension ValidatorXMLController: XMLParserDelegate {
 
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         if elementName == "user" {
-            dataSource.append(currentElementValue)
+            auxUser.name = currentElementValue
+            dataSource.append(auxUser)
         }
     }
 }

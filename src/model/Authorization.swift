@@ -9,7 +9,8 @@ import Foundation
 
 struct Authorization {
     var id: String
-    var name: String
+    var nameSend: String
+    var nameReceive: String
     var state: String
     var sended: Bool
     var type: AuthorizationType?
@@ -21,7 +22,8 @@ struct Authorization {
 extension Authorization {
     init() {
         id = ""
-        name = ""
+        nameSend = ""
+        nameReceive = ""
         state = ""
         sended = false
         type = nil
@@ -32,7 +34,8 @@ extension Authorization {
 
     init(name: String, type: AuthorizationType, initialDate: String, endDate: String, observations: String) {
         id = ""
-        self.name = name
+        self.nameSend = name
+        nameReceive = ""
         state = ""
         sended = true
         self.type = type

@@ -13,7 +13,9 @@ import Foundation
     let wsController = WSDataController()
     private var authorizationParser = AuthorizationXMLController()
     private var validatorParser = ValidatorXMLController()
+    private var stateAuthorizationParser = StateAuthorizationXMLController()
     private var authorizationsFlag: Bool = true
+    private var isRevokingValidator: Bool = false
 
     var authorizationsUpdated: (([Authorization]) -> Void)?
     var authorizations: [Authorization] = [] {
@@ -21,10 +23,25 @@ import Foundation
             authorizationsUpdated?(authorizations)
         }
     }
-    var validatorsUpdated: (([String]) -> Void)?
-    var validators: [String] = [] {
+    var validatorsUpdated: (([User]) -> Void)?
+    var validators: [User] = [] {
         didSet {
             validatorsUpdated?(validators)
+        }
+    }
+
+    var result: Bool = false {
+        didSet {
+            if result {
+                getValidators()
+            }
+        }
+    }
+
+    var errorMsgUpdated: ((String) -> Void)?
+    var errorMsg: String = "" {
+        didSet {
+            errorMsgUpdated?(errorMsg)
         }
     }
 
@@ -46,6 +63,14 @@ import Foundation
         wsController?.startConnection()
     }
 
+    func revokeValidator(id: String) {
+        isRevokingValidator = true
+        wsController?.delegate = self
+        let data = stateAuthorizationParser.buildRevokeValidatorRequest(id: id)
+        wsController?.loadPostRequest(withData: data, code: 30)
+        wsController?.startConnection()
+    }
+
     private func cancelWS() {
         wsController?.cancelConnection()
     }
@@ -53,11 +78,22 @@ import Foundation
 
 extension ConfigurationViewModel: WSDelegate {
     func doParse(_ data: Data!) {
-        switch authorizationsFlag {
-        case true:
-            authorizations = authorizationParser.parse(data: data)
-        case false:
-            validators = validatorParser.parse(data: data)
+        if isRevokingValidator {
+            isRevokingValidator = false
+            let response = stateAuthorizationParser.parse(data: data)
+            for (key, value) in response {
+                result = key
+                if !key {
+                    errorMsg = value
+                }
+            }
+        } else {
+            switch authorizationsFlag {
+            case true:
+                authorizations = authorizationParser.parse(data: data)
+            case false:
+                validators = validatorParser.parse(data: data)
+            }
         }
     }
 

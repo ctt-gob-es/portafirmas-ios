@@ -70,7 +70,9 @@ extension AuthorizationXMLController: XMLParserDelegate {
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         switch elementName {
         case "user":
-            auxAuthorization.name = currentElementValue
+            auxAuthorization.nameSend = currentElementValue
+        case "authuser":
+            auxAuthorization.nameReceive = currentElementValue
         case "observations":
             auxAuthorization.observations = currentElementValue
         case "auth":

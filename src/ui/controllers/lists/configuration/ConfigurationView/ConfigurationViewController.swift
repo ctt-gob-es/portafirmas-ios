@@ -23,7 +23,7 @@ class ConfigurationViewController: UIViewController {
     private let validatorCellHeight: CGFloat = 40.0
     private var showAuthorizations: Bool = true
     private var authorizations: [Authorization] = []
-    private var validators: [String] = []
+    private var validators: [User] = []
 
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var tableView: UITableView!
@@ -79,6 +79,10 @@ class ConfigurationViewController: UIViewController {
             }
             self.removeLoading()
         }
+
+        viewModel?.errorMsgUpdated = { msg in
+            self.didReceiveError(errorString: msg)
+        }
     }
 
     // MARK: - Actions
@@ -132,6 +136,16 @@ class ConfigurationViewController: UIViewController {
             SVProgressHUD.dismiss()
         }
     }
+
+    private func didReceiveError(errorString: String) {
+        SVProgressHUD.dismiss {
+            let alert = UIAlertController(title: "Alert_View_Error".localized(), message: errorString, preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Alert_View_Ok_Option".localized(), style: UIAlertAction.Style.default, handler: { _ in
+                self.navigationController?.popViewController(animated: true)
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
 }
 
 extension ConfigurationViewController: UITableViewDelegate {
@@ -145,11 +159,20 @@ extension ConfigurationViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if showAuthorizations {
+        switch showAuthorizations {
+        case true:
             let authorizationDetailViewController = AuthorizationDetailViewController(authorization: authorizations[indexPath.row])
             authorizationDetailViewController.modalPresentationStyle = .fullScreen
             self.navigationController?.pushViewController(authorizationDetailViewController, animated: true)
             tableView.deselectRow(at: indexPath, animated: true)
+        case false:
+            let alert = UIAlertController(title: "Create_validator_Alert_Title".localized(), message: "Revoke_Validator_Alert_Message".localized().replacingOccurrences(of: "%@", with: validators[indexPath.row].name), preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Create_Validator_Alert_Accept".localized(), style: UIAlertAction.Style.default, handler: { _ in
+                self.showLoading()
+                self.viewModel?.revokeValidator(id: self.validators[indexPath.row].id)
+            }))
+            alert.addAction(UIAlertAction(title: "Create_Validator_Alert_Cancel".localized(), style: UIAlertAction.Style.cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
 }
@@ -172,7 +195,7 @@ extension ConfigurationViewController: UITableViewDataSource {
             return cell
         case false:
             let cell = tableView.dequeueReusableCell(withIdentifier: validatorCellIdentifier, for: indexPath) as! UserNameCell
-            cell.configureCell(for: validators[indexPath.row])
+            cell.configureCell(for: validators[indexPath.row].name)
             return cell
         }
     }

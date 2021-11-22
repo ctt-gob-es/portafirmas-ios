@@ -17,7 +17,8 @@ class AuthorizationCell: UITableViewCell {
     @IBOutlet weak var direction: UIImageView!
 
     func configureCell(for authorization: Authorization) {
-        name.text = authorization.name
+        name.text = authorization.sended ? authorization.nameReceive : authorization.nameSend
+
         date.text = authorization.endDate.toDate()?.toString() ?? "-"
         switch authorization.state {
         case "pending":

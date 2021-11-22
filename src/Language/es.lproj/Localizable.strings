@@ -193,3 +193,6 @@
 "Create_Validator_Alert_Message" = "¿Está seguro de que quiere añadir el validador %@?";
 "Create_Validator_Alert_Accept" = "Aceptar";
 "Create_Validator_Alert_Cancel" = "Cancelar";
+
+// Validator list
+"Revoke_Validator_Alert_Message" = "Tiene asignado el validador %@, ¿Desea eliminarlo?";

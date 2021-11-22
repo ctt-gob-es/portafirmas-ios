@@ -18,7 +18,7 @@ class AuthorizationDetailCell: UITableViewCell {
         switch index {
         case 0:
             titleLabel.text = "Authorization_Detail_Name".localized()
-            contentLabel.text = authorization.name
+            contentLabel.text = authorization.nameSend
         case 1:
             titleLabel.text = "Authorization_Detail_State".localized()
             switch authorization.state {

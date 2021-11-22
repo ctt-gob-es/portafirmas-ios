@@ -29,11 +29,15 @@ class StateAuthorizationXMLController: NSObject {
     }
 
     func buildCreateAuthorizationRequest(user: User, authorization: Authorization) -> String {
-        "<rqsaveauth type=\"\(authorization.type?.rawValue ?? "")\"><authuser id=\"\(user.id)\" dni=\"012340000\">\(authorization.name)</authuser> <startdate>\(authorization.initialDate)</startdate> <expdate>\(authorization.endDate)</expdate><observations>\(authorization.observations)</observations></rqsaveauth>"
+        "<rqsaveauth type=\"\(authorization.type?.rawValue ?? "")\"><authuser id=\"\(user.id)\" dni=\"012340000\">\(authorization.nameSend)</authuser> <startdate>\(authorization.initialDate)</startdate> <expdate>\(authorization.endDate)</expdate><observations>\(authorization.observations)</observations></rqsaveauth>"
     }
 
     func buildCreateValidatorRequest(user: User) -> String {
         "<rqsavevalid><validator id=\"\(user.id)\" dni=\"\(user.dni)\">\(user.name)</validator></rqsavevalid>"
+    }
+
+    func buildRevokeValidatorRequest(id: String) -> String {
+        "<rqrevvalidator id=\"\(id)\"/>"
     }
 }
 
