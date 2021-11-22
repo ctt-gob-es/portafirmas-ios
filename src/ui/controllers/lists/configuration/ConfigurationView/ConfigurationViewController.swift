@@ -83,6 +83,12 @@ class ConfigurationViewController: UIViewController {
         viewModel?.errorMsgUpdated = { msg in
             self.didReceiveError(errorString: msg)
         }
+
+        viewModel?.areAuthorizationsPending = {
+            let alert = UIAlertController(title: "Alert_View_Notice".localized(), message: "Autorization_Pending_Alert_Message".localized(), preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Alert_View_Ok_Option".localized(), style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 
     // MARK: - Actions

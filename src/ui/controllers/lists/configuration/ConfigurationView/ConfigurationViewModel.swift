@@ -45,6 +45,8 @@ import Foundation
         }
     }
 
+    var areAuthorizationsPending: (() -> Void)?
+
     func getAuthorizations() {
         authorizationsFlag = true
         authorizations = []
@@ -71,6 +73,15 @@ import Foundation
         wsController?.startConnection()
     }
 
+    private func pendingAuthorizations() {
+        for item in authorizations {
+            if item.state == "pending" {
+                areAuthorizationsPending?()
+            }
+        }
+
+    }
+
     private func cancelWS() {
         wsController?.cancelConnection()
     }
@@ -91,6 +102,7 @@ extension ConfigurationViewModel: WSDelegate {
             switch authorizationsFlag {
             case true:
                 authorizations = authorizationParser.parse(data: data)
+                pendingAuthorizations()
             case false:
                 validators = validatorParser.parse(data: data)
             }

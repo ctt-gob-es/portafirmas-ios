@@ -29,6 +29,12 @@
 "Alert_View_Loaded_Certificate_In_Your_App" = "El certificado se ha cargado correctamente en su aplicación.";
 "Alert_View_Server_Going_To_Be_Selected" = "Se va a seleccionar el servidor %@ con url %@.";
 "Alert_View_Accept" = "Aceptar";
+"Autorization_Pending_Alert_Message" = "Hay al menos una autorización pendiente";
+"Revoke_Validator_Alert_Message" = "Tiene asignado el validador %@, ¿Desea eliminarlo?";
+"Create_validator_Alert_Title" = "Confirmar";
+"Create_Validator_Alert_Message" = "¿Está seguro de que quiere añadir el validador %@?";
+"Create_Validator_Alert_Accept" = "Aceptar";
+"Create_Validator_Alert_Cancel" = "Cancelar";
 
 //Global errors
 "Global_Error_Server_Connection" = "Se ha producido un error de conexión con el servidor.";
@@ -189,10 +195,3 @@
 // Create item
 "Search_User_Title_Authorization" = "Crear nueva autorización";
 "Search_User_Title_Validator" = "Crear nuevo validador";
-"Create_validator_Alert_Title" = "Confirmar";
-"Create_Validator_Alert_Message" = "¿Está seguro de que quiere añadir el validador %@?";
-"Create_Validator_Alert_Accept" = "Aceptar";
-"Create_Validator_Alert_Cancel" = "Cancelar";
-
-// Validator list
-"Revoke_Validator_Alert_Message" = "Tiene asignado el validador %@, ¿Desea eliminarlo?";
