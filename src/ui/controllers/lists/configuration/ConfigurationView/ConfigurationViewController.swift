@@ -38,7 +38,12 @@ class ConfigurationViewController: UIViewController {
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        viewModel?.getAuthorizations()
+        switch showAuthorizations {
+        case true:
+            viewModel?.getAuthorizations()
+        case false:
+            viewModel?.getValidators()
+        }
     }
 
     // MARK: - Style and configurations
@@ -61,13 +66,17 @@ class ConfigurationViewController: UIViewController {
     func bind() {
         viewModel?.authorizationsUpdated = { authorizations in
             self.authorizations = authorizations
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
             self.removeLoading()
         }
 
         viewModel?.validatorsUpdated = { validators in
             self.validators = validators
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
             self.removeLoading()
         }
     }
@@ -85,7 +94,9 @@ class ConfigurationViewController: UIViewController {
         case 1:
             showAuthorizations = false
             viewModel?.getValidators()
-            tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         default:
             return
         }

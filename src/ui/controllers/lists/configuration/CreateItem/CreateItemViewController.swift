@@ -97,7 +97,6 @@ class CreateItemViewController: UIViewController {
             return
         }
         let authorization = Authorization(name: user.name, type: type, initialDate: getInitDate(), endDate: getEndDate(), observations: observationsTextField.text ?? "")
-        print(authorization)
         viewModel.createAuthorization(user: user, authorization: authorization)
     }
 

@@ -61,6 +61,14 @@ class SearchUserViewController: UIViewController {
             self.users = users
             self.tableView.reloadData()
         }
+
+        viewModel.resultUpdated = {
+            self.navigationController?.popViewController(animated: true)
+        }
+
+        viewModel.errorMsgUpdated = { msg in
+            self.didReceiveError(errorString: msg)
+        }
     }
 
     // MARK: - Actions
@@ -69,6 +77,16 @@ class SearchUserViewController: UIViewController {
             SVProgressHUD.show()
         }
         self.navigationController?.popViewController(animated: true)
+    }
+
+    private func didReceiveError(errorString: String) {
+        SVProgressHUD.dismiss {
+            let alert = UIAlertController(title: "Alert_View_Error".localized(), message: errorString, preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Alert_View_Ok_Option".localized(), style: UIAlertAction.Style.default, handler: { _ in
+                self.navigationController?.popViewController(animated: true)
+            }))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }
 
