@@ -113,6 +113,7 @@
 		4861B780273BE36800446EB8 /* AuthorizationDetailButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4861B77E273BE36800446EB8 /* AuthorizationDetailButtonCell.xib */; };
 		4861B782273CFB0D00446EB8 /* AuthorizationDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B781273CFB0D00446EB8 /* AuthorizationDetailViewModel.swift */; };
 		4861B786273CFC1B00446EB8 /* StateAuthorizationXMLController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B785273CFC1B00446EB8 /* StateAuthorizationXMLController.swift */; };
+		482BB9F72716CF6D0044C956 /* PDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 482BB9F62716CF6D0044C956 /* PDFKit.framework */; };
 		921EAE2F22AFB631005D6D5B /* GlobalConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EAE2E22AFB631005D6D5B /* GlobalConstants.m */; };
 		9226966F23C60FAD00F099F0 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9226966E23C60FAD00F099F0 /* NSString+Extension.m */; };
 		92469F1225792B4100494DCF /* UserRolesNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 92469F1125792B4100494DCF /* UserRolesNetwork.m */; };
@@ -338,6 +339,7 @@
 		4861B77E273BE36800446EB8 /* AuthorizationDetailButtonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthorizationDetailButtonCell.xib; sourceTree = "<group>"; };
 		4861B781273CFB0D00446EB8 /* AuthorizationDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationDetailViewModel.swift; sourceTree = "<group>"; };
 		4861B785273CFC1B00446EB8 /* StateAuthorizationXMLController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateAuthorizationXMLController.swift; sourceTree = "<group>"; };
+		482BB9F62716CF6D0044C956 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
 		862DBE2D1FC5F494A173087E /* Pods-PortaFirmasUniv.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortaFirmasUniv.release.xcconfig"; path = "Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv.release.xcconfig"; sourceTree = "<group>"; };
 		921EAE2E22AFB631005D6D5B /* GlobalConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalConstants.m; sourceTree = "<group>"; };
 		921EAE3022AFB672005D6D5B /* GlobalConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalConstants.h; sourceTree = "<group>"; };
@@ -433,6 +435,7 @@
 				1C9F2014163E93C3007A170B /* UIKit.framework in Frameworks */,
 				1C9F2016163E93C3007A170B /* Foundation.framework in Frameworks */,
 				1C9F2018163E93C3007A170B /* CoreGraphics.framework in Frameworks */,
+				482BB9F72716CF6D0044C956 /* PDFKit.framework in Frameworks */,
 				4809540C2705CCB2004BF96A /* OpenSSL.xcframework in Frameworks */,
 				992987C2AA230FF0604BD234 /* libPods-PortaFirmasUniv.a in Frameworks */,
 			);
@@ -466,6 +469,7 @@
 		1C9F2012163E93C3007A170B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				482BB9F62716CF6D0044C956 /* PDFKit.framework */,
 				A74AFCD326AECEB900470B9D /* OpenSSL.xcframework */,
 				BC5BF9DF1FDFCF1100B1CF0C /* WebKit.framework */,
 				BCAF65E21FAC9E0700D30E54 /* UserNotifications.framework */,
@@ -1094,7 +1098,6 @@
 			buildConfigurationList = 1C9F2036163E93C3007A170B /* Build configuration list for PBXNativeTarget "PortaFirmasUniv" */;
 			buildPhases = (
 				E3D4D6D6C009A3B3E13001A6 /* [CP] Check Pods Manifest.lock */,
-				BBB70BA0CE5FECC9271CA0BF /* [CP] Prepare Artifacts */,
 				1C9F200B163E93C3007A170B /* Sources */,
 				1C9F200C163E93C3007A170B /* Frameworks */,
 				1C9F200D163E93C3007A170B /* Resources */,
@@ -1512,7 +1515,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 2H36E8KFN2;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "src/main/PortaFirmasUniv-Prefix.pch";
@@ -1522,7 +1525,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6.1;
+				MARKETING_VERSION = 1.6.3;
 				PRODUCT_BUNDLE_IDENTIFIER = es.gob.afirma.Portafirmas;
 				PRODUCT_NAME = "Port@firmas";
 				PROVISIONING_PROFILE = "";
@@ -1557,7 +1560,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6.1;
+				MARKETING_VERSION = 1.6.3;
 				PRODUCT_BUNDLE_IDENTIFIER = es.gob.afirma.Portafirmas;
 				PRODUCT_NAME = "Port@firmas";
 				PROVISIONING_PROFILE = "";
