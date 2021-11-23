@@ -21,11 +21,11 @@ class AuthorizationCell: UITableViewCell {
 
         date.text = authorization.endDate.toDate()?.toString() ?? "-"
         switch authorization.state {
-        case "pending":
+        case .pending:
             state.image = UIImage(named: "ic_waiting")
-        case "accepted":
+        case .accepted:
             state.image = UIImage(named: "ic_check")
-        case "revoked":
+        case .revoked:
             state.image = UIImage(named: "ic_error")
         default:
             return

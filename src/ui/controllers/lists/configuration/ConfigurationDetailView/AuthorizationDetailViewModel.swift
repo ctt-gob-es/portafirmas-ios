@@ -30,11 +30,11 @@ class AuthorizationDetailViewModel: NSObject {
     }
 
     func acceptAuthorization(id: String) {
-        startConnection(id: id, code: 27)
+        startConnection(id: id, code: OperationConstants.acceptAuthorization)
     }
 
     func rejectAuthorization(id: String) {
-        startConnection(id: id, code: 26)
+        startConnection(id: id, code: OperationConstants.revokeAuthorization)
     }
 
     private func startConnection(id: String, code: Int) {

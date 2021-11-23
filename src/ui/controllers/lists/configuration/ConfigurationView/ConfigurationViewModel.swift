@@ -52,7 +52,7 @@ import Foundation
         authorizations = []
         wsController?.delegate = self
         let data = authorizationParser.buildRequest()
-        wsController?.loadPostRequest(withData: data, code: 24)
+        wsController?.loadPostRequest(withData: data, code: OperationConstants.authorizationList)
         wsController?.startConnection()
     }
 
@@ -61,7 +61,7 @@ import Foundation
         validators = []
         wsController?.delegate = self
         let data = validatorParser.buildRequest()
-        wsController?.loadPostRequest(withData: data, code: 28)
+        wsController?.loadPostRequest(withData: data, code: OperationConstants.validatorList)
         wsController?.startConnection()
     }
 
@@ -69,17 +69,17 @@ import Foundation
         isRevokingValidator = true
         wsController?.delegate = self
         let data = stateAuthorizationParser.buildRevokeValidatorRequest(id: id)
-        wsController?.loadPostRequest(withData: data, code: 30)
+        wsController?.loadPostRequest(withData: data, code: OperationConstants.revokeValidator)
         wsController?.startConnection()
     }
 
     private func pendingAuthorizations() {
         for item in authorizations {
-            if item.state == "pending" {
+            if item.state == .pending {
                 areAuthorizationsPending?()
+                return
             }
         }
-
     }
 
     private func cancelWS() {

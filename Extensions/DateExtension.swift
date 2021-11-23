@@ -8,13 +8,13 @@
 import Foundation
 
 extension Date {
-    func toString(withFormat: String = "dd/MM/YYYY") -> String {
+    func toString(withFormat: String = DateFormatConstants.dateFormat) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = withFormat
         return dateFormatter.string(from: self)
     }
 
-    func utcDateToString(withFormat format: String = "dd/MM/YYYY") -> String {
+    func utcDateToString(withFormat format: String = DateFormatConstants.dateFormat) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone.current
         dateFormatter.locale = Locale.current
@@ -25,7 +25,7 @@ extension Date {
         return stringdate
     }
 
-    func utcDateToStringTime(withFormat format: String = "HH:mm") -> String {
+    func utcDateToStringTime(withFormat format: String = DateFormatConstants.timeFormat) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone.current
         dateFormatter.locale = Locale.current

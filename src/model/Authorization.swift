@@ -7,11 +7,17 @@
 
 import Foundation
 
+enum AuthorizationState: String {
+    case accepted = "accepted"
+    case revoked = "revoked"
+    case pending = "pending"
+}
+
 struct Authorization {
     var id: String
     var nameSend: String
     var nameReceive: String
-    var state: String
+    var state: AuthorizationState?
     var sended: Bool
     var type: AuthorizationType?
     var initialDate: String
@@ -24,7 +30,7 @@ extension Authorization {
         id = ""
         nameSend = ""
         nameReceive = ""
-        state = ""
+        state = nil
         sended = false
         type = nil
         initialDate = ""
@@ -36,7 +42,7 @@ extension Authorization {
         id = ""
         self.nameSend = name
         nameReceive = ""
-        state = ""
+        state = nil
         sended = true
         self.type = type
         self.initialDate = initialDate

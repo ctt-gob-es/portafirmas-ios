@@ -14,6 +14,7 @@ class SearchUserViewController: UIViewController {
     private var type: SearchType
     private var viewModel: CreateItemViewModel
     private var users: [User] = []
+    private let minLengthToSearch: Int = 3
 
     @IBOutlet weak var viewTitle: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -122,7 +123,7 @@ extension SearchUserViewController: UITableViewDataSource {
 extension SearchUserViewController: UISearchBarDelegate {
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText.count > 2 {
+        if searchText.count >= minLengthToSearch {
             viewModel.searchUser(string: searchText)
         } else {
             users = []
@@ -134,7 +135,7 @@ extension SearchUserViewController: UISearchBarDelegate {
         guard let text = searchBar.text else {
             return
         }
-        if text.count <= 3 {
+        if text.count <= minLengthToSearch {
             viewModel.searchUser(string: text)
         }
         let resign = #selector(UIResponder.resignFirstResponder)

@@ -48,8 +48,7 @@ class ConfigurationViewController: UIViewController {
 
     // MARK: - Style and configurations
     private func configureSegmentedControl() {
-        let color = UIColor.init(red: 105.0/255.0, green: 25.0/255.0, blue: 31.0/255.0, alpha: 1.0)
-        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.segmentedControl()]
         segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .normal)
         segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
         segmentedControl.addTarget(self, action: #selector(segmentedControlTapped(_:)), for: .valueChanged)

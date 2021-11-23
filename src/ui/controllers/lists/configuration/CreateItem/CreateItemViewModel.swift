@@ -49,7 +49,7 @@ class CreateItemViewModel: NSObject {
         users = []
         wsController?.delegate = self
         let data = searchItemParser.buildRequest(string: string, searchType: type)
-        wsController?.loadPostRequest(withData: data, code: 19)
+        wsController?.loadPostRequest(withData: data, code: OperationConstants.userSearch)
         wsController?.startConnection()
     }
 
@@ -57,7 +57,7 @@ class CreateItemViewModel: NSObject {
         isSearch = false
         wsController?.delegate = self
         let data = stateAuthorizationParser.buildCreateAuthorizationRequest(user: user, authorization: authorization)
-        wsController?.loadPostRequest(withData: data, code: 25)
+        wsController?.loadPostRequest(withData: data, code: OperationConstants.createAuthorization)
         wsController?.startConnection()
     }
 
@@ -65,7 +65,7 @@ class CreateItemViewModel: NSObject {
         isSearch = false
         wsController?.delegate = self
         let data = stateAuthorizationParser.buildCreateValidatorRequest(user: user)
-        wsController?.loadPostRequest(withData: data, code: 29)
+        wsController?.loadPostRequest(withData: data, code: OperationConstants.createValidator)
         wsController?.startConnection()
     }
 }

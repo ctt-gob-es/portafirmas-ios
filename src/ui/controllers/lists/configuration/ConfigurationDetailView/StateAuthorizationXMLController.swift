@@ -16,6 +16,8 @@ class StateAuthorizationXMLController: NSObject {
     var isError: Bool = false
     var auxResult: String = ""
     var errorMsg: String = ""
+    private let resultElement: String = "result"
+    private let errorElement: String = "errorMsg"
 
     func parse(data: Data) -> [Bool : String] {
         self.parser = XMLParser(data: data)
@@ -43,7 +45,7 @@ class StateAuthorizationXMLController: NSObject {
 
 extension StateAuthorizationXMLController: XMLParserDelegate {
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
-        if elementName == "errorMsg" {
+        if elementName == errorElement {
             isError = true
         }
     }
@@ -64,14 +66,14 @@ extension StateAuthorizationXMLController: XMLParserDelegate {
     }
 
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        if elementName == "result" {
+        if elementName == resultElement {
             if isError {
                 auxResult = currentElementValue
             } else {
                 dataSource = [currentElementValue.stringToBool() : ""]
             }
         }
-        if elementName == "errorMsg" {
+        if elementName == errorElement {
             dataSource = [auxResult.stringToBool() : currentElementValue]
         }
 

@@ -90,6 +90,7 @@
 		48037CE3273E637200966968 /* SearchUserXMLController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48037CE2273E637200966968 /* SearchUserXMLController.swift */; };
 		4809540C2705CCB2004BF96A /* OpenSSL.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A74AFCD326AECEB900470B9D /* OpenSSL.xcframework */; };
 		4809540D2705CCB2004BF96A /* OpenSSL.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A74AFCD326AECEB900470B9D /* OpenSSL.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		482BB9F72716CF6D0044C956 /* PDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 482BB9F62716CF6D0044C956 /* PDFKit.framework */; };
 		485610C4273EA66B0000CF3B /* CreateItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485610C2273EA66B0000CF3B /* CreateItemViewController.swift */; };
 		485610C5273EA66B0000CF3B /* CreateItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 485610C3273EA66B0000CF3B /* CreateItemView.xib */; };
 		4861B6EA27214C1E00446EB8 /* ConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B6E927214C1E00446EB8 /* ConfigurationViewController.swift */; };
@@ -113,7 +114,8 @@
 		4861B780273BE36800446EB8 /* AuthorizationDetailButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4861B77E273BE36800446EB8 /* AuthorizationDetailButtonCell.xib */; };
 		4861B782273CFB0D00446EB8 /* AuthorizationDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B781273CFB0D00446EB8 /* AuthorizationDetailViewModel.swift */; };
 		4861B786273CFC1B00446EB8 /* StateAuthorizationXMLController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B785273CFC1B00446EB8 /* StateAuthorizationXMLController.swift */; };
-		482BB9F72716CF6D0044C956 /* PDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 482BB9F62716CF6D0044C956 /* PDFKit.framework */; };
+		4876D1C7274CCF9B00F045AF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4876D1C6274CCF9B00F045AF /* Constants.swift */; };
+		4876D1C9274CE81400F045AF /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4876D1C8274CE81400F045AF /* UIColorExtension.swift */; };
 		921EAE2F22AFB631005D6D5B /* GlobalConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EAE2E22AFB631005D6D5B /* GlobalConstants.m */; };
 		9226966F23C60FAD00F099F0 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9226966E23C60FAD00F099F0 /* NSString+Extension.m */; };
 		92469F1225792B4100494DCF /* UserRolesNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 92469F1125792B4100494DCF /* UserRolesNetwork.m */; };
@@ -315,6 +317,7 @@
 		48037CDC273E5BF500966968 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		48037CDE273E612500966968 /* CreateItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemViewModel.swift; sourceTree = "<group>"; };
 		48037CE2273E637200966968 /* SearchUserXMLController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserXMLController.swift; sourceTree = "<group>"; };
+		482BB9F62716CF6D0044C956 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
 		485610C2273EA66B0000CF3B /* CreateItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemViewController.swift; sourceTree = "<group>"; };
 		485610C3273EA66B0000CF3B /* CreateItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateItemView.xib; sourceTree = "<group>"; };
 		4861B6E827214C1E00446EB8 /* PortaFirmasUniv-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PortaFirmasUniv-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -339,7 +342,8 @@
 		4861B77E273BE36800446EB8 /* AuthorizationDetailButtonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthorizationDetailButtonCell.xib; sourceTree = "<group>"; };
 		4861B781273CFB0D00446EB8 /* AuthorizationDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationDetailViewModel.swift; sourceTree = "<group>"; };
 		4861B785273CFC1B00446EB8 /* StateAuthorizationXMLController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateAuthorizationXMLController.swift; sourceTree = "<group>"; };
-		482BB9F62716CF6D0044C956 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
+		4876D1C6274CCF9B00F045AF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4876D1C8274CE81400F045AF /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		862DBE2D1FC5F494A173087E /* Pods-PortaFirmasUniv.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortaFirmasUniv.release.xcconfig"; path = "Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv.release.xcconfig"; sourceTree = "<group>"; };
 		921EAE2E22AFB631005D6D5B /* GlobalConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalConstants.m; sourceTree = "<group>"; };
 		921EAE3022AFB672005D6D5B /* GlobalConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalConstants.h; sourceTree = "<group>"; };
@@ -612,6 +616,7 @@
 				3CA899111AA6073F0035012D /* main */,
 				3CA899441AA60D910035012D /* model */,
 				3CA8995A1AA60E020035012D /* ui */,
+				4876D1C6274CCF9B00F045AF /* Constants.swift */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -955,6 +960,7 @@
 				9226966E23C60FAD00F099F0 /* NSString+Extension.m */,
 				4861B77927356CCE00446EB8 /* DateExtension.swift */,
 				4861B7772735695700446EB8 /* StringExtension.swift */,
+				4876D1C8274CE81400F045AF /* UIColorExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1212,23 +1218,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BBB70BA0CE5FECC9271CA0BF /* [CP] Prepare Artifacts */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-artifacts-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Prepare Artifacts";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-artifacts-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-artifacts.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C17CEF1E1F82ED5589E5DBBD /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1294,6 +1283,7 @@
 				3C00ADDA1AB71B1700EF6886 /* RequestListXMLController.m in Sources */,
 				BC46A0E91FD6CBEB004D0C33 /* PFError.m in Sources */,
 				4861B6EA27214C1E00446EB8 /* ConfigurationViewController.swift in Sources */,
+				4876D1C9274CE81400F045AF /* UIColorExtension.swift in Sources */,
 				BCF083621FC72E3100450FE7 /* NSString+XMLSafe.m in Sources */,
 				92469F1C257938A900494DCF /* UserRolesService.m in Sources */,
 				3C00AD751AB71A6300EF6886 /* DetailTableViewController.m in Sources */,
@@ -1349,6 +1339,7 @@
 				BCF083321FC45A0900450FE7 /* Stack.m in Sources */,
 				4861B7562729314000446EB8 /* AuthorizationXMLController.swift in Sources */,
 				BC71EE3A1FDEB51C0040F8A2 /* DefaultServersData.m in Sources */,
+				4876D1C7274CCF9B00F045AF /* Constants.swift in Sources */,
 				3C00ADB81AB71B0B00EF6886 /* PFHelper.m in Sources */,
 				3C00AD991AB71ACB00EF6886 /* Detail.m in Sources */,
 				3C00ADD51AB71B1700EF6886 /* DetailXMLController.m in Sources */,

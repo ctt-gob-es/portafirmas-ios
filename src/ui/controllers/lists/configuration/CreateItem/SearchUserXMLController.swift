@@ -14,6 +14,10 @@ class SearchUserXMLController: NSObject {
     var dataSource: [User] = []
     var auxUser: User = User()
     var currentElementValue: String = ""
+    private let userElement: String = "user"
+    private let idElement: String = "id"
+    private let dniElement: String = "dni"
+
 
     func parse(data: Data) -> [User] {
         dataSource = []
@@ -27,9 +31,9 @@ class SearchUserXMLController: NSObject {
         var type: String
         switch searchType {
         case .authorization:
-            type = "autorizados"
+            type = RequestConstants.authorizationType
         case .validator:
-            type = "validadores"
+            type = RequestConstants.validatorType
         }
         let mesg = "<rqfinduser mode=\"%s\"><rquserls><![CDATA[\(string)]]></rquserls></rqfinduser>".replacingOccurrences(of: "%s", with: type)
         return mesg
@@ -38,12 +42,12 @@ class SearchUserXMLController: NSObject {
 
 extension SearchUserXMLController: XMLParserDelegate {
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
-        if elementName == "user" {
+        if elementName == userElement {
             auxUser = User()
-            if let id = attributeDict["id"] {
+            if let id = attributeDict[idElement] {
                 auxUser.id = id
             }
-            if let dni = attributeDict["dni"] {
+            if let dni = attributeDict[dniElement] {
                 auxUser.dni = dni
             }
         }
@@ -61,7 +65,7 @@ extension SearchUserXMLController: XMLParserDelegate {
     }
 
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        if elementName == "user" {
+        if elementName == userElement {
             auxUser.name = currentElementValue
             dataSource.append(auxUser)
         }

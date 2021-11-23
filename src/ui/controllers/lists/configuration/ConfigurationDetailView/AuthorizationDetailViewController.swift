@@ -113,19 +113,19 @@ extension AuthorizationDetailViewController: UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: authorizationDetailButtonCellIdentifier, for: indexPath) as! AuthorizationDetailButtonCell
             cell.configureCell(for: "Authorization_Detail_Accept".localized())
             cell.button.addTarget(self, action: #selector(acceptButtonTapped(sender:)), for: .touchUpInside)
-            if authorization.state != "pending" || authorization.sended {
+            if authorization.state != .pending || authorization.sended {
                 cell.button.isHidden = true
             }
             return cell
         case 8:
             let cell = tableView.dequeueReusableCell(withIdentifier: authorizationDetailButtonCellIdentifier, for: indexPath) as! AuthorizationDetailButtonCell
-            if authorization.state == "accepted" {
+            if authorization.state == .accepted {
                 cell.configureCell(for: "Authorization_Detail_Cancel".localized())
             } else {
                 cell.configureCell(for: "Authorization_Detail_Revoke".localized())
             }
             cell.button.addTarget(self, action: #selector(rejectButtonTapped(sender:)), for: .touchUpInside)
-            if authorization.state == "revoked" {
+            if authorization.state == .revoked {
                 cell.button.isHidden = true
             }
             return cell

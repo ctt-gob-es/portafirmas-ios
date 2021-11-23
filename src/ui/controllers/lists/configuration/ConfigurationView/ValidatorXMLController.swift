@@ -14,6 +14,8 @@ class ValidatorXMLController: NSObject {
     var currentElementValue: String = ""
     var auxUser: User = User()
     var dataSource: [User] = []
+    private let userElement: String = "user"
+    private let idElement: String = "id"
 
     func parse(data: Data) -> [User] {
         dataSource = []
@@ -33,9 +35,9 @@ class ValidatorXMLController: NSObject {
 
 extension ValidatorXMLController: XMLParserDelegate {
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
-        if elementName == "user" {
+        if elementName == userElement {
             auxUser = User()
-            if let id = attributeDict["id"] {
+            if let id = attributeDict[idElement] {
                 auxUser.id = id
             }
         }
@@ -52,7 +54,7 @@ extension ValidatorXMLController: XMLParserDelegate {
     }
 
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        if elementName == "user" {
+        if elementName == userElement {
             auxUser.name = currentElementValue
             dataSource.append(auxUser)
         }

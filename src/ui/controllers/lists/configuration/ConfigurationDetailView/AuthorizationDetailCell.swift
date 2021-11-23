@@ -22,13 +22,13 @@ class AuthorizationDetailCell: UITableViewCell {
         case 1:
             titleLabel.text = "Authorization_Detail_State".localized()
             switch authorization.state {
-            case "pending":
+            case .pending:
                 iconImageView.image = UIImage(named: "ic_waiting")
                 contentLabel.text = "Authorization_Detail_State_Pending".localized()
-            case "accepted":
+            case .accepted:
                 iconImageView.image = UIImage(named: "ic_check")
                 contentLabel.text = "Authorization_Detail_State_Accepted".localized()
-            case "revoked":
+            case .revoked:
                 iconImageView.image = UIImage(named: "ic_error")
                 contentLabel.text = "Authorization_Detail_State_Revoked".localized()
             default:

@@ -153,7 +153,7 @@ class CreateItemViewController: UIViewController {
         if (initDateField.text != "" && initTimeField.text != "") {
         return "\(initDateField.text ?? "") \(initTimeField.text ?? "")"
         } else {
-            return Date().utcDateToString(withFormat: "dd/MM/YYYY HH:mm")
+            return Date().utcDateToString(withFormat: DateFormatConstants.dateTimeFormat)
         }
     }
 

@@ -11,7 +11,7 @@ extension String {
 
     func toDate() -> Date? {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
+        dateFormatter.dateFormat = DateFormatConstants.dateTimeFormat
         return dateFormatter.date(from: self) ?? nil
     }
 

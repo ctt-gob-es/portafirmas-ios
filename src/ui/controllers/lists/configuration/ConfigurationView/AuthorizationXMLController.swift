@@ -14,6 +14,16 @@ class AuthorizationXMLController: NSObject {
     var currentElementValue: String = ""
     var dataSource: [Authorization] = []
     var auxAuthorization = Authorization()
+    private let authElement: String = "auth"
+    private let idElement: String = "id"
+    private let typeElement: String = "type"
+    private let stateElement: String = "state"
+    private let revDateElement: String = "revdate"
+    private let sendedElement: String = "sended"
+    private let startDateElement: String = "startdate"
+    private let userElement: String = "user"
+    private let authUserElement: String = "authuser"
+    private let observationsElement: String = "observations"
 
     func parse(data: Data) -> [Authorization] {
         dataSource = []
@@ -33,25 +43,25 @@ class AuthorizationXMLController: NSObject {
 
 extension AuthorizationXMLController: XMLParserDelegate {
         func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
-            if elementName == "auth" {
+            if elementName == authElement {
                 auxAuthorization = Authorization()
-                if let id = attributeDict["id"] {
+                if let id = attributeDict[idElement] {
                     auxAuthorization.id = id
                 }
-                if let type = attributeDict["type"] {
+                if let type = attributeDict[typeElement] {
                     auxAuthorization.type = AuthorizationType(rawValue: type)
                 }
-                if let state = attributeDict["state"] {
-                    auxAuthorization.state = state
+                if let state = attributeDict[stateElement] {
+                    auxAuthorization.state = AuthorizationState(rawValue: state)
                 }
-                if let revDate = attributeDict["revdate"] {
-                    auxAuthorization.endDate = revDate.toDate()?.toString(withFormat: "dd/MM/yyyy HH:mm") ?? "-"
+                if let revDate = attributeDict[revDateElement] {
+                    auxAuthorization.endDate = revDate.toDate()?.toString(withFormat: DateFormatConstants.dateTimeFormat) ?? "-"
                 }
-                if let sended = attributeDict["sended"] {
+                if let sended = attributeDict[sendedElement] {
                     auxAuthorization.sended = sended.stringToBool()
                 }
-                if let startDate = attributeDict["startdate"] {
-                    auxAuthorization.initialDate = startDate.toDate()?.toString(withFormat: "dd/MM/yyyy HH:mm") ?? "-"
+                if let startDate = attributeDict[startDateElement] {
+                    auxAuthorization.initialDate = startDate.toDate()?.toString(withFormat: DateFormatConstants.dateTimeFormat) ?? "-"
                 }
             }
         }
@@ -69,13 +79,13 @@ extension AuthorizationXMLController: XMLParserDelegate {
 
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         switch elementName {
-        case "user":
+        case userElement:
             auxAuthorization.nameSend = currentElementValue
-        case "authuser":
+        case authUserElement:
             auxAuthorization.nameReceive = currentElementValue
-        case "observations":
+        case observationsElement:
             auxAuthorization.observations = currentElementValue
-        case "auth":
+        case authElement:
             dataSource.append(auxAuthorization)
         default:
             return
