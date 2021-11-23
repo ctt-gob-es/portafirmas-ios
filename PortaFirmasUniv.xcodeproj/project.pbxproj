@@ -89,7 +89,6 @@
 		48037CDF273E612500966968 /* CreateItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48037CDE273E612500966968 /* CreateItemViewModel.swift */; };
 		48037CE3273E637200966968 /* SearchUserXMLController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48037CE2273E637200966968 /* SearchUserXMLController.swift */; };
 		4809540C2705CCB2004BF96A /* OpenSSL.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A74AFCD326AECEB900470B9D /* OpenSSL.xcframework */; };
-		4809540D2705CCB2004BF96A /* OpenSSL.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A74AFCD326AECEB900470B9D /* OpenSSL.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		482BB9F72716CF6D0044C956 /* PDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 482BB9F62716CF6D0044C956 /* PDFKit.framework */; };
 		485610C4273EA66B0000CF3B /* CreateItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485610C2273EA66B0000CF3B /* CreateItemViewController.swift */; };
 		485610C5273EA66B0000CF3B /* CreateItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 485610C3273EA66B0000CF3B /* CreateItemView.xib */; };
@@ -167,20 +166,6 @@
 		BCF619A41FC42DC2009C5B50 /* LoginService.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF619A31FC42DC2009C5B50 /* LoginService.m */; };
 		BCF619A71FC4379D009C5B50 /* LoginNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF619A61FC4379D009C5B50 /* LoginNetwork.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		4809540E2705CCB2004BF96A /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				4809540D2705CCB2004BF96A /* OpenSSL.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1C9F200F163E93C3007A170B /* Port@firmas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Port@firmas.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1138,7 +1123,6 @@
 				1C9F200D163E93C3007A170B /* Resources */,
 				2E8453FF896F4595D50AC2A2 /* [CP] Copy Pods Resources */,
 				C17CEF1E1F82ED5589E5DBBD /* [CP] Embed Pods Frameworks */,
-				4809540E2705CCB2004BF96A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1541,7 +1525,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 2H36E8KFN2;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1576,7 +1560,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 2H36E8KFN2;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
