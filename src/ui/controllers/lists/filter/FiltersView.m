@@ -13,6 +13,8 @@
 #import "LoginService.h"
 #import "PushNotificationService.h"
 
+#import "Port_firmas-Swift.h"
+
 #define SORT_CRITERIA_TITLE_ARRAY @[@"Filter_View_Sort_Criteria_Array_Date".localized, @"Filter_View_Sort_Criteria_Array_Topic".localized, @"Filter_View_Sort_Criteria_Array_Application".localized]
 
 #define SORT_CRITERIA_VALUE_ARRAY @[@"fmodified", @"dsubject", @"application"]
@@ -79,6 +81,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 @property (weak, nonatomic) NSString *selectedType;
 @property (weak, nonatomic) NSString *selectedTimeInterval;
 @property (weak, nonatomic) NSString *selectedYear;
+@property (weak, nonatomic) IBOutlet UIButton *configurationButton;
 
 @end
 
@@ -331,6 +334,25 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (IBAction)didSelectCancelButton:(id)sender {
     [self.filtersViewDelegate didSelectCancelButton];
+}
+
+- (IBAction)didSelectConfirmationButton:(id)sender {
+    DefaultNavigationViewController *nvc = [[DefaultNavigationViewController alloc] init];
+    ConfigurationViewController *vc = [[ConfigurationViewController alloc] initWithNibName:@"ConfigurationView" bundle:nil];
+    ConfigurationViewModel *viewModel = [[ConfigurationViewModel alloc] init];
+    [vc injectViewModelWithViewModel:viewModel];
+    [nvc initWithRootViewController:vc];
+    UIViewController *currentTopVC = [self currentTopViewController];
+    nvc.modalPresentationStyle = UIModalPresentationFullScreen;
+    [currentTopVC presentViewController:nvc animated:YES completion:nil];
+}
+
+- (UIViewController *)currentTopViewController {
+    UIViewController *topVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    while (topVC.presentedViewController) {
+        topVC = topVC.presentedViewController;
+    }
+    return topVC;
 }
 
 #pragma mark - Notifications Section

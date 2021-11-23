@@ -29,6 +29,12 @@
 "Alert_View_Loaded_Certificate_In_Your_App" = "El certificado se ha cargado correctamente en su aplicación.";
 "Alert_View_Server_Going_To_Be_Selected" = "Se va a seleccionar el servidor %@ con url %@.";
 "Alert_View_Accept" = "Aceptar";
+"Autorization_Pending_Alert_Message" = "Hay al menos una autorización pendiente";
+"Revoke_Validator_Alert_Message" = "Tiene asignado el validador %@, ¿Desea eliminarlo?";
+"Create_validator_Alert_Title" = "Confirmar";
+"Create_Validator_Alert_Message" = "¿Está seguro de que quiere añadir el validador %@?";
+"Create_Validator_Alert_Accept" = "Aceptar";
+"Create_Validator_Alert_Cancel" = "Cancelar";
 
 //Global errors
 "Global_Error_Server_Connection" = "Se ha producido un error de conexión con el servidor.";
@@ -168,3 +174,24 @@
 "Alert_View_Disable_Notifications_Title" = "Las notificaciones estan deshabilitadas";
 "Alert_View_Disable_Notifications_Message" = "Has de ir a ajustes en tu dispositivo y luego a Notificaciones buscar PortaFirmas y permitir notificaciones.";
 "Alert_View_Can_Not_Subscribe_Notifications_Title" = "No se han activado las notificaciones";
+
+// Authorization detail
+"Authorization_Detail_Name" = "Nombre";
+"Authorization_Detail_State" = "Estado";
+"Authorization_Detail_Sended_Received" = "Enviada/Recibida";
+"Authorization_Detail_Type" = "Tipo";
+"Authorization_Detail_Initial_Date" = "Fecha inicio";
+"Authorization_Detail_End_Date" = "Fecha fin";
+"Authorization_Detail_Observations" = "Observaciones";
+"Authorization_Detail_Sended" = "Enviada";
+"Authorization_Detail_Received" = "Recibida";
+"Authorization_Detail_State_Pending" = "Pendiente de validación";
+"Authorization_Detail_State_Accepted" = "Aceptada";
+"Authorization_Detail_State_Revoked" = "Rechazada";
+"Authorization_Detail_Accept" = "Aceptar";
+"Authorization_Detail_Revoke" = "Rechazar";
+"Authorization_Detail_Cancel" = "Cancelar";
+
+// Create item
+"Search_User_Title_Authorization" = "Crear nueva autorización";
+"Search_User_Title_Validator" = "Crear nuevo validador";
