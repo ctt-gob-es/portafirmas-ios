@@ -15,6 +15,7 @@ class CreateItemViewController: UIViewController {
     private var user: User
     private var datePicker = UIDatePicker()
     private var timePicker = UIDatePicker()
+    private let numberOfVCToPopBack: Int = 3
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var typeSegmentedControl: UISegmentedControl!
@@ -84,8 +85,8 @@ class CreateItemViewController: UIViewController {
     func bind() {
         viewModel.resultUpdated = {
             let viewControllers: [UIViewController] = self.navigationController?.viewControllers ?? []
-            if viewControllers.count > 2 {
-                self.navigationController?.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
+            if viewControllers.count >= self.numberOfVCToPopBack {
+                self.navigationController?.popToViewController(viewControllers[viewControllers.count - self.numberOfVCToPopBack], animated: true)
             } else {
                 self.navigationController?.popViewController(animated: true)
             }
