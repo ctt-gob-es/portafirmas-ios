@@ -83,7 +83,8 @@ class CreateItemViewController: UIViewController {
     // MARK: - Binding
     func bind() {
         viewModel.resultUpdated = {
-            self.navigationController?.popViewController(animated: true)
+            let viewControllers: [UIViewController] = self.navigationController?.viewControllers ?? []
+            self.navigationController?.popToViewController(viewControllers[viewControllers.count - 3], animated: true)
         }
 
         viewModel.errorMsgUpdated = { msg in
