@@ -43,14 +43,8 @@ void uncaughtExceptionHandler(NSException *exception)
 {
     // Override point for customization after application launch.
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
-//    [[NSUserDefaults standardUserDefaults] setObject:nil forKey:kPFUserDefaultsKeyServersArray];
-//
-//    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"hasLaunchOnceToIncludeDefaultServers"];
 
     [DefaultServersData createDefaultServersIsNotExist];
-
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setBool:NO forKey:kPFUserDefaultsKeyLaunchedBefore];
 
     [self handleNavigation];
 
