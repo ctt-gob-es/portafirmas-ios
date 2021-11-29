@@ -122,6 +122,7 @@
 		4876D1D6274E486800F045AF /* ServerSelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4876D1D4274E486800F045AF /* ServerSelectionView.xib */; };
 		4876D1DD274E6D9C00F045AF /* OptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4876D1DB274E6D9C00F045AF /* OptionsCell.swift */; };
 		4876D1DE274E6D9C00F045AF /* OptionsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4876D1DC274E6D9C00F045AF /* OptionsCell.xib */; };
+		4876D1E02755413000F045AF /* framd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4876D1DF2755413000F045AF /* framd.ttf */; };
 		921EAE2F22AFB631005D6D5B /* GlobalConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EAE2E22AFB631005D6D5B /* GlobalConstants.m */; };
 		9226966F23C60FAD00F099F0 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9226966E23C60FAD00F099F0 /* NSString+Extension.m */; };
 		92469F1225792B4100494DCF /* UserRolesNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 92469F1125792B4100494DCF /* UserRolesNetwork.m */; };
@@ -356,6 +357,7 @@
 		4876D1D4274E486800F045AF /* ServerSelectionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServerSelectionView.xib; sourceTree = "<group>"; };
 		4876D1DB274E6D9C00F045AF /* OptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsCell.swift; sourceTree = "<group>"; };
 		4876D1DC274E6D9C00F045AF /* OptionsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionsCell.xib; sourceTree = "<group>"; };
+		4876D1DF2755413000F045AF /* framd.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = framd.ttf; sourceTree = "<group>"; };
 		862DBE2D1FC5F494A173087E /* Pods-PortaFirmasUniv.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortaFirmasUniv.release.xcconfig"; path = "Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv.release.xcconfig"; sourceTree = "<group>"; };
 		921EAE2E22AFB631005D6D5B /* GlobalConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalConstants.m; sourceTree = "<group>"; };
 		921EAE3022AFB672005D6D5B /* GlobalConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalConstants.h; sourceTree = "<group>"; };
@@ -973,6 +975,7 @@
 		921EAE2D22AFB5E9005D6D5B /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				4876D1DF2755413000F045AF /* framd.ttf */,
 				921EAE3022AFB672005D6D5B /* GlobalConstants.h */,
 				921EAE2E22AFB631005D6D5B /* GlobalConstants.m */,
 			);
@@ -1208,6 +1211,7 @@
 				4876D1DE274E6D9C00F045AF /* OptionsCell.xib in Resources */,
 				3CA898FC1AA605B70035012D /* PortaFirmasUniv.entitlements in Resources */,
 				925FC27A25B1AD8E00D5632A /* FiltersView.xib in Resources */,
+				4876D1E02755413000F045AF /* framd.ttf in Resources */,
 				3CA898F61AA5BEA80035012D /* main_assets.xcassets in Resources */,
 				4861B6EC27214C4B00446EB8 /* ConfigurationView.xib in Resources */,
 				3CA899151AA607840035012D /* configPRE in Resources */,

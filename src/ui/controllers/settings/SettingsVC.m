@@ -412,11 +412,12 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 #pragma mark - RoleSelectedDelegate
 
-- (void) rolesSelected{
+- (void) rolesSelected {
     _roleAlreadySelected = YES;
 }
 
 - (void)viewDismissed {
     [self.tableView reloadData];
+    [self updateAccessButton];
 }
 @end
