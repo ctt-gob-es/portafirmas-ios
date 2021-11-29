@@ -13,6 +13,8 @@
 #import "DefaultServersData.h"
 #import "NotificationHandler.h"
 
+#import "Port_firmas-Swift.h"
+
 @implementation AppDelegate
 // @synthesize certificate, appConfig=_appConfig;
 @synthesize  appConfig = _appConfig;
@@ -27,7 +29,7 @@
 
     // Load the file content and read the data into arrays
     _appConfig = [[NSDictionary alloc] initWithContentsOfFile:path];
-    
+
     return self;
 }
 
@@ -41,10 +43,11 @@ void uncaughtExceptionHandler(NSException *exception)
 {
     // Override point for customization after application launch.
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    [DefaultServersData createDefaultServersIsNotExist];
+
+    [self handleNavigation];
     [self customizeAppearance];
     [self loadSelectedCertificate];
-    
-    [DefaultServersData createDefaultServersIsNotExist];
 
     return YES;
 }
@@ -160,6 +163,32 @@ void uncaughtExceptionHandler(NSException *exception)
     }
     
     return topController;
+}
+
+- (void) handleNavigation {
+    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+    if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        if(![[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyLaunchedBefore]) {
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            [userDefaults setBool:YES forKey:kPFUserDefaultsKeyLaunchedBefore];
+
+            DefaultNavigationViewController *nvc = [[DefaultNavigationViewController alloc] init];
+            OnboardingSplashViewController *vc = [[OnboardingSplashViewController alloc] initWithNibName:@"OnboardingSplashView" bundle:nil];
+            [nvc initWithRootViewController:vc];
+            self.window.rootViewController = nvc;
+            [self.window makeKeyAndVisible];
+        } else {
+            UIViewController *mainVC = [[UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil] instantiateInitialViewController];
+            [mainVC setModalPresentationStyle:UIModalPresentationFullScreen];
+            self.window.rootViewController = mainVC;
+            [self.window makeKeyAndVisible];
+        }
+    } else if([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        UIViewController *mainVC = [[UIStoryboard storyboardWithName:@"MainStoryboard_iPad" bundle:nil] instantiateInitialViewController];
+        [mainVC setModalPresentationStyle:UIModalPresentationFullScreen];
+        self.window.rootViewController = mainVC;
+        [self.window makeKeyAndVisible];
+    }
 }
 
 @end

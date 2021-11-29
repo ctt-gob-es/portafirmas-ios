@@ -19,6 +19,8 @@
 #import "PushNotificationService.h"
 #import "SelectRoleViewController.h"
 
+#import "Port_firmas-Swift.h"
+
 static const NSInteger kSettingsVCNumberOfSections = 3;
 static const NSInteger kSettingsVCNumberOfRowsPerSection = 1;
 static NSString *const kSettingsVCSectionTitleServerURL = @"Servidor";
@@ -37,7 +39,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 };
 
 
-@interface SettingsVC ()
+@interface SettingsVC () <OnboardingDelegate>
 {
     NSString *_currentCertificate;
     NSArray *userDefaultsKeys;
@@ -58,7 +60,19 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.titleBar.title =[NSString stringWithFormat: @"Configuration_Page_Title".localized,[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+    if(![[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyLaunchedBefore]) {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setBool:YES forKey:kPFUserDefaultsKeyLaunchedBefore];
+
+        DefaultNavigationViewController *nvc = [[DefaultNavigationViewController alloc] init];
+        OnboardingSplashViewController *vc = [[OnboardingSplashViewController alloc] init];
+        [nvc initWithRootViewController:vc];
+        nvc.onboardingDelegate = self;
+        self.modalPresentationStyle = UIModalPresentationFormSheet;
+        [self presentViewController:nvc animated:YES completion:nil];
+    }
+
+        self.titleBar.title = [NSString stringWithFormat: @"Configuration_Page_Title".localized,[[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -67,7 +81,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
     [self.tableView reloadData];
     [self updateAccessButton];
 	[self disableRemoteCertificatesIfCertificateSelected];
-    if(_roleAlreadySelected){
+    if(_roleAlreadySelected) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self performSegueWithIdentifier:kSettingsVCSegueIdentifierAccess sender:self];
         });
@@ -402,4 +416,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
     _roleAlreadySelected = YES;
 }
 
+- (void)viewDismissed {
+    [self.tableView reloadData];
+}
 @end

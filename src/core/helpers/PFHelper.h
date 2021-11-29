@@ -84,6 +84,7 @@ static NSString *const kPFUserDefaultsKeyUserHasValidator = @"UserHasValidator";
 static NSString *const kPFUserDefaultsKeyPortafirmasNotificationsActivated = @"PortafirmasNotificationsActivated";
 static NSString *const kPFUserDefaultsKeyUserNotificationsActivated = @"UserNotificationsActivated";
 static NSString *const kPFUserDefaultsKeyPushNotificationsServiceToken = @"PushNotificationsServiceToken";
+static NSString *const kPFUserDefaultsKeyLaunchedBefore = @"launchedBefore";
 
 //Certificate
 static NSString *const kPFCertInfoKeyIssuer = @"issuer";
