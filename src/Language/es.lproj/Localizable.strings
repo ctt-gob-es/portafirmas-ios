@@ -195,3 +195,21 @@
 // Create item
 "Search_User_Title_Authorization" = "Crear nueva autorización";
 "Search_User_Title_Validator" = "Crear nuevo validador";
+
+// Onboarding
+"Onboarding_Server_View_Title" = "¿Qué portafirmas usará principalmente?";
+"Onboarding_Server_View_DTIC_Title" = "Portafirmas General AGE";
+"Onboarding_Server_View_DTIC_Message" = "Este portafirmas se configurará automáticamente.";
+"Onboarding_Server_View_Redsara_Title" = "Portafirmas RedSara";
+"Onboarding_Server_View_Redsara_Message" = "Este portafirmas se configurará automáticamente.";
+"Onboarding_Server_View_Other_Title" = "Otro portafirmas";
+"Onboarding_Server_View_Other_Message" = "Deberá dar de alta su servidor portafirmas desde el apartado \"SERVIDOR\" del menú principal de la aplicación. Consulte la URL de acceso con el responsable del portafirmas.";
+"Onboarding_Server_View_Reminder" = "Recuerde que debe estar dado de alta en su sistema portafirmas para tener acceso.";
+"Onboarding_View_Skip" = "Omitir";
+
+"Onboarding_Certificate_View_Title" = "¿Qué tipo de certificado desea utilizar?";
+"Onboarding_Certificate_View_Local_Title" = "Certificado local";
+"Onboarding_Certificate_View_Local_Message" = "Copie el certificado a su dispositivo e impórtelo desde el apartado \"CERTIFICADO\" de la pantalla principal.";
+"Onboarding_Certificate_View_Remote_Title" = "Certificado remoto";
+"Onboarding_Certificate_View_Remote_Message" = "Utilice sus certificados de autenticación y firma de Cl@ve Permanente.Deberá haberse dado de alta en Cl@ve con el nivel avanzado y activado su usuario de Cl@ve Permanente.";
+"Onboarding_Certificate_View_Reminder" = "Más información sobre Cl@ve: \nhttps://clave.gob.es/clave_Home/registro.html";

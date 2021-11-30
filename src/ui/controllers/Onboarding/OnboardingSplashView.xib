@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OnboardingSplashViewController" customModule="Port_firmas" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_splash" translatesAutoresizingMaskIntoConstraints="NO" id="04o-g8-7Id">
+                    <rect key="frame" x="57" y="203" width="300" height="300"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="300" id="5ae-YI-K2n"/>
+                        <constraint firstAttribute="height" constant="300" id="CT8-9R-zH7"/>
+                    </constraints>
+                </imageView>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_portafirmas" translatesAutoresizingMaskIntoConstraints="NO" id="FSM-gp-TZn">
+                    <rect key="frame" x="60" y="712" width="294" height="120"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="120" id="Aow-VT-9pb"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="FSM-gp-TZn" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="60" id="0EN-Pm-tjV"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="FSM-gp-TZn" secondAttribute="trailing" constant="60" id="Wz0-Zt-aAQ"/>
+                <constraint firstItem="04o-g8-7Id" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" constant="-100" id="Zto-7a-hJ7"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="FSM-gp-TZn" secondAttribute="bottom" constant="30" id="n5d-fw-i84"/>
+                <constraint firstItem="04o-g8-7Id" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="weE-Fi-gVu"/>
+            </constraints>
+            <point key="canvasLocation" x="137.68115942028987" y="150.66964285714286"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic_splash" width="744" height="1052"/>
+        <image name="logo_portafirmas" width="650" height="127"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

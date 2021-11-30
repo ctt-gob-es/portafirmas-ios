@@ -10,6 +10,8 @@ import Foundation
 
 class DefaultNavigationViewController: UINavigationController {
 
+    @objc weak var onboardingDelegate: OnboardingDelegate?
+
     override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
         applyStyle()
@@ -27,4 +29,12 @@ class DefaultNavigationViewController: UINavigationController {
     func applyStyle() {
         self.navigationBar.isHidden = true
     }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        onboardingDelegate?.viewDismissed()
+    }
+}
+
+@objc protocol OnboardingDelegate {
+    func viewDismissed()
 }
