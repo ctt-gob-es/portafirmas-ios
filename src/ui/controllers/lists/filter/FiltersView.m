@@ -126,13 +126,17 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         NSInteger sortCriteriaArrayPosition = [SORT_CRITERIA_VALUE_ARRAY indexOfObject: [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSortCriteria]];
         [_sortButton setTitle:SORT_CRITERIA_TITLE_ARRAY[sortCriteriaArrayPosition] forState:UIControlStateNormal];
         _selectedSort = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSortCriteria];
+        [_sortPickerView selectRow:sortCriteriaArrayPosition inComponent:0 animated:NO];
     } else {
         [_sortButton setTitle:@"Filter_View_Sort_Criteria_Default_Title".localized forState:UIControlStateNormal];
         _selectedSort = kEmptyString;
     }
     if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp]) {
-        [_appButton setTitle:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp] forState:UIControlStateNormal];
-        _selectedApp = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp];
+        NSString *filterAppTitle = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp];
+        [_appButton setTitle:filterAppTitle forState:UIControlStateNormal];
+        _selectedApp = filterAppTitle;
+        NSInteger selection = [[[AppListXMLController sharedInstance] appsArray] indexOfObject:filterAppTitle];
+        [_appPickerView selectRow:selection inComponent:0 animated:NO];
     } else {
         [_appButton setTitle:@"Filter_View_Application_Default_Title".localized forState:UIControlStateNormal];
         _selectedApp = kEmptyString;
@@ -149,6 +153,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval]) {
         NSInteger timeIntervalArrayPosition = [TIME_INTERVAL_VALUE_ARRAY indexOfObject: [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval]];
         [_timeIntervalButton setTitle: [TIME_INTERVAL_TITLE_ARRAY objectAtIndex:timeIntervalArrayPosition] forState:UIControlStateNormal];
+        [_timeIntervalPickerView selectRow:timeIntervalArrayPosition inComponent:0 animated:NO];
         _selectedTimeInterval = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval];
     } else {
         _selectedTimeInterval = kEmptyString;
@@ -172,6 +177,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 - (void) setTypeTitleAndFilterValue: (NSInteger)selection {
     [_typeButton setTitle:TYPE_TITLE_ARRAY[selection] forState:UIControlStateNormal];
     _selectedType = TYPE_FILTER_VALUE_ARRAY[selection];
+    [_typePickerView selectRow:selection inComponent:0 animated:NO];
 }
 
 - (BOOL) showYearViewWithInterval: (NSString*)interval {
