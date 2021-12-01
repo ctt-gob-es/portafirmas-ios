@@ -211,5 +211,5 @@
 "Onboarding_Certificate_View_Local_Title" = "Certificado local";
 "Onboarding_Certificate_View_Local_Message" = "Copie el certificado a su dispositivo e impórtelo desde el apartado \"CERTIFICADO\" de la pantalla principal.";
 "Onboarding_Certificate_View_Remote_Title" = "Certificado remoto";
-"Onboarding_Certificate_View_Remote_Message" = "Utilice sus certificados de autenticación y firma de Cl@ve Permanente.Deberá haberse dado de alta en Cl@ve con el nivel avanzado y activado su usuario de Cl@ve Permanente.";
+"Onboarding_Certificate_View_Remote_Message" = "Utilice sus certificados de autenticación y firma de Cl@ve Permanente. Deberá haberse dado de alta en Cl@ve con el nivel avanzado y activado su usuario de Cl@ve Permanente.";
 "Onboarding_Certificate_View_Reminder" = "Más información sobre Cl@ve: \nhttps://clave.gob.es/clave_Home/registro.html";
