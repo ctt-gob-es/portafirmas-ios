@@ -1061,7 +1061,7 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Pendientes" id="Efu-78-U3c">
-                        <barButtonItem key="leftBarButtonItem" title="Registro" id="TXb-tP-EBY">
+                        <barButtonItem key="leftBarButtonItem" title="Inicio" id="TXb-tP-EBY">
                             <connections>
                                 <action selector="didTapOnBackButton:" destination="p5t-hl-A0j" id="Nfx-Qi-XTq"/>
                             </connections>
@@ -1166,7 +1166,7 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Rechazadas" id="JsF-uH-DQb">
-                        <barButtonItem key="leftBarButtonItem" title="Registro" id="dEk-J2-M9N">
+                        <barButtonItem key="leftBarButtonItem" title="Inicio" id="dEk-J2-M9N">
                             <connections>
                                 <action selector="didTapOnBackButton:" destination="8DN-aW-qmn" id="uSG-YW-ahg"/>
                             </connections>
@@ -1264,8 +1264,8 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Firmadas" id="fjW-hL-XpN">
-                        <barButtonItem key="backBarButtonItem" title="Atras" id="7M0-aV-Q8D"/>
-                        <barButtonItem key="leftBarButtonItem" title="Preferencias" id="GTa-kV-ZFj">
+                        <barButtonItem key="backBarButtonItem" title="Firmadas" id="7M0-aV-Q8D"/>
+                        <barButtonItem key="leftBarButtonItem" title="Inicio" id="GTa-kV-ZFj">
                             <connections>
                                 <action selector="didTapOnBackButton:" destination="Ah9-tv-AT6" id="Mrr-EP-Tl0"/>
                             </connections>
