@@ -730,7 +730,7 @@ typedef NS_ENUM(NSUInteger, Operation) {
     if (processedOK) {
         // @" Peticiones firmadas corrrectamente"
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized
-                                                                                 message: @"Alert_View_Everything_Signed_Correctly".eelocalized
+                                                                                 message: @"Alert_View_Request_Signed_Correctly".localized
                                                                           preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             [self dismissSelfView];
