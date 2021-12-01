@@ -332,8 +332,14 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
             filters[kFilterKeyYear] = _selectedYear;
             [[NSUserDefaults standardUserDefaults] setObject:_selectedYear forKey: kPFUserDefaultsKeyUserSelectionFilterYear];
         } else {
-            [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyUserSelectionFilterYear];
+            [[NSUserDefaults standardUserDefaults] setObject: nil forKey: kPFUserDefaultsKeyUserSelectionFilterYear];
         }
+    } else {
+        [[NSUserDefaults standardUserDefaults] setObject: nil forKey: kPFUserDefaultsKeyUserSelectionFilterSubject];
+        [[NSUserDefaults standardUserDefaults] setObject: nil forKey: kPFUserDefaultsKeyUserSelectionFilterApp];
+        [[NSUserDefaults standardUserDefaults] setObject: nil forKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval];
+        [[NSUserDefaults standardUserDefaults] setObject: nil forKey: kPFUserDefaultsKeyUserSelectionFilterYear];
+        [[NSUserDefaults standardUserDefaults] setObject: nil forKey: kPFUserDefaultsKeyUserSelectionFilterType];
     }
     [self.filtersViewDelegate didSelectAcceptButton: filters];
 }
@@ -370,10 +376,10 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 -(IBAction)switchChanged:(UISwitch *)sender {
     self.notificationStateLabel.text = [self.notificationSwitch isOn] ? @"Filter_View_Push_Notification_Enabled_Title".localized : @"Filter_View_Push_Notification_Pending_Title".localized;
-    if([self.notificationSwitch isOn]){
+    if([self.notificationSwitch isOn]) {
         [self initSubscriptionProcess];
     } else {
-        if([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible] && [[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyPortafirmasNotificationsActivated]){
+        if([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible] && [[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyPortafirmasNotificationsActivated]) {
             [self initUnsubscriptionProcess];
         }
     }
