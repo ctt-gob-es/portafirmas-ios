@@ -361,15 +361,17 @@ static CGFloat const kCancelButtonWidth = 100;
     NSString *message;
     
     if (_selectedRequestSetToApprove && _selectedRequestSetToApprove.count > 0 && _selectedRequestsSetToSign && _selectedRequestsSetToSign.count > 0) {
-        message = [NSString stringWithFormat: @"Alert_View_Process_Sign_and_Approve".localized, (unsigned long)_selectedRequestsSetToSign.count, (unsigned long)_selectedRequestSetToApprove.count];
-    }
-    else if (_selectedRequestSetToApprove && _selectedRequestSetToApprove.count > 0) {
-        message = [NSString stringWithFormat: @"Alert_View_Process_Approve".localized, (unsigned long)_selectedRequestSetToApprove.count];
-    }
-    else if (_selectedRequestsSetToSign && _selectedRequestsSetToSign.count > 0) {
-        message = [NSString stringWithFormat: @"Alert_View_Process_Sign".localized, (unsigned long)_selectedRequestsSetToSign.count];
+        NSString *str = _selectedRequestsSetToSign.count == 1 ? @"Alert_View_Process_Sign_and_Approve_Single".localized : @"Alert_View_Process_Sign_and_Approve".localized;
+        message = [NSString stringWithFormat: str, (unsigned long)_selectedRequestsSetToSign.count, (unsigned long)_selectedRequestSetToApprove.count];
+    } else if (_selectedRequestSetToApprove && _selectedRequestSetToApprove.count > 0) {
+        NSString *str = _selectedRequestSetToApprove.count == 1 ? @"Alert_View_Process_Approve_Single".localized : @"Alert_View_Process_Approve".localized;
+        message = [NSString stringWithFormat: str, (unsigned long)_selectedRequestSetToApprove.count];
+    } else if (_selectedRequestsSetToSign && _selectedRequestsSetToSign.count > 0) {
+        NSString *str = _selectedRequestsSetToSign.count == 1 ? @"Alert_View_Process_Sign_Single".localized : @"Alert_View_Process_Sign".localized;
+        message = [NSString stringWithFormat: str, (unsigned long)_selectedRequestsSetToSign.count];
     } else if (_selectedRequestSetToValidate.count > 0) {
-        message = [NSString stringWithFormat: @"Alert_View_Process_Validate".localized, (unsigned long)_selectedRequestSetToValidate.count];
+        NSString *str = _selectedRequestSetToValidate.count == 1 ? @"Alert_View_Process_Validate_Single".localized : @"Alert_View_Process_Validate".localized;
+        message = [NSString stringWithFormat: str, (unsigned long)_selectedRequestSetToValidate.count];
     }
     
     if (message) {
@@ -610,7 +612,7 @@ static CGFloat const kCancelButtonWidth = 100;
                 message = @"Alert_View_Request_Signed_Correctly".localized;
                 break;
             case validate:
-                message = @"Alert_View_Requests_Validated_Correctly".localized;
+                message = @"Alert_View_Request_Validated_Correctly".localized;
                 break;
             default:
                 break;
