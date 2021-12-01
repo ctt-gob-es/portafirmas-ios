@@ -11,11 +11,16 @@
 "Alert_View_Ok_Option" = "OK";
 "Alert_View_Notice" = "Aviso";
 "Alert_View_Process_Sign_and_Approve" = "Se van a procesar %lu peticiones de firma y %lu de visto bueno.";
+"Alert_View_Process_Sign_and_Approve_Single" = "Se va a procesar %lu petición de firma y %lu de visto bueno.";
 "Alert_View_Process_Approve" = "Se van a procesar %lu peticiones de visto bueno.";
 "Alert_View_Process_Sign" = "Se van a procesar %lu peticiones de firma.";
 "Alert_View_Process_Validate" = "Se van a procesar %lu peticiones de validación.";
+"Alert_View_Process_Approve_Single" = "Se va a procesar %lu petición de visto bueno.";
+"Alert_View_Process_Sign_Single" = "Se va a procesar %lu petición de firma.";
+"Alert_View_Process_Validate_Single" = "Se va a procesar %lu petición de validación.";
 "Alert_View_Request_Processed_Correctly" = "Peticiones procesadas correctamente";
-"Alert_View_Request_Signed_Correctly" = "Peticiones firmadas correctamente.";
+"Alert_View_Request_Signed_Correctly" = "Petición firmada correctamente.";
+"Alert_View_Requests_Signed_Correctly" = "Peticiones firmadas correctamente.";
 "Alert_View_Request_Validated_Correctly" = "Petición validada correctamente.";
 "Alert_View_Requests_Validated_Correctly" = "Peticiones validadas correctamente.";
 "Alert_View_Error" = "Error";
