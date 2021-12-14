@@ -635,17 +635,14 @@ typedef NS_ENUM(NSUInteger, Operation) {
          }
      }];
     if (idsForRequestsWithError.count == 0) {
-        NSString *message;
-        switch (operation) {
-            case approve:
-                message = @"Alert_View_Request_Signed_Correctly".localized;
-                break;
-            case validate:
-                message = @"Alert_View_Request_Validated_Correctly".localized;
-                break;
-            default:
-                break;
-        }        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized message: message preferredStyle:UIAlertControllerStyleAlert];
+        NSString *type = [self getRequestType];
+        NSString *message = @"";
+        if (type == @"Request_Type_Firma".localized) {
+            message = @"Alert_View_Request_Signed_Correctly".localized;
+        } else if (type == @"Request_Type_Visto_Bueno".localized) {
+            message = @"Alert_View_Request_Validated_Correctly".localized;
+        }
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized message: message preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             [self dismissSelfView];
         }];
