@@ -636,7 +636,7 @@ static CGFloat const kCancelButtonWidth = 100;
         [self didReceiveError:errorMessage];
     }
     [self cancelEditing];
-    [self refreshInfo];
+    [self refreshInfoWithoutProgress];
 }
 
 - (void)didReceiveSignerRequestResult:(NSArray *)requestsSigned {
@@ -644,7 +644,7 @@ static CGFloat const kCancelButtonWidth = 100;
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
     });
-    
+
     NSIndexSet *requestsWithError = [requestsSigned indexesOfObjectsPassingTest:^BOOL (PFRequest *request, NSUInteger idx, BOOL *stop) {
         return [request.status isEqualToString:@"KO"];
     }];
@@ -672,7 +672,7 @@ static CGFloat const kCancelButtonWidth = 100;
     }
     else {
         [self cancelEditing];
-        [self refreshInfo];
+        [self refreshInfoWithoutProgress];
     }
     [[self tableView] reloadData];
 }
@@ -695,7 +695,7 @@ static CGFloat const kCancelButtonWidth = 100;
     if (processedOK) {
         
         _waitingResponseType = PFWaitingResponseTypeList;
-        [super loadData];
+        [self refreshInfoWithoutProgress];
         // Peticiones rechazadas corrrectamente
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized
                                                                                  message: @"Correctly_rejected_requests".localized
@@ -734,7 +734,7 @@ static CGFloat const kCancelButtonWidth = 100;
             UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
             [alertController addAction:cancel];
             [self presentViewController:alertController animated:YES completion:^{
-                [self refreshInfo];
+                [self refreshInfoWithoutProgress];
             }];
         }];
     });
@@ -793,7 +793,7 @@ static CGFloat const kCancelButtonWidth = 100;
 }
 
 - (void)showErrorInFIReAndRefresh:(NSString *)errorString {
-    [self refreshInfo];
+    [self refreshInfoWithoutProgress];
     [[ErrorService instance] showAlertViewWithTitle: @"Alert_View_Error".localized andMessage: errorString];
 }
 
@@ -826,7 +826,7 @@ static CGFloat const kCancelButtonWidth = 100;
     NSArray *urlFragments= [urlString componentsSeparatedByString: kStringSlash];
     if ([[urlFragments lastObject] rangeOfString:kError].location != NSNotFound) {
         [self.webView removeFromSuperview];
-        [self refreshInfo];
+        [self refreshInfoWithoutProgress];
         dispatch_async(dispatch_get_main_queue(), ^{
             [SVProgressHUD dismissWithCompletion:^{
                 [self.navigationController setNavigationBarHidden:NO animated:YES];
