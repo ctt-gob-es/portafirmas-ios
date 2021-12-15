@@ -123,6 +123,13 @@
     [self loadData];
 }
 
+- (void)refreshInfoWithoutProgress {
+    NSDictionary *filters = [NSMutableDictionary new];
+    _filtersDict = [filters mutableCopy];
+    [self resetLazyLoad];
+    [self loadDataWithProgressIndicator:NO];
+}
+
 - (void)addPreselectedFilters {
     //Default
     NSDictionary *roleSelected = [[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected];
