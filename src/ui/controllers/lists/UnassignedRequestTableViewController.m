@@ -636,6 +636,7 @@ static CGFloat const kCancelButtonWidth = 100;
         [self didReceiveError:errorMessage];
     }
     [self cancelEditing];
+    _waitingResponseType = PFWaitingResponseTypeList;
     [self refreshInfoWithoutProgress];
 }
 
