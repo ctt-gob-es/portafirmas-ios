@@ -99,6 +99,7 @@ static NSString *const kUserRoleRoleNameKey = @"roleName";
 static NSString *const kUserRoleUserDNIKey = @"dni";
 static NSString *const kUserRoleRoleNameValidator = @"VALIDADOR";
 static NSString *const kUserRoleUserHasValidator = @"S";
+static NSString *const kUserRoleContent = @"content";
 
 //Filters
 static NSString *const kPFFilterKeyType =  @"tipoFilter";

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="pP7-Rp-efU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="pP7-Rp-efU">
     <device id="ipad9_7" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -62,11 +62,11 @@
                                 <rect key="frame" x="0.0" y="395" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QVV-Wz-jpE" id="kRA-IW-Jrv">
-                                    <rect key="frame" x="0.0" y="0.0" width="738.5" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="739.5" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gEJ-mi-9Sj">
-                                            <rect key="frame" x="20" y="0.0" width="710.5" height="44"/>
+                                            <rect key="frame" x="20" y="0.0" width="711.5" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
                                             <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.38431372549999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -163,7 +163,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="ReceiversListView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="A8d-GS-Z3z" customClass="ReceiversViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="YNy-T2-eWx">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="974"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="DHI-lv-JqE">
@@ -259,11 +259,11 @@
                                 <rect key="frame" x="0.0" y="49.5" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6Jx-6j-6WJ" id="9z8-cd-6bw">
-                                    <rect key="frame" x="0.0" y="0.0" width="738.5" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="739.5" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="abp-dT-KGe">
-                                            <rect key="frame" x="20" y="0.0" width="710.5" height="44"/>
+                                            <rect key="frame" x="20" y="0.0" width="711.5" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="16"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -312,7 +312,7 @@
                                 <rect key="frame" x="0.0" y="44.5" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Nyw-db-BmG" id="cHI-ne-8Mr">
-                                    <rect key="frame" x="0.0" y="0.0" width="738.5" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="739.5" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="center" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OHZ-AF-deh">
@@ -320,32 +320,32 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Remitente" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="evV-G3-WfS">
-                                            <rect key="frame" x="31" y="0.0" width="508" height="23"/>
+                                            <rect key="frame" x="31" y="0.0" width="509" height="23"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Petición" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXZ-Np-ojJ">
-                                            <rect key="frame" x="31" y="21" width="508" height="21"/>
+                                            <rect key="frame" x="31" y="21" width="509" height="21"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="02/09/2011" textAlignment="right" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dMI-9b-UJc">
-                                            <rect key="frame" x="667" y="0.0" width="64" height="42"/>
+                                            <rect key="frame" x="668" y="0.0" width="64" height="42"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
                                             <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icn_check" translatesAutoresizingMaskIntoConstraints="NO" id="4I5-Mz-cj9">
-                                            <rect key="frame" x="644" y="10" width="15" height="15"/>
+                                            <rect key="frame" x="645" y="10" width="15" height="15"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Expira: 02/09/2011" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lm0-O7-tuv">
-                                            <rect key="frame" x="526" y="1" width="140" height="43"/>
+                                            <rect key="frame" x="502" y="1" width="147" height="43"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                             <nil key="textColor"/>
@@ -397,7 +397,7 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Expira: 02/09/2011" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uww-1G-e4Y">
-                                            <rect key="frame" x="531" y="1" width="140" height="43"/>
+                                            <rect key="frame" x="503" y="1" width="140" height="43"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                             <nil key="textColor"/>
@@ -478,7 +478,7 @@
                                 <rect key="frame" x="0.0" y="44.5" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="D04-XF-E2n" id="Kcf-pj-fzJ">
-                                    <rect key="frame" x="0.0" y="0.0" width="738.5" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="739.5" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="center" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9N1-9l-j1t">
@@ -486,28 +486,28 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Remitente" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0IL-Oh-hHx">
-                                            <rect key="frame" x="31" y="0.0" width="602" height="23"/>
+                                            <rect key="frame" x="31" y="0.0" width="603" height="23"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Petición" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jtp-4u-jED">
-                                            <rect key="frame" x="31" y="21" width="602" height="21"/>
+                                            <rect key="frame" x="31" y="21" width="603" height="21"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="02/09/2011" textAlignment="right" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KRh-A4-RMx">
-                                            <rect key="frame" x="665" y="0.0" width="65" height="41"/>
+                                            <rect key="frame" x="666" y="0.0" width="65" height="41"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
                                             <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icn_check" translatesAutoresizingMaskIntoConstraints="NO" id="iaf-cC-8Lc">
-                                            <rect key="frame" x="641" y="10" width="15" height="15"/>
+                                            <rect key="frame" x="642" y="10" width="15" height="15"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                     </subviews>
@@ -578,7 +578,7 @@
                                 <rect key="frame" x="0.0" y="44.5" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="09K-MV-AhR" id="38k-uG-4ht">
-                                    <rect key="frame" x="0.0" y="0.0" width="738.5" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="739.5" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="center" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XwV-8B-WeA">
@@ -586,28 +586,28 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Remitente" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vnP-4q-Wj1">
-                                            <rect key="frame" x="29" y="0.0" width="602" height="23"/>
+                                            <rect key="frame" x="29" y="0.0" width="603" height="23"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Petición" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6zX-Nw-bKt">
-                                            <rect key="frame" x="29" y="21" width="602" height="21"/>
+                                            <rect key="frame" x="29" y="21" width="603" height="21"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="02/09/2011" textAlignment="right" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p62-Ja-Wrj">
-                                            <rect key="frame" x="662" y="-1" width="68" height="42"/>
+                                            <rect key="frame" x="663" y="-1" width="68" height="42"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
                                             <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icn_check" translatesAutoresizingMaskIntoConstraints="NO" id="lre-T0-lhg">
-                                            <rect key="frame" x="638" y="10" width="17" height="14"/>
+                                            <rect key="frame" x="639" y="10" width="17" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                     </subviews>
@@ -741,7 +741,7 @@
             <objects>
                 <tableViewController modalTransitionStyle="flipHorizontal" hidesBottomBarWhenPushed="YES" id="smC-PL-1kk" customClass="DetailTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" sectionIndexMinimumDisplayRowCount="8" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="FRp-fG-woV">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="974"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
@@ -851,7 +851,7 @@
                                         <rect key="frame" x="0.0" y="186" width="768" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="apj-DJ-W7i" id="8Wm-C1-V1p">
-                                            <rect key="frame" x="0.0" y="0.0" width="738.5" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="739.5" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Documentos adjuntos" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YmK-8T-Wf6">
@@ -872,7 +872,7 @@
                                         <rect key="frame" x="0.0" y="230" width="768" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="A7S-So-Bsc" id="9Ji-Hm-DDO">
-                                            <rect key="frame" x="0.0" y="0.0" width="738.5" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="739.5" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" fixedFrame="YES" text="Destinatarios" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BnN-Hu-3aE">
@@ -1399,7 +1399,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="RxH-f1-X8R">
-                            <rect key="frame" x="0.0" y="103.5" width="768" height="857"/>
+                            <rect key="frame" x="0.0" y="104" width="768" height="857"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K5c-o9-GdF">
@@ -1428,11 +1428,11 @@
                                 <rect key="frame" x="0.0" y="49.5" width="768" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uIs-UM-F22" id="0sl-TA-M56">
-                                    <rect key="frame" x="0.0" y="0.0" width="738.5" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="739.5" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="http://firma.sanfernando.es/afirma-signfolder-proxy/ProxyService" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RdX-I9-zfS">
-                                            <rect key="frame" x="8" y="3" width="720" height="31"/>
+                                            <rect key="frame" x="8" y="3" width="721" height="31"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1633,8 +1633,8 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="vfb-eq-kIh"/>
-        <segue reference="XZP-R4-sPf"/>
-        <segue reference="ayM-Ft-att"/>
+        <segue reference="UAU-nZ-4R4"/>
+        <segue reference="yZR-9X-bLz"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="ic_calendar" width="15.5" height="15.5"/>
