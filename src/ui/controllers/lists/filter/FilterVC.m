@@ -32,6 +32,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 @property (strong, nonatomic) FiltersView* filterView;
 @property (strong, nonatomic) IBOutlet UIView *filterViewContainerView;
+@property NSMutableDictionary *selectedFilters;
 
 @end
 
@@ -76,6 +77,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.selectedFilters = [[NSMutableDictionary alloc] init];
 //    [self listenNotificationAboutPushNotifications];
 //    [self showChangeRoleOptionIfNeeded];
     [_filterView showChangeRoleOptionIfNeeded];
@@ -94,10 +96,24 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 #pragma mark - User Interaction
 
 - (void)didSelectAcceptButton: (NSMutableDictionary *) selectedFilters {
-    NSMutableDictionary *filters = [selectedFilters mutableCopy];
+    self.selectedFilters = selectedFilters;
+    [self navigate];
+}
+
+- (void)didSelectCancelButton {
+    if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    });
+}
+
+- (void)navigate {
+    NSMutableDictionary *filters = [self.selectedFilters mutableCopy];
     UITabBarController *tabController;
     if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
-        
+
         UINavigationController *nav = (UINavigationController *)self.presentingViewController;
         UIViewController *settingsVC = nav.rootViewController;
         tabController = (UITabBarController *)settingsVC.presentedViewController;
@@ -124,21 +140,17 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     });
 }
 
-- (void)didSelectCancelButton {
-    if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self dismissViewControllerAnimated:YES completion:nil];
-    });
-}
-
 #pragma mark - TapChangeRoleDelegate
 
 - (void)tapChangeRole {
     SelectRoleViewController *selectRoleViewController = [[SelectRoleViewController alloc] initWithNibName: @"SelectRoleViewController" bundle: nil];
     [selectRoleViewController setModalPresentationStyle:UIModalPresentationFullScreen];
+    selectRoleViewController.delegate = self;
     [self presentViewController:selectRoleViewController animated:YES completion:nil];
+}
+
+- (void) rolesSelected {
+    [self navigate];
 }
 
 @end
