@@ -122,8 +122,9 @@ static NSString *const kPFFilterValueSortCriteriaApp = @"application";
 static NSString *const kPFFilterKeyApp = @"applicationFilter";
 
 //Notifications
-static NSString *const kPortafirmasNotificationsConfigActivated =  @"S";
-static NSString *const kUserNotificationsConfigActivated =  @"S";
+static NSString *const kPortafirmasNotificationsConfigActivated = @"S";
+static NSString *const kUserNotificationsConfigActivated = @"S";
+static NSString *const kSettingsDismissNotification = @"settingsDismissNotification";
 
 @interface PFHelper : NSObject
 

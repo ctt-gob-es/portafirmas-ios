@@ -78,8 +78,8 @@ static CGFloat const kCancelButtonWidth = 100;
     self = [super initWithCoder:aDecoder];
 
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(receiveTestNotification:)
-                                                 name:@"TestNotification"
+                                             selector:@selector(receiveSettingsDismissNotification:)
+                                                 name:kSettingsDismissNotification
                                                object:nil];
 
     if (self) {
@@ -432,9 +432,9 @@ static CGFloat const kCancelButtonWidth = 100;
     }
 }
 
-- (void) receiveTestNotification:(NSNotification *) notification
+- (void) receiveSettingsDismissNotification:(NSNotification *) notification
 {
-    if ([[notification name] isEqualToString:@"TestNotification"]) {
+    if ([[notification name] isEqualToString:kSettingsDismissNotification]) {
         [self setupTabBar];
         if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleRoleNameKey] objectForKey:kUserRoleContent] isEqual: @"User_Role_Validator".localized]) {
             [self.navigationController.tabBarController setSelectedIndex:0];

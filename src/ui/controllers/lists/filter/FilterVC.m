@@ -110,14 +110,14 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [baseTVC setFiltersDict:filters.count > 0 ? filters:nil];
     if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
         [[NSNotificationCenter defaultCenter]
-         postNotificationName:@"TestNotification"
+         postNotificationName:kSettingsDismissNotification
          object:self];
         [self.navigationController popViewControllerAnimated:YES];
     }
     dispatch_async(dispatch_get_main_queue(), ^{
         [self dismissViewControllerAnimated:YES completion:^{
             [[NSNotificationCenter defaultCenter]
-             postNotificationName:@"TestNotification"
+             postNotificationName:kSettingsDismissNotification
              object:self];
             [baseTVC refreshInfoWithFilters:filters];
         }];
