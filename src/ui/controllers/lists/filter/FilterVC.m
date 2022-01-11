@@ -83,7 +83,6 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-    [self.parentViewController.tabBarController.tabBar setHidden:NO];
 	[[KeyboardObserver getInstance] removeObserver:self];
 }
 
@@ -110,10 +109,16 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     BaseListTVC *baseTVC = (BaseListTVC *)navigation.rootViewController;
     [baseTVC setFiltersDict:filters.count > 0 ? filters:nil];
     if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:kSettingsDismissNotification
+         object:self];
         [self.navigationController popViewControllerAnimated:YES];
     }
     dispatch_async(dispatch_get_main_queue(), ^{
         [self dismissViewControllerAnimated:YES completion:^{
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:kSettingsDismissNotification
+             object:self];
             [baseTVC refreshInfoWithFilters:filters];
         }];
     });

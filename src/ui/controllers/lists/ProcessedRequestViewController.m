@@ -33,6 +33,7 @@
 {
     [self.parentViewController setHidesBottomBarWhenPushed:TRUE];
     [self.navigationController setToolbarHidden:YES];
+    [self.parentViewController.tabBarController.tabBar setHidden:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

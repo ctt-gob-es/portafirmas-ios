@@ -76,7 +76,12 @@ static CGFloat const kCancelButtonWidth = 100;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
-    
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveSettingsDismissNotification:)
+                                                 name:kSettingsDismissNotification
+                                               object:nil];
+
     if (self) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [SVProgressHUD dismiss];
@@ -97,6 +102,10 @@ static CGFloat const kCancelButtonWidth = 100;
     }
     
     return self;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Life Cycle
@@ -224,6 +233,12 @@ static CGFloat const kCancelButtonWidth = 100;
 #pragma mark - User Interface
 
 - (void)setupTabBar {
+    if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleRoleNameKey] objectForKey:kUserRoleContent] isEqual: @"User_Role_Validator".localized]) {
+        [self.navigationController.tabBarController.tabBar setUserInteractionEnabled:NO];
+    } else {
+        [self.navigationController.tabBarController.tabBar setUserInteractionEnabled:YES];
+    }
+
     if (!_didSetUpTabBar) {
         [self.navigationController setTabBarItem:[self.tabBarItem initWithTitle:@"Pendientes"
                                                                           image:[[QuartzUtils getImageWithName:@"ic_pendientes" andTintColor:[UIColor lightGrayColor]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
@@ -414,6 +429,16 @@ static CGFloat const kCancelButtonWidth = 100;
     }
     else if (_selectedRequestSetToValidate.count > 0) {
         [self startSendingValidateRequests];
+    }
+}
+
+- (void) receiveSettingsDismissNotification:(NSNotification *) notification
+{
+    if ([[notification name] isEqualToString:kSettingsDismissNotification]) {
+        [self setupTabBar];
+        if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleRoleNameKey] objectForKey:kUserRoleContent] isEqual: @"User_Role_Validator".localized]) {
+            [self.navigationController.tabBarController setSelectedIndex:0];
+        }
     }
 }
 
