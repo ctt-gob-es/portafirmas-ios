@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "FiltersView.h"
+#import "SelectRoleViewController.h"
 
-@interface FilterVC : UIViewController<FiltersViewDelegate>
+@interface FilterVC : UIViewController<FiltersViewDelegate, RoleSelectedDelegate>
 
 @end
