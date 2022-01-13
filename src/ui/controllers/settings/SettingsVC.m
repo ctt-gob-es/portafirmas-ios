@@ -49,6 +49,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 @property (strong, nonatomic) IBOutlet UINavigationItem *titleBar;
 @property (strong, nonatomic) WKWebView *webView;
 @property (nonatomic) BOOL roleAlreadySelected;
+@property BOOL showingAlert;
 
 @end
 
@@ -191,6 +192,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
 	__block BOOL segue = NO;
+    self.showingAlert = NO;
 	if ([identifier isEqualToString:kSettingsVCSegueIdentifierAccess]) {
 		if ([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyRemoteCertificatesSelection]) {
 			[[LoginService instance] loginWithRemoteCertificates:^{
@@ -257,7 +259,10 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 				} else {
 					segue = NO;
 					dispatch_async(dispatch_get_main_queue(), ^{
-						[[ErrorService instance] showLoginErrorAlertView];
+                        if (!self.showingAlert) {
+                            self.showingAlert = YES;
+                            [[ErrorService instance] showLoginErrorAlertView];
+                        }
 					});
 				}
 			}];
