@@ -34,7 +34,7 @@ class ConfigurationViewController: UIViewController {
         showLoading()
         bind()
         configureSegmentedControl()
-        configuraTableView()
+        configureTableView()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -54,7 +54,7 @@ class ConfigurationViewController: UIViewController {
         segmentedControl.addTarget(self, action: #selector(segmentedControlTapped(_:)), for: .valueChanged)
     }
 
-    private func configuraTableView() {
+    private func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: authorizationCellIdentifier, bundle: nil), forCellReuseIdentifier: authorizationCellIdentifier)

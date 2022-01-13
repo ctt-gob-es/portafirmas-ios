@@ -75,7 +75,7 @@ import Foundation
 
     private func pendingAuthorizations() {
         for item in authorizations {
-            if item.state == .pending {
+            if item.state == .pending && !item.sended {
                 areAuthorizationsPending?()
                 return
             }
