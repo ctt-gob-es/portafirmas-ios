@@ -20,7 +20,7 @@
 + (BOOL) isFirstInitToIncludeDefaultServers {
     NSString *firstInitToIncludeDefaultServers = @"hasLaunchOnceToIncludeDefaultServers";
     
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:firstInitToIncludeDefaultServers])
+    if ((![[NSUserDefaults standardUserDefaults] boolForKey:firstInitToIncludeDefaultServers]) || !([[NSUserDefaults standardUserDefaults] arrayForKey:@"serversArray"].count > 0))
     {
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:firstInitToIncludeDefaultServers];
         [[NSUserDefaults standardUserDefaults] synchronize];
