@@ -303,7 +303,7 @@ int const kNormalLabelDistance = 20;
 		NSString* fileType = [url.lastPathComponent pathExtension];
 		Boolean correctFileType = false ;
 		NSString *alertMessage = [NSString stringWithFormat:@"files_app_alert_message_incorrect_file".localized, [url lastPathComponent]];
-		if ([fileType  isEqualToString: P12EXTENSION] || [fileType  isEqualToString: PFXEXTENSION]) {
+        if ([fileType.lowercaseString  isEqualToString: P12EXTENSION] || [fileType.lowercaseString  isEqualToString: PFXEXTENSION]) {
 			correctFileType = true;
 		}
 		
