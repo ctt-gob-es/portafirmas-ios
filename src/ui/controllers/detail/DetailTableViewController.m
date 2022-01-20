@@ -169,7 +169,6 @@ typedef NS_ENUM(NSUInteger, Operation) {
             value = [self getRejectExplanation];
             [cell setDarkStyle];
             [cell increaseTitleLabelWidth: rejectCellTitleCellWidth];
-            [cell hideLabelsIfNeeded: ![self rejectExplanationExists]];
             break;
         case AttachedDocument:
             title = @"Cell_Title_AttachedDocument".localized;
@@ -203,7 +202,6 @@ typedef NS_ENUM(NSUInteger, Operation) {
             title = @"Cell_Title_ExpirationDate".localized;
             value = [self getExpirationDate];
             [cell setClearStyle];
-            [cell hideLabelsIfNeeded: !_dataSource.expdate];
             break;
         case Application:
             title = @"Cell_Title_Application".localized;
@@ -214,7 +212,6 @@ typedef NS_ENUM(NSUInteger, Operation) {
 			title = @"Cell_Title_Message".localized;
 			value = [self getMessage];
 			[cell setClearStyle];
-            [cell hideLabelsIfNeeded: ![self messageExists]];
 			break;
     }
     [cell setCellTitle: title];
