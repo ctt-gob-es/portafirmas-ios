@@ -570,14 +570,14 @@ typedef NS_ENUM(NSUInteger, Operation) {
         } else if (_waitingResponseType == PFWaitingResponseTypeApproval) {
             NSArray *approvedRequests = [(ApproveXMLController *)parser dataSource];
             if (approvedRequests != nil){
-                [self didReceiveRequestResult:approvedRequests forOperation:approve];
+                [self didReceiveRequestResult:parser :approvedRequests forOperation:approve];
             } else {
               [self didReceiveError:[(ApproveXMLController *)parser err]];
             }
         } else if (_waitingResponseType == PFWaitingResponseTypeValidate) {
             NSArray *approvedRequests = [(ValidateController *)parser dataSource];
             if (approvedRequests != nil){
-                [self didReceiveRequestResult:approvedRequests forOperation: validate];
+                [self didReceiveRequestResult:parser :approvedRequests forOperation: validate];
             } else {
                 [self didReceiveError:[(ValidateController *)parser err]];
             }
@@ -624,7 +624,13 @@ typedef NS_ENUM(NSUInteger, Operation) {
     }
 }
 
-- (void)didReceiveRequestResult:(NSArray *)approvedRequests forOperation: (Operation) operation {
+- (void)didReceiveRequestResult:(DetailXMLController *)parser :(NSArray *)approvedRequests forOperation: (Operation) operation {
+    if ([parser finishWithError]) {
+        NSString *errorCode = [parser errorCode] == nil ? kEmptyString : [parser errorCode];
+        NSString *err = [parser err] == nil ? kEmptyString : [parser err];
+        [self didReceiveError:[NSString stringWithFormat: @"Detail_view_error_messages_from_server".localized, err, errorCode]];
+    }
+
     NSMutableArray *idsForRequestsWithError = [@[] mutableCopy];
     [approvedRequests enumerateObjectsUsingBlock:^(PFRequest *request, NSUInteger idx, BOOL *stop) {
          if ([request.status isEqualToString:kKOStatusString]) {

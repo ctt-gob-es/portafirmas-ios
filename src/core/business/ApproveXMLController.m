@@ -89,6 +89,11 @@
 {
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qualifiedName attributes:attributeDict];
 
+    if ([elementName isEqualToString:@"err"]) {
+        self.errorCode = attributeDict[@"cd"];
+        _finishwithError = YES;
+    }
+    
     if ([elementName isEqualToString:@"apprv"]) {
 
         _requestResult = [PFRequestResult new];
