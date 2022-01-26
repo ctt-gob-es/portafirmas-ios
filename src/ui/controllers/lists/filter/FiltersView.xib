@@ -525,9 +525,16 @@
                 </pickerView>
                 <pickerView alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="scM-7d-tnG" userLabel="Time Interval Picker View">
                     <rect key="frame" x="0.0" y="635" width="414" height="216"/>
-                    <color key="backgroundColor" red="0.99992364649999999" green="1" blue="0.99988299609999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <outlet property="delegate" destination="ORh-ds-0lu" id="cYc-Z2-Udj"/>
+                    </connections>
+                </pickerView>
+                <pickerView alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PQO-Se-hRM">
+                    <rect key="frame" x="0.0" y="635" width="414" height="216"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <connections>
+                        <outlet property="delegate" destination="ORh-ds-0lu" id="LD0-hm-NlK"/>
                     </connections>
                 </pickerView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XRX-z7-VyH">
@@ -568,9 +575,11 @@
             </subviews>
             <viewLayoutGuide key="safeArea" id="qBo-IR-fwc"/>
             <constraints>
+                <constraint firstItem="qBo-IR-fwc" firstAttribute="trailing" secondItem="PQO-Se-hRM" secondAttribute="trailing" id="2fp-yw-bXB"/>
                 <constraint firstItem="7d4-q7-BSG" firstAttribute="top" secondItem="ORh-ds-0lu" secondAttribute="top" id="2og-Ia-NLa"/>
                 <constraint firstItem="7d4-q7-BSG" firstAttribute="leading" secondItem="ORh-ds-0lu" secondAttribute="leading" id="4It-Pt-QRu"/>
                 <constraint firstAttribute="trailing" secondItem="ZRv-Tp-HAg" secondAttribute="trailing" id="Awu-Kq-x7c"/>
+                <constraint firstAttribute="bottom" secondItem="PQO-Se-hRM" secondAttribute="bottom" constant="45" id="CFe-5I-VVt"/>
                 <constraint firstAttribute="trailing" secondItem="k1f-nw-Zu4" secondAttribute="trailing" id="CHq-lc-VG7"/>
                 <constraint firstItem="k1f-nw-Zu4" firstAttribute="leading" secondItem="ORh-ds-0lu" secondAttribute="leading" id="Gpc-0O-fwe"/>
                 <constraint firstAttribute="trailing" secondItem="x0g-vH-h29" secondAttribute="trailing" id="Gto-QD-qnB"/>
@@ -587,6 +596,7 @@
                 <constraint firstAttribute="bottom" secondItem="scM-7d-tnG" secondAttribute="bottom" constant="45" id="gvn-eV-PJz"/>
                 <constraint firstAttribute="trailing" secondItem="7d4-q7-BSG" secondAttribute="trailing" id="oAb-Du-iFn"/>
                 <constraint firstItem="XRX-z7-VyH" firstAttribute="top" secondItem="7d4-q7-BSG" secondAttribute="bottom" id="oZ2-u5-kYw"/>
+                <constraint firstItem="PQO-Se-hRM" firstAttribute="leading" secondItem="qBo-IR-fwc" secondAttribute="leading" id="pfa-2Z-buK"/>
                 <constraint firstItem="VHq-ve-gGc" firstAttribute="top" secondItem="XRX-z7-VyH" secondAttribute="top" id="sYY-g6-pwV"/>
                 <constraint firstItem="x0g-vH-h29" firstAttribute="leading" secondItem="ORh-ds-0lu" secondAttribute="leading" id="uvq-Pg-rna"/>
                 <constraint firstItem="scM-7d-tnG" firstAttribute="leading" secondItem="ORh-ds-0lu" secondAttribute="leading" id="zV3-w0-4oJ"/>
@@ -623,6 +633,7 @@
                 <outlet property="typePickerView" destination="k1f-nw-Zu4" id="eNp-bj-45b"/>
                 <outlet property="typeView" destination="hMJ-qZ-60z" id="2zr-te-RWN"/>
                 <outlet property="yearButton" destination="adN-KJ-moX" id="zGm-ad-11k"/>
+                <outlet property="yearPickerView" destination="PQO-Se-hRM" id="4Gy-YL-Sto"/>
                 <outlet property="yearView" destination="9Cv-Ch-7TK" id="zbz-iM-8FC"/>
             </connections>
             <point key="canvasLocation" x="-317.39130434782612" y="-542.41071428571422"/>
