@@ -566,7 +566,7 @@ static CGFloat const kCancelButtonWidth = 100;
     
     if (success) {
         NSArray *rejectsReq = [parser dataSource];
-        [self didReceiveRejectResult:rejectsReq];
+        [self didReceiveRejectResult:parser :rejectsReq];
     }
     else {
         [self didReceiveError:@"Detail_view_error_server_connection_501".localized];
@@ -709,36 +709,43 @@ static CGFloat const kCancelButtonWidth = 100;
     [[self tableView] reloadData];
 }
 
-- (void)didReceiveRejectResult:(NSArray *)requestsSigned {
-    BOOL processedOK = TRUE;
-    for (PFRequestResult *request in requestsSigned) {
-        if ([[request status] isEqualToString:@"KO"]) {
-            NSString *message = [[NSString alloc] initWithFormat: @"Alert_View_Error_When_Processing_Request".localized, [request rejectId]];
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Error".localized
-                                                                                     message:message
-                                                                              preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
-            [alertController addAction:cancel];
-            [self presentViewController:alertController animated:YES completion:nil];
-            processedOK = FALSE;
+- (void)didReceiveRejectResult:(RejectXMLController *)parser :(NSArray *)requestsSigned {
+    if ([parser finishWithError]) {
+        NSString *errorCode = [parser errorCode] == nil ? kEmptyString : [parser errorCode];
+        NSString *err = [parser err] == nil ? kEmptyString : [parser err];
+        [self didReceiveError:[NSString stringWithFormat: @"Detail_view_error_messages_from_server".localized, err, errorCode]];
+    } else {
+
+        BOOL processedOK = TRUE;
+        for (PFRequestResult *request in requestsSigned) {
+            if ([[request status] isEqualToString:@"KO"]) {
+                NSString *message = [[NSString alloc] initWithFormat: @"Alert_View_Error_When_Processing_Request".localized, [request rejectId]];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Error".localized
+                                                                                         message:message
+                                                                                  preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
+                [alertController addAction:cancel];
+                [self presentViewController:alertController animated:YES completion:nil];
+                processedOK = FALSE;
+            }
         }
+
+        if (processedOK) {
+            
+            _waitingResponseType = PFWaitingResponseTypeList;
+            [self refreshInfoWithoutProgress];
+            // Peticiones rechazadas corrrectamente
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized
+                                                                                     message: @"Correctly_rejected_requests".localized
+                                                                              preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle: @"Ok".localized
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:nil];
+            [alertController addAction:actionOk];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+        [self cancelEditing];
     }
-    
-    if (processedOK) {
-        
-        _waitingResponseType = PFWaitingResponseTypeList;
-        [self refreshInfoWithoutProgress];
-        // Peticiones rechazadas corrrectamente
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized
-                                                                                 message: @"Correctly_rejected_requests".localized
-                                                                          preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *actionOk = [UIAlertAction actionWithTitle: @"Ok".localized
-                                                           style:UIAlertActionStyleDefault
-                                                         handler:nil];
-        [alertController addAction:actionOk];
-        [self presentViewController:alertController animated:YES completion:nil];
-    }
-    [self cancelEditing];
 }
 
 - (void)showFIRMeWebView:(NSURL *) url {
