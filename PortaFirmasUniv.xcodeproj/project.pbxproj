@@ -1118,6 +1118,7 @@
 			buildConfigurationList = 1C9F2036163E93C3007A170B /* Build configuration list for PBXNativeTarget "PortaFirmasUniv" */;
 			buildPhases = (
 				E3D4D6D6C009A3B3E13001A6 /* [CP] Check Pods Manifest.lock */,
+				080EB4881956976E82F44536 /* [CP] Prepare Artifacts */,
 				1C9F200B163E93C3007A170B /* Sources */,
 				1C9F200C163E93C3007A170B /* Frameworks */,
 				1C9F200D163E93C3007A170B /* Resources */,
@@ -1218,18 +1219,34 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		080EB4881956976E82F44536 /* [CP] Prepare Artifacts */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-artifacts-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Prepare Artifacts";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-artifacts-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-artifacts.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		2E8453FF896F4595D50AC2A2 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-resources.sh",
-				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1241,13 +1258,12 @@
 			buildActionMask = 2147483647;
 			files = (
 			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1538,7 +1554,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6.4;
+				MARKETING_VERSION = 1.6.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = es.gob.afirma.Portafirmas;
 				PRODUCT_NAME = "Port@firmas";
 				PROVISIONING_PROFILE = "";
@@ -1573,7 +1589,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6.4;
+				MARKETING_VERSION = 1.6.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = es.gob.afirma.Portafirmas;
 				PRODUCT_NAME = "Port@firmas";
 				PROVISIONING_PROFILE = "";
