@@ -83,8 +83,45 @@
 		3CC403831AB9BB12006F8803 /* PFCertificateInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC403821AB9BB12006F8803 /* PFCertificateInfo.m */; };
 		3CC403861AB9EDBA006F8803 /* CertificateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CC403851AB9EDBA006F8803 /* CertificateCell.m */; };
 		3CD199A51AC2C952007E9E35 /* UINavigationController+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */; };
+		48037CDA273E4D1400966968 /* SearchUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48037CD8273E4D1400966968 /* SearchUserViewController.swift */; };
+		48037CDB273E4D1400966968 /* SearchUserView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 48037CD9273E4D1400966968 /* SearchUserView.xib */; };
+		48037CDD273E5BF500966968 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48037CDC273E5BF500966968 /* User.swift */; };
+		48037CDF273E612500966968 /* CreateItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48037CDE273E612500966968 /* CreateItemViewModel.swift */; };
+		48037CE3273E637200966968 /* SearchUserXMLController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48037CE2273E637200966968 /* SearchUserXMLController.swift */; };
 		4809540C2705CCB2004BF96A /* OpenSSL.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = A74AFCD326AECEB900470B9D /* OpenSSL.xcframework */; };
-		4809540D2705CCB2004BF96A /* OpenSSL.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A74AFCD326AECEB900470B9D /* OpenSSL.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		482BB9F72716CF6D0044C956 /* PDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 482BB9F62716CF6D0044C956 /* PDFKit.framework */; };
+		485610C4273EA66B0000CF3B /* CreateItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485610C2273EA66B0000CF3B /* CreateItemViewController.swift */; };
+		485610C5273EA66B0000CF3B /* CreateItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 485610C3273EA66B0000CF3B /* CreateItemView.xib */; };
+		4861B6EA27214C1E00446EB8 /* ConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B6E927214C1E00446EB8 /* ConfigurationViewController.swift */; };
+		4861B6EC27214C4B00446EB8 /* ConfigurationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4861B6EB27214C4B00446EB8 /* ConfigurationView.xib */; };
+		4861B6EE2722DA2700446EB8 /* AuthorizationCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4861B6ED2722DA2700446EB8 /* AuthorizationCell.xib */; };
+		4861B6F02722DBF300446EB8 /* AuthorizationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B6EF2722DBF300446EB8 /* AuthorizationCell.swift */; };
+		4861B74A2726EC9000446EB8 /* ConfigurationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B7492726EC8F00446EB8 /* ConfigurationViewModel.swift */; };
+		4861B7562729314000446EB8 /* AuthorizationXMLController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B7552729314000446EB8 /* AuthorizationXMLController.swift */; };
+		4861B758272BCC4500446EB8 /* Authorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B757272BCC4500446EB8 /* Authorization.swift */; };
+		4861B76927327B0300446EB8 /* UserNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B76727327B0300446EB8 /* UserNameCell.swift */; };
+		4861B76A27327B0300446EB8 /* UserNameCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4861B76827327B0300446EB8 /* UserNameCell.xib */; };
+		4861B76C27328B0A00446EB8 /* ValidatorXMLController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B76B27328B0A00446EB8 /* ValidatorXMLController.swift */; };
+		4861B76F2733DCCD00446EB8 /* AuthorizationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B76D2733DCCD00446EB8 /* AuthorizationDetailViewController.swift */; };
+		4861B7702733DCCD00446EB8 /* AuthorizationDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4861B76E2733DCCD00446EB8 /* AuthorizationDetailView.xib */; };
+		4861B7732733ED4B00446EB8 /* AuthorizationDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B7712733ED4B00446EB8 /* AuthorizationDetailCell.swift */; };
+		4861B7742733ED4B00446EB8 /* AuthorizationDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4861B7722733ED4B00446EB8 /* AuthorizationDetailCell.xib */; };
+		4861B7782735695700446EB8 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B7772735695700446EB8 /* StringExtension.swift */; };
+		4861B77A27356CCE00446EB8 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B77927356CCE00446EB8 /* DateExtension.swift */; };
+		4861B77C273BA51100446EB8 /* DefaultNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B77B273BA51000446EB8 /* DefaultNavigationViewController.swift */; };
+		4861B77F273BE36800446EB8 /* AuthorizationDetailButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B77D273BE36800446EB8 /* AuthorizationDetailButtonCell.swift */; };
+		4861B780273BE36800446EB8 /* AuthorizationDetailButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4861B77E273BE36800446EB8 /* AuthorizationDetailButtonCell.xib */; };
+		4861B782273CFB0D00446EB8 /* AuthorizationDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B781273CFB0D00446EB8 /* AuthorizationDetailViewModel.swift */; };
+		4861B786273CFC1B00446EB8 /* StateAuthorizationXMLController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4861B785273CFC1B00446EB8 /* StateAuthorizationXMLController.swift */; };
+		4876D1C7274CCF9B00F045AF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4876D1C6274CCF9B00F045AF /* Constants.swift */; };
+		4876D1C9274CE81400F045AF /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4876D1C8274CE81400F045AF /* UIColorExtension.swift */; };
+		4876D1CD274E2CFD00F045AF /* OnboardingSplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4876D1CB274E2CFD00F045AF /* OnboardingSplashViewController.swift */; };
+		4876D1CE274E2CFD00F045AF /* OnboardingSplashView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4876D1CC274E2CFD00F045AF /* OnboardingSplashView.xib */; };
+		4876D1D5274E486800F045AF /* ServerSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4876D1D3274E486800F045AF /* ServerSelectionViewController.swift */; };
+		4876D1D6274E486800F045AF /* ServerSelectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4876D1D4274E486800F045AF /* ServerSelectionView.xib */; };
+		4876D1DD274E6D9C00F045AF /* OptionsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4876D1DB274E6D9C00F045AF /* OptionsCell.swift */; };
+		4876D1DE274E6D9C00F045AF /* OptionsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4876D1DC274E6D9C00F045AF /* OptionsCell.xib */; };
+		4876D1E02755413000F045AF /* framd.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4876D1DF2755413000F045AF /* framd.ttf */; };
 		921EAE2F22AFB631005D6D5B /* GlobalConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 921EAE2E22AFB631005D6D5B /* GlobalConstants.m */; };
 		9226966F23C60FAD00F099F0 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9226966E23C60FAD00F099F0 /* NSString+Extension.m */; };
 		92469F1225792B4100494DCF /* UserRolesNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 92469F1125792B4100494DCF /* UserRolesNetwork.m */; };
@@ -129,20 +166,6 @@
 		BCF619A41FC42DC2009C5B50 /* LoginService.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF619A31FC42DC2009C5B50 /* LoginService.m */; };
 		BCF619A71FC4379D009C5B50 /* LoginNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF619A61FC4379D009C5B50 /* LoginNetwork.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		4809540E2705CCB2004BF96A /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				4809540D2705CCB2004BF96A /* OpenSSL.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1C9F200F163E93C3007A170B /* Port@firmas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Port@firmas.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -281,6 +304,45 @@
 		3CC403851AB9EDBA006F8803 /* CertificateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CertificateCell.m; sourceTree = "<group>"; };
 		3CD199A31AC2C952007E9E35 /* UINavigationController+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UINavigationController+Utils.h"; path = "UINavigationController/UINavigationController+Utils.h"; sourceTree = "<group>"; };
 		3CD199A41AC2C952007E9E35 /* UINavigationController+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UINavigationController+Utils.m"; path = "UINavigationController/UINavigationController+Utils.m"; sourceTree = "<group>"; };
+		48037CD8273E4D1400966968 /* SearchUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserViewController.swift; sourceTree = "<group>"; };
+		48037CD9273E4D1400966968 /* SearchUserView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchUserView.xib; sourceTree = "<group>"; };
+		48037CDC273E5BF500966968 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		48037CDE273E612500966968 /* CreateItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemViewModel.swift; sourceTree = "<group>"; };
+		48037CE2273E637200966968 /* SearchUserXMLController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserXMLController.swift; sourceTree = "<group>"; };
+		482BB9F62716CF6D0044C956 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
+		485610C2273EA66B0000CF3B /* CreateItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateItemViewController.swift; sourceTree = "<group>"; };
+		485610C3273EA66B0000CF3B /* CreateItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateItemView.xib; sourceTree = "<group>"; };
+		4861B6E827214C1E00446EB8 /* PortaFirmasUniv-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PortaFirmasUniv-Bridging-Header.h"; sourceTree = "<group>"; };
+		4861B6E927214C1E00446EB8 /* ConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationViewController.swift; sourceTree = "<group>"; };
+		4861B6EB27214C4B00446EB8 /* ConfigurationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConfigurationView.xib; sourceTree = "<group>"; };
+		4861B6ED2722DA2700446EB8 /* AuthorizationCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthorizationCell.xib; sourceTree = "<group>"; };
+		4861B6EF2722DBF300446EB8 /* AuthorizationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationCell.swift; sourceTree = "<group>"; };
+		4861B7492726EC8F00446EB8 /* ConfigurationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationViewModel.swift; sourceTree = "<group>"; };
+		4861B7552729314000446EB8 /* AuthorizationXMLController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationXMLController.swift; sourceTree = "<group>"; };
+		4861B757272BCC4500446EB8 /* Authorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authorization.swift; sourceTree = "<group>"; };
+		4861B76727327B0300446EB8 /* UserNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameCell.swift; sourceTree = "<group>"; };
+		4861B76827327B0300446EB8 /* UserNameCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserNameCell.xib; sourceTree = "<group>"; };
+		4861B76B27328B0A00446EB8 /* ValidatorXMLController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatorXMLController.swift; sourceTree = "<group>"; };
+		4861B76D2733DCCD00446EB8 /* AuthorizationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationDetailViewController.swift; sourceTree = "<group>"; };
+		4861B76E2733DCCD00446EB8 /* AuthorizationDetailView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthorizationDetailView.xib; sourceTree = "<group>"; };
+		4861B7712733ED4B00446EB8 /* AuthorizationDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationDetailCell.swift; sourceTree = "<group>"; };
+		4861B7722733ED4B00446EB8 /* AuthorizationDetailCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthorizationDetailCell.xib; sourceTree = "<group>"; };
+		4861B7772735695700446EB8 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		4861B77927356CCE00446EB8 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		4861B77B273BA51000446EB8 /* DefaultNavigationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNavigationViewController.swift; sourceTree = "<group>"; };
+		4861B77D273BE36800446EB8 /* AuthorizationDetailButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationDetailButtonCell.swift; sourceTree = "<group>"; };
+		4861B77E273BE36800446EB8 /* AuthorizationDetailButtonCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AuthorizationDetailButtonCell.xib; sourceTree = "<group>"; };
+		4861B781273CFB0D00446EB8 /* AuthorizationDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationDetailViewModel.swift; sourceTree = "<group>"; };
+		4861B785273CFC1B00446EB8 /* StateAuthorizationXMLController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateAuthorizationXMLController.swift; sourceTree = "<group>"; };
+		4876D1C6274CCF9B00F045AF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4876D1C8274CE81400F045AF /* UIColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		4876D1CB274E2CFD00F045AF /* OnboardingSplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSplashViewController.swift; sourceTree = "<group>"; };
+		4876D1CC274E2CFD00F045AF /* OnboardingSplashView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingSplashView.xib; sourceTree = "<group>"; };
+		4876D1D3274E486800F045AF /* ServerSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerSelectionViewController.swift; sourceTree = "<group>"; };
+		4876D1D4274E486800F045AF /* ServerSelectionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServerSelectionView.xib; sourceTree = "<group>"; };
+		4876D1DB274E6D9C00F045AF /* OptionsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsCell.swift; sourceTree = "<group>"; };
+		4876D1DC274E6D9C00F045AF /* OptionsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OptionsCell.xib; sourceTree = "<group>"; };
+		4876D1DF2755413000F045AF /* framd.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = framd.ttf; sourceTree = "<group>"; };
 		862DBE2D1FC5F494A173087E /* Pods-PortaFirmasUniv.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PortaFirmasUniv.release.xcconfig"; path = "Pods/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv.release.xcconfig"; sourceTree = "<group>"; };
 		921EAE2E22AFB631005D6D5B /* GlobalConstants.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalConstants.m; sourceTree = "<group>"; };
 		921EAE3022AFB672005D6D5B /* GlobalConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalConstants.h; sourceTree = "<group>"; };
@@ -376,6 +438,7 @@
 				1C9F2014163E93C3007A170B /* UIKit.framework in Frameworks */,
 				1C9F2016163E93C3007A170B /* Foundation.framework in Frameworks */,
 				1C9F2018163E93C3007A170B /* CoreGraphics.framework in Frameworks */,
+				482BB9F72716CF6D0044C956 /* PDFKit.framework in Frameworks */,
 				4809540C2705CCB2004BF96A /* OpenSSL.xcframework in Frameworks */,
 				992987C2AA230FF0604BD234 /* libPods-PortaFirmasUniv.a in Frameworks */,
 			);
@@ -409,6 +472,7 @@
 		1C9F2012163E93C3007A170B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				482BB9F62716CF6D0044C956 /* PDFKit.framework */,
 				A74AFCD326AECEB900470B9D /* OpenSSL.xcframework */,
 				BC5BF9DF1FDFCF1100B1CF0C /* WebKit.framework */,
 				BCAF65E21FAC9E0700D30E54 /* UserNotifications.framework */,
@@ -465,6 +529,7 @@
 		3C68F0F81AA866B700B32EF6 /* lists */ = {
 			isa = PBXGroup;
 			children = (
+				4861B6E72720674B00446EB8 /* configuration */,
 				3CBD304B1AB0948C00EE9839 /* filter */,
 				3C00AD7C1AB71A8700EF6886 /* BaseListTVC.h */,
 				3C00AD7D1AB71A8700EF6886 /* BaseListTVC.m */,
@@ -550,6 +615,7 @@
 				3CA899111AA6073F0035012D /* main */,
 				3CA899441AA60D910035012D /* model */,
 				3CA8995A1AA60E020035012D /* ui */,
+				4876D1C6274CCF9B00F045AF /* Constants.swift */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -732,6 +798,8 @@
 				3C00AD981AB71ACB00EF6886 /* SignLine.m */,
 				3CC403811AB9BB12006F8803 /* PFCertificateInfo.h */,
 				3CC403821AB9BB12006F8803 /* PFCertificateInfo.m */,
+				4861B757272BCC4500446EB8 /* Authorization.swift */,
+				48037CDC273E5BF500966968 /* User.swift */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -769,6 +837,7 @@
 		3CA899621AA60E710035012D /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4876D1CA274E2CDA00F045AF /* Onboarding */,
 				925BE5B525878B4400B85BFE /* roles */,
 				3C3468B21AB732FA008C6427 /* base */,
 				3C30D3451AB71512007C859D /* settings */,
@@ -810,6 +879,75 @@
 			name = UINavigationController;
 			sourceTree = "<group>";
 		};
+		48037CD7273E4CCB00966968 /* CreateItem */ = {
+			isa = PBXGroup;
+			children = (
+				48037CDE273E612500966968 /* CreateItemViewModel.swift */,
+				48037CD8273E4D1400966968 /* SearchUserViewController.swift */,
+				48037CD9273E4D1400966968 /* SearchUserView.xib */,
+				485610C2273EA66B0000CF3B /* CreateItemViewController.swift */,
+				485610C3273EA66B0000CF3B /* CreateItemView.xib */,
+				48037CE2273E637200966968 /* SearchUserXMLController.swift */,
+			);
+			path = CreateItem;
+			sourceTree = "<group>";
+		};
+		4861B6E72720674B00446EB8 /* configuration */ = {
+			isa = PBXGroup;
+			children = (
+				4861B6E827214C1E00446EB8 /* PortaFirmasUniv-Bridging-Header.h */,
+				4861B77B273BA51000446EB8 /* DefaultNavigationViewController.swift */,
+				4861B783273CFB5000446EB8 /* ConfigurationView */,
+				4861B784273CFB6200446EB8 /* ConfigurationDetailView */,
+				48037CD7273E4CCB00966968 /* CreateItem */,
+			);
+			path = configuration;
+			sourceTree = "<group>";
+		};
+		4861B783273CFB5000446EB8 /* ConfigurationView */ = {
+			isa = PBXGroup;
+			children = (
+				4861B7492726EC8F00446EB8 /* ConfigurationViewModel.swift */,
+				4861B6E927214C1E00446EB8 /* ConfigurationViewController.swift */,
+				4861B6EB27214C4B00446EB8 /* ConfigurationView.xib */,
+				4861B6EF2722DBF300446EB8 /* AuthorizationCell.swift */,
+				4861B6ED2722DA2700446EB8 /* AuthorizationCell.xib */,
+				4861B76727327B0300446EB8 /* UserNameCell.swift */,
+				4861B76827327B0300446EB8 /* UserNameCell.xib */,
+				4861B7552729314000446EB8 /* AuthorizationXMLController.swift */,
+				4861B76B27328B0A00446EB8 /* ValidatorXMLController.swift */,
+			);
+			path = ConfigurationView;
+			sourceTree = "<group>";
+		};
+		4861B784273CFB6200446EB8 /* ConfigurationDetailView */ = {
+			isa = PBXGroup;
+			children = (
+				4861B781273CFB0D00446EB8 /* AuthorizationDetailViewModel.swift */,
+				4861B76D2733DCCD00446EB8 /* AuthorizationDetailViewController.swift */,
+				4861B76E2733DCCD00446EB8 /* AuthorizationDetailView.xib */,
+				4861B7712733ED4B00446EB8 /* AuthorizationDetailCell.swift */,
+				4861B7722733ED4B00446EB8 /* AuthorizationDetailCell.xib */,
+				4861B77D273BE36800446EB8 /* AuthorizationDetailButtonCell.swift */,
+				4861B77E273BE36800446EB8 /* AuthorizationDetailButtonCell.xib */,
+				4861B785273CFC1B00446EB8 /* StateAuthorizationXMLController.swift */,
+			);
+			path = ConfigurationDetailView;
+			sourceTree = "<group>";
+		};
+		4876D1CA274E2CDA00F045AF /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				4876D1CB274E2CFD00F045AF /* OnboardingSplashViewController.swift */,
+				4876D1CC274E2CFD00F045AF /* OnboardingSplashView.xib */,
+				4876D1D3274E486800F045AF /* ServerSelectionViewController.swift */,
+				4876D1D4274E486800F045AF /* ServerSelectionView.xib */,
+				4876D1DB274E6D9C00F045AF /* OptionsCell.swift */,
+				4876D1DC274E6D9C00F045AF /* OptionsCell.xib */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		80952EC13E6D309528B46AE2 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -822,6 +960,7 @@
 		921EAE2D22AFB5E9005D6D5B /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				4876D1DF2755413000F045AF /* framd.ttf */,
 				921EAE3022AFB672005D6D5B /* GlobalConstants.h */,
 				921EAE2E22AFB631005D6D5B /* GlobalConstants.m */,
 			);
@@ -833,6 +972,9 @@
 			children = (
 				9226966D23C60F3F00F099F0 /* NSString+Extension.h */,
 				9226966E23C60FAD00F099F0 /* NSString+Extension.m */,
+				4861B77927356CCE00446EB8 /* DateExtension.swift */,
+				4861B7772735695700446EB8 /* StringExtension.swift */,
+				4876D1C8274CE81400F045AF /* UIColorExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -976,13 +1118,11 @@
 			buildConfigurationList = 1C9F2036163E93C3007A170B /* Build configuration list for PBXNativeTarget "PortaFirmasUniv" */;
 			buildPhases = (
 				E3D4D6D6C009A3B3E13001A6 /* [CP] Check Pods Manifest.lock */,
-				BBB70BA0CE5FECC9271CA0BF /* [CP] Prepare Artifacts */,
 				1C9F200B163E93C3007A170B /* Sources */,
 				1C9F200C163E93C3007A170B /* Frameworks */,
 				1C9F200D163E93C3007A170B /* Resources */,
 				2E8453FF896F4595D50AC2A2 /* [CP] Copy Pods Resources */,
 				C17CEF1E1F82ED5589E5DBBD /* [CP] Embed Pods Frameworks */,
-				4809540E2705CCB2004BF96A /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1000,11 +1140,10 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1120;
-				ORGANIZATIONNAME = "Solid Gear Projects S.L.";
+				ORGANIZATIONNAME = Izertis;
 				TargetAttributes = {
 					1C9F200E163E93C3007A170B = {
-						DevelopmentTeam = 2H36E8KFN2;
-						ProvisioningStyle = Automatic;
+						LastSwiftMigration = 1300;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -1040,22 +1179,34 @@
 			buildActionMask = 2147483647;
 			files = (
 				925BE5BB2587937100B85BFE /* SelectRoleViewController.xib in Resources */,
+				4861B7702733DCCD00446EB8 /* AuthorizationDetailView.xib in Resources */,
 				92A648FD2587A3CA00DFFACA /* RoleCell.xib in Resources */,
 				3CA899061AA605C60035012D /* CAMERFIRMA PF Apoderado HW Clave PSC Activo.p12 in Resources */,
+				4861B7742733ED4B00446EB8 /* AuthorizationDetailCell.xib in Resources */,
+				4861B6EE2722DA2700446EB8 /* AuthorizationCell.xib in Resources */,
+				48037CDB273E4D1400966968 /* SearchUserView.xib in Resources */,
 				3CA899101AA606E90035012D /* prueba.xml in Resources */,
 				3CA8990A1AA605C60035012D /* PFActivoFirSHA1.pfx in Resources */,
+				4861B780273BE36800446EB8 /* AuthorizationDetailButtonCell.xib in Resources */,
 				3CA898F31AA5BD210035012D /* MainStoryboard_iPad.storyboard in Resources */,
 				BC65EFFC1FEA7ECA003AF04F /* Localizable.strings in Resources */,
+				4876D1DE274E6D9C00F045AF /* OptionsCell.xib in Resources */,
 				3CA898FC1AA605B70035012D /* PortaFirmasUniv.entitlements in Resources */,
 				925FC27A25B1AD8E00D5632A /* FiltersView.xib in Resources */,
+				4876D1E02755413000F045AF /* framd.ttf in Resources */,
 				3CA898F61AA5BEA80035012D /* main_assets.xcassets in Resources */,
+				4861B6EC27214C4B00446EB8 /* ConfigurationView.xib in Resources */,
 				3CA899151AA607840035012D /* configPRE in Resources */,
 				3CA898F41AA5BD210035012D /* MainStoryboard_iPhone.storyboard in Resources */,
+				4876D1D6274E486800F045AF /* ServerSelectionView.xib in Resources */,
 				3CA899091AA605C60035012D /* Certificado-pruebas - ANF-Activo.p12 in Resources */,
 				3CA899071AA605C60035012D /* CATCERT AL PF Identidad y Firma Reconocida de Clase 1 Activo.p12 in Resources */,
 				3CA898FB1AA605B70035012D /* config.plist in Resources */,
 				3CA899171AA607840035012D /* iTunesArtwork@2x in Resources */,
 				3CA899051AA605C60035012D /* ANF_PF_Activo.pfx in Resources */,
+				485610C5273EA66B0000CF3B /* CreateItemView.xib in Resources */,
+				4861B76A27327B0300446EB8 /* UserNameCell.xib in Resources */,
+				4876D1CE274E2CFD00F045AF /* OnboardingSplashView.xib in Resources */,
 				3CA899081AA605C60035012D /* CATCERT GENCAT SAFP PF Identidad y Firma Reconocida de Clase 1 Activo.p12 in Resources */,
 				3CA899161AA607840035012D /* iTunesArtwork in Resources */,
 				B28B24E520AB907B00DC9C81 /* DetailCell.xib in Resources */,
@@ -1083,24 +1234,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BBB70BA0CE5FECC9271CA0BF /* [CP] Prepare Artifacts */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-artifacts.sh",
-				"${PODS_ROOT}/OpenSSL-Universal/Frameworks/OpenSSL.xcframework",
-			);
-			name = "[CP] Prepare Artifacts";
-			outputPaths = (
-				"${BUILT_PRODUCTS_DIR}/cocoapods-artifacts-${CONFIGURATION}.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-artifacts.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C17CEF1E1F82ED5589E5DBBD /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1108,10 +1241,11 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-PortaFirmasUniv/Pods-PortaFirmasUniv-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/cocoapods-artifacts-${CONFIGURATION}.txt",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1144,22 +1278,31 @@
 			buildActionMask = 2147483647;
 			files = (
 				BCEF37A51FB2196E00374541 /* StoredData.m in Sources */,
+				4861B77F273BE36800446EB8 /* AuthorizationDetailButtonCell.swift in Sources */,
+				4861B7782735695700446EB8 /* StringExtension.swift in Sources */,
 				921EAE2F22AFB631005D6D5B /* GlobalConstants.m in Sources */,
 				3C00ADD91AB71B1700EF6886 /* RejectXMLController.m in Sources */,
 				3CC4037D1AB96D29006F8803 /* SettingsVC.m in Sources */,
 				3C00ADE31AB71B4400EF6886 /* NSDateFormatter+Utils.m in Sources */,
+				48037CDA273E4D1400966968 /* SearchUserViewController.swift in Sources */,
 				3C00ADB61AB71B0B00EF6886 /* ColorChart.m in Sources */,
 				B240774920AAEE0900A8EE1C /* DetailCell.m in Sources */,
 				3C00AD9D1AB71ACB00EF6886 /* PFRequestResult.m in Sources */,
+				485610C4273EA66B0000CF3B /* CreateItemViewController.swift in Sources */,
 				3C00AD871AB71A8700EF6886 /* UnassignedRequestTableViewController.m in Sources */,
 				3C00ADE01AB71B3100EF6886 /* NSDate+Utils.m in Sources */,
 				9226966F23C60FAD00F099F0 /* NSString+Extension.m in Sources */,
 				BC5BF9DE1FDFC97000B1CF0C /* HelpViewController.m in Sources */,
 				BCF083361FC46A8B00450FE7 /* Parser.m in Sources */,
 				3CA899601AA60E6C0035012D /* RequestCell.m in Sources */,
+				4876D1DD274E6D9C00F045AF /* OptionsCell.swift in Sources */,
 				BCEF37B51FB338E500374541 /* PushNotificationNetwork.m in Sources */,
+				4861B76C27328B0A00446EB8 /* ValidatorXMLController.swift in Sources */,
 				3C00ADDA1AB71B1700EF6886 /* RequestListXMLController.m in Sources */,
 				BC46A0E91FD6CBEB004D0C33 /* PFError.m in Sources */,
+				4876D1D5274E486800F045AF /* ServerSelectionViewController.swift in Sources */,
+				4861B6EA27214C1E00446EB8 /* ConfigurationViewController.swift in Sources */,
+				4876D1C9274CE81400F045AF /* UIColorExtension.swift in Sources */,
 				BCF083621FC72E3100450FE7 /* NSString+XMLSafe.m in Sources */,
 				92469F1C257938A900494DCF /* UserRolesService.m in Sources */,
 				3C00AD751AB71A6300EF6886 /* DetailTableViewController.m in Sources */,
@@ -1168,10 +1311,12 @@
 				3CB68F611AB81BAD00BEB067 /* ServersListCell.m in Sources */,
 				BC65EFD61FE3D856003AF04F /* Server.m in Sources */,
 				92469F1225792B4100494DCF /* UserRolesNetwork.m in Sources */,
+				4876D1CD274E2CFD00F045AF /* OnboardingSplashViewController.swift in Sources */,
 				3C00AD9E1AB71ACB00EF6886 /* Preview.m in Sources */,
 				BC0D3E1A2004C3A900CB73BB /* AttachedDoc.m in Sources */,
 				3C00ADB51AB71B0B00EF6886 /* CertificateUtils.m in Sources */,
 				B23D243720BDBB0200345E0B /* userDNIManager.m in Sources */,
+				4861B77A27356CCE00446EB8 /* DateExtension.swift in Sources */,
 				BCF083331FC45A0900450FE7 /* XMLParser.m in Sources */,
 				3CC403861AB9EDBA006F8803 /* CertificateCell.m in Sources */,
 				3C00AD741AB71A6300EF6886 /* AttachmentViewController.m in Sources */,
@@ -1180,7 +1325,10 @@
 				3C00ADD21AB71B1700EF6886 /* AppListXMLController.m in Sources */,
 				B289830B20AC8BA600B7544A /* SendersViewController.m in Sources */,
 				BCAF65E61FACA96500D30E54 /* NSData+Conversion.m in Sources */,
+				4861B76927327B0300446EB8 /* UserNameCell.swift in Sources */,
 				3CC403681AB96D05006F8803 /* PFBaseVC.m in Sources */,
+				4861B76F2733DCCD00446EB8 /* AuthorizationDetailViewController.swift in Sources */,
+				4861B758272BCC4500446EB8 /* Authorization.swift in Sources */,
 				BCA133D31FF63DD200818EC7 /* NotificationHandler.m in Sources */,
 				9261566125AEEADD004E47F5 /* ValidateController.m in Sources */,
 				BCE470F51FD70CEF00702306 /* CookieTools.m in Sources */,
@@ -1203,11 +1351,15 @@
 				3C00ADE61AB71B5300EF6886 /* NSData+Base64.m in Sources */,
 				3C00AD9A1AB71ACB00EF6886 /* Document.m in Sources */,
 				3C00ADDB1AB71B1700EF6886 /* RequestSignerController.m in Sources */,
+				48037CDD273E5BF500966968 /* User.swift in Sources */,
 				BCA133D71FF63EB500818EC7 /* Notification.m in Sources */,
 				3C00AD761AB71A6300EF6886 /* PreviewViewController.m in Sources */,
+				4861B6F02722DBF300446EB8 /* AuthorizationCell.swift in Sources */,
 				3C00ADD41AB71B1700EF6886 /* BaseXMLController.m in Sources */,
 				BCF083321FC45A0900450FE7 /* Stack.m in Sources */,
+				4861B7562729314000446EB8 /* AuthorizationXMLController.swift in Sources */,
 				BC71EE3A1FDEB51C0040F8A2 /* DefaultServersData.m in Sources */,
+				4876D1C7274CCF9B00F045AF /* Constants.swift in Sources */,
 				3C00ADB81AB71B0B00EF6886 /* PFHelper.m in Sources */,
 				3C00AD991AB71ACB00EF6886 /* Detail.m in Sources */,
 				3C00ADD51AB71B1700EF6886 /* DetailXMLController.m in Sources */,
@@ -1218,6 +1370,7 @@
 				3C00ADB71AB71B0B00EF6886 /* DateHelper.m in Sources */,
 				3C00AD771AB71A6300EF6886 /* ReceiversViewController.m in Sources */,
 				BCF619A41FC42DC2009C5B50 /* LoginService.m in Sources */,
+				48037CE3273E637200966968 /* SearchUserXMLController.swift in Sources */,
 				3C00AD841AB71A8700EF6886 /* BaseListTVC.m in Sources */,
 				3C00AD9C1AB71ACB00EF6886 /* PFRequest.m in Sources */,
 				BC6C92391FE2C14200AB95D5 /* ErrorService.m in Sources */,
@@ -1225,15 +1378,21 @@
 				BC33AAA0200518FF00B33CBB /* Source.m in Sources */,
 				3C00ADD31AB71B1700EF6886 /* ApproveXMLController.m in Sources */,
 				3CC4036E1AB96D0F006F8803 /* ServerListTVC.m in Sources */,
+				4861B786273CFC1B00446EB8 /* StateAuthorizationXMLController.swift in Sources */,
 				B2E4AEBE20599935000DD0C3 /* ArrayHelper.m in Sources */,
+				4861B7732733ED4B00446EB8 /* AuthorizationDetailCell.swift in Sources */,
 				BCAF65E11FAC9BCC00D30E54 /* PushNotificationService.m in Sources */,
+				4861B782273CFB0D00446EB8 /* AuthorizationDetailViewModel.swift in Sources */,
 				3C00ADD71AB71B1700EF6886 /* PreSignXMLController.m in Sources */,
 				3C00ADD61AB71B1700EF6886 /* PostSignXMLController.m in Sources */,
 				3CC403801AB979FE006F8803 /* OpenSSLCertificateHelper.m in Sources */,
 				BCF619A71FC4379D009C5B50 /* LoginNetwork.m in Sources */,
 				3C00AD9B1AB71ACB00EF6886 /* Param.m in Sources */,
 				3C00AD861AB71A8700EF6886 /* RejectedRequestViewController.m in Sources */,
+				48037CDF273E612500966968 /* CreateItemViewModel.swift in Sources */,
+				4861B77C273BA51100446EB8 /* DefaultNavigationViewController.swift in Sources */,
 				3CC403831AB9BB12006F8803 /* PFCertificateInfo.m in Sources */,
+				4861B74A2726EC9000446EB8 /* ConfigurationViewModel.swift in Sources */,
 				3C00ADD81AB71B1700EF6886 /* PreviewXMLController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1361,12 +1520,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = res/conf/PortaFirmasUniv.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				CURRENT_PROJECT_VERSION = 7;
+				DEVELOPMENT_TEAM = 2H36E8KFN2;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "src/main/PortaFirmasUniv-Prefix.pch";
@@ -1376,11 +1536,14 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6.1;
+				MARKETING_VERSION = 1.6.5;
 				PRODUCT_BUNDLE_IDENTIFIER = es.gob.afirma.Portafirmas;
 				PRODUCT_NAME = "Port@firmas";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "src/ui/controllers/lists/configuration/PortaFirmasUniv-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1392,11 +1555,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = res/conf/PortaFirmasUniv.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = 2H36E8KFN2;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1407,11 +1571,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.6.1;
+				MARKETING_VERSION = 1.6.5;
 				PRODUCT_BUNDLE_IDENTIFIER = es.gob.afirma.Portafirmas;
 				PRODUCT_NAME = "Port@firmas";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "Portafirmas Afirma Movil - App Store";
+				PROVISIONING_PROFILE_SPECIFIER = "Portafirmas Afirma Movil - App Store ABA";
+				SWIFT_OBJC_BRIDGING_HEADER = "src/ui/controllers/lists/configuration/PortaFirmasUniv-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

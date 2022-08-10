@@ -51,6 +51,11 @@
     [self loadData];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self refreshInfo];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -116,6 +121,13 @@
     _filtersDict = [filters mutableCopy];
     [self resetLazyLoad];
     [self loadData];
+}
+
+- (void)refreshInfoWithoutProgress {
+    NSDictionary *filters = [NSMutableDictionary new];
+    _filtersDict = [filters mutableCopy];
+    [self resetLazyLoad];
+    [self loadDataWithProgressIndicator:NO];
 }
 
 - (void)addPreselectedFilters {

@@ -76,7 +76,12 @@ static CGFloat const kCancelButtonWidth = 100;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
-    
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveSettingsDismissNotification:)
+                                                 name:kSettingsDismissNotification
+                                               object:nil];
+
     if (self) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [SVProgressHUD dismiss];
@@ -97,6 +102,10 @@ static CGFloat const kCancelButtonWidth = 100;
     }
     
     return self;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Life Cycle
@@ -224,6 +233,12 @@ static CGFloat const kCancelButtonWidth = 100;
 #pragma mark - User Interface
 
 - (void)setupTabBar {
+    if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleRoleNameKey] objectForKey:kUserRoleContent] isEqual: @"User_Role_Validator".localized]) {
+        [self.navigationController.tabBarController.tabBar setUserInteractionEnabled:NO];
+    } else {
+        [self.navigationController.tabBarController.tabBar setUserInteractionEnabled:YES];
+    }
+
     if (!_didSetUpTabBar) {
         [self.navigationController setTabBarItem:[self.tabBarItem initWithTitle:@"Pendientes"
                                                                           image:[[QuartzUtils getImageWithName:@"ic_pendientes" andTintColor:[UIColor lightGrayColor]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
@@ -361,15 +376,17 @@ static CGFloat const kCancelButtonWidth = 100;
     NSString *message;
     
     if (_selectedRequestSetToApprove && _selectedRequestSetToApprove.count > 0 && _selectedRequestsSetToSign && _selectedRequestsSetToSign.count > 0) {
-        message = [NSString stringWithFormat: @"Alert_View_Process_Sign_and_Approve".localized, (unsigned long)_selectedRequestsSetToSign.count, (unsigned long)_selectedRequestSetToApprove.count];
-    }
-    else if (_selectedRequestSetToApprove && _selectedRequestSetToApprove.count > 0) {
-        message = [NSString stringWithFormat: @"Alert_View_Process_Approve".localized, (unsigned long)_selectedRequestSetToApprove.count];
-    }
-    else if (_selectedRequestsSetToSign && _selectedRequestsSetToSign.count > 0) {
-        message = [NSString stringWithFormat: @"Alert_View_Process_Sign".localized, (unsigned long)_selectedRequestsSetToSign.count];
+        NSString *str = _selectedRequestsSetToSign.count == 1 ? @"Alert_View_Process_Sign_and_Approve_Single".localized : @"Alert_View_Process_Sign_and_Approve".localized;
+        message = [NSString stringWithFormat: str, (unsigned long)_selectedRequestsSetToSign.count, (unsigned long)_selectedRequestSetToApprove.count];
+    } else if (_selectedRequestSetToApprove && _selectedRequestSetToApprove.count > 0) {
+        NSString *str = _selectedRequestSetToApprove.count == 1 ? @"Alert_View_Process_Approve_Single".localized : @"Alert_View_Process_Approve".localized;
+        message = [NSString stringWithFormat: str, (unsigned long)_selectedRequestSetToApprove.count];
+    } else if (_selectedRequestsSetToSign && _selectedRequestsSetToSign.count > 0) {
+        NSString *str = _selectedRequestsSetToSign.count == 1 ? @"Alert_View_Process_Sign_Single".localized : @"Alert_View_Process_Sign".localized;
+        message = [NSString stringWithFormat: str, (unsigned long)_selectedRequestsSetToSign.count];
     } else if (_selectedRequestSetToValidate.count > 0) {
-        message = [NSString stringWithFormat: @"Alert_View_Process_Validate".localized, (unsigned long)_selectedRequestSetToValidate.count];
+        NSString *str = _selectedRequestSetToValidate.count == 1 ? @"Alert_View_Process_Validate_Single".localized : @"Alert_View_Process_Validate".localized;
+        message = [NSString stringWithFormat: str, (unsigned long)_selectedRequestSetToValidate.count];
     }
     
     if (message) {
@@ -412,6 +429,16 @@ static CGFloat const kCancelButtonWidth = 100;
     }
     else if (_selectedRequestSetToValidate.count > 0) {
         [self startSendingValidateRequests];
+    }
+}
+
+- (void) receiveSettingsDismissNotification:(NSNotification *) notification
+{
+    if ([[notification name] isEqualToString:kSettingsDismissNotification]) {
+        [self setupTabBar];
+        if ([[[[[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected] objectForKey:kUserRoleRoleNameKey] objectForKey:kUserRoleContent] isEqual: @"User_Role_Validator".localized]) {
+            [self.navigationController.tabBarController setSelectedIndex:0];
+        }
     }
 }
 
@@ -539,7 +566,7 @@ static CGFloat const kCancelButtonWidth = 100;
     
     if (success) {
         NSArray *rejectsReq = [parser dataSource];
-        [self didReceiveRejectResult:rejectsReq];
+        [self didReceiveRejectResult:parser :rejectsReq];
     }
     else {
         [self didReceiveError:@"Detail_view_error_server_connection_501".localized];
@@ -554,6 +581,12 @@ static CGFloat const kCancelButtonWidth = 100;
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
     });
+
+    if ([parser finishWithError]) {
+        NSString *errorCode = [parser errorCode] == nil ? kEmptyString : [parser errorCode];
+        NSString *err = [parser err] == nil ? kEmptyString : [parser err];
+        [self didReceiveError:[NSString stringWithFormat: @"Detail_view_error_messages_from_server".localized, err, errorCode]];
+    }
     
     if (success) {
         NSArray *approvalRequests = [parser dataSource];
@@ -610,7 +643,7 @@ static CGFloat const kCancelButtonWidth = 100;
                 message = @"Alert_View_Request_Signed_Correctly".localized;
                 break;
             case validate:
-                message = @"Alert_View_Requests_Validated_Correctly".localized;
+                message = @"Alert_View_Request_Validated_Correctly".localized;
                 break;
             default:
                 break;
@@ -634,7 +667,8 @@ static CGFloat const kCancelButtonWidth = 100;
         [self didReceiveError:errorMessage];
     }
     [self cancelEditing];
-    [self refreshInfo];
+    _waitingResponseType = PFWaitingResponseTypeList;
+    [self refreshInfoWithoutProgress];
 }
 
 - (void)didReceiveSignerRequestResult:(NSArray *)requestsSigned {
@@ -642,7 +676,7 @@ static CGFloat const kCancelButtonWidth = 100;
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
     });
-    
+
     NSIndexSet *requestsWithError = [requestsSigned indexesOfObjectsPassingTest:^BOOL (PFRequest *request, NSUInteger idx, BOOL *stop) {
         return [request.status isEqualToString:@"KO"];
     }];
@@ -670,41 +704,48 @@ static CGFloat const kCancelButtonWidth = 100;
     }
     else {
         [self cancelEditing];
-        [self refreshInfo];
+        [self refreshInfoWithoutProgress];
     }
     [[self tableView] reloadData];
 }
 
-- (void)didReceiveRejectResult:(NSArray *)requestsSigned {
-    BOOL processedOK = TRUE;
-    for (PFRequestResult *request in requestsSigned) {
-        if ([[request status] isEqualToString:@"KO"]) {
-            NSString *message = [[NSString alloc] initWithFormat: @"Alert_View_Error_When_Processing_Request".localized, [request rejectId]];
-            UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Error".localized
-                                                                                     message:message
-                                                                              preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
-            [alertController addAction:cancel];
-            [self presentViewController:alertController animated:YES completion:nil];
-            processedOK = FALSE;
+- (void)didReceiveRejectResult:(RejectXMLController *)parser :(NSArray *)requestsSigned {
+    if ([parser finishWithError]) {
+        NSString *errorCode = [parser errorCode] == nil ? kEmptyString : [parser errorCode];
+        NSString *err = [parser err] == nil ? kEmptyString : [parser err];
+        [self didReceiveError:[NSString stringWithFormat: @"Detail_view_error_messages_from_server".localized, err, errorCode]];
+    } else {
+
+        BOOL processedOK = TRUE;
+        for (PFRequestResult *request in requestsSigned) {
+            if ([[request status] isEqualToString:@"KO"]) {
+                NSString *message = [[NSString alloc] initWithFormat: @"Alert_View_Error_When_Processing_Request".localized, [request rejectId]];
+                UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Error".localized
+                                                                                         message:message
+                                                                                  preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
+                [alertController addAction:cancel];
+                [self presentViewController:alertController animated:YES completion:nil];
+                processedOK = FALSE;
+            }
         }
+
+        if (processedOK) {
+            
+            _waitingResponseType = PFWaitingResponseTypeList;
+            [self refreshInfoWithoutProgress];
+            // Peticiones rechazadas corrrectamente
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized
+                                                                                     message: @"Correctly_rejected_requests".localized
+                                                                              preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle: @"Ok".localized
+                                                               style:UIAlertActionStyleDefault
+                                                             handler:nil];
+            [alertController addAction:actionOk];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
+        [self cancelEditing];
     }
-    
-    if (processedOK) {
-        
-        _waitingResponseType = PFWaitingResponseTypeList;
-        [super loadData];
-        // Peticiones rechazadas corrrectamente
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized
-                                                                                 message: @"Correctly_rejected_requests".localized
-                                                                          preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *actionOk = [UIAlertAction actionWithTitle: @"Ok".localized
-                                                           style:UIAlertActionStyleDefault
-                                                         handler:nil];
-        [alertController addAction:actionOk];
-        [self presentViewController:alertController animated:YES completion:nil];
-    }
-    [self cancelEditing];
 }
 
 - (void)showFIRMeWebView:(NSURL *) url {
@@ -732,7 +773,7 @@ static CGFloat const kCancelButtonWidth = 100;
             UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:nil];
             [alertController addAction:cancel];
             [self presentViewController:alertController animated:YES completion:^{
-                [self refreshInfo];
+                [self refreshInfoWithoutProgress];
             }];
         }];
     });
@@ -791,7 +832,7 @@ static CGFloat const kCancelButtonWidth = 100;
 }
 
 - (void)showErrorInFIReAndRefresh:(NSString *)errorString {
-    [self refreshInfo];
+    [self refreshInfoWithoutProgress];
     [[ErrorService instance] showAlertViewWithTitle: @"Alert_View_Error".localized andMessage: errorString];
 }
 
@@ -824,7 +865,7 @@ static CGFloat const kCancelButtonWidth = 100;
     NSArray *urlFragments= [urlString componentsSeparatedByString: kStringSlash];
     if ([[urlFragments lastObject] rangeOfString:kError].location != NSNotFound) {
         [self.webView removeFromSuperview];
-        [self refreshInfo];
+        [self refreshInfoWithoutProgress];
         dispatch_async(dispatch_get_main_queue(), ^{
             [SVProgressHUD dismissWithCompletion:^{
                 [self.navigationController setNavigationBarHidden:NO animated:YES];

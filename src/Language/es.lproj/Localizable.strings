@@ -11,11 +11,16 @@
 "Alert_View_Ok_Option" = "OK";
 "Alert_View_Notice" = "Aviso";
 "Alert_View_Process_Sign_and_Approve" = "Se van a procesar %lu peticiones de firma y %lu de visto bueno.";
+"Alert_View_Process_Sign_and_Approve_Single" = "Se va a procesar %lu petición de firma y %lu de visto bueno.";
 "Alert_View_Process_Approve" = "Se van a procesar %lu peticiones de visto bueno.";
 "Alert_View_Process_Sign" = "Se van a procesar %lu peticiones de firma.";
-"Alert_View_Process_Validate" = "Se van a procesar %lu peticiones de validación.";
+"Alert_View_Process_Validate" = "Se van a validar %lu peticiones.";
+"Alert_View_Process_Approve_Single" = "Se va a procesar %lu petición de visto bueno.";
+"Alert_View_Process_Sign_Single" = "Se va a procesar %lu petición de firma.";
+"Alert_View_Process_Validate_Single" = "Se va a validar %lu petición.";
 "Alert_View_Request_Processed_Correctly" = "Peticiones procesadas correctamente";
-"Alert_View_Request_Signed_Correctly" = "Peticiones firmadas correctamente.";
+"Alert_View_Request_Signed_Correctly" = "Petición firmada correctamente.";
+"Alert_View_Requests_Signed_Correctly" = "Peticiones firmadas correctamente.";
 "Alert_View_Request_Validated_Correctly" = "Petición validada correctamente.";
 "Alert_View_Requests_Validated_Correctly" = "Peticiones validadas correctamente.";
 "Alert_View_Error" = "Error";
@@ -29,6 +34,12 @@
 "Alert_View_Loaded_Certificate_In_Your_App" = "El certificado se ha cargado correctamente en su aplicación.";
 "Alert_View_Server_Going_To_Be_Selected" = "Se va a seleccionar el servidor %@ con url %@.";
 "Alert_View_Accept" = "Aceptar";
+"Autorization_Pending_Alert_Message" = "Hay al menos una autorización pendiente";
+"Revoke_Validator_Alert_Message" = "Tiene asignado el validador %@, ¿Desea eliminarlo?";
+"Create_validator_Alert_Title" = "Confirmar";
+"Create_Validator_Alert_Message" = "¿Está seguro de que quiere añadir el validador %@?";
+"Create_Validator_Alert_Accept" = "Aceptar";
+"Create_Validator_Alert_Cancel" = "Cancelar";
 
 //Global errors
 "Global_Error_Server_Connection" = "Se ha producido un error de conexión con el servidor.";
@@ -163,8 +174,48 @@
 "User_Roles_Title" = "Roles";
 "User_Roles_Change_Role" = "Cambiar rol";
 "User_Roles_Validate_Operation_Name" = "Validar";
+"User_Role_Validator" = "VALIDADOR";
 
 //Notifications
 "Alert_View_Disable_Notifications_Title" = "Las notificaciones estan deshabilitadas";
 "Alert_View_Disable_Notifications_Message" = "Has de ir a ajustes en tu dispositivo y luego a Notificaciones buscar PortaFirmas y permitir notificaciones.";
 "Alert_View_Can_Not_Subscribe_Notifications_Title" = "No se han activado las notificaciones";
+
+// Authorization detail
+"Authorization_Detail_Name" = "Nombre";
+"Authorization_Detail_State" = "Estado";
+"Authorization_Detail_Sended_Received" = "Enviada/Recibida";
+"Authorization_Detail_Type" = "Tipo";
+"Authorization_Detail_Initial_Date" = "Fecha inicio";
+"Authorization_Detail_End_Date" = "Fecha fin";
+"Authorization_Detail_Observations" = "Observaciones";
+"Authorization_Detail_Sended" = "Enviada";
+"Authorization_Detail_Received" = "Recibida";
+"Authorization_Detail_State_Pending" = "Pendiente de validación";
+"Authorization_Detail_State_Accepted" = "Aceptada";
+"Authorization_Detail_State_Revoked" = "Rechazada";
+"Authorization_Detail_Accept" = "Aceptar";
+"Authorization_Detail_Revoke" = "Rechazar";
+"Authorization_Detail_Cancel" = "Cancelar";
+
+// Create item
+"Search_User_Title_Authorization" = "Crear nueva autorización";
+"Search_User_Title_Validator" = "Crear nuevo validador";
+
+// Onboarding
+"Onboarding_Server_View_Title" = "¿Qué portafirmas usará principalmente?";
+"Onboarding_Server_View_DTIC_Title" = "Portafirmas General AGE";
+"Onboarding_Server_View_DTIC_Message" = "Este portafirmas se configurará automáticamente.";
+"Onboarding_Server_View_Redsara_Title" = "Portafirmas RedSara";
+"Onboarding_Server_View_Redsara_Message" = "Este portafirmas se configurará automáticamente.";
+"Onboarding_Server_View_Other_Title" = "Otro portafirmas";
+"Onboarding_Server_View_Other_Message" = "Deberá dar de alta su servidor portafirmas desde el apartado \"SERVIDOR\" del menú principal de la aplicación. Consulte la URL de acceso con el responsable del portafirmas.";
+"Onboarding_Server_View_Reminder" = "Recuerde que debe estar dado de alta en su sistema portafirmas para tener acceso.";
+"Onboarding_View_Skip" = "Omitir";
+
+"Onboarding_Certificate_View_Title" = "¿Qué tipo de certificado desea utilizar?";
+"Onboarding_Certificate_View_Local_Title" = "Certificado local";
+"Onboarding_Certificate_View_Local_Message" = "Copie el certificado a su dispositivo e impórtelo desde el apartado \"CERTIFICADO\" de la pantalla principal.";
+"Onboarding_Certificate_View_Remote_Title" = "Certificado remoto";
+"Onboarding_Certificate_View_Remote_Message" = "Utilice sus certificados de autenticación y firma de Cl@ve Permanente. Deberá haberse dado de alta en Cl@ve con el nivel avanzado y activado su usuario de Cl@ve Permanente.";
+"Onboarding_Certificate_View_Reminder" = "Más información sobre Cl@ve: \nhttps://clave.gob.es/clave_Home/registro.html";

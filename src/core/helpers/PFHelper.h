@@ -84,6 +84,7 @@ static NSString *const kPFUserDefaultsKeyUserHasValidator = @"UserHasValidator";
 static NSString *const kPFUserDefaultsKeyPortafirmasNotificationsActivated = @"PortafirmasNotificationsActivated";
 static NSString *const kPFUserDefaultsKeyUserNotificationsActivated = @"UserNotificationsActivated";
 static NSString *const kPFUserDefaultsKeyPushNotificationsServiceToken = @"PushNotificationsServiceToken";
+static NSString *const kPFUserDefaultsKeyLaunchedBefore = @"launchedBefore";
 
 //Certificate
 static NSString *const kPFCertInfoKeyIssuer = @"issuer";
@@ -98,6 +99,7 @@ static NSString *const kUserRoleRoleNameKey = @"roleName";
 static NSString *const kUserRoleUserDNIKey = @"dni";
 static NSString *const kUserRoleRoleNameValidator = @"VALIDADOR";
 static NSString *const kUserRoleUserHasValidator = @"S";
+static NSString *const kUserRoleContent = @"content";
 
 //Filters
 static NSString *const kPFFilterKeyType =  @"tipoFilter";
@@ -120,8 +122,9 @@ static NSString *const kPFFilterValueSortCriteriaApp = @"application";
 static NSString *const kPFFilterKeyApp = @"applicationFilter";
 
 //Notifications
-static NSString *const kPortafirmasNotificationsConfigActivated =  @"S";
-static NSString *const kUserNotificationsConfigActivated =  @"S";
+static NSString *const kPortafirmasNotificationsConfigActivated = @"S";
+static NSString *const kUserNotificationsConfigActivated = @"S";
+static NSString *const kSettingsDismissNotification = @"settingsDismissNotification";
 
 @interface PFHelper : NSObject
 

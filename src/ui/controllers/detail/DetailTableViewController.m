@@ -169,7 +169,6 @@ typedef NS_ENUM(NSUInteger, Operation) {
             value = [self getRejectExplanation];
             [cell setDarkStyle];
             [cell increaseTitleLabelWidth: rejectCellTitleCellWidth];
-            [cell hideLabelsIfNeeded: ![self rejectExplanationExists]];
             break;
         case AttachedDocument:
             title = @"Cell_Title_AttachedDocument".localized;
@@ -203,7 +202,6 @@ typedef NS_ENUM(NSUInteger, Operation) {
             title = @"Cell_Title_ExpirationDate".localized;
             value = [self getExpirationDate];
             [cell setClearStyle];
-            [cell hideLabelsIfNeeded: !_dataSource.expdate];
             break;
         case Application:
             title = @"Cell_Title_Application".localized;
@@ -214,7 +212,6 @@ typedef NS_ENUM(NSUInteger, Operation) {
 			title = @"Cell_Title_Message".localized;
 			value = [self getMessage];
 			[cell setClearStyle];
-            [cell hideLabelsIfNeeded: ![self messageExists]];
 			break;
     }
     [cell setCellTitle: title];
@@ -566,21 +563,21 @@ typedef NS_ENUM(NSUInteger, Operation) {
         if (_waitingResponseType == PFWaitingResponseTypeRejection) {
             NSArray *rejectedRequests = [(RejectXMLController *)parser dataSource];
             if(rejectedRequests != nil){
-                [self didReceiveRejectResult: rejectedRequests];
+                [self didReceiveRejectResult:parser :rejectedRequests];
             } else {
                 [self didReceiveError:[(RejectXMLController *)parser err]];
             }
         } else if (_waitingResponseType == PFWaitingResponseTypeApproval) {
             NSArray *approvedRequests = [(ApproveXMLController *)parser dataSource];
             if (approvedRequests != nil){
-                [self didReceiveRequestResult:approvedRequests forOperation:approve];
+                [self didReceiveRequestResult:parser :approvedRequests forOperation:approve];
             } else {
               [self didReceiveError:[(ApproveXMLController *)parser err]];
             }
         } else if (_waitingResponseType == PFWaitingResponseTypeValidate) {
             NSArray *approvedRequests = [(ValidateController *)parser dataSource];
             if (approvedRequests != nil){
-                [self didReceiveRequestResult:approvedRequests forOperation: validate];
+                [self didReceiveRequestResult:parser :approvedRequests forOperation: validate];
             } else {
                 [self didReceiveError:[(ValidateController *)parser err]];
             }
@@ -606,63 +603,74 @@ typedef NS_ENUM(NSUInteger, Operation) {
     return nil;
 }
 
-- (void)didReceiveRejectResult:(NSArray *)requestsSigned
+- (void)didReceiveRejectResult:(RejectXMLController *)parser :(NSArray *)requestsSigned
 {
     isSuccessReject = YES;
     BOOL processedOK = TRUE;
 
-    for (PFRequestResult *request in requestsSigned) {
-        if ([[request status] isEqualToString:kKOStatusString]) {
-            [self didReceiveError:[[NSString alloc] initWithFormat:@"Detail_view_error_processing_request".localized, [request rejectId]]];
-            processedOK = FALSE;
+    if ([parser finishWithError]) {
+        NSString *errorCode = [parser errorCode] == nil ? kEmptyString : [parser errorCode];
+        NSString *err = [parser err] == nil ? kEmptyString : [parser err];
+        [self didReceiveError:[NSString stringWithFormat: @"Detail_view_error_messages_from_server".localized, err, errorCode]];
+
+    } else {
+        for (PFRequestResult *request in requestsSigned) {
+            if ([[request status] isEqualToString:kKOStatusString]) {
+                [self didReceiveError:[[NSString alloc] initWithFormat:@"Detail_view_error_processing_request".localized, [request rejectId]]];
+                processedOK = FALSE;
+            }
         }
-    }
-    if (processedOK) {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized message: @"Correctly_rejected_requests".localized preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *actionOk = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            [self dismissSelfView];
-        }];
-        [alertController addAction:actionOk];
-        [self presentViewController:alertController animated:YES completion:nil];
+        if (processedOK) {
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized message: @"Correctly_rejected_requests".localized preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *actionOk = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                [self dismissSelfView];
+            }];
+            [alertController addAction:actionOk];
+            [self presentViewController:alertController animated:YES completion:nil];
+        }
     }
 }
 
-- (void)didReceiveRequestResult:(NSArray *)approvedRequests forOperation: (Operation) operation {
-    NSMutableArray *idsForRequestsWithError = [@[] mutableCopy];
-    [approvedRequests enumerateObjectsUsingBlock:^(PFRequest *request, NSUInteger idx, BOOL *stop) {
-         if ([request.status isEqualToString:kKOStatusString]) {
-             [idsForRequestsWithError addObject:request.reqid];
-         }
-     }];
-    if (idsForRequestsWithError.count == 0) {
-        NSString *message;
-        switch (operation) {
-            case approve:
-                message = @"Alert_View_Request_Signed_Correctly".localized;
-                break;
-            case validate:
-                message = @"Alert_View_Request_Validated_Correctly".localized;
-                break;
-            default:
-                break;
-        }        UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized message: message preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            [self dismissSelfView];
-        }];
-        [alertController addAction:cancel];
-        [self presentViewController:alertController animated:YES completion:nil];
+- (void)didReceiveRequestResult:(DetailXMLController *)parser :(NSArray *)approvedRequests forOperation: (Operation) operation {
+    if ([parser finishWithError]) {
+        NSString *errorCode = [parser errorCode] == nil ? kEmptyString : [parser errorCode];
+        NSString *err = [parser err] == nil ? kEmptyString : [parser err];
+        [self didReceiveError:[NSString stringWithFormat: @"Detail_view_error_messages_from_server".localized, err, errorCode]];
+
     } else {
-        NSString *errorMessage;
-        if (idsForRequestsWithError.count == 1) {
-            errorMessage = [NSString stringWithFormat: @"Detail_view_error_processing_request".localized, idsForRequestsWithError[0]];
+        NSMutableArray *idsForRequestsWithError = [@[] mutableCopy];
+        [approvedRequests enumerateObjectsUsingBlock:^(PFRequest *request, NSUInteger idx, BOOL *stop) {
+            if ([request.status isEqualToString:kKOStatusString]) {
+                [idsForRequestsWithError addObject:request.reqid];
+            }
+        }];
+        if (idsForRequestsWithError.count == 0) {
+            NSString *type = [self getRequestType];
+            NSString *message = @"";
+            if (type == @"Request_Type_Firma".localized) {
+                message = @"Alert_View_Request_Signed_Correctly".localized;
+            } else if (type == @"Request_Type_Visto_Bueno".localized) {
+                message = @"Alert_View_Request_Validated_Correctly".localized;
+            }
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized message: message preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+                [self dismissSelfView];
+            }];
+            [alertController addAction:cancel];
+            [self presentViewController:alertController animated:YES completion:nil];
         } else {
-            NSMutableString *errorIDSString = [kEmptyString mutableCopy];
-            [idsForRequestsWithError enumerateObjectsUsingBlock:^(NSString *requestID, NSUInteger idx, BOOL *stop) {
-                 [errorIDSString appendFormat:kAppendFormatString, requestID];
-             }];
-            errorMessage = [NSString stringWithFormat:@"Detail_view_error_processing_multiple_request".localized, errorIDSString];
+            NSString *errorMessage;
+            if (idsForRequestsWithError.count == 1) {
+                errorMessage = [NSString stringWithFormat: @"Detail_view_error_processing_request".localized, idsForRequestsWithError[0]];
+            } else {
+                NSMutableString *errorIDSString = [kEmptyString mutableCopy];
+                [idsForRequestsWithError enumerateObjectsUsingBlock:^(NSString *requestID, NSUInteger idx, BOOL *stop) {
+                    [errorIDSString appendFormat:kAppendFormatString, requestID];
+                }];
+                errorMessage = [NSString stringWithFormat:@"Detail_view_error_processing_multiple_request".localized, errorIDSString];
+            }
+            [self didReceiveError:errorMessage];
         }
-        [self didReceiveError:errorMessage];
     }
 }
 
@@ -730,7 +738,7 @@ typedef NS_ENUM(NSUInteger, Operation) {
     if (processedOK) {
         // @" Peticiones firmadas corrrectamente"
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle: @"Info".localized
-                                                                                 message: @"Alert_View_Everything_Signed_Correctly".localized
+                                                                                 message: @"Alert_View_Request_Signed_Correctly".localized
                                                                           preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *cancel = [UIAlertAction actionWithTitle: @"Ok".localized style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             [self dismissSelfView];

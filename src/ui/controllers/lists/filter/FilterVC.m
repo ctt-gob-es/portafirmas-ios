@@ -32,6 +32,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 @property (strong, nonatomic) FiltersView* filterView;
 @property (strong, nonatomic) IBOutlet UIView *filterViewContainerView;
+@property NSMutableDictionary *selectedFilters;
 
 @end
 
@@ -63,6 +64,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 //    [_scrollView setContentSize:CGSizeMake(self.view.frame.size.width, _endDateTextField.frame.origin.y + _endDateTextField.frame.size.height + kFilterVCDefaultMargin)];
 //    [_enableFiltersSwitch setFrame:CGRectMake(self.view.frame.size.width - _enableFiltersSwitch.frame.size.width - kFilterVCDefaultMargin, _enableFiltersSwitch.frame.origin.y, _enableFiltersSwitch.frame.size.width, _enableFiltersSwitch.frame.size.height)];
 
+    [self.parentViewController.tabBarController.tabBar setHidden:YES];
+    
     if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
         UIApplication.sharedApplication.statusBarHidden = NO;
     }
@@ -74,6 +77,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    self.selectedFilters = [[NSMutableDictionary alloc] init];
 //    [self listenNotificationAboutPushNotifications];
 //    [self showChangeRoleOptionIfNeeded];
     [_filterView showChangeRoleOptionIfNeeded];
@@ -92,28 +96,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 #pragma mark - User Interaction
 
 - (void)didSelectAcceptButton: (NSMutableDictionary *) selectedFilters {
-    NSMutableDictionary *filters = [selectedFilters mutableCopy];
-    UITabBarController *tabController;
-    if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
-        
-        UINavigationController *nav = (UINavigationController *)self.presentingViewController;
-        UIViewController *settingsVC = nav.rootViewController;
-        tabController = (UITabBarController *)settingsVC.presentedViewController;
-    }
-    else if ([[UIDevice currentDevice].model isEqualToString:@"iPad"]) {
-        tabController = (UITabBarController *)self.presentingViewController;
-    }
-    UINavigationController *navigation = (UINavigationController *) tabController.selectedViewController;
-    BaseListTVC *baseTVC = (BaseListTVC *)navigation.rootViewController;
-    [baseTVC setFiltersDict:filters.count > 0 ? filters:nil];
-    if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
-        [self.navigationController popViewControllerAnimated:YES];
-    }
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self dismissViewControllerAnimated:YES completion:^{
-            [baseTVC refreshInfoWithFilters:filters];
-        }];
-    });
+    self.selectedFilters = selectedFilters;
+    [self navigate];
 }
 
 - (void)didSelectCancelButton {
@@ -125,12 +109,53 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     });
 }
 
+- (void)navigate {
+    NSMutableDictionary *filters = [self.selectedFilters mutableCopy];
+    UITabBarController *tabController;
+    if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
+
+        UINavigationController *nav = (UINavigationController *)self.presentingViewController;
+        UIViewController *settingsVC = nav.rootViewController;
+        tabController = (UITabBarController *)settingsVC.presentedViewController;
+    }
+    else if ([[UIDevice currentDevice].model isEqualToString:@"iPad"]) {
+        tabController = (UITabBarController *)self.presentingViewController;
+    }
+    UINavigationController *navigation = (UINavigationController *) tabController.selectedViewController;
+    BaseListTVC *baseTVC = (BaseListTVC *)navigation.rootViewController;
+    [baseTVC setFiltersDict:filters.count > 0 ? filters:nil];
+    if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:kSettingsDismissNotification
+         object:self];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:kSettingsDismissNotification
+             object:self];
+            [baseTVC refreshInfoWithFilters:filters];
+        }];
+    });
+}
+
 #pragma mark - TapChangeRoleDelegate
 
 - (void)tapChangeRole {
     SelectRoleViewController *selectRoleViewController = [[SelectRoleViewController alloc] initWithNibName: @"SelectRoleViewController" bundle: nil];
     [selectRoleViewController setModalPresentationStyle:UIModalPresentationFullScreen];
+    selectRoleViewController.delegate = self;
     [self presentViewController:selectRoleViewController animated:YES completion:nil];
+}
+
+- (void) rolesSelected {
+    [[NSUserDefaults standardUserDefaults] setObject: nil forKey: kPFUserDefaultsKeyUserSelectionFilterSubject];
+    [[NSUserDefaults standardUserDefaults] setObject: nil forKey: kPFUserDefaultsKeyUserSelectionFilterApp];
+    [[NSUserDefaults standardUserDefaults] setObject: nil forKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval];
+    [[NSUserDefaults standardUserDefaults] setObject: nil forKey: kPFUserDefaultsKeyUserSelectionFilterYear];
+    [[NSUserDefaults standardUserDefaults] setObject: nil forKey: kPFUserDefaultsKeyUserSelectionFilterType];
+    [self navigate];
 }
 
 @end

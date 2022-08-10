@@ -13,6 +13,8 @@
 #import "LoginService.h"
 #import "PushNotificationService.h"
 
+#import "Port_firmas-Swift.h"
+
 #define SORT_CRITERIA_TITLE_ARRAY @[@"Filter_View_Sort_Criteria_Array_Date".localized, @"Filter_View_Sort_Criteria_Array_Topic".localized, @"Filter_View_Sort_Criteria_Array_Application".localized]
 
 #define SORT_CRITERIA_VALUE_ARRAY @[@"fmodified", @"dsubject", @"application"]
@@ -79,6 +81,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 @property (weak, nonatomic) NSString *selectedType;
 @property (weak, nonatomic) NSString *selectedTimeInterval;
 @property (weak, nonatomic) NSString *selectedYear;
+@property (weak, nonatomic) IBOutlet UIButton *configurationButton;
 
 @end
 
@@ -123,13 +126,17 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         NSInteger sortCriteriaArrayPosition = [SORT_CRITERIA_VALUE_ARRAY indexOfObject: [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSortCriteria]];
         [_sortButton setTitle:SORT_CRITERIA_TITLE_ARRAY[sortCriteriaArrayPosition] forState:UIControlStateNormal];
         _selectedSort = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSortCriteria];
+        [_sortPickerView selectRow:sortCriteriaArrayPosition inComponent:0 animated:NO];
     } else {
         [_sortButton setTitle:@"Filter_View_Sort_Criteria_Default_Title".localized forState:UIControlStateNormal];
         _selectedSort = kEmptyString;
     }
     if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp]) {
-        [_appButton setTitle:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp] forState:UIControlStateNormal];
-        _selectedApp = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp];
+        NSString *filterAppTitle = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterApp];
+        [_appButton setTitle:filterAppTitle forState:UIControlStateNormal];
+        _selectedApp = filterAppTitle;
+        NSInteger selection = [[[AppListXMLController sharedInstance] appsArray] indexOfObject:filterAppTitle];
+        [_appPickerView selectRow:selection inComponent:0 animated:NO];
     } else {
         [_appButton setTitle:@"Filter_View_Application_Default_Title".localized forState:UIControlStateNormal];
         _selectedApp = kEmptyString;
@@ -146,6 +153,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     if ([[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval]) {
         NSInteger timeIntervalArrayPosition = [TIME_INTERVAL_VALUE_ARRAY indexOfObject: [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval]];
         [_timeIntervalButton setTitle: [TIME_INTERVAL_TITLE_ARRAY objectAtIndex:timeIntervalArrayPosition] forState:UIControlStateNormal];
+        [_timeIntervalPickerView selectRow:timeIntervalArrayPosition inComponent:0 animated:NO];
         _selectedTimeInterval = [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval];
     } else {
         _selectedTimeInterval = kEmptyString;
@@ -169,6 +177,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 - (void) setTypeTitleAndFilterValue: (NSInteger)selection {
     [_typeButton setTitle:TYPE_TITLE_ARRAY[selection] forState:UIControlStateNormal];
     _selectedType = TYPE_FILTER_VALUE_ARRAY[selection];
+    [_typePickerView selectRow:selection inComponent:0 animated:NO];
 }
 
 - (BOOL) showYearViewWithInterval: (NSString*)interval {
@@ -323,14 +332,39 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
             filters[kFilterKeyYear] = _selectedYear;
             [[NSUserDefaults standardUserDefaults] setObject:_selectedYear forKey: kPFUserDefaultsKeyUserSelectionFilterYear];
         } else {
-            [[NSUserDefaults standardUserDefaults] setObject:nil forKey: kPFUserDefaultsKeyUserSelectionFilterYear];
+            [[NSUserDefaults standardUserDefaults] setObject: nil forKey: kPFUserDefaultsKeyUserSelectionFilterYear];
         }
+    } else {
+        [[NSUserDefaults standardUserDefaults] setObject: nil forKey: kPFUserDefaultsKeyUserSelectionFilterSubject];
+        [[NSUserDefaults standardUserDefaults] setObject: nil forKey: kPFUserDefaultsKeyUserSelectionFilterApp];
+        [[NSUserDefaults standardUserDefaults] setObject: nil forKey: kPFUserDefaultsKeyUserSelectionFilterTimeInterval];
+        [[NSUserDefaults standardUserDefaults] setObject: nil forKey: kPFUserDefaultsKeyUserSelectionFilterYear];
+        [[NSUserDefaults standardUserDefaults] setObject: nil forKey: kPFUserDefaultsKeyUserSelectionFilterType];
     }
     [self.filtersViewDelegate didSelectAcceptButton: filters];
 }
 
 - (IBAction)didSelectCancelButton:(id)sender {
     [self.filtersViewDelegate didSelectCancelButton];
+}
+
+- (IBAction)didSelectConfirmationButton:(id)sender {
+    DefaultNavigationViewController *nvc = [[DefaultNavigationViewController alloc] init];
+    ConfigurationViewController *vc = [[ConfigurationViewController alloc] initWithNibName:@"ConfigurationView" bundle:nil];
+    ConfigurationViewModel *viewModel = [[ConfigurationViewModel alloc] init];
+    [vc injectViewModelWithViewModel:viewModel];
+    [nvc initWithRootViewController:vc];
+    UIViewController *currentTopVC = [self currentTopViewController];
+    nvc.modalPresentationStyle = UIModalPresentationFullScreen;
+    [currentTopVC presentViewController:nvc animated:YES completion:nil];
+}
+
+- (UIViewController *)currentTopViewController {
+    UIViewController *topVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    while (topVC.presentedViewController) {
+        topVC = topVC.presentedViewController;
+    }
+    return topVC;
 }
 
 #pragma mark - Notifications Section
@@ -342,10 +376,10 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 
 -(IBAction)switchChanged:(UISwitch *)sender {
     self.notificationStateLabel.text = [self.notificationSwitch isOn] ? @"Filter_View_Push_Notification_Enabled_Title".localized : @"Filter_View_Push_Notification_Pending_Title".localized;
-    if([self.notificationSwitch isOn]){
+    if([self.notificationSwitch isOn]) {
         [self initSubscriptionProcess];
     } else {
-        if([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible] && [[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyPortafirmasNotificationsActivated]){
+        if([[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible] && [[NSUserDefaults standardUserDefaults] boolForKey:kPFUserDefaultsKeyPortafirmasNotificationsActivated]) {
             [self initUnsubscriptionProcess];
         }
     }

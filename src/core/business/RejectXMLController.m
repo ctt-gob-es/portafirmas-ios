@@ -71,6 +71,11 @@
 {
     [super parser:parser didStartElement:elementName namespaceURI:namespaceURI qualifiedName:qualifiedName attributes:attributeDict];
 
+    if ([elementName isEqualToString:@"err"]) {
+        self.errorCode = attributeDict[@"cd"];
+        _finishwithError = YES;
+    }
+    
     if ([elementName isEqualToString:@"rjct"]) {
         reject = [[PFRequestResult alloc] init];
         // We do not have any attributes in the user elements, but if

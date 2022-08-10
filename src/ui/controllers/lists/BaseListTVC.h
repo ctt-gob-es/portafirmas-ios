@@ -33,6 +33,7 @@ static NSString *const kBaseListVCDataStatusPending = @"unresolved";
 - (void)loadData;
 - (void)refreshInfo;
 - (void)refreshInfoWithFilters:(NSDictionary *)filters;
+- (void)refreshInfoWithoutProgress;
 
 #pragma mark - Filters
 - (void)addPreselectedFilters;
