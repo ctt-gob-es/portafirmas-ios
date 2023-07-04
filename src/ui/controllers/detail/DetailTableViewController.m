@@ -146,6 +146,7 @@ typedef NS_ENUM(NSUInteger, Operation) {
     }
     NSString *title = kEmptyString;
     NSString *value = kEmptyString;
+    NSAttributedString *attributedText = nil;
     switch (indexPath.row) {
         case From:
             title = @"Cell_Title_From".localized;
@@ -211,11 +212,12 @@ typedef NS_ENUM(NSUInteger, Operation) {
 		case Message:
 			title = @"Cell_Title_Message".localized;
 			value = [self getMessage];
+            attributedText = value.readHtml;
 			[cell setClearStyle];
 			break;
     }
     [cell setCellTitle: title];
-    [cell setCellValue: value];
+    [cell setCellValue: value attributedText:attributedText];
     return cell;
 }
 

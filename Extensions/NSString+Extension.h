@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSString (Common)
 
 - (NSString *) localized;
+- (NSAttributedString *) readHtml;
 
 @end
 
