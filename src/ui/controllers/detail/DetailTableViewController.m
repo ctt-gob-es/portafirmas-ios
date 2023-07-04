@@ -284,7 +284,7 @@ typedef NS_ENUM(NSUInteger, Operation) {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:kMainStoryboardIPhoneIdentifier bundle:nil];
-
+    
     switch (indexPath.row) {
         case AttachedDocument: {
             AttachmentViewController *attachmentController =  (AttachmentViewController *)[storyboard instantiateViewControllerWithIdentifier:kAttachmentsListViewIdentifier];
@@ -300,6 +300,12 @@ typedef NS_ENUM(NSUInteger, Operation) {
             receiversController.dataSource = _dataSource.signlines;
             [self.navigationController pushViewController:receiversController animated:YES];
             break;
+        }
+        // TODO
+        case Message: {
+            NSString* url = [self getMessage];
+            if( [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:url]])
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString: url] options:@{} completionHandler:nil];
         }
     }
 }

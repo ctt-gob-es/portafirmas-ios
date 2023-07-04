@@ -30,6 +30,10 @@
     self.titleLabel.textAlignment = NSTextAlignmentLeft;
 }
 
+-(NSString*)getCellValue {
+    return self.valueLabel.text;
+}
+
 -(void)setCellValue:(NSString *)value attributedText:(NSAttributedString *) attributedText
 {
     self.valueLabel.text = value;

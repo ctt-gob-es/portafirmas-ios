@@ -10,6 +10,7 @@
 
 @interface DetailCell : UITableViewCell
 
+-(NSString*)getCellValue;
 -(void)setCellValue:(NSString *)value attributedText:(NSAttributedString *) attributedText;
 -(void)setCellTitle:(NSString *)value;
 -(void)setDarkStyle;
