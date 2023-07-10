@@ -6,4 +6,5 @@ target 'PortaFirmasUniv' do
     pod 'OpenSSL-Universal', '~> 1.1.1100'
     pod 'UICKeyChainStore', '~> 2.1.2'
     pod 'Realm', '~> 3.21.0'
+    pod 'TTTAttributedLabel'
 end

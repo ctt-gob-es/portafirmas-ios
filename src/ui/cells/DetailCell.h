@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TTTAttributedLabel.h"
 
 @interface DetailCell : UITableViewCell
 
--(NSString*)getCellValue;
--(void)setCellValue:(NSString *)value attributedText:(NSAttributedString *) attributedText;
+-(void)setCellValue:(NSString *)value;
 -(void)setCellTitle:(NSString *)value;
 -(void)setDarkStyle;
 -(void)setValueInNewViewStyle;
@@ -22,7 +22,7 @@
 
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *titleConstraintWidth;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
-@property (strong, nonatomic) IBOutlet UILabel *valueLabel;
+@property (strong, nonatomic) IBOutlet TTTAttributedLabel *valueLabel;
 @property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *labels;
 
 @end

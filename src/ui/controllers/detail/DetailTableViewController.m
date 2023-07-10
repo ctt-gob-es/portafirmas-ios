@@ -146,7 +146,6 @@ typedef NS_ENUM(NSUInteger, Operation) {
     }
     NSString *title = kEmptyString;
     NSString *value = kEmptyString;
-    NSAttributedString *attributedText = nil;
     switch (indexPath.row) {
         case From:
             title = @"Cell_Title_From".localized;
@@ -212,12 +211,11 @@ typedef NS_ENUM(NSUInteger, Operation) {
 		case Message:
 			title = @"Cell_Title_Message".localized;
 			value = [self getMessage];
-            attributedText = value.readHtml;
 			[cell setClearStyle];
 			break;
     }
     [cell setCellTitle: title];
-    [cell setCellValue: value attributedText:attributedText];
+    [cell setCellValue: value];
     return cell;
 }
 
@@ -300,12 +298,6 @@ typedef NS_ENUM(NSUInteger, Operation) {
             receiversController.dataSource = _dataSource.signlines;
             [self.navigationController pushViewController:receiversController animated:YES];
             break;
-        }
-        // TODO
-        case Message: {
-            NSString* url = [self getMessage];
-            if( [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:url]])
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString: url] options:@{} completionHandler:nil];
         }
     }
 }

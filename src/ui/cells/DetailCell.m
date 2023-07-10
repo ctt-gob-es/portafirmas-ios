@@ -1,26 +1,27 @@
-//
-//  DetailCell.m
-//  PortaFirmasUniv
-//
-//  Created by Sergio PH on 15/05/2018.
-//  Copyright © 2018 Solid Gear Projects S.L. All rights reserved.
-//
+    //
+    //  DetailCell.m
+    //  PortaFirmasUniv
+    //
+    //  Created by Sergio PH on 15/05/2018.
+    //  Copyright © 2018 Solid Gear Projects S.L. All rights reserved.
+    //
 
 #import "DetailCell.h"
 #import "UIFont+Styles.h"
 #import "UIColor+Styles.h"
+#import "TTTAttributedLabel.h"
 
 @implementation DetailCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+        // Initialization code
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+    
+        // Configure the view for the selected state
 }
 
 -(void)setCellTitle:(NSString *)value
@@ -30,15 +31,16 @@
     self.titleLabel.textAlignment = NSTextAlignmentLeft;
 }
 
--(NSString*)getCellValue {
-    return self.valueLabel.text;
-}
-
--(void)setCellValue:(NSString *)value attributedText:(NSAttributedString *) attributedText
+-(void)setCellValue:(NSString *)value
 {
-    self.valueLabel.text = value;
-    if (attributedText != nil) {
-        self.valueLabel.attributedText = attributedText;
+    if(value != nil) {
+        self.valueLabel.delegate = self;
+        
+        NSAttributedString *attributedString = [[NSAttributedString alloc] initWithData: [value dataUsingEncoding:NSUnicodeStringEncoding]
+                                                                                options: @{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType }
+                                                                     documentAttributes: nil
+                                                                                  error: nil ];
+        self.valueLabel.text = attributedString;
     }
 }
 
@@ -62,7 +64,7 @@
 -(void)setBoldStyle:(UILabel*)label
 {
     if (![label.font.fontName containsString: @"Bold"]) {
-    label.font = [UIFont fontWithName:[NSString stringWithFormat:@"%@-Bold",label.font.fontName] size:label.font.pointSize];
+        label.font = [UIFont fontWithName:[NSString stringWithFormat:@"%@-Bold",label.font.fontName] size:label.font.pointSize];
     }
 }
 
@@ -94,6 +96,13 @@
 -(void)increaseTitleLabelWidth:(CGFloat)width
 {
     self.titleConstraintWidth.constant = width;
+}
+
+#pragma mark - TTTAttributedLabel delegate
+    // Function to detect when a link is clicked in a TTTAttributedLabel
+- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
+    if( [[UIApplication sharedApplication] canOpenURL:url])
+        [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
 }
 
 @end

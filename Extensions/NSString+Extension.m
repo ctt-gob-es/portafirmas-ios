@@ -15,14 +15,4 @@
     return NSLocalizedString(self, nil);
 }
 
-    // Function to interpret the HTML content of a text
-- (NSAttributedString *) readHtml {
-        //Converting HTML string with UTF-8 encoding to NSAttributedString
-    return [[NSAttributedString alloc]
-            initWithData: [self dataUsingEncoding:NSUnicodeStringEncoding]
-            options: @{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType }
-            documentAttributes: nil
-            error: nil ];
-}
-
 @end
