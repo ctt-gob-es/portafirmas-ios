@@ -56,6 +56,10 @@
                                                         <constraint firstAttribute="height" constant="31" id="Vgi-e6-EU9"/>
                                                         <constraint firstAttribute="width" constant="49" id="dVK-82-qsK"/>
                                                     </constraints>
+                                                    <connections>
+                                                        <action selector="displayExpandedViewSwitchChanged:" destination="ORh-ds-0lu" eventType="valueChanged" id="w7m-oe-cQg"/>
+                                                        <action selector="switchChanged:" destination="ORh-ds-0lu" eventType="valueChanged" id="Rgy-gX-NIR"/>
+                                                    </connections>
                                                 </switch>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -662,7 +666,12 @@
                 <outlet property="appPickerView" destination="ZRv-Tp-HAg" id="iTr-az-ERk"/>
                 <outlet property="cancelButton" destination="7vg-L0-m6t" id="HY4-6S-qCD"/>
                 <outlet property="configurationButton" destination="ObC-As-TTb" id="BDK-8k-LJ4"/>
+                <outlet property="displayContainerView" destination="UU9-rO-3kw" id="vKd-S9-59b"/>
+                <outlet property="displayLabel" destination="3gp-Lh-3hm" id="Yju-uP-62y"/>
+                <outlet property="displaySeparatorView" destination="xov-9i-TgP" id="L3d-pW-k75"/>
                 <outlet property="enableFiltersSwitch" destination="FAO-4M-9Dp" id="M6o-Bb-bRD"/>
+                <outlet property="expandedViewLabel" destination="p3D-24-FJF" id="Iby-te-ds7"/>
+                <outlet property="expandedViewSwitch" destination="kva-gK-26x" id="8W5-tN-9yu"/>
                 <outlet property="footerView" destination="XRX-z7-VyH" id="ZZV-7m-Ion"/>
                 <outlet property="notificationContainerView" destination="nIf-Ze-smT" id="uvu-tA-tY6"/>
                 <outlet property="notificationSeparatorView" destination="eOE-MG-cnh" id="MPi-ec-HkL"/>

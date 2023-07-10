@@ -65,6 +65,8 @@ static NSString *const kPFUserDefaultsKeyDNI = @"DNI";
 static NSString *const kPFUserDefaultsKeyServersArray = @"serversArray";
 static NSString *const kPFUserDefaultsKeyRemoteCertificates = @"remoteCertificates";
 static NSString *const kPFUserDefaultsKeyRemoteCertificatesSelection = @"remoteCertificatesSelection";
+static NSString *const kPFUserDefaultsKeyUserSelectionFilterDisplayExpandedViewSelected
+ = @"userSelectionFilterDisplayExpandedViewSelected";
 static NSString *const kPFUserDefaultsKeyUserSelectionFilterSortCriteria
  = @"userSelectionFilterSortCriteria";
 static NSString *const kPFUserDefaultsKeyUserSelectionFilterSubject

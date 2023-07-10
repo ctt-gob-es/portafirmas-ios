@@ -1,10 +1,10 @@
-//
-//  RequestCell.m
-//  PortaFirmasUniv
-//
-//  Created by Antonio Fiñana on 26/11/12.
-//  Copyright (c) 2012 Atos. All rights reserved.
-//
+    //
+    //  RequestCell.m
+    //  PortaFirmasUniv
+    //
+    //  Created by Antonio Fiñana on 26/11/12.
+    //  Copyright (c) 2012 Atos. All rights reserved.
+    //
 
 #import "RequestCell.h"
 #import "PFCellContentFactory.h"
@@ -22,9 +22,26 @@
 
 - (void)setPFRequest:(PFRequest *)request
 {
+        // Get if Expanded View selected in Settings
+    Boolean displayExpandedView = [[NSUserDefaults standardUserDefaults] boolForKey: kPFUserDefaultsKeyUserSelectionFilterDisplayExpandedViewSelected];
+    
+        // Title
     [_title setText:request.snder];
+        // Title (max number of lines)
+    [_title setNumberOfLines: displayExpandedView ? 0 : 1];
+    [_title setLineBreakMode: displayExpandedView ? NSLineBreakByWordWrapping : NSLineBreakByTruncatingTail];
+    
+        // Detail
     [_detail setText:request.subj];
+        // Detail (max number of lines)
+    [_detail setNumberOfLines: displayExpandedView ? 0 : 1];
+    [_detail setLineBreakMode: displayExpandedView ? NSLineBreakByWordWrapping : NSLineBreakByTruncatingTail];
+    
+        // Input date
     [_inputDate setText:request.date];
+        // Input date (max number of lines)
+    [_inputDate setNumberOfLines: displayExpandedView ? 0 : 1];
+    [_inputDate setLineBreakMode: displayExpandedView ? NSLineBreakByWordWrapping : NSLineBreakByTruncatingTail];
     [self getExpirationLabelValue:request.expdate];
     [self setupPriorityIcon:request.priority];
     [self setupRequestTypeIcon:request.type];
@@ -42,7 +59,7 @@
 - (void)setupPriorityIcon:(NSString *)priority
 {
     _priorityIconLayer = [PFCellContentFactory iconLayerForPriority:priority withSize:_image.frame.size.height];
-
+    
     if (_priorityIconLayer) {
         [self initPriorityLabel];
         [_image.layer addSublayer:_priorityIconLayer];
@@ -53,7 +70,7 @@
 - (void)setupRequestTypeIcon:(PFRequestType)type
 {
     NSString *iconImageName = type == PFRequestTypeSign ? @"icn_firma" : @"icn_check";
-
+    
     [_iconRequestType setImage:[QuartzUtils getImageWithName:iconImageName andTintColor:THEME_COLOR]];
 }
 
