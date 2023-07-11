@@ -80,7 +80,8 @@
         _priorityLabel = [[UILabel alloc] initWithFrame:_image.bounds];
         [_priorityLabel setText:@"!"];
         [_priorityLabel setBackgroundColor:[UIColor clearColor]];
-        [_priorityLabel setFont:[UIFont boldSystemFontOfSize:14]];
+        // TODO test: before 14
+        [_priorityLabel setFont:[UIFont boldSystemFontOfSize:10]];
         [_priorityLabel setTextColor:[UIColor whiteColor]];
         [_priorityLabel setTextAlignment:NSTextAlignmentCenter];
     }

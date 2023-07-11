@@ -13,6 +13,7 @@
 #import "DetailTableViewController.h"
 #import "ArrayHelper.h"
 #import "GlobalConstants.h"
+#import "UIFont+Styles.h"
 
 @interface BaseListTVC ()
 
@@ -229,6 +230,36 @@
 }
 
 #pragma mark - UITableViewDataSource
+// TODO test
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    PFRequest *request = self.dataArray[indexPath.row];
+    
+    // Fonts
+    UIFont *titleFont = [UIFont clearStyleTitleDetailCell];
+    UIFont *detailFont = [UIFont clearStyleValueDetailCell];
+    
+    // Variables
+    CGFloat MARGIN_5 = 5;
+    CGFloat MARGIN_8 = 8;
+    CGFloat LEFT_IMAGE_WIDTH = (2 * MARGIN_5) + 20;
+    CGFloat RIGHT_IMAGE_WIDTH = (2 * MARGIN_5) + 20;
+    CGFloat DATE_WIDTH = (2 * MARGIN_5) + 65;
+    CGFloat RIGHT_ARROW_WIDTH = 0;
+    
+    // Hay un margen de 8 entre la celda de titulo y el borde superior, otro entre las celdas y el borde inferior
+    CGFloat verticalMargins = 2 * MARGIN_5;
+    
+    // Hay un margen horizontal de 8 entre los bordes laterales y las celdas
+    CGFloat horizontalMargins = LEFT_IMAGE_WIDTH + RIGHT_IMAGE_WIDTH + DATE_WIDTH + RIGHT_ARROW_WIDTH;
+    // Height
+    CGFloat titleHeight = [request.snder usedSizeForMaxWidth:SCREEN_WIDTH - horizontalMargins withFont:titleFont].height;
+    CGFloat detailHeight = [request.subj usedSizeForMaxWidth:SCREEN_WIDTH - horizontalMargins withFont:detailFont].height;
+    
+    return ((verticalMargins + titleHeight + detailHeight) > CELL_HEIGHT_DEFAULT) ? (verticalMargins + titleHeight + detailHeight) : CELL_HEIGHT_DEFAULT;
+
+   // return 100;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -238,6 +269,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PFRequest *request = self.dataArray[indexPath.row];
+    
+    
+    // TODO test
+    if (indexPath.row % 2 == 0) {
+        NSString *title = @"Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser ";
+        request.snder = title;
+        
+        NSString *detail = @"documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares ";
+        request.subj = detail;
+    }
 
     return self.isEditing ? [self editinCellForRequest:request] : [self cellForRequest:request];
 }
