@@ -25,8 +25,6 @@
         // Get if Expanded View selected in Settings
     Boolean displayExpandedView = [[NSUserDefaults standardUserDefaults] boolForKey: kPFUserDefaultsKeyUserSelectionFilterDisplayExpandedViewSelected];
     
-    CGFloat titleWidth = _title.bounds.size.width;
-    
         // Title
     [_title setText:request.snder];
         // Title (max number of lines)
@@ -60,19 +58,16 @@
 
 - (void)setupPriorityIcon:(NSString *)priority
 {
-    // TODO test, initial
     _priorityIconLayer = [PFCellContentFactory iconLayerForPriority:priority withSize:_image.frame.size.width];
     
     if (_priorityIconLayer) {
         [self initPriorityLabel];
         [_image.layer addSublayer:_priorityIconLayer];
         [_image addSubview:_priorityLabel];
-        
-        _image.frame = CGRectMake(
-                     _image.frame.origin.x,
-                    _image.frame.origin.y, 20, 20);
+        // Size of the UIImageView defined on the StoryBoard
+        CGFloat imageViewSize = 20;
+        _image.frame = CGRectMake(_image.frame.origin.x,_image.frame.origin.y, imageViewSize, imageViewSize);
         _image.clipsToBounds = YES;
-
     }
 }
 

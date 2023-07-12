@@ -197,15 +197,6 @@
             [self.dataArray addObjectsFromArray:[parser dataSource]];
         }
         
-            // TODO test
-        if (self.dataArray.count > 2) {
-            PFRequest *request = self.dataArray[2];
-            NSString *title = @"Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser2 Csic_ws_comser3 Csic_ws_comser4 Csic_ws_comser5";
-            request.snder = title;
-            
-            NSString *detail = @"documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (2).doc - Pliego de clausulas administrativas particulares documento (3).doc - Pliego de clausulas administrativas particulares ";
-            request.subj = detail;
-        }
         self.dataArray = [ArrayHelper getSortedArrayByExpirationDate: self.dataArray];
         [self setMoreDataAvailable:[parser dataSource].count > 0 && [parser dataSource].count % kRequestListXMLControllerPageSize == 0];
         [self.tableViewFooter setHidden:!self.moreDataAvailable];
@@ -239,9 +230,9 @@
 }
 
 #pragma mark - UITableViewDataSource
-// TODO test
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    RequestCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kBaseListVCCellIdentifier];
     PFRequest *request = self.dataArray[indexPath.row];
     
     // Fonts
@@ -250,26 +241,26 @@
     
     // Variables
     CGFloat MARGIN_5 = 5;
-    CGFloat MARGIN_8 = 8;
     CGFloat LEFT_IMAGE_WIDTH = (2 * MARGIN_5) + 20;
     CGFloat RIGHT_IMAGE_WIDTH = (2 * MARGIN_5) + 20;
     CGFloat DATE_WIDTH = MARGIN_5 + 65;
     CGFloat RIGHT_ARROW_WIDTH = 32;
     
-    // Hay un margen de 8 entre la celda de titulo y el borde superior, otro entre las celdas y el borde inferior
+    // Margins
+    // Upper margin between the title and the container and lower margin between the detail and the container
     CGFloat verticalMargins = 2 * MARGIN_5;
-    
-    // Hay un margen horizontal de 8 entre los bordes laterales y las celdas
     CGFloat horizontalMargins = LEFT_IMAGE_WIDTH + RIGHT_IMAGE_WIDTH + DATE_WIDTH + RIGHT_ARROW_WIDTH;
+    
+    // Width
+    CGFloat titleWidth = cell.title.bounds.size.width;
+    CGFloat detailWidth = cell.detail.bounds.size.width;
+    
     // Height
-    CGFloat titleHeight = [request.snder usedSizeForMaxWidth:SCREEN_WIDTH - horizontalMargins withFont:titleFont].height;
-    CGFloat detailHeight = [request.subj usedSizeForMaxWidth:SCREEN_WIDTH - horizontalMargins withFont:detailFont].height;
+    CGFloat titleHeight = [request.snder usedSizeForMaxWidth:titleWidth withFont:titleFont].height;
+    CGFloat detailHeight = [request.subj usedSizeForMaxWidth:detailWidth withFont:detailFont].height;
+    CGFloat totalHeight = verticalMargins + titleHeight + detailHeight;
     
-    CGFloat titleWidth = SCREEN_WIDTH - horizontalMargins;
-    
-    return ((verticalMargins + titleHeight + detailHeight) > CELL_HEIGHT_DEFAULT) ? (verticalMargins + titleHeight + detailHeight) : CELL_HEIGHT_DEFAULT;
-
-   // return 100;
+    return (totalHeight > CELL_HEIGHT_DEFAULT) ? totalHeight : CELL_HEIGHT_DEFAULT;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -280,7 +271,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PFRequest *request = self.dataArray[indexPath.row];
-    
     
     return self.isEditing ? [self cellForRequest:request] : [self cellForRequest:request];
 }
