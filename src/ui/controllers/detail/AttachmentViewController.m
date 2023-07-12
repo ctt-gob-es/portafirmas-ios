@@ -1,10 +1,10 @@
-//
-//  AttachmentViewController.m
-//  PortaFirmas_@Firma
-//
-//  Created by Antonio Fiñana Sánchez on 19/10/12.
-//  Copyright (c) 2012 Luis Lopez. All rights reserved.
-//
+    //
+    //  AttachmentViewController.m
+    //  PortaFirmas_@Firma
+    //
+    //  Created by Antonio Fiñana Sánchez on 19/10/12.
+    //  Copyright (c) 2012 Luis Lopez. All rights reserved.
+    //
 
 #import "AttachmentViewController.h"
 #import "PreviewViewController.h"
@@ -23,27 +23,27 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    // Custom initialization
+        // Custom initialization
     self.navigationController.toolbarHidden = YES;
-
+    
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self.tableView setTableFooterView:[[UIView alloc] initWithFrame:CGRectZero]];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+        // Uncomment the following line to preserve selection between presentations.
+        // self.clearsSelectionOnViewWillAppear = NO;
+    
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+        // Dispose of any resources that can be recreated.
 }
 
 - (NSMutableArray *) sections {
@@ -77,7 +77,7 @@
     
     if (_attachedDocsDataSource != nil && _attachedDocsDataSource.count > 0) {
         Source *attachedDocSource = [Source new];
-        attachedDocSource.title = @"Annexes_Section".localized; 
+        attachedDocSource.title = @"Annexes_Section".localized;
         attachedDocSource.type = PFAttachmentTypeAttachedDoc;
         attachedDocSource.subType = PFAttachmentVCSectionAttachedDocs;
         attachedDocSource.elements = _attachedDocsDataSource.count;
@@ -87,7 +87,7 @@
     return sections;
 }
 
-
+#pragma mark TableViewDelegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return [self sections].count;
@@ -101,25 +101,64 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-   Source *sourceSection = [[self sections] objectAtIndex:section];
-   return sourceSection.elements;
+    Source *sourceSection = [[self sections] objectAtIndex:section];
+    return sourceSection.elements;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"AttachmentsCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-
+    
     Source *sourceSection = [[self sections] objectAtIndex:indexPath.section];
     
     if (sourceSection.type == PFAttachmentTypeDocument) {
         [self configureCell:cell forDocument:_documentsDataSource[indexPath.row] ofType:sourceSection.type ofSubType:sourceSection.subType];
-       
+        
     } else {
-         [self configureCell:cell forDocument:_attachedDocsDataSource[indexPath.row] ofType:sourceSection.type ofSubType:sourceSection.subType];
+        [self configureCell:cell forDocument:_attachedDocsDataSource[indexPath.row] ofType:sourceSection.type ofSubType:sourceSection.subType];
     }
-
+    
     return cell;
+}
+
+    // Returns the swipe actions to display on the trailing edge of the row
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UIContextualAction *shareAction = self.configureShareAction;
+    UIContextualAction *downloadAction = self.configureDownloadAction;
+    
+    UISwipeActionsConfiguration *swipeActionConfig = [UISwipeActionsConfiguration configurationWithActions:@[shareAction, downloadAction]];
+    swipeActionConfig.performsFirstActionWithFullSwipe = NO;
+    return swipeActionConfig;
+}
+
+    // Function to configure the share action
+- (UIContextualAction *) configureShareAction {
+    UIContextualAction *action = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal
+        title:@"Attachment_View_Share_Option".localized
+        handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            // TODO complete
+        completionHandler(YES);
+    }];
+    action.backgroundColor = [UIColor purpleColor];
+    action.image = [UIImage systemImageNamed:@"square.and.arrow.up"];
+    
+    return action;
+}
+
+    // Function to configure the download action
+- (UIContextualAction *) configureDownloadAction {
+    UIContextualAction *action = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal
+        title:@"Attachment_View_Download_Option".localized
+        handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            // TODO complete
+        completionHandler(YES);
+    }];
+    action.backgroundColor = [UIColor orangeColor];
+    action.image = [UIImage systemImageNamed:@"folder"];
+    
+    return action;
 }
 
 - (void)configureCell:(UITableViewCell *)cell forDocument:(id)item ofType:(PFAttachmentType)type ofSubType:(PFAttachmentVCSection)subType
@@ -161,7 +200,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     NSIndexPath *selectedIndexPath = [self.tableView indexPathForSelectedRow];
-
+    
     if ([segue.identifier isEqualToString:@"segueShowPreview"]) {
         
         PreviewViewController *previewViewController = [segue destinationViewController];
