@@ -946,7 +946,7 @@
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </view>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CustomRequestCell" editingAccessoryType="disclosureIndicator" rowHeight="44" id="ZuO-oC-LVE" customClass="RequestCell">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="CustomRequestCell" rowHeight="44" id="ZuO-oC-LVE" customClass="RequestCell">
                                 <rect key="frame" x="0.0" y="50" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZuO-oC-LVE" id="rTt-5p-nzQ">
