@@ -23,25 +23,25 @@
 - (void)setPFRequest:(PFRequest *)request
 {
         // Get if Expanded View selected in Settings
-    Boolean displayExpandedView = [[NSUserDefaults standardUserDefaults] boolForKey: kPFUserDefaultsKeyUserSelectionFilterDisplayExpandedViewSelected];
+    Boolean displayExpandedViewSelected = [[NSUserDefaults standardUserDefaults] boolForKey: kPFUserDefaultsKeyUserSelectionFilterDisplayExpandedViewSelected];
     
         // Title
     [_title setText:request.snder];
         // Title (max number of lines)
-    [_title setNumberOfLines: displayExpandedView ? 0 : 1];
-    [_title setLineBreakMode: displayExpandedView ? NSLineBreakByWordWrapping : NSLineBreakByTruncatingTail];
+    [_title setNumberOfLines: displayExpandedViewSelected ? 0 : 1];
+    [_title setLineBreakMode: displayExpandedViewSelected ? NSLineBreakByWordWrapping : NSLineBreakByTruncatingTail];
     
         // Detail
     [_detail setText:request.subj];
         // Detail (max number of lines)
-    [_detail setNumberOfLines: displayExpandedView ? 0 : 1];
-    [_detail setLineBreakMode: displayExpandedView ? NSLineBreakByWordWrapping : NSLineBreakByTruncatingTail];
+    [_detail setNumberOfLines: displayExpandedViewSelected ? 0 : 1];
+    [_detail setLineBreakMode: displayExpandedViewSelected ? NSLineBreakByWordWrapping : NSLineBreakByTruncatingTail];
     
         // Input date
     [_inputDate setText:request.date];
         // Input date (max number of lines)
-    [_inputDate setNumberOfLines: displayExpandedView ? 0 : 1];
-    [_inputDate setLineBreakMode: displayExpandedView ? NSLineBreakByWordWrapping : NSLineBreakByTruncatingTail];
+    [_inputDate setNumberOfLines: displayExpandedViewSelected ? 0 : 1];
+    [_inputDate setLineBreakMode: displayExpandedViewSelected ? NSLineBreakByWordWrapping : NSLineBreakByTruncatingTail];
     [self getExpirationLabelValue:request.expdate];
     [self setupPriorityIcon:request.priority];
     [self setupRequestTypeIcon:request.type];
@@ -64,9 +64,9 @@
         [self initPriorityLabel];
         [_image.layer addSublayer:_priorityIconLayer];
         [_image addSubview:_priorityLabel];
-        // Size of the UIImageView defined on the StoryBoard
-        CGFloat imageViewSize = 20;
-        _image.frame = CGRectMake(_image.frame.origin.x,_image.frame.origin.y, imageViewSize, imageViewSize);
+        
+        CGFloat imageWidth = _image.frame.size.width;
+        _image.frame = CGRectMake(_image.frame.origin.x,_image.frame.origin.y, imageWidth, imageWidth);
         _image.clipsToBounds = YES;
     }
 }

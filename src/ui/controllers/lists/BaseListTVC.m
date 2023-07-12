@@ -1,10 +1,10 @@
-//
-//  BaseListVC.m
-//  PortaFirmasUniv
-//
-//  Created by Rocio Tovar on 6/3/15.
-//  Copyright (c) 2015 Atos. All rights reserved.
-//
+    //
+    //  BaseListVC.m
+    //  PortaFirmasUniv
+    //
+    //  Created by Rocio Tovar on 6/3/15.
+    //  Copyright (c) 2015 Atos. All rights reserved.
+    //
 
 #import "BaseListTVC.h"
 #import "RequestListXMLController.h"
@@ -26,7 +26,7 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
-
+    
     if (self) {
         _currentPage = kBaseListVCMinPage;
         _moreDataAvailable = YES;
@@ -35,7 +35,7 @@
         _dataArray = [@[] mutableCopy];
         _filtersDict = [NSMutableDictionary new];
     }
-
+    
     return self;
 }
 
@@ -44,7 +44,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     [self addPullToRefresh];
     [self addWatermark];
     [self setClearsSelectionOnViewWillAppear:NO];
@@ -60,7 +60,7 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+        // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - User Interface
@@ -68,7 +68,7 @@
 - (void)addPullToRefresh
 {
     UIRefreshControl *refreshControl = [UIRefreshControl new];
-
+    
     [refreshControl addTarget:self action:@selector(refreshInfo) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
 }
@@ -76,7 +76,7 @@
 - (void)addWatermark
 {
     UIImageView *watermarkIV = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"logo_transp"]];
-
+    
     [watermarkIV setFrame:self.view.bounds];
     [watermarkIV setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth ];
     [watermarkIV setContentMode:UIViewContentModeCenter];
@@ -96,9 +96,9 @@
 - (void)loadDataWithProgressIndicator:(BOOL)showProgressIndicator
 {
     if (showProgressIndicator) {
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[SVProgressHUD show];
-		});
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD show];
+        });
     }
     if ([[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible]) {
         [self addPreselectedFilters];
@@ -132,10 +132,10 @@
 }
 
 - (void)addPreselectedFilters {
-    //Default
+        //Default
     NSDictionary *roleSelected = [[NSUserDefaults standardUserDefaults] objectForKey:kPFUserDefaultsKeyUserRoleSelected];
     if (roleSelected && [[[roleSelected objectForKey:kUserRoleRoleNameKey] objectForKey:kContentKey] isEqual: kUserRoleRoleNameValidator] ){
-            [_filtersDict setObject: [[roleSelected objectForKey:kFilterDNIKey]objectForKey:kContentKey] forKey:kFilterDNIValidator];
+        [_filtersDict setObject: [[roleSelected objectForKey:kFilterDNIKey]objectForKey:kContentKey] forKey:kFilterDNIValidator];
     }
     if (![_filtersDict objectForKey:kPFFilterKeySortCriteria] && [[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSortCriteria]){
         [_filtersDict setObject:[[NSUserDefaults standardUserDefaults] objectForKey: kPFUserDefaultsKeyUserSelectionFilterSortCriteria] forKey:kPFFilterKeySortCriteria];
@@ -177,20 +177,20 @@
 - (void)doParse:(NSData *)data
 {
     [self.refreshControl endRefreshing];
-
+    
     NSXMLParser *nsXmlParser = [[NSXMLParser alloc] initWithData:data];
     RequestListXMLController *parser = [[RequestListXMLController alloc] initXMLParser];
     [nsXmlParser setDelegate:parser];
     BOOL success = [nsXmlParser parse];
-
+    
     if (success) {
         BOOL finishOK = ![parser finishWithError];
-
+        
         if (!finishOK) {
             [self didReceiveParserWithError:[NSString stringWithFormat:@"Mensaje del servidor:%@(%@)", [parser err], [parser errorCode]]];
             return;
         }
-
+        
         if (self.currentPage == kBaseListVCMinPage) {
             self.dataArray = [parser dataSource];
         } else {
@@ -233,34 +233,36 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     RequestCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kBaseListVCCellIdentifier];
-    PFRequest *request = self.dataArray[indexPath.row];
     
-    // Fonts
-    UIFont *titleFont = [UIFont clearStyleTitleRequestCell];
-    UIFont *detailFont = [UIFont clearStyleValueRequestCell];
+        // Get if Expanded View selected in Settings
+    Boolean displayExpandedViewSelected = [[NSUserDefaults standardUserDefaults] boolForKey: kPFUserDefaultsKeyUserSelectionFilterDisplayExpandedViewSelected];
     
-    // Variables
-    CGFloat MARGIN_5 = 5;
-    CGFloat LEFT_IMAGE_WIDTH = (2 * MARGIN_5) + 20;
-    CGFloat RIGHT_IMAGE_WIDTH = (2 * MARGIN_5) + 20;
-    CGFloat DATE_WIDTH = MARGIN_5 + 65;
-    CGFloat RIGHT_ARROW_WIDTH = 32;
-    
-    // Margins
-    // Upper margin between the title and the container and lower margin between the detail and the container
-    CGFloat verticalMargins = 2 * MARGIN_5;
-    CGFloat horizontalMargins = LEFT_IMAGE_WIDTH + RIGHT_IMAGE_WIDTH + DATE_WIDTH + RIGHT_ARROW_WIDTH;
-    
-    // Width
-    CGFloat titleWidth = cell.title.bounds.size.width;
-    CGFloat detailWidth = cell.detail.bounds.size.width;
-    
-    // Height
-    CGFloat titleHeight = [request.snder usedSizeForMaxWidth:titleWidth withFont:titleFont].height;
-    CGFloat detailHeight = [request.subj usedSizeForMaxWidth:detailWidth withFont:detailFont].height;
-    CGFloat totalHeight = verticalMargins + titleHeight + detailHeight;
-    
-    return (totalHeight > CELL_HEIGHT_DEFAULT) ? totalHeight : CELL_HEIGHT_DEFAULT;
+    if (!displayExpandedViewSelected) {
+        return CELL_HEIGHT_DEFAULT;
+    } else {
+        PFRequest *request = self.dataArray[indexPath.row];
+        
+            // Fonts
+        UIFont *titleFont = [UIFont clearStyleTitleRequestCell];
+        UIFont *detailFont = [UIFont clearStyleValueRequestCell];
+        
+            // Variables
+        CGFloat MARGIN_5 = 5;
+        
+            // Upper margin between the title and the container and lower margin between the detail and the container
+        CGFloat verticalMargins = 2 * MARGIN_5;
+        
+            // Width
+        CGFloat titleWidth = cell.title.bounds.size.width;
+        CGFloat detailWidth = cell.detail.bounds.size.width;
+        
+            // Height
+        CGFloat titleHeight = [request.snder usedSizeForMaxWidth:titleWidth withFont:titleFont].height;
+        CGFloat detailHeight = [request.subj usedSizeForMaxWidth:detailWidth withFont:detailFont].height;
+        CGFloat totalHeight = verticalMargins + titleHeight + detailHeight;
+        
+        return (totalHeight > CELL_HEIGHT_DEFAULT) ? totalHeight : CELL_HEIGHT_DEFAULT;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -278,33 +280,33 @@
 - (UITableViewCell *)editinCellForRequest:(PFRequest *)request
 {
     RequestCellNoUI *editingCell = [self.tableView dequeueReusableCellWithIdentifier:kBaseListVCEditingCellIdentifier];
-
+    
     if (!editingCell) {
         return nil;
     }
-
+    
     [editingCell setPFRequest:request];
-
+    
     return editingCell;
 }
 
 - (UITableViewCell *)cellForRequest:(PFRequest *)request
 {
     RequestCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kBaseListVCCellIdentifier];
-
+    
     if (!cell) {
         return nil;
     }
-
+    
     [cell setPFRequest:request];
-
+    
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     int normalizedRow = (int)indexPath.row + 1;
-
+    
     if (_moreDataAvailable && normalizedRow % kRequestListXMLControllerPageSize == 0 && self.dataArray.count == normalizedRow) {
         [_tableViewFooter setHidden:NO];
         self.currentPage++;
@@ -317,15 +319,15 @@
 - (void)prepareForDetailSegue:(UIStoryboardSegue *)segue enablingSigning:(BOOL)enableSign
 {
     NSInteger selectedRow = [self.tableView indexPathForSelectedRow].row;
-	[self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:true];
+    [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:true];
     DetailTableViewController *detailVC = [segue destinationViewController];
     PFRequest *selectedRequest = self.dataArray[selectedRow];
     [detailVC setDataSourceRequest:selectedRequest];
     [detailVC setSignEnabled:enableSign];
     [detailVC setRequestId:selectedRequest.reqid];
-	dispatch_async(dispatch_get_main_queue(), ^{
-		[SVProgressHUD show];
-	});
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD show];
+    });
 }
 
 @end
