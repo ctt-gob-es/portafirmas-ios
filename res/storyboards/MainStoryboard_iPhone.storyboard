@@ -954,24 +954,26 @@
                                     <rect key="frame" x="0.0" y="0.0" width="383.5" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="3ih-Ro-wCS">
+                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ih-Ro-wCS">
                                             <rect key="frame" x="5" y="0.0" width="20" height="44"/>
+                                            <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="20" id="1Ag-ZW-kOe"/>
+                                                <constraint firstAttribute="height" constant="20" id="sux-Az-7eM"/>
                                             </constraints>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Erw-73-rYg">
                                             <rect key="frame" x="30" y="0.0" width="253.5" height="44"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalCompressionResistancePriority="751" text="Remitente" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ne9-vu-8Wh">
-                                                    <rect key="frame" x="0.0" y="5" width="254" height="18"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Remitente" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ne9-vu-8Wh">
+                                                    <rect key="frame" x="0.0" y="5" width="253.5" height="17.5"/>
                                                     <color key="backgroundColor" red="0.59999999999999998" green="0.0" blue="0.090196078430000007" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" misplaced="YES" text="Petición" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xFB-Sb-rva">
-                                                    <rect key="frame" x="0.0" y="26" width="254" height="18"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" text="Petición" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xFB-Sb-rva">
+                                                    <rect key="frame" x="0.0" y="22.5" width="253.5" height="16.5"/>
                                                     <color key="backgroundColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="12"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1019,12 +1021,11 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstItem="Erw-73-rYg" firstAttribute="centerY" secondItem="rTt-5p-nzQ" secondAttribute="centerY" id="0dQ-Xc-LQ7"/>
                                         <constraint firstItem="Lnz-G5-c7z" firstAttribute="leading" secondItem="92C-rf-Hl4" secondAttribute="trailing" constant="5" id="1yQ-va-Wv4"/>
                                         <constraint firstItem="Lnz-G5-c7z" firstAttribute="top" secondItem="rTt-5p-nzQ" secondAttribute="top" id="2Pn-br-9I8"/>
-                                        <constraint firstItem="3ih-Ro-wCS" firstAttribute="top" secondItem="rTt-5p-nzQ" secondAttribute="top" id="39z-4y-DXc"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="92C-rf-Hl4" secondAttribute="bottom" id="6Ux-9V-DyV"/>
                                         <constraint firstAttribute="bottom" secondItem="erm-5q-EPw" secondAttribute="bottom" id="9Qr-D3-SYM"/>
+                                        <constraint firstItem="Erw-73-rYg" firstAttribute="centerY" secondItem="rTt-5p-nzQ" secondAttribute="centerY" id="A6t-QM-hUN"/>
                                         <constraint firstAttribute="trailing" secondItem="Lnz-G5-c7z" secondAttribute="trailing" constant="5" id="Bei-eD-7e5"/>
                                         <constraint firstItem="92C-rf-Hl4" firstAttribute="centerY" secondItem="rTt-5p-nzQ" secondAttribute="centerY" id="Gdc-1K-UKA"/>
                                         <constraint firstItem="erm-5q-EPw" firstAttribute="leading" secondItem="92C-rf-Hl4" secondAttribute="trailing" constant="5" id="MHV-SU-76b"/>
@@ -1034,7 +1035,6 @@
                                         <constraint firstItem="3ih-Ro-wCS" firstAttribute="centerY" secondItem="rTt-5p-nzQ" secondAttribute="centerY" id="WKP-TL-oHC"/>
                                         <constraint firstItem="Erw-73-rYg" firstAttribute="leading" secondItem="3ih-Ro-wCS" secondAttribute="trailing" constant="5" id="gcH-lx-y8p"/>
                                         <constraint firstItem="Erw-73-rYg" firstAttribute="top" secondItem="rTt-5p-nzQ" secondAttribute="top" id="iFt-7R-Wg0"/>
-                                        <constraint firstAttribute="bottom" secondItem="3ih-Ro-wCS" secondAttribute="bottom" id="jF8-0X-TXZ"/>
                                         <constraint firstItem="92C-rf-Hl4" firstAttribute="top" secondItem="rTt-5p-nzQ" secondAttribute="topMargin" id="qdb-WS-gFL"/>
                                         <constraint firstItem="3ih-Ro-wCS" firstAttribute="leading" secondItem="rTt-5p-nzQ" secondAttribute="leading" constant="5" id="sd4-AN-1b5"/>
                                         <constraint firstItem="92C-rf-Hl4" firstAttribute="leading" secondItem="Erw-73-rYg" secondAttribute="trailing" constant="5" id="tym-iD-fHD"/>
@@ -1777,6 +1777,9 @@
         </systemColor>
         <systemColor name="systemMintColor">
             <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -25,6 +25,8 @@
         // Get if Expanded View selected in Settings
     Boolean displayExpandedView = [[NSUserDefaults standardUserDefaults] boolForKey: kPFUserDefaultsKeyUserSelectionFilterDisplayExpandedViewSelected];
     
+    CGFloat titleWidth = _title.bounds.size.width;
+    
         // Title
     [_title setText:request.snder];
         // Title (max number of lines)
@@ -58,12 +60,19 @@
 
 - (void)setupPriorityIcon:(NSString *)priority
 {
-    _priorityIconLayer = [PFCellContentFactory iconLayerForPriority:priority withSize:_image.frame.size.height];
+    // TODO test, initial
+    _priorityIconLayer = [PFCellContentFactory iconLayerForPriority:priority withSize:_image.frame.size.width];
     
     if (_priorityIconLayer) {
         [self initPriorityLabel];
         [_image.layer addSublayer:_priorityIconLayer];
         [_image addSubview:_priorityLabel];
+        
+        _image.frame = CGRectMake(
+                     _image.frame.origin.x,
+                    _image.frame.origin.y, 20, 20);
+        _image.clipsToBounds = YES;
+
     }
 }
 
@@ -80,8 +89,7 @@
         _priorityLabel = [[UILabel alloc] initWithFrame:_image.bounds];
         [_priorityLabel setText:@"!"];
         [_priorityLabel setBackgroundColor:[UIColor clearColor]];
-        // TODO test: before 14
-        [_priorityLabel setFont:[UIFont boldSystemFontOfSize:10]];
+        [_priorityLabel setFont:[UIFont boldSystemFontOfSize:14]];
         [_priorityLabel setTextColor:[UIColor whiteColor]];
         [_priorityLabel setTextAlignment:NSTextAlignmentCenter];
     }

@@ -22,4 +22,12 @@
     return [UIFont fontWithName: @"Helvetica" size: 14.0];
 }
 
++(UIFont *)clearStyleTitleRequestCell {
+    return [UIFont fontWithName: @"Helvetica" size: 15.0];
+}
+
++(UIFont *)clearStyleValueRequestCell {
+    return [UIFont fontWithName: @"Helvetica" size: 12.0];
+}
+
 @end

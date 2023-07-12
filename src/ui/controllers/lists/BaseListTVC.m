@@ -196,7 +196,16 @@
         } else {
             [self.dataArray addObjectsFromArray:[parser dataSource]];
         }
-
+        
+            // TODO test
+        if (self.dataArray.count > 2) {
+            PFRequest *request = self.dataArray[2];
+            NSString *title = @"Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser2 Csic_ws_comser3 Csic_ws_comser4 Csic_ws_comser5";
+            request.snder = title;
+            
+            NSString *detail = @"documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (2).doc - Pliego de clausulas administrativas particulares documento (3).doc - Pliego de clausulas administrativas particulares ";
+            request.subj = detail;
+        }
         self.dataArray = [ArrayHelper getSortedArrayByExpirationDate: self.dataArray];
         [self setMoreDataAvailable:[parser dataSource].count > 0 && [parser dataSource].count % kRequestListXMLControllerPageSize == 0];
         [self.tableViewFooter setHidden:!self.moreDataAvailable];
@@ -236,16 +245,16 @@
     PFRequest *request = self.dataArray[indexPath.row];
     
     // Fonts
-    UIFont *titleFont = [UIFont clearStyleTitleDetailCell];
-    UIFont *detailFont = [UIFont clearStyleValueDetailCell];
+    UIFont *titleFont = [UIFont clearStyleTitleRequestCell];
+    UIFont *detailFont = [UIFont clearStyleValueRequestCell];
     
     // Variables
     CGFloat MARGIN_5 = 5;
     CGFloat MARGIN_8 = 8;
     CGFloat LEFT_IMAGE_WIDTH = (2 * MARGIN_5) + 20;
     CGFloat RIGHT_IMAGE_WIDTH = (2 * MARGIN_5) + 20;
-    CGFloat DATE_WIDTH = (2 * MARGIN_5) + 65;
-    CGFloat RIGHT_ARROW_WIDTH = 0;
+    CGFloat DATE_WIDTH = MARGIN_5 + 65;
+    CGFloat RIGHT_ARROW_WIDTH = 32;
     
     // Hay un margen de 8 entre la celda de titulo y el borde superior, otro entre las celdas y el borde inferior
     CGFloat verticalMargins = 2 * MARGIN_5;
@@ -255,6 +264,8 @@
     // Height
     CGFloat titleHeight = [request.snder usedSizeForMaxWidth:SCREEN_WIDTH - horizontalMargins withFont:titleFont].height;
     CGFloat detailHeight = [request.subj usedSizeForMaxWidth:SCREEN_WIDTH - horizontalMargins withFont:detailFont].height;
+    
+    CGFloat titleWidth = SCREEN_WIDTH - horizontalMargins;
     
     return ((verticalMargins + titleHeight + detailHeight) > CELL_HEIGHT_DEFAULT) ? (verticalMargins + titleHeight + detailHeight) : CELL_HEIGHT_DEFAULT;
 
@@ -271,16 +282,7 @@
     PFRequest *request = self.dataArray[indexPath.row];
     
     
-    // TODO test
-    if (indexPath.row % 2 == 0) {
-        NSString *title = @"Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser Csic_ws_comser ";
-        request.snder = title;
-        
-        NSString *detail = @"documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares documento (1).doc - Pliego de clausulas administrativas particulares ";
-        request.subj = detail;
-    }
-
-    return self.isEditing ? [self editinCellForRequest:request] : [self cellForRequest:request];
+    return self.isEditing ? [self cellForRequest:request] : [self cellForRequest:request];
 }
 
 - (UITableViewCell *)editinCellForRequest:(PFRequest *)request
