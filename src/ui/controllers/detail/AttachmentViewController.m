@@ -11,14 +11,29 @@
 #import "Document.h"
 #import "AttachedDoc.h"
 #import "Source.h"
+    // TODO test
+#import "PreviewXMLController.h"
 
 @interface AttachmentViewController ()
 
 @end
-
 @implementation AttachmentViewController
 @synthesize documentsDataSource = _documentsDataSource;
 @synthesize attachedDocsDataSource = _attachedDocsDataSource;
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    
+    if (self) {
+            // Custom initialization
+        
+        dataController = [[WSDataController alloc] init];
+        dataController.delegate = self;
+    }
+    
+    return self;
+}
 
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -122,45 +137,6 @@
     return cell;
 }
 
-    // Returns the swipe actions to display on the trailing edge of the row
-- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UIContextualAction *shareAction = self.configureShareAction;
-    UIContextualAction *downloadAction = self.configureDownloadAction;
-    
-    UISwipeActionsConfiguration *swipeActionConfig = [UISwipeActionsConfiguration configurationWithActions:@[shareAction, downloadAction]];
-    swipeActionConfig.performsFirstActionWithFullSwipe = NO;
-    return swipeActionConfig;
-}
-
-    // Function to configure the share action
-- (UIContextualAction *) configureShareAction {
-    UIContextualAction *action = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal
-        title:@"Attachment_View_Share_Option".localized
-        handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-            // TODO complete
-        completionHandler(YES);
-    }];
-    action.backgroundColor = [UIColor purpleColor];
-    action.image = [UIImage systemImageNamed:@"square.and.arrow.up"];
-    
-    return action;
-}
-
-    // Function to configure the download action
-- (UIContextualAction *) configureDownloadAction {
-    UIContextualAction *action = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal
-        title:@"Attachment_View_Download_Option".localized
-        handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-            // TODO complete
-        completionHandler(YES);
-    }];
-    action.backgroundColor = [UIColor orangeColor];
-    action.image = [UIImage systemImageNamed:@"folder"];
-    
-    return action;
-}
-
 - (void)configureCell:(UITableViewCell *)cell forDocument:(id)item ofType:(PFAttachmentType)type ofSubType:(PFAttachmentVCSection)subType
 {
     
@@ -194,6 +170,99 @@
     }
 }
 
+    // Returns the swipe actions to display on the trailing edge of the row
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+        // Configure actions on the cell
+    UIContextualAction *shareAction = [self configureShareAction:indexPath];
+    
+    UISwipeActionsConfiguration *swipeActionConfig = [UISwipeActionsConfiguration configurationWithActions:@[shareAction]];
+    swipeActionConfig.performsFirstActionWithFullSwipe = NO;
+    return swipeActionConfig;
+}
+
+    // Function to configure the share action
+- (UIContextualAction *) configureShareAction: (NSIndexPath *)indexPath {
+    UIContextualAction *action = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal
+                                                                         title:@"Attachment_View_Share_Option".localized
+                                                                       handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            // Load file data
+        [self loadFileData:indexPath];
+       
+        
+    }];
+    action.backgroundColor = [UIColor purpleColor];
+    action.image = [UIImage systemImageNamed:@"square.and.arrow.up"];
+    
+    return action;
+}
+
+    // Function to obtain the data of a document
+- (void)loadFileData: (NSIndexPath *)indexPath
+{
+    Source *sourceSection = [[self sections] objectAtIndex:indexPath.section];
+    _requestCode = [PFHelper getPFRequestCodeForSection:sourceSection.subType];
+    
+    if (sourceSection.type == PFAttachmentTypeDocument) {
+        Document *selectedDoc = _documentsDataSource[indexPath.row];
+        _docName = selectedDoc.nm;
+        _docId = selectedDoc.docid;
+    } else {
+        AttachedDoc *selectedDoc = _attachedDocsDataSource[indexPath.row];
+        _docName = selectedDoc.nm;
+        _docId = selectedDoc.docid;
+    }
+    
+    if (_docId != nil) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [SVProgressHUD show];
+        });
+        
+            // Call service to get document data
+        NSString *data = [PreviewXMLController buildRequestWithId:_docId];
+        [dataController loadPostRequestWithData:data code:_requestCode];
+        [dataController startConnection];
+    }
+}
+
+    // Function to present an UIActivityViewController
+- (void)presentActivityController:(NSArray *)items {
+    UIActivityViewController *activityViewController = [[UIActivityViewController alloc]initWithActivityItems:items applicationActivities:nil];
+    activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+    activityViewController.completionWithItemsHandler = ^(NSString *activityType,
+                                                         BOOL completed,
+                                                         NSArray *returnedItems,
+                                                         NSError *error){
+                   // react to the completion
+                   if (completed) {
+                       
+                       // user shared an item
+                       NSLog(@"We used activity type%@", activityType);
+                       
+                   } else {
+                       
+                       // user cancelled
+                       NSLog(@"We didn't want to share anything after all.");
+                   }
+                   
+                   if (error) {
+                       NSLog(@"An Error occured: %@, %@", error.localizedDescription, error.localizedFailureReason);
+                   }
+   /*     dispatch_async(dispatch_get_main_queue(), ^{
+           [self dismissViewControllerAnimated:YES completion:nil];
+        });*/
+               };
+  
+        // For IPAD
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        UIPopoverPresentationController *popController = [activityViewController popoverPresentationController];
+        popController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        popController.sourceView = self.view;
+        popController.barButtonItem = self.navigationItem.leftBarButtonItem;
+    }
+    
+    [self presentViewController:activityViewController animated:YES completion:nil];
+}
 
 #pragma mark - Navigation
 
@@ -221,6 +290,26 @@
             previewViewController.attachedDataSource = selectedDoc;
         }
     }
+}
+
+# pragma mark WSDelegate
+    // Function to parse the data of a document
+- (void)doParse:(NSData *)data {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [SVProgressHUD dismiss];
+    });
+    // TODO test Cancell service connection
+    //[dataController cancelConnection];
+    
+        // Create a temporary file
+    NSURL *temporaryDirectoryURL = [NSURL fileURLWithPath: NSTemporaryDirectory() isDirectory: YES];
+    NSURL *temporaryFileURL = [temporaryDirectoryURL URLByAppendingPathComponent:_docName];
+        // Write data into temporal file
+    [data writeToURL:temporaryFileURL options:NSDataWritingAtomic error:nil];
+    
+        // Share file
+    NSArray *items = @[temporaryFileURL];
+    [self presentActivityController:items];
 }
 
 @end
