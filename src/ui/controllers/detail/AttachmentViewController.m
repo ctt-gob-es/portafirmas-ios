@@ -11,7 +11,6 @@
 #import "Document.h"
 #import "AttachedDoc.h"
 #import "Source.h"
-    // TODO test
 #import "PreviewXMLController.h"
 
 @interface AttachmentViewController ()
@@ -229,36 +228,13 @@
 - (void)presentActivityController:(NSArray *)items {
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc]initWithActivityItems:items applicationActivities:nil];
     activityViewController.modalPresentationStyle = UIModalPresentationPopover;
-    activityViewController.completionWithItemsHandler = ^(NSString *activityType,
-                                                         BOOL completed,
-                                                         NSArray *returnedItems,
-                                                         NSError *error){
-                   // react to the completion
-                   if (completed) {
-                       
-                       // user shared an item
-                       NSLog(@"We used activity type%@", activityType);
-                       
-                   } else {
-                       
-                       // user cancelled
-                       NSLog(@"We didn't want to share anything after all.");
-                   }
-                   
-                   if (error) {
-                       NSLog(@"An Error occured: %@, %@", error.localizedDescription, error.localizedFailureReason);
-                   }
-   /*     dispatch_async(dispatch_get_main_queue(), ^{
-           [self dismissViewControllerAnimated:YES completion:nil];
-        });*/
-               };
   
         // For IPAD
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIPopoverPresentationController *popController = [activityViewController popoverPresentationController];
         popController.permittedArrowDirections = UIPopoverArrowDirectionAny;
         popController.sourceView = self.view;
-        popController.barButtonItem = self.navigationItem.leftBarButtonItem;
+        popController.sourceRect = CGRectMake(self.view.frame.size.width/2, self.view.frame.size.height, 0, 0);
     }
     
     [self presentViewController:activityViewController animated:YES completion:nil];
@@ -298,8 +274,6 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [SVProgressHUD dismiss];
     });
-    // TODO test Cancell service connection
-    //[dataController cancelConnection];
     
         // Create a temporary file
     NSURL *temporaryDirectoryURL = [NSURL fileURLWithPath: NSTemporaryDirectory() isDirectory: YES];

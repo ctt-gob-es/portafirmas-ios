@@ -21,7 +21,6 @@
 @property (strong, nonatomic) NSMutableArray *attachedDocsDataSource;
 @property (strong, nonatomic) Detail *detail;
 @property (assign, nonatomic) PFRequestStatus requestStatus;
-// TODO test
 @property (assign, nonatomic) PFRequestCode requestCode;
 @property (strong, nonatomic) NSString *docId;
 @property (strong, nonatomic) NSString *docName;
