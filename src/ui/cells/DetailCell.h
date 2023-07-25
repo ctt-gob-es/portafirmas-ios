@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TTTAttributedLabel.h"
 
-@interface DetailCell : UITableViewCell
+@interface DetailCell : UITableViewCell<TTTAttributedLabelDelegate>
 
 -(void)setCellValue:(NSString *)value;
 -(void)setCellTitle:(NSString *)value;
