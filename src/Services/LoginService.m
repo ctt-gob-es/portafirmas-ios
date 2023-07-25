@@ -150,7 +150,7 @@ static NSString *const kSessionId = @"sessionId";
     
     NSData *tokenData = [token dataUsingEncoding:NSUTF8StringEncoding];
     NSData *result = [[CertificateUtils sharedWrapper] getSignatureBytesSHA256:tokenData];
-    NSString *tokenSigned = [NSString stringWithFormat: @"%@",[result base64EncodedString]];
+    NSString *tokenSigned = [NSString stringWithFormat: @"%@",[result convertToBase64EncodedString]];
     
     return tokenSigned;
 }
@@ -162,7 +162,7 @@ static NSString *const kSessionId = @"sessionId";
 
 - (NSString *) certificateInBase64 {
     NSData *certificateData = [CertificateUtils sharedWrapper].publicKeyBits;
-	return [certificateData base64EncodedString];
+	return [certificateData convertToBase64EncodedString];
 }
 
 - (void) setRemoteCertificatesParameters: (NSDictionary *) content {

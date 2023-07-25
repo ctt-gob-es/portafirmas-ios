@@ -187,8 +187,8 @@
                                                                        handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             // Load file data
         [self loadFileData:indexPath];
-       
-        
+            // Hide share action
+        completionHandler(true);
     }];
     action.backgroundColor = [UIColor purpleColor];
     action.image = [UIImage systemImageNamed:@"square.and.arrow.up"];

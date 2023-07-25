@@ -59,7 +59,7 @@
 	NSData *hashMessage = [CertificateUtils getHashBytesSHA1:data] ;
 	NSLog(@"hashMessage: %@", hashMessage);
 	// Encode it in Base64
-	NSString *hashAndBase64 = [hashMessage base64EncodedString];
+	NSString *hashAndBase64 = [hashMessage convertToBase64EncodedString];
 	NSLog(@"hashAndBase64: %@", hashAndBase64);
 	return hashAndBase64;
 }

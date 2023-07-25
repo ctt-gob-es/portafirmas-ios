@@ -26,7 +26,7 @@
     
     NSData *data = [dataString  dataUsingEncoding:NSUTF8StringEncoding];
     NSString *params = [NSString stringWithFormat: @"%@=%lu&%@=%@", opParameter,
-                        (unsigned long)operation,datParameter, [data base64EncodedString]];
+                        (unsigned long)operation,datParameter, [data convertToBase64EncodedString]];
     
     if ([[LoginService instance] sessionId]){
         params = [NSString stringWithFormat:@"%@%@", params , [NSString stringWithFormat:@"&ssid=%@", [[LoginService instance] sessionId]]];
