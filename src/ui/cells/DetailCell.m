@@ -36,34 +36,11 @@
     if(value != nil) {
         self.valueLabel.delegate = self;
         
-            // Copy text into a variable to modify it
-        NSString *valueFormatted = value;
-        NSString *hrefString = @"href";
+            // Get text with links as HTML format
+        NSString * valueWithLinks = [self detectLinksOnString:value];
         
-            // Detect links in text
-        NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
-        NSArray *matches = [detector matchesInString:value options:0 range:NSMakeRange(0, [value length])];
-        for (NSTextCheckingResult *match in matches) {
-            NSRange matchRange = [match range];
-                // If link, convert URL into HTML link
-            if ([match resultType] == NSTextCheckingTypeLink) {
-                    // Get URL
-                NSURL *url = [match URL];
-                    // Convert URL to String with HTML link format
-                NSString *link = [NSString stringWithFormat:@"%s%@%s%@%s", "<a href='", url, "'>", url, "</a>"];
-                
-                    // Check if the URL is already included in HTML link format, that is, <a href="URL"></a>
-                NSUInteger temporalLabelLenght = 8;
-                NSUInteger temporalLabelStartIndex = matchRange.location - temporalLabelLenght;
-                NSString *temporalLabel = [value substringWithRange:NSMakeRange(temporalLabelStartIndex, temporalLabelLenght)];
-                    // If the temporary label does not come in HTML format, it is modified so that it does.
-                if ([temporalLabel rangeOfString:hrefString].location == NSNotFound) {
-                    valueFormatted = [valueFormatted stringByReplacingOccurrencesOfString:url.absoluteString withString:link];
-                }
-            }
-        }
             // Update text
-        value = valueFormatted;
+        value = valueWithLinks;
         
         NSAttributedString *attributedString = [[NSAttributedString alloc] initWithData: [value dataUsingEncoding:NSUnicodeStringEncoding]
                                                                                 options: @{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType }
@@ -71,6 +48,37 @@
                                                                                   error: nil ];
         self.valueLabel.text = attributedString;
     }
+}
+
+    // Detect links in the string that is passed as parameter and convert them to links in HTML format (if they are not already there)
+- (NSString *)detectLinksOnString:(NSString *)value {
+        // Variables
+    NSString *valueFormatted = value;
+    NSString *hrefString = @"href";
+    
+        // Detect links in text
+    NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
+    NSArray *matches = [detector matchesInString:value options:0 range:NSMakeRange(0, [value length])];
+    for (NSTextCheckingResult *match in matches) {
+        NSRange matchRange = [match range];
+            // If link, convert URL into HTML link
+        if ([match resultType] == NSTextCheckingTypeLink) {
+                // Get URL
+            NSURL *url = [match URL];
+                // Convert URL to String with HTML link format
+            NSString *link = [NSString stringWithFormat:@"%s%@%s%@%s", "<a href='", url, "'>", url, "</a>"];
+            
+                // Check if the URL is already in HTML link format, that is, <a href="URL"></a>
+            NSUInteger temporalLabelLenght = 8;
+            NSUInteger temporalLabelStartIndex = matchRange.location - temporalLabelLenght;
+            NSString *temporalLabel = [value substringWithRange:NSMakeRange(temporalLabelStartIndex, temporalLabelLenght)];
+                // If the temporary label does not come in HTML format, it is modified so that it does.
+            if ([temporalLabel rangeOfString:hrefString].location == NSNotFound) {
+                valueFormatted = [valueFormatted stringByReplacingOccurrencesOfString:url.absoluteString withString:link];
+            }
+        }
+    }
+    return valueFormatted;
 }
 
 -(void)setDarkStyle
@@ -127,7 +135,7 @@
     self.titleConstraintWidth.constant = width;
 }
 
-#pragma mark - TTTAttributedLabel delegate
+#pragma mark - TTTAttributedLabelDelegate
     // Function to detect when a link is clicked in a TTTAttributedLabel
 - (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url {
     if( [[UIApplication sharedApplication] canOpenURL:url])

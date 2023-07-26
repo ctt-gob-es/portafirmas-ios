@@ -11,6 +11,7 @@
 
 @interface DetailCell : UITableViewCell<TTTAttributedLabelDelegate>
 
+- (NSString *)detectLinksOnString:(NSString *)value;
 -(void)setCellValue:(NSString *)value;
 -(void)setCellTitle:(NSString *)value;
 -(void)setDarkStyle;
