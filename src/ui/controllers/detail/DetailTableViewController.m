@@ -282,7 +282,7 @@ typedef NS_ENUM(NSUInteger, Operation) {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:kMainStoryboardIPhoneIdentifier bundle:nil];
-
+    
     switch (indexPath.row) {
         case AttachedDocument: {
             AttachmentViewController *attachmentController =  (AttachmentViewController *)[storyboard instantiateViewControllerWithIdentifier:kAttachmentsListViewIdentifier];
