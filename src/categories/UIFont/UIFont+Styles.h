@@ -13,5 +13,7 @@
 +(UIFont *)headerFontStyle;
 +(UIFont *)clearStyleTitleDetailCell;
 +(UIFont *)clearStyleValueDetailCell;
++(UIFont *)clearStyleTitleRequestCell;
++(UIFont *)clearStyleValueRequestCell;
 
 @end
