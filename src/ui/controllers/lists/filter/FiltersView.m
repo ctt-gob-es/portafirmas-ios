@@ -82,6 +82,11 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 @property (weak, nonatomic) NSString *selectedTimeInterval;
 @property (weak, nonatomic) NSString *selectedYear;
 @property (weak, nonatomic) IBOutlet UIButton *configurationButton;
+@property (weak, nonatomic) IBOutlet UIView *displayContainerView;
+@property (nonatomic, strong) IBOutlet UILabel *displayLabel;
+@property (nonatomic, strong) IBOutlet UIView *displaySeparatorView;
+@property (nonatomic, strong) IBOutlet UILabel *expandedViewLabel;
+@property (nonatomic, strong) IBOutlet UISwitch *expandedViewSwitch;
 
 @end
 
@@ -100,6 +105,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [_typeView setHidden:![[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible]];
     [self setupPickers];
     [self setFiltersSwitch];
+    [self configureDisplaySection];
 }
 
 #pragma mark - User Interface
@@ -500,6 +506,17 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+
+#pragma mark - Display section
+- (void) configureDisplaySection {
+    self.displayLabel.text =  @"Filter_View_Display".localized;
+    self.expandedViewLabel.text = @"Filter_View_Display_ExpandedView".localized;
+    [self.expandedViewSwitch setOn:[[NSUserDefaults standardUserDefaults] boolForKey: kPFUserDefaultsKeyUserSelectionFilterDisplayExpandedViewSelected]? YES : NO];
+}
+
+-(IBAction)displayExpandedViewSwitchChanged:(UISwitch *)sender {
+    [[NSUserDefaults standardUserDefaults] setBool: [self.expandedViewSwitch isOn] forKey:kPFUserDefaultsKeyUserSelectionFilterDisplayExpandedViewSelected];
 }
 
 @end

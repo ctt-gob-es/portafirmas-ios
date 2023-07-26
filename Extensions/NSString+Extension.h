@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSString (Common)
 
 - (NSString *) localized;
+- (CGSize)usedSizeForMaxWidth:(CGFloat)width withFont:(UIFont *)font;
 
 @end
 

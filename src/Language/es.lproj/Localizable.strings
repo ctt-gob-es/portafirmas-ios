@@ -53,6 +53,8 @@
 "Alert_View_Error_Signing" = "Se ha producido un error de firmado";
 
 //Filter View
+"Filter_View_Display" = "Visualización";
+"Filter_View_Display_ExpandedView" = "Vista expandida en los listados";
 "Filter_View_Push_Notification_Pending_Title" = "Activar sistema de notificaciones";
 "Filter_View_Push_Notification_Enabled_Title" = "Sistema de notificaciones activado";
 "Filter_View_Footer_Accept_Button_Title" = "Aceptar";
