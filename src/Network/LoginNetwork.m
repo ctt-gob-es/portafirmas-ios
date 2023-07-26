@@ -27,7 +27,7 @@
     NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
     
 	NSString *params = [NSString stringWithFormat: @"%@=%lu&%@=%@", opParameter,
-                      (unsigned long)operation, datParameter, [data base64EncodedString]];
+                      (unsigned long)operation, datParameter, [data convertToBase64EncodedString]];
 	
 	if ([[LoginService instance] sessionId]){
 		params = [NSString stringWithFormat:@"%@%@", params , [NSString stringWithFormat:@"&ssid=%@", [[LoginService instance] sessionId]]];
@@ -70,7 +70,7 @@
 	NSData *data = [dataString dataUsingEncoding:NSUTF8StringEncoding];
 	
 	NSString *params = [NSString stringWithFormat: @"%@=%lu&%@=%@", opParameter,
-						(unsigned long)operation, datParameter, [data base64EncodedString]];
+						(unsigned long)operation, datParameter, [data convertToBase64EncodedString]];
 	
 	NSData *postData = [params dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
 	NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
@@ -117,7 +117,7 @@
     NSString *xmlSafeString = [dataString xmlSafeString];
     NSData *data = [xmlSafeString  dataUsingEncoding:NSUTF8StringEncoding];
     NSString *params = [NSString stringWithFormat: @"%@=%lu&%@=%@", opParameter,
-                        (unsigned long)operation,datParameter, [data base64EncodedString]];
+                        (unsigned long)operation,datParameter, [data convertToBase64EncodedString]];
 
     NSData *postData = [params dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
@@ -163,7 +163,7 @@
     
     NSData *data = [xmlSafeString  dataUsingEncoding:NSUTF8StringEncoding];
     NSString *params = [NSString stringWithFormat: @"%@=%lu&%@=%@", opParameter,
-                        (unsigned long)operation,datParameter, [data base64EncodedString]];
+                        (unsigned long)operation,datParameter, [data convertToBase64EncodedString]];
     
     NSData *postData = [params dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];

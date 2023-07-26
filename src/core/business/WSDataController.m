@@ -56,7 +56,8 @@ struct {
 {
 	NSData *msgData = [data dataUsingEncoding:NSUTF8StringEncoding];
 	NSMutableURLRequest *request;
-	NSString *operationAndData = [NSString stringWithFormat: @"op=%lu&dat=%@",(unsigned long)code, [msgData base64EncodedString]];
+    NSString *dataEncoded = [msgData convertToBase64EncodedString];
+	NSString *operationAndData = [NSString stringWithFormat: @"op=%lu&dat=%@",(unsigned long)code, dataEncoded];
 	if (!REQUEST_POST) {
 		NSString *params = [NSString stringWithFormat:@"?%@", operationAndData];
 		params = [self includeSsidIfExists:params];
@@ -104,7 +105,7 @@ struct {
 		NSString *datParameter = @"dat";
 		NSString *baseURL = SERVER_URL;
 		NSString *params = [NSString stringWithFormat: @"%@=%lu&%@=%@", opParameter,
-							(unsigned long)code, datParameter, [data base64EncodedString]];
+							(unsigned long)code, datParameter, [data convertToBase64EncodedString]];
 		NSData *postData = [params dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
 		NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
 		NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];

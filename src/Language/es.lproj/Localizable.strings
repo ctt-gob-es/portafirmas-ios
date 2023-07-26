@@ -92,6 +92,7 @@
 "Sign_Section" = "Firmas";
 "Sign_Report_Section" = "Informes de firmas";
 "Annexes_Section" = "Anexos";
+"Attachment_View_Share_Option" = "Compartir";
 
 //Detail view
 "Request_Type_Firma" = "Firma";

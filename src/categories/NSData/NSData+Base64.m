@@ -296,7 +296,7 @@ char *NewBase64Encode(
 // returns an autoreleased NSString being the base 64 representation of the
 //	receiver.
 //
-- (NSString *)base64EncodedString
+- (NSString *)convertToBase64EncodedString
 {
 	size_t outputLength;
 	char *outputBuffer = NewBase64Encode([self bytes], [self length], false, &outputLength);
@@ -308,7 +308,7 @@ char *NewBase64Encode(
 			encoding:NSASCIIStringEncoding];
     
 	free(outputBuffer);
-	return result;
+    return result;
 }
 
 

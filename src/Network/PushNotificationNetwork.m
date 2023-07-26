@@ -30,7 +30,7 @@
     //NSString *xmlSafeString = [dataString xmlSafeString];
     NSData *data = [dataString  dataUsingEncoding:NSUTF8StringEncoding];
     NSString *params = [NSString stringWithFormat: @"%@=%lu&%@=%@", opParameter,
-                        (unsigned long)operation,datParameter, [data base64EncodedString]];
+                        (unsigned long)operation,datParameter, [data convertToBase64EncodedString]];
     
   //  NSData *postData = [params dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     NSData *postData = [params dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
@@ -82,7 +82,7 @@
     
     NSData *data = [dataString  dataUsingEncoding:NSUTF8StringEncoding];
     NSString *params = [NSString stringWithFormat: @"%@=%lu&%@=%@", opParameter,
-                        (unsigned long)operation,datParameter, [data base64EncodedString]];
+                        (unsigned long)operation,datParameter, [data convertToBase64EncodedString]];
     
     NSData *postData = [params dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
     NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[postData length]];
