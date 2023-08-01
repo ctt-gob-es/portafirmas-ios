@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *) localized;
 - (CGSize)usedSizeForMaxWidth:(CGFloat)width withFont:(UIFont *)font;
+- (NSString *)replacingWithPattern:(NSString *)pattern withTemplate:(NSString *)withTemplate error:(NSError **)error;
 
 @end
 

@@ -36,11 +36,8 @@
     if(value != nil) {
         self.valueLabel.delegate = self;
         
-            // Get text with links as HTML format
-        NSString * valueWithLinks = [self detectLinksOnString:value];
-        
-            // Update text
-        value = valueWithLinks;
+            // Format value
+        value = [self formatValue:value];
         
         NSAttributedString *attributedString = [[NSAttributedString alloc] initWithData: [value dataUsingEncoding:NSUnicodeStringEncoding]
                                                                                 options: @{ NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType }
@@ -50,14 +47,30 @@
     }
 }
 
+    // Format string passed as parameter to be able to interpret HTML
+- (NSString *)formatValue:(NSString *)value {
+        // Replace "/n" by "<br/>"
+    NSString * valueFormatted = [value stringByReplacingOccurrencesOfString:@"\n" withString:@"<br/>"];
+        // Replace "<br/>" by " <br/> "
+    valueFormatted = [valueFormatted stringByReplacingOccurrencesOfString:@"<br/>" withString:@" <br/> "];
+        // Put HTTPS before links start with WWW
+    valueFormatted = [valueFormatted replacingWithPattern:@"(?<!//)www." withTemplate:@"https://www." error:nil];
+        // Replace ” by "
+    valueFormatted = [valueFormatted stringByReplacingOccurrencesOfString:@"”" withString:@"\""];
+    
+        // Get text with links as HTML format
+    valueFormatted = [self detectLinksOnString:valueFormatted];
+    return valueFormatted;
+}
+
     // Detect links in the string that is passed as parameter and convert them to links in HTML format (if they are not already there)
 - (NSString *)detectLinksOnString:(NSString *)value {
         // Variables
     NSString *valueFormatted = value;
-    NSString *hrefString = @"href";
     
         // Detect links in text
     NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:nil];
+    
     NSArray *matches = [detector matchesInString:value options:0 range:NSMakeRange(0, [value length])];
     for (NSTextCheckingResult *match in matches) {
         NSRange matchRange = [match range];
@@ -68,16 +81,12 @@
                 // Convert URL to String with HTML link format
             NSString *link = [NSString stringWithFormat:@"%s%@%s%@%s", "<a href='", url, "'>", url, "</a>"];
             
-                // Check if the URL is already in HTML link format, that is, <a href="URL"></a>
-            NSUInteger temporalLabelLenght = 8;
-            NSUInteger temporalLabelStartIndex = matchRange.location - temporalLabelLenght;
-            NSString *temporalLabel = [value substringWithRange:NSMakeRange(temporalLabelStartIndex, temporalLabelLenght)];
-                // If the temporary label does not come in HTML format, it is modified so that it does.
-            if ([temporalLabel rangeOfString:hrefString].location == NSNotFound) {
-                valueFormatted = [valueFormatted stringByReplacingOccurrencesOfString:url.absoluteString withString:link];
-            }
+                // Replace URLs that do not start with ", ' or > with the URL in HTML format
+            NSString * pattern = [NSString stringWithFormat:@"(?<!\"|'|>)%@", url.absoluteString];
+            valueFormatted = [valueFormatted replacingWithPattern:pattern withTemplate:link error:nil];
         }
     }
+    
     return valueFormatted;
 }
 
