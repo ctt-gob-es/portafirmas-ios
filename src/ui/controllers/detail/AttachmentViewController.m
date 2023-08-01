@@ -228,7 +228,14 @@
 - (void)presentActivityController:(NSArray *)items {
     UIActivityViewController *activityViewController = [[UIActivityViewController alloc]initWithActivityItems:items applicationActivities:nil];
     activityViewController.modalPresentationStyle = UIModalPresentationPopover;
-  
+    activityViewController.completionWithItemsHandler = ^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *error){
+        
+            // Remove temporary file
+        NSURL *temporaryFileURL = items.firstObject;
+        NSFileManager* theFM = [[NSFileManager alloc] init];
+        [theFM removeItemAtURL:temporaryFileURL error:nil];
+    };
+    
         // For IPAD
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UIPopoverPresentationController *popController = [activityViewController popoverPresentationController];
