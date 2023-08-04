@@ -49,8 +49,10 @@
 
     // Format string passed as parameter to be able to interpret HTML
 - (NSString *)formatValue:(NSString *)value {
-        // Replace "/n" by "<br/>"
-    NSString * valueFormatted = [value stringByReplacingOccurrencesOfString:@"\n" withString:@"<br/>"];
+        // Replace "\r" by "<br/>"
+    NSString * valueFormatted = [value stringByReplacingOccurrencesOfString:@"\r" withString:@"<br/>"];
+        // Replace "\n" by "<br/>"
+    valueFormatted = [valueFormatted stringByReplacingOccurrencesOfString:@"\n" withString:@"<br/>"];
         // Replace "<br/>" by " <br/> "
     valueFormatted = [valueFormatted stringByReplacingOccurrencesOfString:@"<br/>" withString:@" <br/> "];
         // Put HTTPS before links start with WWW
