@@ -49,8 +49,10 @@
 
     // Format string passed as parameter to be able to interpret HTML
 - (NSString *)formatValue:(NSString *)value {
+        // Replace "\r" inside list ("<ul></ul>" or "<ol></ol>") by ""
+    NSString * valueFormatted = [self removeLineBreakInsideList:value];
         // Replace "\r" by "<br/>"
-    NSString * valueFormatted = [value stringByReplacingOccurrencesOfString:@"\r" withString:@"<br/>"];
+    valueFormatted = [valueFormatted stringByReplacingOccurrencesOfString:@"\r" withString:@"<br/>"];
         // Replace "\n" by "<br/>"
     valueFormatted = [valueFormatted stringByReplacingOccurrencesOfString:@"\n" withString:@"<br/>"];
         // Replace "<br/>" by " <br/> "
@@ -62,6 +64,39 @@
     
         // Get text with links as HTML format
     valueFormatted = [self detectLinksOnString:valueFormatted];
+    return valueFormatted;
+}
+
+    // Method to delete line breaks in HTML lists
+- (NSString *)removeLineBreakInsideList:(NSString *) value {
+    NSArray * tagsHtmlLists = @[@"ul", @"ol"];
+    NSString * valueFormatted = value;
+    
+    for (NSString *tag in tagsHtmlLists) {
+        NSString *finalText = @"";
+        NSString *startLabelList = [NSString stringWithFormat:@"<%1$@>", tag];
+        NSString *endLabelList = [NSString stringWithFormat:@"</%1$@>", tag];
+        
+        while ([valueFormatted containsString:startLabelList] == TRUE) {
+            NSRange initLabelRange = [valueFormatted rangeOfString:startLabelList];
+            NSRange endLabelRange = [valueFormatted rangeOfString:endLabelList];
+            
+            NSUInteger htmlListStartIndex = initLabelRange.location;
+            NSUInteger htmlListEndIndex = endLabelRange.location + endLabelRange.length;
+            NSRange htmlListRange = NSMakeRange(htmlListStartIndex, htmlListEndIndex - htmlListStartIndex);
+            
+            NSString *contentOutList = [valueFormatted substringWithRange:NSMakeRange(0, htmlListStartIndex)];
+            finalText = [finalText stringByAppendingString:contentOutList];
+            
+            NSString *htmlList = [valueFormatted substringWithRange:htmlListRange];
+            htmlList = [htmlList stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+            finalText = [finalText stringByAppendingString:htmlList];
+            
+            valueFormatted = [valueFormatted substringWithRange:NSMakeRange(htmlListEndIndex, valueFormatted.length - htmlListEndIndex)];
+        }
+        valueFormatted = [finalText stringByAppendingString:valueFormatted];
+    }
+    
     return valueFormatted;
 }
 
