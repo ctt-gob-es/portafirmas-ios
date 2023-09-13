@@ -180,14 +180,24 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 - (void) showLoginWebView {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		WKWebViewConfiguration *wkWebViewConfiguration = [[WKWebViewConfiguration alloc] init];
-		self.webView = [[WKWebView alloc] initWithFrame: self.view.bounds configuration: wkWebViewConfiguration];
+        self.webView = [[WKWebView alloc] initWithFrame: self.view.bounds configuration: wkWebViewConfiguration];
 		self.webView.navigationDelegate = self;
 		NSString *url=[[LoginService instance] urlForRemoteCertificates];
 		NSURL *nsurl=[NSURL URLWithString:url];
-		NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
-		[self.webView loadRequest: nsrequest];
-		[self.view addSubview: self.webView];
-	});
+		
+        
+        NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: nsurl];
+        NSDictionary *cookieHeaders = [NSHTTPCookie requestHeaderFieldsWithCookies:cookies];
+        
+        NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
+        
+        for (NSHTTPCookie *cookie in cookies) {
+            [[[[self.webView configuration] websiteDataStore] httpCookieStore] setCookie: cookie completionHandler:^{
+                            [self.webView loadRequest:nsrequest];
+                            [self.view addSubview: self.webView];
+                        }];
+        }
+    });
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
@@ -399,6 +409,13 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 #pragma mark - WebViewDelegate
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
+    
+    NSHTTPCookie *cookie;
+    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (cookie in [cookieStorage cookies]) {
+        NSLog(@"%@", cookie);
+    }
+    
     NSURLRequest *request = navigationAction.request;
     NSString *requestString = [[request URL]absoluteString];
 	NSArray *urlFragments= [requestString componentsSeparatedByString: kStringSlash];
