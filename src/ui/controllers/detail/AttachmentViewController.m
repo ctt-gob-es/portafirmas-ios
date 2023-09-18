@@ -138,35 +138,26 @@
 
 - (void)configureCell:(UITableViewCell *)cell forDocument:(id)item ofType:(PFAttachmentType)type ofSubType:(PFAttachmentVCSection)subType
 {
-    
+    NSString *documentName = @"";
+    NSString *documentExtension = @"";
     Document *document;
     AttachedDoc *attachedDoc;
     
     switch (type) {
         case PFAttachmentTypeDocument:
             document = (Document *) item;
+            documentName = document.nm;
+            documentExtension = [document getSignatureExtension];
             break;
             
         case PFAttachmentTypeAttachedDoc:
             attachedDoc = (AttachedDoc *) item;
+            documentName = attachedDoc.nm;
             break;
     }
     
-    switch (subType) {
-        case PFAttachmentVCSectionDocuments:
-            [cell.textLabel setText:document.nm];
-            break;
-            
-        case PFAttachmentVCSectionSignatures:
-            [cell.textLabel setText:[NSString stringWithFormat:@"%@_firmado.%@", document.nm, [document getSignatureExtension]]];
-            break;
-        case PFAttachmentVCSectionSignaturesReport:
-            [cell.textLabel setText:[NSString stringWithFormat:@"report_%@.pdf", document.nm]];
-            break;
-        case PFAttachmentVCSectionAttachedDocs:
-            [cell.textLabel setText:attachedDoc.nm];
-            break;
-    }
+        // Get document name
+    [cell.textLabel setText:[PFHelper getDocumentNameBasedOnSection:subType originalDocumentName:documentName documentExtension:documentExtension]];
 }
 
     // Returns the swipe actions to display on the trailing edge of the row
@@ -202,15 +193,24 @@
     Source *sourceSection = [[self sections] objectAtIndex:indexPath.section];
     _requestCode = [PFHelper getPFRequestCodeForSection:sourceSection.subType];
     
+    NSString *documentName = @"";
+    NSString *documentExtension = @"";
+    
     if (sourceSection.type == PFAttachmentTypeDocument) {
         Document *selectedDoc = _documentsDataSource[indexPath.row];
-        _docName = selectedDoc.nm;
         _docId = selectedDoc.docid;
+            // Get document name and extension
+        documentName = selectedDoc.nm;
+        documentExtension = [selectedDoc getSignatureExtension];
     } else {
         AttachedDoc *selectedDoc = _attachedDocsDataSource[indexPath.row];
-        _docName = selectedDoc.nm;
         _docId = selectedDoc.docid;
+            // Get document name
+        documentName = selectedDoc.nm;
     }
+    
+        // Get docName
+    _docName = [PFHelper getDocumentNameBasedOnSection:sourceSection.subType originalDocumentName:documentName documentExtension:documentExtension];
     
     if (_docId != nil) {
         dispatch_async(dispatch_get_main_queue(), ^{

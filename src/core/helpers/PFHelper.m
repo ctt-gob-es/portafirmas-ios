@@ -1,10 +1,10 @@
-//
-//  PFHelper.m
-//  PortaFirmasUniv
-//
-//  Created by Rocio Tovar on 9/3/15.
-//  Copyright (c) 2015 Atos. All rights reserved.
-//
+    //
+    //  PFHelper.m
+    //  PortaFirmasUniv
+    //
+    //  Created by Rocio Tovar on 9/3/15.
+    //  Copyright (c) 2015 Atos. All rights reserved.
+    //
 
 #import "PFHelper.h"
 #import "Source.h"
@@ -38,7 +38,7 @@ static NSString *const kPFHelperClassNamePendingList = @"UnassignedRequestTableV
 + (PFRequestStatus)getPFRequestStatusFromClass:(Class)classObject
 {
     NSString *className = NSStringFromClass(classObject);
-
+    
     if ([className isEqualToString:kPFHelperClassNameSignedList]) {
         return PFRequestStatusSigned;
     } else if ([className isEqualToString:kPFHelperClassNameRejectedList]) {
@@ -46,7 +46,7 @@ static NSString *const kPFHelperClassNamePendingList = @"UnassignedRequestTableV
     } else if ([className isEqualToString:kPFHelperClassNamePendingList]) {
         return PFRequestStatusPending;
     }
-	return PFRequestStatusPending;
+    return PFRequestStatusPending;
 }
 
 + (PFRequestCode)getPFRequestCodeForSection:(NSInteger)section
@@ -61,7 +61,7 @@ static NSString *const kPFHelperClassNamePendingList = @"UnassignedRequestTableV
         case PFAttachmentVCSectionAttachedDocs:
             return PFRequestCodeDocumentPreview;
     }
-	return PFRequestCodeDocumentPreview;
+    return PFRequestCodeDocumentPreview;
 }
 
 + (NSString *)getCurrentYear {
@@ -77,6 +77,26 @@ static NSString *const kPFHelperClassNamePendingList = @"UnassignedRequestTableV
         [yearsArray insertObject:[@(year) stringValue] atIndex:0];
     }
     return yearsArray;
+}
+
++ (NSString *)getDocumentNameBasedOnSection: (NSInteger)section originalDocumentName:(NSString *)originalDocumentName documentExtension: (NSString *)documentExtension
+{
+    NSString * finalDocumentName = originalDocumentName;
+    switch (section) {
+        case PFAttachmentVCSectionDocuments:
+            finalDocumentName = originalDocumentName;
+            break;
+        case PFAttachmentVCSectionSignatures:
+            finalDocumentName = [NSString stringWithFormat:@"%@_firmado.%@", originalDocumentName, documentExtension];
+            break;
+        case PFAttachmentVCSectionSignaturesReport:
+            finalDocumentName = [NSString stringWithFormat:@"report_%@.pdf", originalDocumentName];
+            break;
+        case PFAttachmentVCSectionAttachedDocs:
+            finalDocumentName = originalDocumentName;
+            break;
+    }
+    return finalDocumentName;
 }
 
 @end

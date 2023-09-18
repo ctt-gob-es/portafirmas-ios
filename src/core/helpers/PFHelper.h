@@ -1,10 +1,10 @@
-//
-//  PFHelper.h
-//  PortaFirmasUniv
-//
-//  Created by Rocio Tovar on 9/3/15.
-//  Copyright (c) 2015 Atos. All rights reserved.
-//
+    //
+    //  PFHelper.h
+    //  PortaFirmasUniv
+    //
+    //  Created by Rocio Tovar on 9/3/15.
+    //  Copyright (c) 2015 Atos. All rights reserved.
+    //
 
 #import <Foundation/Foundation.h>
 
@@ -56,7 +56,7 @@ static NSString *const kPFTrue = @"true";
 static NSString *const kPFFalse = @"false";
 static NSString *const kPFDefaultDateFormat = @"dd/MM/yyyy";
 
-// User Defaults
+    // User Defaults
 static NSString *const kPFUserDefaultsKeyCurrentServer = @"currentServer";
 static NSString *const kPFUserDefaultsKeyCurrentCertificate = @"currentCertificate";
 static NSString *const kPFUserDefaultsKeyAlias = @"alias";
@@ -66,19 +66,19 @@ static NSString *const kPFUserDefaultsKeyServersArray = @"serversArray";
 static NSString *const kPFUserDefaultsKeyRemoteCertificates = @"remoteCertificates";
 static NSString *const kPFUserDefaultsKeyRemoteCertificatesSelection = @"remoteCertificatesSelection";
 static NSString *const kPFUserDefaultsKeyUserSelectionFilterDisplayExpandedViewSelected
- = @"userSelectionFilterDisplayExpandedViewSelected";
+= @"userSelectionFilterDisplayExpandedViewSelected";
 static NSString *const kPFUserDefaultsKeyUserSelectionFilterSortCriteria
- = @"userSelectionFilterSortCriteria";
+= @"userSelectionFilterSortCriteria";
 static NSString *const kPFUserDefaultsKeyUserSelectionFilterSubject
- = @"userSelectionFilterSubject";
+= @"userSelectionFilterSubject";
 static NSString *const kPFUserDefaultsKeyUserSelectionFilterApp
- = @"userSelectionFilterApplication";
+= @"userSelectionFilterApplication";
 static NSString *const kPFUserDefaultsKeyUserSelectionFilterType
- = @"userSelectionFilterType";
+= @"userSelectionFilterType";
 static NSString *const kPFUserDefaultsKeyUserSelectionFilterTimeInterval
- = @"userSelectionFilterTimeInterval";
+= @"userSelectionFilterTimeInterval";
 static NSString *const kPFUserDefaultsKeyUserSelectionFilterYear
- = @"userSelectionFilterYear";
+= @"userSelectionFilterYear";
 static NSString *const kPFUserDefaultsKeyUserRoles = @"userRoles";
 static NSString *const kPFUserDefaultsKeyUserRoleSelected = @"userRoleSelected";
 static NSString *const kPFUserDefaultsKeyUserConfigurationCompatible = @"UserConfigurationCompatible";
@@ -88,14 +88,14 @@ static NSString *const kPFUserDefaultsKeyUserNotificationsActivated = @"UserNoti
 static NSString *const kPFUserDefaultsKeyPushNotificationsServiceToken = @"PushNotificationsServiceToken";
 static NSString *const kPFUserDefaultsKeyLaunchedBefore = @"launchedBefore";
 
-//Certificate
+    //Certificate
 static NSString *const kPFCertInfoKeyIssuer = @"issuer";
 static NSString *const kPFCertInfoKeySubject = @"subject";
 static NSString *const kPFCertInfoKeyStartDate = @"startDate";
 static NSString *const kPFCertInfoKeyEndDate = @"endDate";
 static NSString *const kPFCertInfoKeyPurpose = @"purpose";
 
-//Roles
+    //Roles
 static NSString *const kUserRoleUserNameKey = @"userName";
 static NSString *const kUserRoleRoleNameKey = @"roleName";
 static NSString *const kUserRoleUserDNIKey = @"dni";
@@ -103,7 +103,7 @@ static NSString *const kUserRoleRoleNameValidator = @"VALIDADOR";
 static NSString *const kUserRoleUserHasValidator = @"S";
 static NSString *const kUserRoleContent = @"content";
 
-//Filters
+    //Filters
 static NSString *const kPFFilterKeyType =  @"tipoFilter";
 static NSString *const kPFFilterValueTypeViewAll =  @"view_all";
 static NSString *const kPFFilterValueTypeViewValidate =  @"view_validate";
@@ -123,7 +123,7 @@ static NSString *const kPFFilterValueSortCriteriaSubject = @"dsubject";
 static NSString *const kPFFilterValueSortCriteriaApp = @"application";
 static NSString *const kPFFilterKeyApp = @"applicationFilter";
 
-//Notifications
+    //Notifications
 static NSString *const kPortafirmasNotificationsConfigActivated = @"S";
 static NSString *const kUserNotificationsConfigActivated = @"S";
 static NSString *const kSettingsDismissNotification = @"settingsDismissNotification";
@@ -136,5 +136,6 @@ static NSString *const kSettingsDismissNotification = @"settingsDismissNotificat
 + (PFRequestCode)getPFRequestCodeForSection:(NSInteger)section;
 + (NSArray *)getYearsForFilter;
 + (NSString *)getCurrentYear;
++ (NSString *)getDocumentNameBasedOnSection:(NSInteger)section originalDocumentName:(NSString *)originalDocumentName documentExtension: (NSString *)documentExtension;
 
 @end
