@@ -246,7 +246,7 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
                                 });
                             } else {
                                 //User with roles navigate to rol selection
-                            [self setRolesInLocalStorage: responseUserRolesDict];
+                                [self setRolesInLocalStorage: responseUserRolesDict];
                                 SelectRoleViewController *selectRoleViewController = [[SelectRoleViewController alloc] initWithNibName: @"SelectRoleViewController" bundle: nil];
                                 selectRoleViewController.delegate = self;
                                 [selectRoleViewController setModalPresentationStyle:UIModalPresentationFullScreen];
@@ -367,6 +367,12 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 - (void) setRolesInLocalStorage:(NSDictionary*)userRolesDictionary {
     NSArray * userRolesArray = [userRolesDictionary allValues];
+    if ([userRolesDictionary objectForKey:@"rolesArray"] != nil) {
+        userRolesArray = [userRolesDictionary objectForKey:@"rolesArray"];
+    } else {
+        userRolesArray = [userRolesDictionary allValues];
+    }
+    
     [[NSUserDefaults standardUserDefaults] setObject:userRolesArray forKey:kPFUserDefaultsKeyUserRoles];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
