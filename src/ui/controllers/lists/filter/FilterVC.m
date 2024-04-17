@@ -135,7 +135,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
             [[NSNotificationCenter defaultCenter]
              postNotificationName:kSettingsDismissNotification
              object:self];
-            [baseTVC refreshInfoWithFilters:filters];
+          // TODO TEST REMOVE EL BASEListTVC ya hace el refresco en el viewDidAppear  [baseTVC refreshInfoWithFilters:filters];
         }];
     });
 }

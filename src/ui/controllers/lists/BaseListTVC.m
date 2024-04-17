@@ -49,7 +49,7 @@
     [self addWatermark];
     [self setClearsSelectionOnViewWillAppear:NO];
     [_tableViewFooter setHidden:YES];
-    [self loadData];
+   // TODO TEST SE HACE EN EL VIEWDID APPEAR [self loadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
