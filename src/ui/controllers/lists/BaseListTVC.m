@@ -34,6 +34,7 @@
         [_wsDataController setDelegate:self];
         _dataArray = [@[] mutableCopy];
         _filtersDict = [NSMutableDictionary new];
+        _comeFromFiltering = NO;
     }
     
     return self;
@@ -49,7 +50,6 @@
     [self addWatermark];
     [self setClearsSelectionOnViewWillAppear:NO];
     [_tableViewFooter setHidden:YES];
-   // TODO TEST SE HACE EN EL VIEWDID APPEAR [self loadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -115,7 +115,12 @@
 
 - (void)refreshInfo
 {
-    [self refreshInfoWithFilters:[NSMutableDictionary new]];
+    if (!self.comeFromFiltering) {
+        [self refreshInfoWithFilters:[NSMutableDictionary new]];
+    } else {
+        // Resetear variable
+        [self setComeFromFiltering:NO];
+    }
 }
 
 - (void)refreshInfoWithFilters:(NSDictionary *)filters {

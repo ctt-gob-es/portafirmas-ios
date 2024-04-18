@@ -124,6 +124,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     UINavigationController *navigation = (UINavigationController *) tabController.selectedViewController;
     BaseListTVC *baseTVC = (BaseListTVC *)navigation.rootViewController;
     [baseTVC setFiltersDict:filters.count > 0 ? filters:nil];
+    [baseTVC setComeFromFiltering:YES];
+    
     if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
         [[NSNotificationCenter defaultCenter]
          postNotificationName:kSettingsDismissNotification
@@ -135,7 +137,8 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
             [[NSNotificationCenter defaultCenter]
              postNotificationName:kSettingsDismissNotification
              object:self];
-          // TODO TEST REMOVE EL BASEListTVC ya hace el refresco en el viewDidAppear  [baseTVC refreshInfoWithFilters:filters];
+                
+            [baseTVC refreshInfoWithFilters:filters];
         }];
     });
 }
