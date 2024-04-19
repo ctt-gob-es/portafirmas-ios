@@ -177,6 +177,8 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 #pragma mark - Navigation Methods
 
+NSHTTPCookie *cookieJsession = nil;
+
 - (void) showLoginWebView {
 	dispatch_async(dispatch_get_main_queue(), ^{
 		WKWebViewConfiguration *wkWebViewConfiguration = [[WKWebViewConfiguration alloc] init];
@@ -185,19 +187,72 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 		NSString *url=[[LoginService instance] urlForRemoteCertificates];
 		NSURL *nsurl=[NSURL URLWithString:url];
 		
-        
         NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookiesForURL: nsurl];
-        NSDictionary *cookieHeaders = [NSHTTPCookie requestHeaderFieldsWithCookies:cookies];
-        
+        NSMutableArray *cookiesMutable = [[NSMutableArray alloc] initWithArray:cookies];
         NSURLRequest *nsrequest=[NSURLRequest requestWithURL:nsurl];
         
+        cookieJsession = nil;
+        NSLog(@"Establecemos cookies");
+        [self setCookiesAndLoadWebView:cookiesMutable request:nsrequest];
+        
+        /*
         for (NSHTTPCookie *cookie in cookies) {
-            [[[[self.webView configuration] websiteDataStore] httpCookieStore] setCookie: cookie completionHandler:^{
-                            [self.webView loadRequest:nsrequest];
-                            [self.view addSubview: self.webView];
-                        }];
+            NSString *name = cookie.name;
+            NSString *value = cookie.value;
+            NSLog(@"Cookie: %@ Valor: %@", name, value);
+            if ([cookie.name isEqualToString:@"JSESSIONID"]) {
+                cookieJsession = cookie;
+            }
         }
+        
+        if (cookieJsession != nil) {
+            [[[[self.webView configuration] websiteDataStore] httpCookieStore] setCookie: cookieJsession completionHandler:^{
+                [self.webView loadRequest:nsrequest];
+                [self.view addSubview: self.webView];
+            }];
+        } else {
+            [self.webView loadRequest:nsrequest];
+            [self.view addSubview: self.webView];
+        }*/
+        
+        /*for (NSHTTPCookie *cookie in cookies) {
+            [[[[self.webView configuration] websiteDataStore] httpCookieStore] setCookie: cookie completionHandler:^{
+                [self.webView loadRequest:nsrequest];
+                [self.view addSubview: self.webView];
+            }];
+        }*/
+
+            /*[[[[self.webView configuration] websiteDataStore] httpCookieStore] setCookie: cookie completionHandler:^{
+                [[[[self.webView configuration] websiteDataStore] httpCookieStore] getAllCookies: ^(NSArray *cookiesWebView) {
+                    for (NSHTTPCookie *cookie in cookiesWebView) {
+                        NSString *name = cookie.name;
+                        NSString *value = cookie.value;
+                        NSLog(@"Cookie WebView POST: %@ Valor: %@", name, value);
+                    }
+                }];
+            }];
+            break;
+        }*/
     });
+}
+
+-(void) setCookiesAndLoadWebView:(NSMutableArray *) cookies request:(NSURLRequest *) request {
+    if ([cookies count] == 0) {
+        NSLog(@"Cargamos WebView");
+        [self.webView loadRequest:request];
+        [self.view addSubview: self.webView];
+    } else {
+        NSHTTPCookie *cookie = [cookies lastObject];
+        NSLog(@"Cargamos cookie %@", cookie.name);
+        if ([cookie.name isEqualToString:@"JSESSIONID"]) {
+            cookieJsession = cookie;
+        }
+        [[[[self.webView configuration] websiteDataStore] httpCookieStore] setCookie: cookie completionHandler:^{
+            NSLog(@"Cookie %@ cargada correctamente", cookie.name);
+            [cookies removeLastObject];
+            [self setCookiesAndLoadWebView:cookies request:request];
+        }];
+    }
 }
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
@@ -416,15 +471,37 @@ typedef NS_ENUM (NSInteger, SettingsVCSection)
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
     
-    NSHTTPCookie *cookie;
-    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    for (cookie in [cookieStorage cookies]) {
-        NSLog(@"%@", cookie);
-    }
+    [[[[self.webView configuration] websiteDataStore] httpCookieStore] setCookie: cookieJsession completionHandler:^{
+        
+    }];
     
     NSURLRequest *request = navigationAction.request;
     NSString *requestString = [[request URL]absoluteString];
-	NSArray *urlFragments= [requestString componentsSeparatedByString: kStringSlash];
+    
+    /*
+     NSData *postData = [request HTTPBody];
+     NSString *postDataString = [[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding];
+     
+     // Ver la url de la peticion
+     NSLog(@"URL PETICION: %@", requestString);
+    
+     //Ver los parametros de la peticion
+    //NSLog(@"POST DATA: %@", postDataString);
+     
+    // Ver las cookies del web View
+    [[[[self.webView configuration] websiteDataStore] httpCookieStore] getAllCookies: ^(NSArray *cookiesWebView) {
+        NSLog(@"COOKIES WEBVIEW");
+        for (NSHTTPCookie *cookie in cookiesWebView) {
+            NSString *name = cookie.name;
+            NSString *value = cookie.value;
+            NSString *domain = cookie.domain;
+            NSLog(@"Cookie WebView: %@ Valor: %@ Domain: %@", name, value, domain);
+        }
+        NSLog(@"FIN COOKIES WEBVIEW");
+    }];*/
+    
+    
+    NSArray *urlFragments= [requestString componentsSeparatedByString: kStringSlash];
 	if ([[urlFragments lastObject] rangeOfString:kError].location != NSNotFound) {
 		[[ErrorService instance] showLoginErrorAlertView];
 		[self.webView removeFromSuperview];
