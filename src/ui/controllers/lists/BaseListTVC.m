@@ -116,11 +116,12 @@
 - (void)refreshInfo
 {
     if (!self.comeFromFiltering) {
-        [self refreshInfoWithFilters:[NSMutableDictionary new]];
+        [self refreshInfoWithFilters:_filtersDict];
     } else {
-        // Resetear variable
+            // Resetear variable
         [self setComeFromFiltering:NO];
     }
+    
 }
 
 - (void)refreshInfoWithFilters:(NSDictionary *)filters {

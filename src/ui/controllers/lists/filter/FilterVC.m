@@ -1,10 +1,10 @@
-//
-//  FilterVC.m
-//  PortaFirmasUniv
-//
-//  Created by Rocio Tovar on 11/3/15.
-//  Copyright (c) 2015 Atos. All rights reserved.
-//
+    //
+    //  FilterVC.m
+    //  PortaFirmasUniv
+    //
+    //  Created by Rocio Tovar on 11/3/15.
+    //  Copyright (c) 2015 Atos. All rights reserved.
+    //
 
 #import "FilterVC.h"
 #import "DateHelper.h"
@@ -43,7 +43,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
-
+    
     if (self) {
         
         [[KeyboardObserver getInstance] addObserver:self];
@@ -56,14 +56,14 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    [self addToolbar];
-//    [self shouldShowNotificationsSection];
-//    [self hidePickers];
-//    [self setupPickers];
-
-//    [_scrollView setContentSize:CGSizeMake(self.view.frame.size.width, _endDateTextField.frame.origin.y + _endDateTextField.frame.size.height + kFilterVCDefaultMargin)];
-//    [_enableFiltersSwitch setFrame:CGRectMake(self.view.frame.size.width - _enableFiltersSwitch.frame.size.width - kFilterVCDefaultMargin, _enableFiltersSwitch.frame.origin.y, _enableFiltersSwitch.frame.size.width, _enableFiltersSwitch.frame.size.height)];
-
+        //    [self addToolbar];
+        //    [self shouldShowNotificationsSection];
+        //    [self hidePickers];
+        //    [self setupPickers];
+    
+        //    [_scrollView setContentSize:CGSizeMake(self.view.frame.size.width, _endDateTextField.frame.origin.y + _endDateTextField.frame.size.height + kFilterVCDefaultMargin)];
+        //    [_enableFiltersSwitch setFrame:CGRectMake(self.view.frame.size.width - _enableFiltersSwitch.frame.size.width - kFilterVCDefaultMargin, _enableFiltersSwitch.frame.origin.y, _enableFiltersSwitch.frame.size.width, _enableFiltersSwitch.frame.size.height)];
+    
     [self.parentViewController.tabBarController.tabBar setHidden:YES];
     
     if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
@@ -78,14 +78,14 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 - (void) viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.selectedFilters = [[NSMutableDictionary alloc] init];
-//    [self listenNotificationAboutPushNotifications];
-//    [self showChangeRoleOptionIfNeeded];
+        //    [self listenNotificationAboutPushNotifications];
+        //    [self showChangeRoleOptionIfNeeded];
     [_filterView showChangeRoleOptionIfNeeded];
 }
 
 - (void) viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
-	[[KeyboardObserver getInstance] removeObserver:self];
+    [[KeyboardObserver getInstance] removeObserver:self];
 }
 
 - (void)dealloc
@@ -113,7 +113,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     NSMutableDictionary *filters = [self.selectedFilters mutableCopy];
     UITabBarController *tabController;
     if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
-
+        
         UINavigationController *nav = (UINavigationController *)self.presentingViewController;
         UIViewController *settingsVC = nav.rootViewController;
         tabController = (UITabBarController *)settingsVC.presentedViewController;
@@ -121,10 +121,24 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     else if ([[UIDevice currentDevice].model isEqualToString:@"iPad"]) {
         tabController = (UITabBarController *)self.presentingViewController;
     }
-    UINavigationController *navigation = (UINavigationController *) tabController.selectedViewController;
-    BaseListTVC *baseTVC = (BaseListTVC *)navigation.rootViewController;
+    
+        // Obtenemos el controller de la tab activa y actualizamos sus variables
+    UINavigationController *actualNavController = (UINavigationController *) tabController.selectedViewController;
+    BaseListTVC *baseTVC = (BaseListTVC *)actualNavController.rootViewController;
     [baseTVC setFiltersDict:filters.count > 0 ? filters:nil];
     [baseTVC setComeFromFiltering:YES];
+    
+        // Obtenemos todos los controllers de las tabs y actualizamos los filtros para aquellos que no sean la tab activa
+    NSArray<UIViewController *> *tabControllers = tabController.viewControllers;
+    for (UIViewController *viewController in tabControllers) {
+        UINavigationController *navigationController = (UINavigationController *) viewController;
+        
+        if (actualNavController != navigationController) {
+            BaseListTVC *controller = (BaseListTVC *)navigationController.rootViewController;
+            [controller setFiltersDict:filters.count > 0 ? filters:nil];
+            [controller setComeFromFiltering:NO];
+        }
+    }
     
     if ([[UIDevice currentDevice].model isEqualToString:kPFDeviceModeliPhone]) {
         [[NSNotificationCenter defaultCenter]
@@ -137,7 +151,7 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
             [[NSNotificationCenter defaultCenter]
              postNotificationName:kSettingsDismissNotification
              object:self];
-                
+            
             [baseTVC refreshInfoWithFilters:filters];
         }];
     });
