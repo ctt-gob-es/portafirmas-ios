@@ -25,6 +25,7 @@ static NSString *const kBaseListVCDataStatusPending = @"unresolved";
 @property (nonatomic, strong) NSMutableArray *dataArray;
 @property (nonatomic, strong) IBOutlet UIView *tableViewFooter;
 @property (nonatomic, strong) NSMutableDictionary *filtersDict;
+@property (nonatomic, assign) BOOL comeFromFiltering;
 
 #pragma mark - Lazy load methods
 - (void)resetLazyLoad;
