@@ -50,6 +50,10 @@
 
 - (void)getExpirationLabelValue:(NSString *)expirationDate {
     _expirationDate.hidden = expirationDate == nil;
+    
+        // TODO Por el momento la ocultamos siempre para que no se solape con la fecha de la petición
+    _expirationDate.hidden = TRUE;
+    
     if (expirationDate){
         NSString* expirationDateText = [@"Expiration_text_message".localized stringByAppendingString:expirationDate];
         [_expirationDate setText:expirationDateText];
