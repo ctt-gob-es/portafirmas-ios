@@ -102,7 +102,6 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
     [self showChangeRoleOptionIfNeeded];
     [self setFooterStyle];
     [_yearView setHidden:YES];
-    [_typeView setHidden:![[NSUserDefaults standardUserDefaults]boolForKey:kPFUserDefaultsKeyUserConfigurationCompatible]];
     [self setupPickers];
     [self setFiltersSwitch];
     [self configureDisplaySection];
