@@ -103,10 +103,11 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
 - (void)didSelectCancelButton {
     if ([[UIDevice currentDevice].model isEqualToString:@"iPhone"]) {
         [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        });
     }
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self dismissViewControllerAnimated:YES completion:nil];
-    });
 }
 
 - (void)navigate {
@@ -128,16 +129,18 @@ static const CGFloat kFilterVCDefaultMargin = 14.f;
         [[NSNotificationCenter defaultCenter]
          postNotificationName:kSettingsDismissNotification
          object:self];
+        [baseTVC refreshInfoWithFilters:filters];
         [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self dismissViewControllerAnimated:YES completion:^{
+                [[NSNotificationCenter defaultCenter]
+                 postNotificationName:kSettingsDismissNotification
+                 object:self];
+                
+            }];
+        });
     }
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self dismissViewControllerAnimated:YES completion:^{
-            [[NSNotificationCenter defaultCenter]
-             postNotificationName:kSettingsDismissNotification
-             object:self];
-            [baseTVC refreshInfoWithFilters:filters];
-        }];
-    });
 }
 
 #pragma mark - TapChangeRoleDelegate

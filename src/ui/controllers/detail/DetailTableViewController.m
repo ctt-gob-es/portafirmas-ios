@@ -747,15 +747,11 @@ typedef NS_ENUM(NSUInteger, Operation) {
         [self presentViewController:alertController animated:YES completion:nil];
     } else {
         [self didReceiveError:msg];
-        [self dismissSelfView];
+
     }
 }
 
 - (void)dismissSelfView {
-   dispatch_async(dispatch_get_main_queue(), ^{
-	   [self dismissViewControllerAnimated:YES completion:nil];
-	});
-    [(BaseListTVC *)self.navigationController.previousViewController refreshInfo];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
